@@ -1,0 +1,89 @@
+/* 모바일 메뉴 오버레이. design/salliljido.extracted.html 69-82줄.
+   원래 Header.module.css 안에 같이 있었는데 그 파일이 300줄을 넘겨서
+   (CLAUDE.md 코드 원칙) 오버레이만 떼어냈다 — 값은 옮기기 전 그대로다. */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: var(--paper);
+  flex-direction: column;
+  padding: 0 clamp(20px, 5vw, 64px);
+}
+.overlay.open {
+  display: flex;
+}
+.overlayTop {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0 0 auto;
+}
+.overlayLogo {
+  font-size: 21.5px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--forest);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+.overlayLogo:hover {
+  opacity: 0.78;
+}
+.overlayClose {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  font-size: 23.5px;
+  line-height: 1;
+  color: var(--ink);
+  cursor: pointer;
+}
+.overlayNav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  padding-bottom: 80px;
+}
+.overlayLink {
+  align-self: flex-start;
+  margin: 0 -16px;
+  padding: 12px 16px;
+  border-radius: var(--radius-card);
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+.overlayLink:hover {
+  background: var(--mist);
+  color: var(--forest);
+}
+.overlayCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  height: 52px;
+  margin-top: 12px;
+  padding: 0 28px;
+  border-radius: var(--radius-card);
+  background: var(--terracotta);
+  color: var(--cream);
+  font-size: 17.5px;
+  font-weight: 600;
+}
+.overlayCta:hover {
+  background: var(--terracotta-strong);
+  color: var(--cream);
+}

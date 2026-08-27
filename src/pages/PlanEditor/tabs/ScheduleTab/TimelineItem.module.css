@@ -1,0 +1,237 @@
+/* design/salliljido.extracted.html 899-943줄 */
+.gap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 26px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.gap:hover {
+  opacity: 1;
+}
+
+/* design 2907줄(gapOpacity) / 3195줄(rtTailOpacity):
+   원본은 좁은 화면(narrow, <760)에서 이 값을 0.5로 둔다. 모바일에는
+   hover가 없어서 0으로 두면 "일정 추가" 버튼을 찾을 방법이 아예 없다. */
+@media (max-width: 759px) {
+  .gap {
+    opacity: 0.5;
+  }
+}
+.gapLine {
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--border);
+}
+.gapBtn {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--cream);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.gapBtn:hover {
+  border-color: var(--terracotta);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+.slotCol {
+  flex: 0 0 118px;
+  min-width: 112px;
+  padding-top: 6px;
+}
+.slotLabel {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.slotTime {
+  margin-top: 3px;
+  font-size: 13.5px;
+  color: var(--gray);
+  white-space: nowrap;
+}
+
+.card {
+  flex: 1 1 320px;
+  min-width: 240px;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 13px 15px;
+  border-radius: var(--radius-card);
+  background: var(--cream);
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+.swatch {
+  flex: 0 0 62px;
+  min-width: 56px;
+  height: 58px;
+  border-radius: 9px;
+}
+.body {
+  flex: 1 1 200px;
+  min-width: 170px;
+}
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-right: 74px;
+}
+.place {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.tag {
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.desc {
+  margin: 6px 0 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+.cuisineWrap {
+  position: relative;
+}
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+.actionBtn:hover,
+.actionBtn.hot {
+  border-color: var(--forest);
+  color: var(--forest);
+}
+/* design 2926-2927줄(actionBorder/actionColor): 원본은 `hot || narrow`라
+   좁은 화면에서는 hover 없이도 항상 강조색이다. */
+@media (max-width: 759px) {
+  .actionBtn {
+    border-color: var(--forest);
+    color: var(--forest);
+  }
+}
+.cuisineMenu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 38px;
+  z-index: 6;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--mist);
+  background: var(--cream);
+  box-shadow: 0 12px 26px -16px rgba(43, 43, 41, 0.55);
+}
+.cuisineMenu.open {
+  display: flex;
+}
+.cuisineOption {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--gray);
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+  background: transparent;
+}
+.cuisineOption.active {
+  background: var(--mist);
+  color: var(--forest);
+  font-weight: 600;
+}
+.cuisineNote {
+  padding: 4px 14px 2px;
+  font-size: 12.5px;
+  color: var(--gray);
+  white-space: nowrap;
+}
+.deleteBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.deleteBtn.visible {
+  display: flex;
+}
+.deleteBtn:hover {
+  border-color: var(--rust);
+}
+.mineBadge {
+  display: none;
+  position: absolute;
+  right: 14px;
+  top: 13px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--clay-tint);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rust);
+}
+.mineBadge.visible {
+  display: inline-flex;
+}

@@ -1,0 +1,185 @@
+/* design/salliljido.extracted.html 679-703줄 */
+.banner {
+  position: relative;
+  min-height: clamp(220px, 26vh, 260px);
+  display: flex;
+  align-items: flex-end;
+  padding: 104px clamp(20px, 5vw, 64px) 46px;
+  background: var(--forest);
+  overflow: hidden;
+}
+@media (max-width: 759px) {
+  .banner {
+    min-height: 180px;
+  }
+}
+
+.texture {
+  position: absolute;
+  inset: 0;
+}
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(47, 93, 80, 0.72) 0%,
+    rgba(47, 93, 80, 0.6) 45%,
+    rgba(35, 71, 61, 0.76) 100%
+  );
+}
+.imageNote {
+  position: absolute;
+  right: clamp(20px, 5vw, 64px);
+  top: 78px;
+  font-family: var(--font-family-mono);
+  font-size: 12px;
+  color: rgba(250, 248, 244, 0.72);
+}
+
+.row {
+  position: relative;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.left {
+  flex: 1 1 420px;
+  min-width: 260px;
+}
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: rgba(250, 248, 244, 0.78);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.backBtn:hover {
+  color: var(--cream);
+}
+.backArrow {
+  font-size: 15.5px;
+}
+
+.nameRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+.name {
+  margin: 0;
+  font-size: clamp(34px, 3.6vw, 44px);
+  line-height: 1.18;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--cream);
+}
+@media (max-width: 759px) {
+  .name {
+    font-size: 31px;
+  }
+}
+
+.badge {
+  position: relative;
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(250, 248, 244, 0.38);
+  background: rgba(250, 248, 244, 0.12);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(250, 248, 244, 0.9);
+  cursor: help;
+}
+.badge:hover {
+  background: rgba(250, 248, 244, 0.24);
+}
+.badgeTip {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  z-index: 5;
+  display: none;
+  width: 250px;
+  padding: 12px 14px;
+  border-radius: var(--radius-input);
+  background: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--paper);
+  letter-spacing: -0.01em;
+}
+.badgeTip.open {
+  display: block;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
+}
+.chip {
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(250, 248, 244, 0.42);
+  background: rgba(250, 248, 244, 0.16);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cream);
+}
+
+.saveBtn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: var(--radius-card);
+  border: 1px solid rgba(250, 248, 244, 0.5);
+  background: rgba(250, 248, 244, 0.14);
+  font-family: inherit;
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+.saveBtn:hover {
+  background: rgba(250, 248, 244, 0.3);
+  border-color: rgba(250, 248, 244, 0.75);
+}
+.saveBtn.saved {
+  background: rgba(250, 248, 244, 0.28);
+}
+@media (max-width: 759px) {
+  .saveBtn {
+    padding: 0;
+    width: 44px;
+    justify-content: center;
+  }
+  .saveText {
+    display: none;
+  }
+}

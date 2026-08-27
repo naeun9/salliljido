@@ -1,0 +1,104 @@
+/* design/salliljido.extracted.html 1706-1732줄 */
+.panel {
+  margin-top: clamp(28px, 4vh, 40px);
+  padding: 20px 22px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.rowLabel {
+  flex: 0 0 auto;
+  font-size: var(--font-body-sm);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--gray);
+  width: 44px;
+}
+
+.chipList {
+  flex: 1 1 300px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.chip {
+  flex: 0 0 auto;
+  padding: 8px 15px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--paper);
+  font-family: inherit;
+  font-size: var(--font-body);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--gray);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+}
+.chip:hover {
+  border-color: var(--sage);
+}
+.chipActive {
+  background: var(--mist);
+  border-color: var(--forest);
+  font-weight: 600;
+  color: var(--forest);
+}
+
+.divider {
+  height: 1px;
+  background: var(--hairline);
+}
+
+.sortGroup {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+}
+
+.count {
+  font-size: var(--font-body);
+  font-weight: 600;
+  color: var(--forest);
+  white-space: nowrap;
+}
+
+.sortBtns {
+  display: flex;
+  gap: 6px;
+}
+
+.sortBtn {
+  padding: 7px 12px;
+  border-radius: var(--radius-chip-sq);
+  border: 1px solid var(--border);
+  background: var(--paper);
+  font-family: inherit;
+  font-size: var(--font-body-sm);
+  font-weight: 500;
+  color: var(--gray);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.sortBtnActive {
+  background: var(--mist);
+  border-color: var(--forest);
+  color: var(--forest);
+}

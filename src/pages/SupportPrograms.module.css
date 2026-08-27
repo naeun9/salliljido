@@ -1,0 +1,127 @@
+/* design/salliljido.extracted.html 1697-1809줄 */
+.page {
+  min-height: 100vh;
+  background: var(--paper);
+  padding: 104px clamp(20px, 5vw, 64px) clamp(64px, 9vh, 96px);
+}
+.inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+.title {
+  margin: 0;
+  font-size: clamp(28px, 2.8vw, 36px);
+  line-height: 1.4;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.subtitle {
+  margin: 12px 0 0;
+  font-size: var(--font-lead);
+  line-height: 1.75;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+}
+.asOf {
+  font-size: 14.5px;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+}
+
+.grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 18px;
+}
+
+.skeletonCard {
+  padding: 24px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--cream);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 320px;
+  margin-top: 20px;
+}
+.emptyIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-circle);
+  background: var(--mist);
+}
+.emptyTitle {
+  margin-top: 22px;
+  font-size: 18.5px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.emptyDesc {
+  margin: 10px 0 22px;
+  font-size: var(--font-body-lg);
+  color: var(--gray);
+}
+.emptyBtn {
+  height: 46px;
+  padding: 0 22px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--forest);
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--font-body-lg);
+  font-weight: 600;
+  color: var(--forest);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
+}
+.emptyBtn:hover {
+  background: var(--forest);
+  color: var(--paper);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  padding: 20px 22px;
+  border-radius: var(--radius-card);
+  background: var(--sand);
+  border: 1px solid var(--sand-strong);
+}
+.disclaimer p {
+  margin: 0;
+  font-size: var(--font-body);
+  line-height: 1.75;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+}
+
+/* design 1734·1746줄의 `minmax(420px, 1fr)`을 그대로 옮겼는데, auto-fit은
+   최소값 밑으로 줄지 않아 390px 화면에서 카드가 51px 넘쳤다. 넓은 화면
+   레이아웃은 그대로 두고 좁은 화면에서만 한 칸으로 떨어뜨린다. */
+@media (max-width: 759px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

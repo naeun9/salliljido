@@ -1,0 +1,90 @@
+/* design/salliljido.extracted.html 279-307줄. 랜딩 화면 전용. */
+.footer {
+  background: var(--sand);
+  padding: clamp(56px, 7vh, 80px) clamp(20px, 5vw, 64px) 32px;
+}
+.inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(36px, 5vw, 72px);
+  justify-content: space-between;
+}
+
+.brand {
+  flex: 1 1 280px;
+  max-width: 340px;
+}
+.brandName {
+  font-size: 19.5px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--forest);
+}
+.brandDesc {
+  margin: 12px 0 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+}
+
+.links {
+  flex: 0 1 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.heading {
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.links a {
+  font-size: 15px;
+  color: var(--gray);
+}
+.links a:hover {
+  color: var(--forest);
+}
+
+.sources {
+  flex: 1 1 300px;
+  max-width: 400px;
+}
+.sourceList {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.sourceList li {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--gray);
+}
+
+.bottom {
+  margin-top: clamp(40px, 5vh, 56px);
+  padding-top: 22px;
+  border-top: 1px solid #e4d9cb;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+}
+.bottom span,
+.bottom a {
+  font-size: 14px;
+  color: var(--gray);
+}
+.bottom a:hover {
+  color: var(--forest);
+}

@@ -1,0 +1,296 @@
+/* design/salliljido.extracted.html 1542-1613줄. */
+.section {
+  padding: clamp(44px, 6vh, 64px) clamp(20px, 5vw, 64px);
+  background: #f5ede4;
+  border-top: 1px solid #e7dccb;
+  border-bottom: 1px solid #e7dccb;
+}
+
+.inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(25px, 2.4vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #2b2b29;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.tab {
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid #e7e2d8;
+  background: #fffdfa;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #6e6e68;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+.tab.tabOn {
+  border-color: #2f5d50;
+  background: #2f5d50;
+  color: #faf8f4;
+}
+
+/* --- 카드 보기 --- */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.dayBlock {
+  padding: 20px 22px 22px;
+  border-radius: 12px;
+  border: 1px solid #e7e2d8;
+  background: #fffdfa;
+}
+
+.dayHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f1ece3;
+}
+
+.dayLabel {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #2b2b29;
+}
+
+.dayTheme {
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: #dce8e2;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #2f5d50;
+}
+
+.dayWeek {
+  font-size: 13.5px;
+  color: #6e6e68;
+}
+
+.cells {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cellHead {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.cellSlot {
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #2f5d50;
+}
+
+.cellTime {
+  font-size: 13px;
+  color: #6e6e68;
+  white-space: nowrap;
+}
+
+.itemBtn {
+  text-align: left;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #efe7dc;
+  background: #faf8f4;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.itemBtn:hover {
+  border-color: #4a7c6f;
+}
+
+.itemName {
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #2b2b29;
+}
+.itemName.mine {
+  color: #c05f33;
+}
+
+.itemTag {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #dce8e2;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #2f5d50;
+}
+.itemTag.mine {
+  background: #f5e1d5;
+  color: #c05f33;
+}
+
+.empty {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px dashed #e7e2d8;
+  font-size: 13.5px;
+  color: #6e6e68;
+}
+
+.expandRow {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.expandBtn {
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 12px;
+  border: 1px solid #2f5d50;
+  background: transparent;
+  font-family: inherit;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: #2f5d50;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+.expandBtn:hover {
+  background: #2f5d50;
+  color: #faf8f4;
+}
+
+/* --- 표 보기 --- */
+.tableWrap {
+  margin-top: 24px;
+  overflow-x: auto;
+}
+
+.table {
+  min-width: 760px;
+  border-radius: 12px;
+  border: 1px solid #e7e2d8;
+  background: #fffdfa;
+  overflow: hidden;
+}
+
+.tableHead {
+  display: grid;
+  grid-template-columns: 132px repeat(3, 1fr);
+  background: #f5ede4;
+  border-bottom: 1px solid #e7dccb;
+}
+
+.th {
+  padding: 13px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #6e6e68;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 132px repeat(3, 1fr);
+  border-bottom: 1px solid #f1ece3;
+}
+
+.rowHead {
+  padding: 14px 16px;
+}
+
+.rowLabel {
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #2b2b29;
+}
+
+.rowTheme {
+  margin-top: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4a7c6f;
+}
+
+.td {
+  padding: 14px 16px;
+  border-left: 1px solid #f1ece3;
+}
+
+.cellBtn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 6px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #2b2b29;
+  cursor: pointer;
+}
+.cellBtn.mine {
+  color: #c05f33;
+}
+.cellBtn:hover {
+  color: #2f5d50;
+}
+
+.tdEmpty {
+  font-size: 13.5px;
+  color: #6e6e68;
+}
+
+/* design state.narrow(< 760px): 카드 보기의 슬롯 3칸이 1칸으로 접힌다
+   (ovCellCols). 표 보기는 원본대로 가로 스크롤을 유지한다. */
+@media (max-width: 759px) {
+  .cells {
+    grid-template-columns: 1fr;
+  }
+}

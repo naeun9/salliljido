@@ -1,0 +1,65 @@
+/* design/salliljido.extracted.html 1394-1409줄 */
+.wrap {
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--cream);
+  overflow: hidden;
+}
+.toggleBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 24px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 16.5px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+.toggleLabel {
+  font-size: 14.5px;
+  color: var(--gray);
+}
+.body {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 24px 22px;
+}
+.body.open {
+  display: flex;
+}
+.divider {
+  height: 1px;
+  background: var(--hairline);
+  margin-bottom: 6px;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+}
+.label {
+  flex: 0 0 84px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sage);
+}
+.text {
+  flex: 1 1 240px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--gray);
+}
+.source {
+  margin: 8px 0 0;
+  font-size: 13.5px;
+  color: var(--gray);
+}

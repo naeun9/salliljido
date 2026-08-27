@@ -1,0 +1,186 @@
+/* design/salliljido.extracted.html 1228-1443줄 */
+.section {
+  padding: clamp(32px, 4.5vh, 48px) clamp(20px, 5vw, 64px) clamp(64px, 9vh, 96px);
+}
+.inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.summaryCard {
+  padding: 26px 28px 28px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--cream);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.chip {
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--mist);
+  background: var(--paper);
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--forest);
+}
+.totalRow {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 16px;
+}
+.total {
+  font-size: clamp(36px, 4.6vw, 57px);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--forest);
+}
+.daily {
+  font-size: 16.5px;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+}
+.disclaimer {
+  margin: 14px 0 0;
+  font-size: 14px;
+  line-height: 1.68;
+  color: var(--gray);
+}
+
+.grid {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  gap: 20px;
+  align-items: flex-start;
+}
+.left {
+  flex: 1 1 520px;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  padding: 22px 24px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--cream);
+}
+
+.cardHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.cardTitle {
+  margin: 0;
+  font-size: 18.5px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.cardSub {
+  margin: 0 0 5px;
+  font-size: 13.5px;
+  color: var(--gray);
+}
+.cardAmount {
+  font-size: 17.5px;
+  font-weight: 700;
+  color: var(--forest);
+}
+.cardBasis {
+  margin: 14px 0 0;
+  font-size: 14px;
+  line-height: 1.68;
+  color: var(--gray);
+}
+
+.amountRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+.amountInputWrap {
+  flex: 1 1 220px;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 50px;
+  padding: 0 16px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--mist);
+  background: var(--paper);
+}
+.amountInputWrap input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: inherit;
+  font-size: 17.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.amountUnit {
+  flex: 0 0 auto;
+  font-size: 15.5px;
+  color: var(--gray);
+}
+.amountMultiplier {
+  flex: 0 0 auto;
+  font-size: 15.5px;
+  color: var(--gray);
+}
+
+.toggleRow {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+}
+.toggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+.toggleTrack {
+  width: 40px;
+  height: 22px;
+  border-radius: var(--radius-pill);
+  position: relative;
+  transition: background 0.2s ease;
+}
+.toggleKnob {
+  position: absolute;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--cream);
+  transition: left 0.2s ease;
+}
+.toggleLabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}

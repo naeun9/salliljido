@@ -1,0 +1,103 @@
+/* design/salliljido.extracted.html 663-676줄 */
+.gate {
+  display: none;
+  position: fixed;
+  right: clamp(16px, 4vw, 32px);
+  bottom: clamp(16px, 4vw, 32px);
+  z-index: 90;
+  width: min(340px, calc(100vw - 32px));
+  padding: 20px 22px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--white);
+  box-shadow: var(--shadow-soft);
+  flex-direction: column;
+}
+.gate.open {
+  display: flex;
+  animation: slj-fade 0.25s ease;
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.closeBtn {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: transparent;
+  font-size: 18.5px;
+  line-height: 1;
+  color: var(--gray);
+  cursor: pointer;
+}
+
+.body {
+  margin: 8px 0 0;
+  font-size: var(--font-body);
+  line-height: 1.65;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.googleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 46px;
+  border-radius: var(--radius-input);
+  border: 1px solid #dadce0;
+  background: var(--white);
+  font-family: inherit;
+  font-size: var(--font-label);
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+}
+.googleBtn:hover {
+  background: #f7f8f8;
+}
+
+.googleNotice {
+  margin: -2px 0 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--gray);
+}
+
+.demoBtn {
+  height: 44px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--forest);
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--font-label);
+  font-weight: 600;
+  color: var(--forest);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
+}
+.demoBtn:hover {
+  background: var(--forest);
+  color: var(--paper);
+}

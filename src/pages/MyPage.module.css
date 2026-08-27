@@ -1,0 +1,126 @@
+/* design/salliljido.extracted.html 1810-1982줄 */
+.page {
+  min-height: 100vh;
+  background: var(--paper);
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(28px, 2.8vw, 36px);
+  line-height: 1.4;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.header {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 104px clamp(20px, 5vw, 64px) clamp(40px, 5vh, 56px);
+}
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.statCard {
+  min-width: 124px;
+  padding: 14px 18px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--cream);
+}
+.statLabel {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--gray);
+}
+.statValue {
+  margin-top: 6px;
+  font-size: 21.5px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--forest);
+}
+
+.allEmpty {
+  padding: 8px clamp(20px, 5vw, 64px) clamp(72px, 10vh, 104px);
+}
+.allEmptyInner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(56px, 9vh, 88px) 24px;
+  text-align: center;
+}
+.allEmptyIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-circle);
+  background: var(--mist);
+}
+.allEmptyTitle {
+  margin-top: 22px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.allEmptyDesc {
+  margin: 10px 0 24px;
+  font-size: var(--font-body-lg);
+  line-height: 1.7;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+}
+.allEmptyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 50px;
+  padding: 0 24px;
+  border-radius: var(--radius-card);
+  border: none;
+  background: var(--terracotta);
+  font-family: inherit;
+  color: var(--cream);
+  font-size: 16.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.allEmptyBtn:hover {
+  background: var(--terracotta-strong);
+}
+
+.logoutSection {
+  padding: clamp(40px, 5vh, 56px) clamp(20px, 5vw, 64px) clamp(72px, 10vh, 104px);
+  background: var(--sand);
+  border-top: 1px solid var(--sand-strong);
+}
+.logoutBtn {
+  height: 44px;
+  padding: 0 20px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--border);
+  background: var(--paper);
+  font-family: inherit;
+  font-size: var(--font-label);
+  font-weight: 600;
+  color: var(--gray);
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+.logoutBtn:hover {
+  border-color: var(--terracotta);
+  color: var(--rust);
+}

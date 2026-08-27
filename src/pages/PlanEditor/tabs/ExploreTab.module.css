@@ -1,0 +1,218 @@
+/* design/salliljido.extracted.html 1012-1227줄 */
+.section {
+  padding: clamp(32px, 4.5vh, 48px) clamp(20px, 5vw, 64px) clamp(64px, 9vh, 96px);
+}
+.grid {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(300px, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 939px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.list {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 8px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--border);
+  background: var(--cream);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--gray);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+.chip:hover {
+  border-color: var(--sage);
+}
+.chip.active {
+  font-weight: 600;
+  background: var(--mist);
+  border-color: var(--forest);
+  color: var(--forest);
+}
+.chipDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.subChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: -8px 0 22px 14px;
+}
+.subChip {
+  flex: 0 0 auto;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--cream);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--gray);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+.subChip:hover {
+  border-color: var(--sage);
+}
+.subChip.active {
+  font-weight: 600;
+  background: var(--mist);
+  border-color: var(--forest);
+  color: var(--forest);
+}
+
+.loadGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 6px;
+}
+.loadCard {
+  display: flex;
+  gap: 16px;
+  padding: 16px 18px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--cream);
+}
+.loadCardBody {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.categorySection {
+  display: flex;
+  flex-direction: column;
+  margin-top: 6px;
+  animation: slj-fade 0.25s ease;
+}
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.sectionHeadPlain {
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.sectionTitle {
+  margin: 0;
+  font-size: 20.5px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.sectionNote {
+  font-size: 14px;
+  color: var(--gray);
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.moreRow {
+  display: none;
+  justify-content: center;
+  margin-top: 18px;
+}
+.moreRow.visible {
+  display: flex;
+}
+.moreBtn {
+  height: 46px;
+  padding: 0 24px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--forest);
+  background: transparent;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--forest);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+.moreBtn:hover {
+  background: var(--forest);
+  color: var(--paper);
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 50px;
+  padding: 0 24px;
+  border-radius: var(--radius-card);
+  border: none;
+  background: var(--terracotta);
+  font-family: inherit;
+  font-size: 16.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.ctaBtn:hover {
+  background: var(--terracotta-strong);
+  color: var(--cream);
+}
+.ctaSource {
+  font-size: 14px;
+  color: var(--gray);
+}

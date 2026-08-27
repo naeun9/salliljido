@@ -1,0 +1,223 @@
+/* design/salliljido.extracted.html 752-789줄 */
+.banner {
+  position: relative;
+  padding: 98px clamp(20px, 5vw, 64px) 42px;
+  background: var(--forest);
+  overflow: hidden;
+}
+.texture {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+}
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(47, 93, 80, 0.86) 0%, rgba(38, 76, 65, 0.92) 100%);
+}
+.row {
+  position: relative;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.left {
+  flex: 1 1 360px;
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(250, 248, 244, 0.78);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.backBtn:hover {
+  color: var(--cream);
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 14px;
+}
+.title {
+  margin: 0;
+  font-size: clamp(24px, 2.4vw, 31px);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--cream);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  text-align: left;
+}
+.unsavedBadge {
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(250, 248, 244, 0.4);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(250, 248, 244, 0.85);
+}
+.renameBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 11px;
+  border-radius: 8px;
+  border: 1px solid rgba(250, 248, 244, 0.45);
+  background: rgba(250, 248, 244, 0.14);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--cream);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.renameBtn:hover {
+  background: rgba(250, 248, 244, 0.3);
+}
+
+.editRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+.editInput {
+  width: min(280px, 60vw);
+  height: 42px;
+  padding: 0 13px;
+  border-radius: 9px;
+  border: 1px solid rgba(250, 248, 244, 0.6);
+  background: rgba(250, 248, 244, 0.92);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  outline: none;
+}
+.editConfirm {
+  height: 42px;
+  padding: 0 15px;
+  border-radius: 9px;
+  border: none;
+  background: var(--terracotta);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--cream);
+  cursor: pointer;
+}
+.editCancel {
+  height: 42px;
+  padding: 0 12px;
+  border-radius: 9px;
+  border: 1px solid rgba(250, 248, 244, 0.4);
+  background: transparent;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: rgba(250, 248, 244, 0.85);
+  cursor: pointer;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+.metaRegion {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: rgba(250, 248, 244, 0.9);
+}
+.metaDivider {
+  font-size: 14px;
+  color: rgba(250, 248, 244, 0.5);
+}
+.metaCondition {
+  font-size: 14.5px;
+  color: rgba(250, 248, 244, 0.78);
+}
+
+.actions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.saveBtn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(250, 248, 244, 0.5);
+  background: rgba(250, 248, 244, 0.14);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+.saveBtn:hover {
+  background: rgba(250, 248, 244, 0.3);
+  border-color: rgba(250, 248, 244, 0.75);
+}
+.saveBtn.saved {
+  background: rgba(250, 248, 244, 0.28);
+}
+
+.deleteBtn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid rgba(250, 248, 244, 0.4);
+  background: rgba(250, 248, 244, 0.1);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+.deleteBtn:hover {
+  background: rgba(217, 120, 78, 0.35);
+  border-color: rgba(250, 248, 244, 0.75);
+}

@@ -1,0 +1,51 @@
+/* design/salliljido.extracted.html 1488-1497줄. */
+.section {
+  padding: 0 clamp(20px, 5vw, 64px);
+}
+
+.card {
+  max-width: 1180px;
+  margin: 32px auto 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px 0;
+  padding: 34px 10px;
+  border-radius: 12px;
+  border: 1px solid #e7e2d8;
+  background: #ffffff;
+}
+
+.cell {
+  padding: 2px 26px;
+  border-left: 1px solid #efe9df;
+}
+.cell:first-child {
+  border-left: none;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #6e6e68;
+}
+
+.value {
+  margin-top: 12px;
+  font-size: clamp(23px, 2.2vw, 30px);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #2f5d50;
+}
+
+/* design state.narrow(window.innerWidth < 760): 2열로 접히고
+   세 번째 칸(=새 줄의 첫 칸)의 구분선도 사라진다. */
+@media (max-width: 759px) {
+  .card {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cell:nth-child(3) {
+    border-left: none;
+  }
+}

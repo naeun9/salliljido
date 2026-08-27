@@ -1,0 +1,13 @@
+/* design 534-677줄 여러 모달이 공유하는 배경 오버레이 셸 */
+.backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(43, 43, 41, 0.42);
+}
+.backdrop.open {
+  display: flex;
+}

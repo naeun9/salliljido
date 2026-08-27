@@ -1,0 +1,67 @@
+/* design/salliljido.extracted.html 638-646줄 */
+.card {
+  width: min(380px, 100%);
+  padding: 26px 28px;
+  border-radius: var(--radius-card);
+  background: var(--white);
+  box-shadow: 0 24px 50px -26px rgba(43, 43, 41, 0.6);
+}
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.body {
+  margin: 10px 0 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--gray);
+}
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 22px;
+}
+.keepBtn {
+  height: 46px;
+  border-radius: var(--radius-input);
+  border: none;
+  background: var(--terracotta);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cream);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.keepBtn:hover {
+  background: var(--rust);
+}
+.allBtn {
+  height: 46px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--forest);
+  background: var(--white);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--forest);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.allBtn:hover {
+  background: var(--mist);
+}
+.cancelBtn {
+  height: 42px;
+  border-radius: var(--radius-input);
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gray);
+  cursor: pointer;
+}

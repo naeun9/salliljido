@@ -1,0 +1,12 @@
+/* design/salliljido.extracted.html의 shimmer 바(예: 407-424줄)를 공통 원자
+   컴포넌트로 뺐다. 값은 원본 그대로. */
+.bar {
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-base) 25%,
+    var(--skeleton-highlight) 50%,
+    var(--skeleton-base) 75%
+  );
+  background-size: 200% 100%;
+  animation: slj-shimmer 1.5s linear infinite;
+}

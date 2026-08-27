@@ -1,0 +1,86 @@
+/* design/salliljido.extracted.html 1936-1971줄 */
+.section {
+  padding: clamp(48px, 6vh, 72px) clamp(20px, 5vw, 64px) clamp(64px, 9vh, 96px);
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.title {
+  margin: 0;
+  font-size: 21.5px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.moreLink {
+  font-size: var(--font-body);
+  font-weight: 500;
+  color: var(--forest);
+  border-bottom: 1px solid var(--mist);
+  padding-bottom: 2px;
+}
+.moreLink:hover {
+  border-color: var(--terracotta);
+}
+
+.grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 18px;
+}
+
+.empty {
+  margin-top: 20px;
+  padding: 44px 24px;
+  border-radius: var(--radius-card);
+  border: 1px dashed var(--mist);
+  background: var(--cream);
+  text-align: center;
+}
+.emptyIcon {
+  margin-bottom: 14px;
+}
+.emptyTitle {
+  font-size: 17.5px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.emptyDesc {
+  margin: 8px 0 20px;
+  font-size: var(--font-label);
+  color: var(--gray);
+}
+.emptyBtn {
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 20px;
+  border-radius: var(--radius-input);
+  background: var(--terracotta);
+  color: var(--cream);
+  font-size: var(--font-label);
+  font-weight: 600;
+}
+.emptyBtn:hover {
+  background: var(--terracotta-strong);
+  color: var(--cream);
+}
+
+/* SupportPrograms의 그리드와 같은 이유. 원본의 minmax(400px, 1fr)이
+   390px 화면에서 31px 넘쳤다. 넓은 화면은 그대로 둔다. */
+@media (max-width: 759px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,74 @@
+/* design/salliljido.extracted.html 1655-1670줄. */
+.section {
+  padding: clamp(44px, 6vh, 64px) clamp(20px, 5vw, 64px);
+  background: #f5ede4;
+  border-top: 1px solid #e7dccb;
+}
+
+.inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(25px, 2.4vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #2b2b29;
+}
+
+.lead {
+  margin: 12px 0 0;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: #6e6e68;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.card {
+  flex: 1 1 300px;
+  min-width: 240px;
+  padding: 20px 22px;
+  border-radius: 12px;
+  border: 1px solid #e7dccb;
+  background: #fffdfa;
+}
+
+.name {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #2b2b29;
+}
+
+.meta {
+  margin-top: 8px;
+  font-size: 14.5px;
+  color: #6e6e68;
+}
+
+.summary {
+  margin-top: 8px;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: #6e6e68;
+}
+
+.moreLink {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2f5d50;
+  border-bottom: 1px solid #dcc9b0;
+}
+.moreLink:hover {
+  border-color: #d9784e;
+}

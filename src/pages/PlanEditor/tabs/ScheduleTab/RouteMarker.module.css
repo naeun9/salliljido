@@ -1,0 +1,59 @@
+/* design/salliljido.extracted.html 981-989줄 */
+.markerBase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.info {
+  display: none;
+  width: 176px;
+  padding: 11px 13px;
+  border-radius: var(--radius-input);
+  background: var(--cream);
+  border: 1px solid var(--mist);
+  box-shadow: 0 10px 22px -14px rgba(43, 43, 41, 0.6);
+  text-align: left;
+}
+.info.open {
+  display: block;
+}
+.infoName {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.infoTag {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sage);
+}
+.infoDesc {
+  margin-top: 6px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--gray);
+}
+.infoAddr {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--gray);
+}
+.num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 3px solid var(--cream);
+  color: var(--cream);
+  font-size: 17.5px;
+  font-weight: 700;
+  box-shadow: 0 6px 14px -8px rgba(43, 43, 41, 0.6);
+  transition:
+    width 0.2s ease,
+    height 0.2s ease,
+    background 0.2s ease;
+}

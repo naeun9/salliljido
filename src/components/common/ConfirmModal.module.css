@@ -1,0 +1,85 @@
+/* design/salliljido.extracted.html 534-545줄 */
+.backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 96;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(43, 43, 41, 0.32);
+}
+.backdrop.open {
+  display: flex;
+  animation: slj-fade 0.18s ease;
+}
+
+.card {
+  width: min(360px, 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 26px 26px 22px;
+  border-radius: var(--radius-card);
+  background: var(--white);
+  box-shadow: var(--shadow-pop);
+  animation: slj-rise 0.22s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.target {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-input);
+  background: var(--sand);
+  font-size: var(--font-body);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.cancelBtn {
+  flex: 1;
+  height: 46px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--border);
+  background: var(--paper);
+  font-family: inherit;
+  font-size: var(--font-label);
+  font-weight: 600;
+  color: var(--gray);
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+.cancelBtn:hover {
+  border-color: var(--sage);
+  color: var(--forest);
+}
+
+.confirmBtn {
+  flex: 1;
+  height: 46px;
+  border-radius: var(--radius-input);
+  border: none;
+  background: #b85a32;
+  font-family: inherit;
+  font-size: var(--font-label);
+  font-weight: 600;
+  color: var(--cream);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.confirmBtn:hover {
+  background: #9e4a27;
+}
