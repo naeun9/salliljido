@@ -1,0 +1,98 @@
+/* design/salliljido.extracted.html 799-800, 840-862줄 */
+.section {
+  padding: clamp(32px, 4.5vh, 48px) clamp(20px, 5vw, 64px) clamp(64px, 9vh, 96px);
+}
+.grid {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(300px, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 939px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.main {
+  min-width: 0;
+}
+
+.empty {
+  margin-top: 20px;
+  padding: 64px 24px;
+  border-radius: var(--radius-card);
+  border: 1px dashed var(--mist);
+  background: var(--cream);
+  text-align: center;
+}
+
+.loading {
+  margin-top: 20px;
+}
+.loadingTitle {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--forest);
+}
+.loadingRows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+.loadingRow {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.loadingCard {
+  flex: 1 1 auto;
+  display: flex;
+  gap: 14px;
+  padding: 13px 15px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--cream);
+}
+.loadingCardBody {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.routine {
+  margin-top: 20px;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 50px;
+  padding: 0 24px;
+  border-radius: var(--radius-card);
+  border: none;
+  background: var(--terracotta);
+  font-family: inherit;
+  font-size: 16.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.ctaBtn:hover {
+  background: var(--terracotta-strong);
+  color: var(--cream);
+}

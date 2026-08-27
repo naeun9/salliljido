@@ -1,0 +1,230 @@
+/* design/salliljido.extracted.html 1447-1486줄. 값은 원본 그대로. */
+.header {
+  position: relative;
+  padding: 108px clamp(20px, 5vw, 64px) 76px;
+  background: #2f5d50;
+}
+
+.row {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.left {
+  flex: 1 1 380px;
+  min-width: 260px;
+}
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(250, 248, 244, 0.78);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.backBtn:hover {
+  color: #fffdfa;
+}
+.backArrow {
+  font-size: 15px;
+}
+
+.titleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(28px, 3.2vw, 40px);
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: #fffdfa;
+  cursor: pointer;
+}
+
+.renameBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(250, 248, 244, 0.45);
+  background: rgba(250, 248, 244, 0.14);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.renameBtn:hover {
+  background: rgba(250, 248, 244, 0.3);
+}
+
+.editRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.editInput {
+  width: min(300px, 62vw);
+  height: 46px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(250, 248, 244, 0.6);
+  background: rgba(250, 248, 244, 0.92);
+  font-family: inherit;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #2b2b29;
+  outline: none;
+}
+
+.editConfirm {
+  height: 46px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(250, 248, 244, 0.92);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2f5d50;
+  cursor: pointer;
+}
+
+.subline {
+  margin-top: 12px;
+  font-size: 15.5px;
+  color: rgba(250, 248, 244, 0.82);
+  letter-spacing: -0.01em;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.editBtn {
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(250, 248, 244, 0.5);
+  background: rgba(250, 248, 244, 0.14);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fffdfa;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.editBtn:hover {
+  background: rgba(250, 248, 244, 0.3);
+  color: #fffdfa;
+}
+
+.exportWrap {
+  position: relative;
+}
+
+.exportBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(250, 248, 244, 0.5);
+  background: transparent;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fffdfa;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.exportBtn:hover {
+  background: rgba(250, 248, 244, 0.22);
+}
+
+.exportMenu {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 216px;
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid #dce8e2;
+  background: #fffdfa;
+  box-shadow: 0 18px 36px -20px rgba(43, 43, 41, 0.55);
+}
+
+.exportItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #2b2b29;
+  cursor: pointer;
+  text-align: left;
+}
+.exportItem:hover {
+  background: #f5ede4;
+}
+
+/* 원본에 없는 요소. 내보내기 동작이 붙기 전까지의 안내 문구로,
+   로그인 화면의 googleNotice와 같은 톤·크기를 썼다. */
+.exportNotice {
+  margin: 6px 0 2px;
+  padding: 0 12px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--gray);
+}
+
+.deleteBtn {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid rgba(250, 248, 244, 0.4);
+  background: rgba(250, 248, 244, 0.1);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.deleteBtn:hover {
+  background: rgba(217, 120, 78, 0.35);
+}

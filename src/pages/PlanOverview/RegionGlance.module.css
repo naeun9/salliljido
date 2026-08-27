@@ -1,0 +1,230 @@
+/* design/salliljido.extracted.html 1499-1540줄. */
+.section {
+  padding: clamp(44px, 6vh, 64px) clamp(20px, 5vw, 64px);
+}
+
+.inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.heading {
+  margin: 0 0 32px;
+  font-size: clamp(25px, 2.4vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #2b2b29;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(24px, 3.5vw, 44px);
+  align-items: center;
+}
+
+.left {
+  flex: 1 1 42%;
+  min-width: 260px;
+}
+
+.nameRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.name {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #2b2b29;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #e4e0d6;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6e6e68;
+}
+
+.intro {
+  margin: 12px 0 0;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #6e6e68;
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+}
+
+.facts {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.factRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #efe9df;
+}
+
+.factLabel {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #6e6e68;
+}
+
+.factValue {
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #2b2b29;
+  text-align: right;
+}
+
+.introLink {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2f5d50;
+  border-bottom: 1px solid #dce8e2;
+}
+.introLink:hover {
+  border-color: #d9784e;
+}
+
+.right {
+  flex: 1 1 52%;
+  min-width: 260px;
+}
+
+.map {
+  position: relative;
+  height: 268px;
+  border-radius: 12px;
+  border: 1px solid #dce8e2;
+  overflow: hidden;
+  background: repeating-linear-gradient(135deg, #eaf0eb 0 12px, #e1eae3 12px 24px);
+}
+
+.radius {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 208px;
+  height: 208px;
+  margin: -104px 0 0 -104px;
+  border-radius: 50%;
+  border: 1px solid rgba(47, 93, 80, 0.35);
+  background: rgba(74, 124, 111, 0.16);
+}
+
+.cluster {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transform: translate(-50%, -50%);
+}
+
+.clusterDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #4a7c6f;
+}
+
+.clusterLabel {
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(250, 248, 244, 0.9);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #2f5d50;
+  white-space: nowrap;
+}
+
+.centerPin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 3px solid #fffdfa;
+  background: #2f5d50;
+  box-shadow: 0 8px 18px -10px rgba(43, 43, 41, 0.6);
+}
+
+.mapTag {
+  position: absolute;
+  /* 카카오맵이 컨테이너 안에 타일을 그리므로 그 위로 올린다.
+     목업에서는 마크업 순서만으로 위에 있었다. */
+  z-index: 3;
+  left: 12px;
+  bottom: 12px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgba(250, 248, 244, 0.9);
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  color: #6e6e68;
+}
+
+.mapFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.rangeNote {
+  font-size: 14.5px;
+  color: #6e6e68;
+}
+
+.routeLink {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #2f5d50;
+  border-bottom: 1px solid #dce8e2;
+}
+.routeLink:hover {
+  border-color: #d9784e;
+}
+
+/* 아래 둘은 실제 카카오맵 위에 올리는 오버레이용이다. 위치는 CustomOverlay가
+   좌표로 잡아 주므로 position/transform만 빼고 나머지 값(.cluster,
+   .centerPin)은 목업과 똑같이 유지한다. */
+.clusterInner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.centerPinInner {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 3px solid #fffdfa;
+  background: #2f5d50;
+  box-shadow: 0 8px 18px -10px rgba(43, 43, 41, 0.6);
+}

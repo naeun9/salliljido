@@ -1,0 +1,71 @@
+/* design/salliljido.extracted.html 791-796줄 */
+.wrap {
+  position: sticky;
+  top: 64px;
+  z-index: 40;
+  background: var(--paper);
+  border-bottom: 1px solid var(--border);
+  padding: 0 clamp(20px, 5vw, 64px);
+}
+.inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+}
+.tab {
+  flex: 0 0 auto;
+  height: 52px;
+  padding: 0 18px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--gray);
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+/* 원본 좌우 여백은 18px(design 793줄)인데, 390px 화면에서 탭 3개가
+   가로 350px에 27px 모자라 세 번째 탭("3 예상 비용")이 잘린 채 시작한다.
+   `.inner`가 overflow-x: auto라 스크롤해서 닿을 수는 있지만 처음부터
+   잘려 보인다. 페이지 좌우 여백(clamp(20px,5vw,64px))은 아래 콘텐츠와
+   맞춰야 해서 못 줄이므로, 좁은 화면에서만 탭 여백을 좁힌다.
+   넓은 화면은 원본 그대로 18px. */
+@media (max-width: 759px) {
+  .tab {
+    padding: 0 12px;
+  }
+}
+
+.tab.active {
+  font-weight: 600;
+  color: var(--forest);
+  border-bottom-color: var(--forest);
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--border-dashed);
+  background: transparent;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--gray);
+}
+.tab.active .badge {
+  border-color: var(--forest);
+  background: var(--mist);
+  color: var(--forest);
+}

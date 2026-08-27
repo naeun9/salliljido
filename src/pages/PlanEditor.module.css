@@ -1,0 +1,16 @@
+.page {
+  min-height: 100vh;
+  background: var(--paper);
+}
+
+/* design은 dtTab1Display/dtTab2Display/dtTabRestDisplay로 3탭을 전부
+   마운트해둔 채 display만 토글한다(display:none이어도 언마운트되지 않아
+   탭을 오가도 각 탭의 로컬 state가 살아있다). react-router의 쿼리
+   파라미터로 탭을 바꿀 때도 컴포넌트를 언마운트하지 않기 위해 같은
+   방식을 그대로 썼다 — "탭 전환 시 상태가 유지되도록" 요구사항의 핵심. */
+.tabPanel {
+  display: none;
+}
+.tabPanel.active {
+  display: block;
+}

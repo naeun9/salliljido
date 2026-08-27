@@ -1,0 +1,165 @@
+/* design/salliljido.extracted.html 1187-1223줄 */
+.sidebar {
+  order: 0;
+  min-width: 0;
+  position: sticky;
+  top: 124px;
+  align-self: start;
+  z-index: 30;
+  padding-bottom: 8px;
+  background: var(--paper);
+}
+@media (max-width: 939px) {
+  .sidebar {
+    order: -1;
+  }
+}
+
+.mapBox {
+  position: relative;
+  height: min(520px, calc(100vh - 170px));
+  transition: height 0.35s cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+@media (max-width: 939px) {
+  .mapBox {
+    height: min(240px, calc(100vh - 210px));
+  }
+}
+.mapBox.collapsed {
+  height: 0px;
+}
+
+.zoomCluster {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  border-radius: 9px;
+  overflow: hidden;
+  border: 1px solid var(--mist);
+  background: var(--cream);
+}
+.zoomBtn {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  font-family: inherit;
+  font-size: 18.5px;
+  line-height: 1;
+  color: var(--forest);
+  cursor: pointer;
+}
+.zoomBtn:last-child {
+  border-bottom: none;
+}
+
+.errorOverlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  background: #f3f1ea;
+}
+.errorOverlay.visible {
+  display: flex;
+}
+.errorIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--clay-tint);
+}
+.errorTitle {
+  margin-top: 18px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.errorBody {
+  margin: 8px 0 18px;
+  font-size: 15px;
+  color: var(--gray);
+}
+.retryBtn {
+  height: 42px;
+  padding: 0 20px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--forest);
+  background: transparent;
+  font-family: inherit;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--forest);
+  cursor: pointer;
+}
+
+.handleRow {
+  display: none;
+  justify-content: center;
+  margin-top: 8px;
+}
+@media (max-width: 939px) {
+  .handleRow {
+    display: flex;
+  }
+}
+.handleBtn {
+  height: 30px;
+  padding: 0 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--cream);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray);
+  cursor: pointer;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  margin-top: 16px;
+}
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: var(--gray);
+}
+.legendDot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+
+/* 실제 카카오맵 컨테이너. MapPlaceholder(.map)와 완전히 같은 값이라
+   목업/실제 지도의 크기·모서리·테두리가 달라지지 않는다. 빗금 배경은
+   타일이 오기 전 로딩 플레이스홀더로 그대로 둔다. */
+.kakaoMap {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--mist);
+  background: repeating-linear-gradient(
+    135deg,
+    var(--map-tile-light) 0 14px,
+    var(--map-tile-dark) 14px 28px
+  );
+}

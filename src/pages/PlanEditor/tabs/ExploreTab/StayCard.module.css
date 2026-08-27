@@ -1,0 +1,79 @@
+/* design/salliljido.extracted.html 1052-1067줄 */
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px 18px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--cream);
+  transition: border-color 0.25s ease;
+}
+.card.hovered {
+  border-color: var(--sage);
+}
+.image {
+  flex: 0 0 84px;
+  min-width: 76px;
+  height: 76px;
+  border-radius: var(--radius-input);
+  display: flex;
+  align-items: flex-end;
+  padding: 6px;
+}
+.imageTag {
+  font-family: var(--font-family-mono);
+  font-size: 12px;
+  color: var(--gray);
+}
+.body {
+  flex: 1 1 220px;
+  min-width: 190px;
+}
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+}
+.name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.badge {
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--mist);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--forest);
+}
+.location {
+  margin-top: 7px;
+  font-size: 15px;
+  color: var(--gray);
+}
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  height: 38px;
+  padding: 0 15px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--forest);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+.link:hover {
+  border-color: var(--sage);
+  background: #f7faf8;
+  color: var(--forest);
+}

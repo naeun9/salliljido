@@ -1,0 +1,8 @@
+# 줄바꿈은 저장소에 LF로 저장하고 체크아웃할 때도 LF로 둔다.
+# 팀원마다 OS가 달라도(Windows/macOS) 같은 파일이 CRLF↔LF 차이만으로
+# 통째로 바뀐 것처럼 보이는 일을 막는다.
+* text=auto eol=lf
+
+# 디자인 캔버스 원본은 도구가 생성한 한 줄짜리 대용량 파일이라
+# diff를 보여줄 이유가 없다.
+design/salliljido.html -diff

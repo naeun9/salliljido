@@ -1,0 +1,26 @@
+/* design/salliljido.extracted.html의 지도 목업 셸(480줄 등). 값은 원본 그대로.
+   실제 Kakao Map으로 교체할 때도 이 레이아웃/크기/비율은 유지한다
+   (docs/01-analysis.md §5). */
+.map {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--mist);
+  background: repeating-linear-gradient(
+    135deg,
+    var(--map-tile-light) 0 14px,
+    var(--map-tile-dark) 14px 28px
+  );
+}
+
+.label {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 5px 9px;
+  border-radius: var(--radius-tag);
+  background: rgba(250, 248, 244, 0.92);
+  font-family: var(--font-family-mono);
+  font-size: 12px;
+  color: var(--gray);
+}

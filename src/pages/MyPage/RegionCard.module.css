@@ -1,0 +1,120 @@
+/* design/salliljido.extracted.html 1864-1883줄 */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--cream);
+  overflow: hidden;
+  transition:
+    border-color var(--transition-base),
+    transform var(--transition-base),
+    opacity 0.24s ease;
+}
+.card:hover {
+  border-color: var(--sage);
+  transform: translateY(-2px);
+}
+.card.fading {
+  opacity: 0;
+}
+
+.image {
+  height: 132px;
+  display: flex;
+  align-items: flex-end;
+  padding: 10px;
+}
+.imageNote {
+  padding: 5px 8px;
+  border-radius: 5px;
+  background: rgba(250, 248, 244, 0.92);
+  font-family: var(--font-family-mono);
+  font-size: 12px;
+  color: var(--gray);
+}
+
+.unsaveBtn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-chip-sq);
+  border: none;
+  background: rgba(250, 248, 244, 0.92);
+  cursor: pointer;
+}
+.unsaveBtn:hover {
+  background: var(--white);
+}
+
+.body {
+  padding: 20px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+}
+.name {
+  margin: 0;
+  font-size: 19.5px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.declineBadge {
+  padding: 4px 9px;
+  border-radius: var(--radius-pill);
+  border: 1px solid #e4e0d6;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray);
+  white-space: nowrap;
+}
+
+.reason {
+  margin: 10px 0 0;
+  font-size: var(--font-body);
+  line-height: 1.68;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+}
+
+.savedAt {
+  margin-top: 12px;
+  font-size: var(--font-body-sm);
+  color: var(--gray);
+}
+
+.openLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  gap: 8px;
+  height: 42px;
+  margin-top: 18px;
+  padding: 0 18px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--forest);
+  color: var(--forest);
+  font-size: var(--font-label);
+  font-weight: 600;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
+}
+.openLink:hover {
+  background: var(--forest);
+  color: var(--paper);
+}

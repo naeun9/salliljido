@@ -1,0 +1,180 @@
+/* design/salliljido.extracted.html 1747-1791줄 */
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 24px 22px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--cream);
+  transition:
+    border-color var(--transition-base),
+    transform var(--transition-base);
+}
+.card:hover {
+  border-color: var(--sage);
+  transform: translateY(-2px);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.badge {
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.dLabel {
+  font-size: var(--font-body-sm);
+  color: var(--gray);
+}
+
+.name {
+  margin: 18px 0 0;
+  font-size: var(--font-h3);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.city {
+  margin-top: 7px;
+  font-size: var(--font-body);
+  font-weight: 500;
+  color: var(--sage);
+}
+
+.benefits {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: var(--font-label);
+  line-height: 1.68;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.dot {
+  flex: 0 0 auto;
+  width: 5px;
+  height: 5px;
+  margin-top: 8px;
+  border-radius: var(--radius-circle);
+  background: var(--sage);
+}
+
+.infoGrid {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+}
+.infoLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray);
+}
+.infoValue {
+  margin-top: 4px;
+  font-size: var(--font-body);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.applyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: var(--radius-input);
+  background: var(--terracotta);
+  color: var(--cream);
+  font-size: var(--font-label);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: background var(--transition-fast);
+}
+.applyBtn:hover {
+  background: var(--terracotta-strong);
+  color: var(--cream);
+}
+
+.saveBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--border);
+  background: var(--cream);
+  font-family: inherit;
+  font-size: var(--font-label);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--gray);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+}
+.saveBtn:hover {
+  border-color: var(--sage);
+}
+.saveBtnActive {
+  background: var(--mist);
+  border-color: var(--forest);
+  color: var(--forest);
+}
+
+.notifyNudge {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-body-sm);
+  color: var(--gray);
+}
+.notifyBtn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-family: inherit;
+  font-size: var(--font-body-sm);
+  font-weight: 600;
+  color: var(--forest);
+  border-bottom: 1px solid var(--mist);
+  cursor: pointer;
+}
+
+/* 원본에 없던 줄. 카드 맨 아래 작게 붙는 문의처로, 주변 보조 문구
+   (.infoLabel 13px / var(--gray))와 같은 톤을 썼다. */
+.contact {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--gray);
+}

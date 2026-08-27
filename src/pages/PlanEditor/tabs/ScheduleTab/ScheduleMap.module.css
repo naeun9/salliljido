@@ -1,0 +1,118 @@
+/* design/salliljido.extracted.html 971-1007줄 */
+.sidebar {
+  order: 0;
+  min-width: 0;
+  position: sticky;
+  top: 124px;
+  align-self: start;
+  z-index: 30;
+  padding-bottom: 8px;
+  background: var(--paper);
+}
+
+.mapBox {
+  position: relative;
+  height: min(520px, calc(100vh - 170px));
+}
+@media (max-width: 939px) {
+  .mapBox {
+    height: min(240px, calc(100vh - 210px));
+  }
+}
+
+.zoomCluster {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  border-radius: 9px;
+  overflow: hidden;
+  border: 1px solid var(--mist);
+  background: var(--cream);
+}
+.zoomBtn {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  font-family: inherit;
+  font-size: 18.5px;
+  line-height: 1;
+  color: var(--forest);
+  cursor: pointer;
+}
+.zoomBtn:last-child {
+  border-bottom: none;
+}
+
+.emptyOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.emptyCard {
+  max-width: 264px;
+  padding: 16px 18px;
+  border-radius: var(--radius-input);
+  background: rgba(250, 248, 244, 0.9);
+  border: 1px solid var(--mist);
+  text-align: center;
+}
+.emptyText {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+}
+
+.meta {
+  display: none;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+.meta.visible {
+  display: flex;
+}
+.distance {
+  font-size: 15px;
+  color: var(--gray);
+}
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: var(--gray);
+}
+.legendDot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--terracotta);
+}
+
+/* 실제 카카오맵 컨테이너. MapPlaceholder(.map)와 완전히 같은 값이라
+   목업/실제 지도의 크기·모서리·테두리가 달라지지 않는다. 빗금 배경은
+   타일이 오기 전 로딩 플레이스홀더로 그대로 둔다. */
+.kakaoMap {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--mist);
+  background: repeating-linear-gradient(
+    135deg,
+    var(--map-tile-light) 0 14px,
+    var(--map-tile-dark) 14px 28px
+  );
+}

@@ -1,0 +1,136 @@
+/* design/salliljido.extracted.html 430-457줄 */
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 22px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--cream);
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+.card.hovered {
+  border-color: var(--sage);
+  transform: translateY(-2px);
+}
+
+.swatch {
+  flex: 0 0 104px;
+  min-width: 96px;
+  align-self: stretch;
+  min-height: 84px;
+  border-radius: var(--radius-input);
+}
+
+.body {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.name {
+  margin: 0;
+  font-size: 20.5px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.bestBadge {
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--mist);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--forest);
+  white-space: nowrap;
+}
+.declineBadge {
+  padding: 4px 9px;
+  border-radius: var(--radius-pill);
+  border: 1px solid #e4e0d6;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray);
+  white-space: nowrap;
+}
+
+.reason {
+  margin: 8px 0 0;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 8px;
+}
+.metric {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.metricLabel {
+  font-size: 13px;
+  color: var(--gray);
+}
+.metricDots {
+  display: flex;
+  gap: 3px;
+}
+.metricDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mist);
+}
+.metricDot.filled {
+  background: var(--forest);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 8px;
+}
+.tag {
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--mist);
+  background: var(--paper);
+  font-size: 12.5px;
+  color: var(--forest);
+}
+
+.openLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  margin-top: 11px;
+  padding: 0 15px;
+  border-radius: var(--radius-input);
+  background: var(--terracotta);
+  color: var(--cream);
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: background 0.2s ease;
+}
+.openLink:hover {
+  background: var(--terracotta-strong);
+  color: var(--cream);
+}

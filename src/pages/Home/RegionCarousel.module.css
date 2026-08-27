@@ -1,0 +1,162 @@
+/* design/salliljido.extracted.html 195-238줄 */
+.regions {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: clamp(72px, 10vh, 120px) clamp(20px, 5vw, 64px);
+  background: var(--sand);
+  scroll-snap-align: start;
+}
+.inner {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+.headText {
+  max-width: 560px;
+}
+.eyebrow {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--sage);
+}
+.title {
+  margin: 18px 0 0;
+  font-size: clamp(30px, 3.4vw, 45px);
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.arrows {
+  display: flex;
+  gap: 10px;
+}
+.arrowBtn {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--mist);
+  background: var(--paper);
+  color: var(--forest);
+  font-size: 17.5px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+.arrowBtn:hover {
+  background: var(--white);
+  border-color: var(--sage);
+}
+
+.track {
+  margin-top: clamp(36px, 5vh, 56px);
+  overflow: hidden;
+  border-radius: var(--radius-card);
+}
+.trackInner {
+  display: flex;
+  transition: transform 0.8s cubic-bezier(0.4, 0.1, 0.2, 1);
+}
+.slide {
+  flex: 0 0 100%;
+}
+
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: var(--radius-card);
+  border: 1px solid #e4d9cb;
+  background: var(--cream);
+  overflow: hidden;
+  cursor: pointer;
+}
+.cardImage {
+  flex: 1 1 340px;
+  min-width: 280px;
+  position: relative;
+  min-height: 300px;
+  display: flex;
+  align-items: flex-end;
+}
+.cardImageNote {
+  margin: 18px;
+  padding: 7px 11px;
+  border-radius: var(--radius-tag);
+  background: rgba(250, 248, 244, 0.9);
+  font-family: var(--font-family-mono);
+  font-size: 13px;
+  color: var(--gray);
+}
+.cardBody {
+  flex: 1 1 380px;
+  min-width: 280px;
+  padding: clamp(30px, 4vw, 48px);
+}
+.cardOrder {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--terracotta);
+}
+.cardName {
+  margin: 14px 0 0;
+  font-size: clamp(28px, 2.8vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.cardCities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+.cardCity {
+  padding: 7px 13px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--mist);
+  background: var(--paper);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--forest);
+}
+.cardDesc {
+  margin: 24px 0 0;
+  font-size: 17.5px;
+  line-height: 1.8;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 28px;
+}
+.dot {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: #d6c9b8;
+  transition:
+    width 0.4s ease,
+    background 0.4s ease;
+}
+.dot.active {
+  background: var(--forest);
+}

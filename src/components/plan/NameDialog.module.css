@@ -1,0 +1,89 @@
+/* design/salliljido.extracted.html 651-662줄. 배경색이 rgba(0,0,0,.45)로
+   다른 모달들(rgba(43,43,41,.42))과 달라 공용 Modal 셸을 안 썼다. */
+.backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 92;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.45);
+}
+.backdrop.open {
+  display: flex;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  width: min(400px, 100%);
+  padding: 26px 28px;
+  border-radius: var(--radius-card);
+  background: var(--white);
+  box-shadow: 0 24px 50px -26px rgba(43, 43, 41, 0.6);
+  animation: slj-rise 0.22s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+.title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.input {
+  height: 46px;
+  margin-top: 14px;
+  padding: 0 14px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--mist);
+  background: var(--paper);
+  font-family: inherit;
+  font-size: 16.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  outline: none;
+}
+.summary {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--gray);
+}
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+.confirmBtn {
+  flex: 1;
+  height: 46px;
+  border-radius: var(--radius-input);
+  border: none;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cream);
+}
+.confirmBtn.ready {
+  background: var(--terracotta);
+  cursor: pointer;
+}
+.confirmBtn.ready:hover {
+  background: var(--rust);
+}
+.confirmBtn:not(.ready) {
+  background: var(--border-dashed);
+  cursor: not-allowed;
+}
+.cancelBtn {
+  flex: 0 0 auto;
+  height: 46px;
+  padding: 0 18px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--border);
+  background: var(--paper);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gray);
+  cursor: pointer;
+}

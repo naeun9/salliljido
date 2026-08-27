@@ -1,0 +1,169 @@
+/* design/salliljido.extracted.html 84-111줄 */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 64px clamp(20px, 5vw, 64px) clamp(96px, 13vh, 140px);
+  overflow: hidden;
+  background: var(--forest);
+  scroll-snap-align: start;
+}
+
+.texture {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    118deg,
+    #7e8f72 0 26px,
+    #93a184 26px 52px,
+    #6f8470 52px 78px,
+    #a9ae96 78px 104px,
+    #586e63 104px 130px
+  );
+  background-size: cover;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(47, 93, 80, 0.78) 0%,
+    rgba(47, 93, 80, 0.66) 45%,
+    rgba(35, 71, 61, 0.82) 100%
+  );
+}
+
+.imageNote {
+  position: absolute;
+  right: clamp(16px, 3vw, 36px);
+  top: 88px;
+  padding: 7px 11px;
+  border-radius: var(--radius-tag);
+  background: rgba(43, 43, 41, 0.34);
+  font-family: var(--font-family-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+  color: rgba(250, 248, 244, 0.86);
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.inner {
+  max-width: 760px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.eyebrowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--clay);
+}
+.eyebrowText {
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--mist);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(42px, 5.8vw, 80px);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  color: var(--paper);
+  text-shadow: 0 2px 24px rgba(24, 48, 41, 0.45);
+  text-wrap: pretty;
+}
+
+.lead {
+  margin: 30px 0 0;
+  font-size: clamp(17px, 1.4vw, 20.5px);
+  line-height: 1.75;
+  color: rgba(250, 248, 244, 0.9);
+  max-width: 520px;
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 12px rgba(24, 48, 41, 0.4);
+  text-wrap: pretty;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 30px;
+  margin-top: 48px;
+}
+
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 64px;
+  padding: 0 38px;
+  border-radius: var(--radius-card);
+  background: var(--terracotta);
+  color: var(--cream);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  box-shadow: 0 16px 34px -16px rgba(24, 48, 41, 0.75);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+.primaryCta:hover {
+  background: #e4855c;
+  transform: translateY(-2px);
+  color: var(--cream);
+}
+.primaryCtaArrow {
+  font-size: 19.5px;
+  line-height: 1;
+}
+
+.secondaryCta {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--paper);
+  border-bottom: 1px solid rgba(250, 248, 244, 0.45);
+  padding-bottom: 3px;
+}
+.secondaryCta:hover {
+  color: var(--clay);
+  border-color: var(--clay);
+}
+
+.scrollHint {
+  position: absolute;
+  left: 50%;
+  bottom: 34px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-family-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: rgba(250, 248, 244, 0.82);
+  animation: slj-bob 2.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollHint {
+    animation: none;
+  }
+}

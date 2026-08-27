@@ -1,0 +1,122 @@
+/* design/salliljido.extracted.html 1349-1364줄 */
+.list {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+.list.visible {
+  display: flex;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 15px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--border);
+  background: var(--paper);
+}
+.name {
+  flex: 1 1 160px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.duration {
+  flex: 0 0 auto;
+  font-size: 14px;
+  color: var(--gray);
+}
+.cost {
+  flex: 0 0 auto;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+/* design은 금액을 텍스트로만 보여줬는데, 참가비가 API에 없어 사용자 입력을
+   받아야 해서 입력칸으로 바꿨다. 글자 크기·굵기·색은 위 .cost 그대로 두고
+   테두리만 다른 입력칸(EtcSection)과 같은 값으로 맞췄다. */
+.costInputWrap {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--border);
+  background: var(--cream);
+}
+.costInput {
+  width: 82px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 15.5px;
+  font-weight: 600;
+  text-align: right;
+  color: var(--ink);
+  outline: none;
+}
+.costInput::-webkit-outer-spin-button,
+.costInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.costUnit {
+  font-size: 14px;
+  color: var(--gray);
+}
+.removeBtn {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--cream);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.removeBtn:hover {
+  border-color: var(--terracotta);
+}
+
+.empty {
+  display: none;
+  margin-top: 16px;
+  padding: 30px 20px;
+  border-radius: var(--radius-input);
+  border: 1px dashed var(--mist);
+  background: var(--paper);
+  text-align: center;
+}
+.empty.visible {
+  display: block;
+}
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.emptyLink {
+  margin-top: 12px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--forest);
+  border-bottom: 1px solid var(--mist);
+  cursor: pointer;
+}
+.emptyLink:hover {
+  border-color: var(--terracotta);
+}

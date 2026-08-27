@@ -1,0 +1,138 @@
+/* design/salliljido.extracted.html 113-193줄 */
+.service {
+  padding: clamp(80px, 12vh, 130px) clamp(20px, 5vw, 64px) clamp(88px, 13vh, 140px);
+  background: var(--paper);
+  scroll-snap-align: start;
+}
+.inner {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.head {
+  max-width: 640px;
+}
+.eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--sage);
+}
+.title {
+  margin: 18px 0 0;
+  font-size: clamp(30px, 3.4vw, 45px);
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+.lead {
+  margin: 32px 0 0;
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+}
+
+.steps {
+  margin-top: clamp(56px, 7vh, 88px);
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+  flex-direction: row;
+}
+.step.reverse {
+  flex-direction: row-reverse;
+}
+
+.stepText {
+  flex: 1 1 380px;
+  min-width: 260px;
+  opacity: 1;
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.stepNum {
+  font-size: clamp(68px, 7.3vw, 100px);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--mist);
+}
+.stepTitle {
+  margin: 14px 0 0;
+  font-size: clamp(22.5px, 2.1vw, 27px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.stepDesc {
+  margin: 12px 0 0;
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+}
+.stepChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 20px;
+}
+.stepChip {
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--mist);
+  background: var(--cream);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--forest);
+}
+
+.stepArt {
+  flex: 1 1 420px;
+  min-width: 260px;
+  height: clamp(220px, 30vh, 300px);
+  border-radius: var(--radius-card);
+  box-shadow: 0 20px 44px -30px rgba(43, 43, 41, 0.4);
+  display: flex;
+  align-items: flex-end;
+  padding: 14px;
+  opacity: 1;
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.stepArtLabel {
+  padding: 6px 10px;
+  border-radius: var(--radius-tag);
+  background: rgba(250, 248, 244, 0.92);
+  font-family: var(--font-family-mono);
+  font-size: 12.5px;
+  color: var(--gray);
+}
+
+.connector {
+  width: 1px;
+  height: clamp(88px, 12vh, 120px);
+  margin-left: 22px;
+  border-left: 1px dashed var(--border-strong);
+}
+
+@media (max-width: 939px) {
+  .step,
+  .step.reverse {
+    flex-direction: column;
+  }
+  .stepNum {
+    font-size: 42px;
+  }
+  .connector {
+    height: 64px;
+  }
+}

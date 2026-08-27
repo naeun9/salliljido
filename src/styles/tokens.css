@@ -1,0 +1,87 @@
+/*
+  design/salliljido.extracted.html 에서 그대로 추출한 값.
+  원본에는 CSS 변수가 없어(모든 값이 인라인 리터럴) 이름은 이번에 새로 붙였고,
+  값은 단 하나도 바꾸지 않았다. 근거: docs/01-analysis.md §2-1.
+
+  색상 토큰화 기준: 화면 전반에 반복되는(≥4회) 색만 변수로 뺐다.
+  region 카드 스와치, region-intro 슬라이드 배경, 구글 로그인 버튼 브랜드
+  색처럼 특정 데이터/특정 컴포넌트 1곳에서만 쓰이는 값은 변수로 만들지
+  않고 해당 컴포넌트·데이터 파일에 원본 그대로 남겨둔다(사용처: 각 컴포넌트
+  구현 단계에서 처리, docs/01-analysis.md 참고).
+*/
+
+:root {
+  /* ── 색상 : forest(그린) 계열 ── */
+  --forest: #2f5d50; /* 메인 브랜드 그린 (헤더 로고, 강조 텍스트, 버튼 아웃라인) */
+  --sage: #4a7c6f; /* 보조 그린 (아이콘, 링크, 스텝 넘버) */
+  --mist: #dce8e2; /* 연한 그린 틴트 (칩 배경, hover 배경, 뱃지) */
+
+  /* ── 색상 : terracotta(오렌지) 계열 ── */
+  --terracotta: #d9784e; /* 포인트 / 주요 CTA 배경 */
+  --terracotta-strong: #c96a41; /* CTA hover (더 진한 톤) */
+  --rust: #c05f33; /* 연한 배지 배경 위 텍스트 색 (데모 배지, 내 배지 등) */
+  --clay: #ebb98f; /* 밝은 테라코타 (CTA hover 대체, 강조 보더) */
+  --clay-tint: #f5e1d5; /* 배지 배경 (데모 배지, 내 배지) */
+
+  /* ── 색상 : 중성(종이/모래) 계열 ── */
+  --paper: #faf8f4; /* 페이지 배경 */
+  --cream: #fffdfa; /* 카드/서피스/입력창 배경 */
+  --white: #ffffff; /* 순백 (로그인 카드, 일부 모달) */
+  --sand: #f5ede4; /* 섹션 배경 전환용 베이지 (Regions/Support 섹션, 안내 박스) */
+  --sand-strong: #e7dccb; /* 베이지 섹션의 보더 */
+  --ink: #2b2b29; /* 본문 텍스트 (거의 검정) */
+  --gray: #6e6e68; /* 보조 텍스트 (설명, 캡션) */
+
+  /* ── 색상 : 보더 / 구분선 ── */
+  --border: #e7e2d8; /* 기본 보더 (카드, 인풋, 구분선) — 사용 빈도 100회로 가장 많음 */
+  --border-strong: #e5e1d8; /* 기본 보더보다 근소하게 진한 톤 (드물게 쓰임, 4회) */
+  --border-dashed: #d8d4ca; /* 점선 보더 (빈 슬롯 "+ 일정 추가" 버튼 등) */
+  --hairline: #f1ece3; /* 아주 옅은 구분선 (섹션 내부 divider) */
+
+  /* ── 색상 : 스켈레톤 로딩 ── */
+  --skeleton-base: #ede9e2;
+  --skeleton-highlight: #f5f2ec;
+
+  /* ── 색상 : 지도 목업 텍스처 (MapPlaceholder 전용, §5 참고) ── */
+  --map-tile-light: #eaf0eb;
+  --map-tile-dark: #e1eae3;
+
+  /* ── 그림자 ── */
+  --shadow-soft: 0 20px 44px -30px rgba(43, 43, 41, 0.4);
+  --shadow-card: 0 14px 30px -18px rgba(43, 43, 41, 0.5);
+  --shadow-pop: 0 24px 50px -26px rgba(43, 43, 41, 0.6);
+
+  /* ── 모서리 (실제 쓰이는 6종 값만, 사용 맥락 기준으로 명명) ── */
+  --radius-tag: 6px; /* 스켈레톤 텍스트 바, 아주 작은 태그 */
+  --radius-chip-sq: 8px; /* 작은 사각 버튼/배지 */
+  --radius-icon-btn: 9px; /* 줌 버튼 묶음, 계정 메뉴 등 작은 컨테이너 */
+  --radius-input: 10px; /* 인풋, 보조 버튼, 작은 패널 */
+  --radius-card: 12px; /* 카드/모달/기본 버튼 — 가장 많이 쓰임(98회) */
+  --radius-circle: 50%; /* 원형 아이콘, 도트, 아바타 */
+  --radius-pill: 999px; /* 칩, 필 배지, 필 버튼 */
+
+  /* ── 폰트 패밀리 ── */
+  --font-family-base: "Pretendard Variable", Pretendard, -apple-system,
+    sans-serif;
+  --font-family-mono: ui-monospace, Menlo, monospace; /* "screen ·"/"map ·" 라벨 전용 */
+
+  /* ── 폰트 크기 : 반복 확인된 대표 값만 (전체 스케일은 0.5px 단위로
+     18종이 넘고 대부분 특정 한 곳에서만 쓰여, 그런 값은 토큰화하지 않고
+     해당 컴포넌트에 원본 그대로 남긴다) ── */
+  --font-caption: 12.5px; /* 메타 정보, 카운트 라벨 */
+  --font-body-sm: 14px; /* 작은 본문/보조 설명 */
+  --font-body: 15px; /* 기본 본문 (가장 많이 쓰임, 75회) */
+  --font-label: 15.5px; /* 버튼/라벨 텍스트 (55회) */
+  --font-body-lg: 16px; /* 큰 본문 */
+  --font-lead: 17px; /* 인트로/리드 문단 */
+  --font-h3: 20.5px; /* 카드·섹션 소제목 */
+
+  /* 반응형 헤딩(clamp)은 섹션마다 min/vw/max 조합이 전부 달라(원본이
+     고정 스케일을 쓰지 않음) 전역 토큰으로 묶지 않고 각 컴포넌트에
+     원본 clamp() 값 그대로 남긴다. */
+
+  /* ── 트랜지션 ── */
+  --transition-fast: 0.2s ease; /* 가장 많이 쓰임(167회): 버튼/링크 hover */
+  --transition-base: 0.25s ease; /* 카드 hover, border-color 전환 */
+  --transition-slow: 0.3s ease; /* 헤더 배경/보더 전환 */
+}

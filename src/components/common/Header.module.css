@@ -1,0 +1,251 @@
+/* design/salliljido.extracted.html 41-82줄. 값은 원본 그대로, scrolled 상태별
+   값은 CSS 커스텀 프로퍼티로 묶어서 중복 없이 표현했다. */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(20px, 5vw, 64px);
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+
+  --nav-base: rgba(250, 248, 244, 0.88);
+  --nav-active: #ffffff;
+  --nav-hover: #ffffff;
+  --underline: #ffffff;
+  --header-fg: var(--paper);
+  --header-shadow: 0 1px 3px rgba(24, 48, 41, 0.35);
+  --header-bg: rgba(250, 248, 244, 0);
+  --header-border: 0.5px solid transparent;
+  --header-blur: blur(8px);
+  --login-border: rgba(255, 255, 255, 0.7);
+  --login-bg: transparent;
+  --login-fg: #ffffff;
+  --login-hover-bg: rgba(255, 255, 255, 0.16);
+  --avatar-border: rgba(250, 248, 244, 0.6);
+  --avatar-bg: rgba(250, 248, 244, 0.22);
+  --avatar-fg: var(--cream);
+
+  background: var(--header-bg);
+  border-bottom: var(--header-border);
+  backdrop-filter: var(--header-blur);
+  -webkit-backdrop-filter: var(--header-blur);
+}
+
+.header.scrolled {
+  --nav-base: var(--gray);
+  --nav-active: var(--forest);
+  --nav-hover: var(--ink);
+  --underline: var(--forest);
+  --header-fg: var(--ink);
+  --header-shadow: none;
+  --header-bg: rgba(250, 248, 244, 0.85);
+  --header-border: 0.5px solid var(--border-strong);
+  --header-blur: blur(12px);
+  --login-border: var(--forest);
+  --login-bg: var(--white);
+  --login-fg: var(--forest);
+  --login-hover-bg: var(--mist);
+  --avatar-border: var(--forest);
+  --avatar-bg: var(--mist);
+  --avatar-fg: var(--forest);
+}
+
+.logo {
+  font-size: 21.5px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--header-fg);
+  text-shadow: var(--header-shadow);
+  cursor: pointer;
+  transition:
+    color 0.3s ease,
+    opacity 0.2s ease;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+.logo:hover {
+  opacity: 0.78;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2vw, 28px);
+}
+
+.navLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--nav-base);
+  letter-spacing: -0.01em;
+  text-shadow: var(--header-shadow);
+  transition: color 0.2s ease;
+}
+.navLink:hover {
+  color: var(--nav-hover);
+}
+.navLink.active {
+  font-weight: 600;
+  color: var(--nav-active);
+}
+.navUnderline {
+  position: absolute;
+  left: 0;
+  bottom: 7px;
+  height: 2px;
+  width: 0%;
+  background: var(--underline);
+  transition: width 0.2s ease;
+}
+.navLink:hover .navUnderline,
+.navLink.active .navUnderline {
+  width: 100%;
+}
+
+.authArea {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.loginBtn {
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  margin: 0;
+  padding: 0 16px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--login-border);
+  background: var(--login-bg);
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--login-fg);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+.loginBtn:hover {
+  background: var(--login-hover-bg);
+}
+
+.demoBadge {
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  background: var(--clay-tint);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--rust);
+}
+
+.accountWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 38px;
+}
+.avatarBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-circle);
+  border: 1px solid var(--avatar-border);
+  background: var(--avatar-bg);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--avatar-fg);
+  cursor: pointer;
+}
+.accountMenu {
+  position: absolute;
+  right: 0;
+  top: 44px;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 148px;
+  padding: 8px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--border);
+  background: var(--cream);
+  box-shadow: var(--shadow-card);
+}
+.accountMenuItem {
+  height: 36px;
+  padding: 0 12px;
+  border: none;
+  border-radius: var(--radius-chip-sq);
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--font-body);
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+.accountMenuItem:hover {
+  background: var(--mist);
+}
+.accountMenuItem:last-child {
+  color: var(--gray);
+}
+.accountMenuItem:last-child:hover {
+  background: var(--hairline);
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 0 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+.burgerBar {
+  height: 1.5px;
+  background: var(--header-fg);
+  border-radius: 2px;
+  transition: background 0.3s ease;
+}
+
+@media (max-width: 759px) {
+  .nav,
+  .authArea {
+    display: none;
+  }
+  .burger {
+    display: flex;
+  }
+}

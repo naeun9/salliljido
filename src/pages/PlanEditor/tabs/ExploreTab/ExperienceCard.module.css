@@ -1,0 +1,202 @@
+/* design/salliljido.extracted.html 1086-1114줄 */
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--forest);
+  background: var(--white);
+  overflow: hidden;
+  transition: border-color 0.25s ease;
+}
+.card.hovered {
+  border-color: var(--sage);
+  border-left-color: var(--forest);
+}
+.image {
+  height: 92px;
+  display: flex;
+  align-items: flex-end;
+  padding: 8px;
+}
+.imageTag {
+  font-family: var(--font-family-mono);
+  font-size: 12px;
+  color: var(--gray);
+}
+.body {
+  padding: 16px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.name {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.badge {
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  background: var(--mist);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--forest);
+}
+.desc {
+  margin: 9px 0 0;
+  font-size: 15px;
+  line-height: 1.68;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+  flex: 1;
+  text-wrap: pretty;
+}
+.meta {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 12px;
+}
+.duration {
+  font-size: 14px;
+  color: var(--gray);
+}
+.cost {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.toggleBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 42px;
+  margin-top: 14px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--terracotta);
+  background: var(--terracotta);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+.toggleBtn.added {
+  border-color: var(--forest);
+  background: var(--mist);
+  color: var(--forest);
+}
+
+.picker {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: var(--radius-input);
+  background: var(--cream);
+  border: 1px solid var(--mist);
+}
+.picker.open {
+  display: flex;
+}
+.pickerLabel {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--gray);
+}
+.dayOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.dayOption {
+  height: 32px;
+  padding: 0 11px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray);
+  cursor: pointer;
+}
+.dayOption.selected {
+  border-color: var(--forest);
+  background: var(--mist);
+  color: var(--forest);
+  font-weight: 600;
+}
+.pickerConfirm {
+  height: 38px;
+  margin-top: 2px;
+  border-radius: 9px;
+  border: none;
+  background: var(--terracotta);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--cream);
+  cursor: pointer;
+}
+
+/* design에 없는 추가 입력(참가비). 같은 피커 안의 라벨·칩과 톤을 맞춰
+   pickerLabel/dayOption의 값을 그대로 따랐다 — docs/03-api-check.md §14 */
+.priceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 2px;
+}
+.priceLabel {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--gray);
+}
+.priceInputWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 11px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--paper);
+}
+.priceInput {
+  width: 74px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: right;
+  color: var(--ink);
+  outline: none;
+}
+.priceInput::-webkit-outer-spin-button,
+.priceInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.priceUnit {
+  font-size: 14px;
+  color: var(--gray);
+}
