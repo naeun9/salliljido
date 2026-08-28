@@ -32,7 +32,7 @@ const MESSAGES = {
   [MAP_ERROR.INIT]: "지도를 초기화하지 못했습니다.",
 };
 
-export function mapErrorMessage(code) {
+function mapErrorMessage(code) {
   return MESSAGES[code] || MESSAGES[MAP_ERROR.SCRIPT];
 }
 

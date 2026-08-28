@@ -42,7 +42,7 @@ const SWATCHES = [
   "repeating-linear-gradient(135deg, #E7EBE0 0 9px, #DBE2D3 9px 18px)",
 ];
 
-export function swatchFor(index) {
+function swatchFor(index) {
   return SWATCHES[index % 3];
 }
 

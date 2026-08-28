@@ -81,7 +81,8 @@ function cacheFor(listings) {
   return entry;
 }
 
-function bySub(list, sub) {
+// 하위 유형 하나로 거른다(둘러보기 탭의 filterBySelectedSubs와 달리 단수).
+function withSub(list, sub) {
   return (list || []).filter((x) => x.sub === sub);
 }
 
@@ -120,17 +121,17 @@ function fillUpTo(sources) {
 // 오전: 카페(FD05). 카페가 얇은 지역에서는 간이음식(FD03 — 제과·빵집이
 // 여기 들어온다), 그래도 모자라면 문화(VE — 박물관·미술관처럼 오전에
 // 문 여는 곳)까지 섞는다.
-export function buildMorningPool(listings) {
+function buildMorningPool(listings) {
   const entry = cacheFor(listings);
   if (!entry.morning) {
     const utils = listings["식당·카페"] || [];
-    entry.morning = fillUpTo([bySub(utils, "카페"), bySub(utils, "간이음식"), bySub(listings["주변 관광지"], "문화")]);
+    entry.morning = fillUpTo([withSub(utils, "카페"), withSub(utils, "간이음식"), withSub(listings["주변 관광지"], "문화")]);
   }
   return entry.morning;
 }
 
 // 오후: 주변 관광지 4분류 + 체험 프로그램을 테마 가중치로 섞는다.
-export function buildAfternoonPool(listings, theme) {
+function buildAfternoonPool(listings, theme) {
   const entry = cacheFor(listings);
   const key = AFTERNOON_WEIGHTS[theme] ? theme : "힐링";
   if (!entry.afternoon[key]) {
@@ -140,10 +141,10 @@ export function buildAfternoonPool(listings, theme) {
     const taken = new Set(buildMorningPool(listings).map((x) => x.id));
     const spots = (listings["주변 관광지"] || []).filter((x) => !taken.has(x.id));
     entry.afternoon[key] = weightedMerge([
-      { items: bySub(spots, "자연"), weight: w.자연 },
-      { items: bySub(spots, "역사"), weight: w.역사 },
-      { items: bySub(spots, "문화"), weight: w.문화 },
-      { items: bySub(spots, "레저스포츠"), weight: w.레저스포츠 },
+      { items: withSub(spots, "자연"), weight: w.자연 },
+      { items: withSub(spots, "역사"), weight: w.역사 },
+      { items: withSub(spots, "문화"), weight: w.문화 },
+      { items: withSub(spots, "레저스포츠"), weight: w.레저스포츠 },
       { items: listings["체험 프로그램"] || [], weight: w.체험 },
     ]);
   }
@@ -152,16 +153,16 @@ export function buildAfternoonPool(listings, theme) {
 
 // 저녁: 고른 음식 분류 우선. 그 분류가 얇으면 그 지역에 실제로 있는 다른
 // 분류를 뒤에 붙인다(카페는 저녁 후보에서 뺀다 — 오전과 겹친다).
-export function buildDinnerPool(listings, cuisine) {
+function buildDinnerPool(listings, cuisine) {
   const entry = cacheFor(listings);
   const key = cuisine || "한식";
   if (!entry.dinner[key]) {
     const utils = listings["식당·카페"] || [];
     // 카페를 직접 고른 경우가 아니면 오전이 쓰는 가게는 저녁 후보에서 뺀다.
     const taken = key === "카페" ? new Set() : new Set(buildMorningPool(listings).map((x) => x.id));
-    const pickable = (c) => bySub(utils, c).filter((x) => !taken.has(x.id));
+    const pickable = (c) => withSub(utils, c).filter((x) => !taken.has(x.id));
     const rest = ALL_CUISINES.filter((c) => c !== key && c !== "카페").map(pickable);
-    entry.dinner[key] = fillUpTo([key === "카페" ? bySub(utils, key) : pickable(key), ...rest]);
+    entry.dinner[key] = fillUpTo([key === "카페" ? withSub(utils, key) : pickable(key), ...rest]);
   }
   return entry.dinner[key];
 }

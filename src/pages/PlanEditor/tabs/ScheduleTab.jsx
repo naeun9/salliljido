@@ -5,8 +5,14 @@ import { usePlan } from "../../../hooks/usePlan.js";
 import { stayDays } from "../../../utils/date.js";
 import { useRegionListings } from "../../../hooks/useRegionListings.js";
 import { findListing } from "../../../services/exploreListings.js";
-import { getSlotPoolOptions, availableCuisines, getPickerMine } from "../../../services/routineGenerator.js";
-import { buildDayTimeline, resolveThemePrefs, resolveDayContext } from "../../../services/dayTimeline.js";
+import { availableCuisines } from "../../../services/routineGenerator.js";
+import {
+  buildDayTimeline,
+  resolveThemePrefs,
+  resolveDayContext,
+} from "../../../services/dayTimeline.js";
+import { buildSelection } from "../../../services/scheduleSelection.js";
+import { useRoutineActions } from "../../../hooks/useRoutineActions.js";
 import { buildRoutePins, routeDistanceLabel } from "../../../utils/route.js";
 import { toLatLng } from "../../../utils/geo.js";
 import ScheduleModals from "./ScheduleTab/ScheduleModals.jsx";
@@ -35,9 +41,21 @@ export default function ScheduleTab({ region }) {
   const [cuisineMenuOpen, setCuisineMenuOpen] = useState(false);
   const [rtPicker, setRtPicker] = useState(null); // { slot, dinner }
   const [cf, setCf] = useState(null); // { editId, slot }
-  const [regenAsk, setRegenAsk] = useState(false);
   const [timeEdit, setTimeEdit] = useState(null); // 시간 수정 중인 항목
-  const [routineLoading, setRoutineLoading] = useState(false);
+  // 계획 생성·재생성(로딩 연출 포함)은 훅으로 뺐다.
+  const {
+    routineLoading,
+    regenAsk,
+    setRegenAsk,
+    makeRoutine,
+    askRegen,
+    regenKeep,
+    regenAll,
+  } = useRoutineActions(plan, () => {
+    setDay(1);
+    setWeek(0);
+    setCondOpen(false);
+  });
 
   const durDays = stayDays({ dur, customDays });
   // 일차별 테마·메뉴 결정은 최종 계획 화면(PlanOverview)과 같은 규칙을
@@ -64,6 +82,10 @@ export default function ScheduleTab({ region }) {
     regenSeed: plan.regenSeed,
     addedExperiences: plan.addedExperiences,
     experienceDays: plan.experienceDays,
+    savedUtilities: plan.savedUtilities,
+    utilityDays: plan.utilityDays,
+    savedSpots: plan.savedSpots,
+    spotDays: plan.spotDays,
     rtCustom: plan.rtCustom,
     rtPick: plan.rtPick,
     listings,
@@ -72,11 +94,7 @@ export default function ScheduleTab({ region }) {
 
   // 그날 묵는 숙소(둘러보기에서 기간으로 담은 것). 경로선·이동거리에는
   // 넣지 않고 지도에 집 아이콘으로, 타임라인에는 한 줄로만 보여 준다.
-  const staySeg = plan.staySegs.find((g) => g.stayId && g.from <= day && day <= g.to);
-  const stayListing = staySeg ? findListing(listings, "숙박", staySeg.stayId) : null;
-  const stayMarker = stayListing
-    ? { place: stayListing.name, at: toLatLng(stayListing) }
-    : null;
+  const stayMarker = findStayMarker(plan.staySegs, day, listings);
 
   const pins = buildRoutePins(items).map((p, i) => ({
     ...p,
@@ -84,42 +102,26 @@ export default function ScheduleTab({ region }) {
   }));
   const distance = routeDistanceLabel(pins);
 
-  const daysWithAdds = plan.addedExperiences.map((id) => plan.experienceDays[id] || 1);
+  // 지도 핀·타임라인 카드를 누르면 뜨는 상세(services/scheduleSelection.js).
+  const { selection, contentTypeId: selectionTypeId } = buildSelection({
+    selectedIndex,
+    items,
+    pins,
+    day,
+    listings,
+  });
+
+  const daysWithAdds = plan.addedExperiences.map(
+    (id) => plan.experienceDays[id] || 1,
+  );
 
   const showHint =
-    plan.routineOn && !rtHintClosed && Object.keys(plan.rtPick).length === 0 && plan.rtCustom.length === 0;
+    plan.routineOn &&
+    !rtHintClosed &&
+    Object.keys(plan.rtPick).length === 0 &&
+    plan.rtCustom.length === 0;
 
   // --- 핸들러 ---
-  function makeRoutine() {
-    if (routineLoading) return;
-    setRoutineLoading(true);
-    setTimeout(() => {
-      setRoutineLoading(false);
-      plan.startRoutine();
-      setDay(1);
-      setWeek(0);
-      setCondOpen(false);
-    }, 1200);
-  }
-  function askRegen() {
-    if (!routineLoading) setRegenAsk(true);
-  }
-  function regenKeep() {
-    setRegenAsk(false);
-    setRoutineLoading(true);
-    setTimeout(() => {
-      setRoutineLoading(false);
-      plan.bumpRegenSeed();
-    }, 1000);
-  }
-  function regenAll() {
-    setRegenAsk(false);
-    setRoutineLoading(true);
-    setTimeout(() => {
-      setRoutineLoading(false);
-      plan.resetForRegenAll();
-    }, 1000);
-  }
   function openCustomForm(slot, editId) {
     setCf({ slot, editId: editId || null });
   }
@@ -142,7 +144,12 @@ export default function ScheduleTab({ region }) {
     if (item.custom) {
       openCustomForm(item.slot, item.cid);
     } else if (item.mine) {
-      plan.removeExperience(item.id);
+      // 담은 곳은 세 종류(체험·식당카페·관광지)라 어느 목록에서 뺄지
+      // timeKey 접두어로 가린다(services/addedItems.js에서 붙인다).
+      const kind = String(item.timeKey || "").split(":")[0];
+      if (kind === "util") plan.toggleUtility(item.id);
+      else if (kind === "spot") plan.toggleSpot(item.id);
+      else plan.removeExperience(item.id);
     } else {
       setCuisineMenuOpen(false);
       setRtPicker({ slot: item.slot, dinner: !!item.isDinner });
@@ -158,11 +165,6 @@ export default function ScheduleTab({ region }) {
     plan.setItemTime(timeEdit.timeKey, start, end);
     setTimeEdit(null);
   }
-
-  const pickerMine = getPickerMine(plan.savedUtilities, listings);
-  const pickerPlaces = rtPicker
-    ? getSlotPoolOptions({ slot: rtPicker.slot, dinner: rtPicker.dinner, theme, cuisine, listings })
-    : [];
 
   return (
     <section className={styles.section}>
@@ -218,7 +220,7 @@ export default function ScheduleTab({ region }) {
                 onSwapItem={handleSwap}
                 onDeleteCustom={(cid) => plan.removeCustomItem(cid)}
                 onEditTime={(item) => setTimeEdit(item)}
-                stayName={stayListing ? stayListing.name : null}
+                stayName={stayMarker ? stayMarker.place : null}
                 onSetCuisine={(c) => {
                   plan.setMealOverride(day, c);
                   setCuisineMenuOpen(false);
@@ -257,19 +259,8 @@ export default function ScheduleTab({ region }) {
       </div>
 
       <ScheduleModals
-        selection={
-          selectedIndex >= 0 && pins[selectedIndex]
-            ? {
-                day,
-                slot: items[selectedIndex] ? items[selectedIndex].slot : "",
-                time: items[selectedIndex] ? items[selectedIndex].time : "",
-                place: pins[selectedIndex].place,
-                tag: pins[selectedIndex].tag,
-                desc: pins[selectedIndex].desc,
-                addr: pins[selectedIndex].addr,
-              }
-            : null
-        }
+        selection={selection}
+        selectionTypeId={selectionTypeId}
         onCloseSelection={() => setSelectedIndex(-1)}
         timeEdit={timeEdit}
         setTimeEdit={setTimeEdit}
@@ -278,13 +269,17 @@ export default function ScheduleTab({ region }) {
         day={day}
         rtPicker={rtPicker}
         setRtPicker={setRtPicker}
-        pickerMine={pickerMine}
-        pickerPlaces={pickerPlaces}
+        savedUtilities={plan.savedUtilities}
+        theme={theme}
+        cuisine={cuisine}
+        listings={listings}
         setPick={plan.setPick}
         openCustomForm={openCustomForm}
         cf={cf}
         setCf={setCf}
-        editingCustom={cf?.editId ? plan.rtCustom.find((c) => c.id === cf.editId) : null}
+        editingCustom={
+          cf?.editId ? plan.rtCustom.find((c) => c.id === cf.editId) : null
+        }
         submitCustom={submitCustom}
         regenAsk={regenAsk}
         setRegenAsk={setRegenAsk}
@@ -293,4 +288,12 @@ export default function ScheduleTab({ region }) {
       />
     </section>
   );
+}
+
+// 그날 묵는 숙소 마커. 구간(staySegs)에서 오늘이 포함된 것을 찾아
+// 목록에서 좌표를 얻는다.
+function findStayMarker(staySegs, day, listings) {
+  const seg = staySegs.find((g) => g.stayId && g.from <= day && day <= g.to);
+  const listing = seg ? findListing(listings, "숙박", seg.stayId) : null;
+  return listing ? { place: listing.name, at: toLatLng(listing) } : null;
 }

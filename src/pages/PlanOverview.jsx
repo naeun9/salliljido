@@ -7,10 +7,14 @@ import { useConfirm } from "../hooks/useConfirm.js";
 import { useRegionListings } from "../hooks/useRegionListings.js";
 import { PlanProvider } from "../store/PlanContext.jsx";
 import { getRegionByShort } from "../services/regionRecommend.js";
-import { getAllPrograms, regionFilterFor } from "../services/supportPrograms.js";
+import {
+  getAllPrograms,
+  regionFilterFor,
+} from "../services/supportPrograms.js";
 import { buildFullSchedule } from "../services/dayTimeline.js";
+import { findListingAnywhere } from "../services/exploreListings.js";
 import { resolveStayCondition } from "../utils/date.js";
-import { won, computeCostBreakdown, buildCostBars } from "../utils/cost.js";
+import { won, computePlanCost } from "../utils/cost.js";
 import { totalRouteDistanceLabel } from "../utils/route.js";
 import { topDistricts } from "../utils/address.js";
 import RegionNotFound from "../components/region/RegionNotFound.jsx";
@@ -21,7 +25,7 @@ import RegionGlance from "./PlanOverview/RegionGlance.jsx";
 import FullSchedule from "./PlanOverview/FullSchedule.jsx";
 import CostSummary from "./PlanOverview/CostSummary.jsx";
 import SupportSection from "./PlanOverview/SupportSection.jsx";
-import SelectionCard from "../components/plan/SelectionCard.jsx";
+import PlaceDetailModal from "../components/plan/PlaceDetailModal.jsx";
 import styles from "./PlanOverview.module.css";
 
 // design/salliljido.extracted.html 1446-1695줄(Overview 화면),
@@ -43,6 +47,11 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
   const region = getRegionByShort(regionId);
   // 담은 체험·식당의 실제 이름은 둘러보기 목록에서 찾는다(지역 단위 캐시).
   const { listings } = useRegionListings(region ? region.short : null);
+  // 상세 API는 타입별로 응답 필드가 달라 contentTypeId가 필요하다.
+  const selectionListing =
+    selection && selection.id
+      ? findListingAnywhere(listings, selection.id)
+      : null;
 
   if (!region) {
     return <RegionNotFound />;
@@ -50,30 +59,8 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
 
   const { nights } = resolveStayCondition(search);
 
-  const breakdown = computeCostBreakdown({
-    nights,
-    nightly: plan.nightly,
-    staySplit: plan.staySplit,
-    staySegs: plan.staySegs,
-    foodStyle: plan.foodStyle,
-    foodManual: plan.foodManual,
-    foodPer: plan.foodPer,
-    tripManualTotal: plan.tripManualTotal,
-    experienceRows: plan.addedExperiences.map((id) => ({ id, price: plan.experiencePrices[id] })),
-    etcRows: plan.etcRows,
-    rtCustom: plan.rtCustom,
-    rtPick: plan.rtPick,
-  });
-  const bars = buildCostBars({
-    breakdown,
-    nights,
-    nightly: plan.nightly,
-    staySplit: plan.staySplit,
-    foodStyle: plan.foodStyle,
-    foodManual: plan.foodManual,
-    foodPer: plan.foodPer,
-    experienceCount: plan.addedExperiences.length,
-  });
+  // 예상 비용 탭과 같은 계산을 쓴다(utils/cost.js computePlanCost).
+  const { breakdown, bars } = computePlanCost({ plan, nights });
 
   const days = buildFullSchedule({
     nights,
@@ -83,6 +70,10 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
     regenSeed: plan.regenSeed,
     addedExperiences: plan.addedExperiences,
     experienceDays: plan.experienceDays,
+    savedUtilities: plan.savedUtilities,
+    utilityDays: plan.utilityDays,
+    savedSpots: plan.savedSpots,
+    spotDays: plan.spotDays,
     rtCustom: plan.rtCustom,
     rtPick: plan.rtPick,
     listings,
@@ -94,12 +85,20 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
   // 장소들의 주소에서 읍·면·동을 뽑아 많이 나온 순으로 쓴다.
   // 주소에 읍면동이 없는 지역(속초처럼 시 아래 도로명만 있는 곳)에서는
   // 뽑히는 게 없어서, 그때는 구체적인 말 대신 지역 이름만 쓴다.
-  const areas = topDistricts(days.flatMap((d) => d.cells.flatMap((c) => c.items)), 2);
-  const routeAreaLabel = areas.length ? areas.map((a) => `${a} 일대`).join(" · ") : `${region.name} 일대`;
+  const areas = topDistricts(
+    days.flatMap((d) => d.cells.flatMap((c) => c.items)),
+    2,
+  );
+  const routeAreaLabel = areas.length
+    ? areas.map((a) => `${a} 일대`).join(" · ")
+    : `${region.name} 일대`;
 
   const themeLine = plan.themes.length ? plan.themes.join(", ") : "테마 전체";
   const title = plan.planTitle || `${region.short} ${nights}일 계획`;
-  const placeCount = days.reduce((s, d) => s + d.cells.reduce((n, c) => n + c.items.length, 0), 0);
+  const placeCount = days.reduce(
+    (s, d) => s + d.cells.reduce((n, c) => n + c.items.length, 0),
+    0,
+  );
 
   // design 3304-3309줄.
   const metrics = [
@@ -115,7 +114,9 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
   const facts = [
     {
       label: "담은 식당",
-      value: plan.savedUtilities.length ? `담은 식당 ${plan.savedUtilities.length}곳` : "미정",
+      value: plan.savedUtilities.length
+        ? `담은 식당 ${plan.savedUtilities.length}곳`
+        : "미정",
     },
     { label: "주요 동선", value: routeAreaLabel },
     // 예전에는 design의 가짜 공식(`체류일 × 11km`)을 썼다. 실제 좌표가
@@ -148,7 +149,12 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
   // 유지된다(design은 planTitle과 planTitles를 같이 고친다, 3357-3363줄).
   function commitTitle(next) {
     plan.setPlanTitle(next);
-    if (savedPlan) saved.savePlan({ ...savedPlan, title: next, data: { ...savedPlan.data, planTitle: next } });
+    if (savedPlan)
+      saved.savePlan({
+        ...savedPlan,
+        title: next,
+        data: { ...savedPlan.data, planTitle: next },
+      });
   }
 
   function deletePlan() {
@@ -170,8 +176,10 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
     navigate(`/region/${encodeURIComponent(region.short)}`);
   }
 
+  // 상세 모달에 넘길 값. id·좌표는 상세 조회(api/tour/detail)와
+  // 카카오맵 링크에 쓴다.
   function selectItem(d, c, it) {
-    setSelection({ day: d.day, slot: c.slot, time: it.time, place: it.place, tag: it.tag, desc: it.desc, addr: it.addr });
+    setSelection({ ...it, day: d.day, slot: c.slot });
   }
 
   function toggleExport() {
@@ -223,10 +231,12 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
       <section className={styles.impact}>
         <div className={styles.impactInner}>
           <p className={styles.impactNote}>
-            {region.short}에서 {nights}일 머무는 동안의 소비가 지역에 남습니다. · 인구감소지역 지정 현황 자료 행정안전부
+            {region.short}에서 {nights}일 머무는 동안의 소비가 지역에 남습니다.
+            · 인구감소지역 지정 현황 자료 행정안전부
           </p>
           <p className={styles.source}>
-            출처 ⓒ한국관광공사 · 인구감소지역 지정 현황 행정안전부 · 일정과 비용은 공개 자료를 바탕으로 한 추정치입니다.
+            출처 ⓒ한국관광공사 · 인구감소지역 지정 현황 행정안전부 · 일정과
+            비용은 공개 자료를 바탕으로 한 추정치입니다.
           </p>
         </div>
       </section>
@@ -235,12 +245,24 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
         <button type="button" className={styles.mobileEdit} onClick={goEdit}>
           편집하기
         </button>
-        <button type="button" className={styles.mobileExport} onClick={toggleExport}>
+        <button
+          type="button"
+          className={styles.mobileExport}
+          onClick={toggleExport}
+        >
           내보내기
         </button>
       </div>
 
-      <SelectionCard selection={selection} onEdit={goEdit} onClose={() => setSelection(null)} />
+      {/* 우하단 카드(design ovSel) 대신 중앙 상세 모달. 체류 계획 탭과 같은
+          컴포넌트를 쓴다. 원본 카드에 있던 "루틴 편집으로" 버튼은 뺐다 —
+          같은 이동을 상단 "편집" 버튼이 이미 갖고 있고, 모달은 장소 정보만
+          보여 주는 자리로 정리했다. */}
+      <PlaceDetailModal
+        selection={selection}
+        contentTypeId={selectionListing ? selectionListing.contentTypeId : ""}
+        onClose={() => setSelection(null)}
+      />
 
       <ConfirmModal
         open={!!confirm}
@@ -269,7 +291,10 @@ export default function PlanOverview() {
 
   return (
     <PlanProvider initial={openedPlan?.data}>
-      <PlanOverviewInner openedPlanId={openedPlan ? openedPlan.id : null} savedPlan={openedPlan} />
+      <PlanOverviewInner
+        openedPlanId={openedPlan ? openedPlan.id : null}
+        savedPlan={openedPlan}
+      />
     </PlanProvider>
   );
 }

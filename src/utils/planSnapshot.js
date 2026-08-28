@@ -13,6 +13,8 @@ const PLAN_STATE_KEYS = [
   "experienceDays",
   "experiencePrices",
   "savedUtilities",
+  "utilityDays",
+  "spotDays",
   "savedSpots",
   "itemTimes",
   "themes",
@@ -35,7 +37,7 @@ const PLAN_STATE_KEYS = [
   "etcRows",
 ];
 
-export function pickPlanSnapshot(plan) {
+function pickPlanSnapshot(plan) {
   const snapshot = {};
   PLAN_STATE_KEYS.forEach((key) => {
     snapshot[key] = plan[key];

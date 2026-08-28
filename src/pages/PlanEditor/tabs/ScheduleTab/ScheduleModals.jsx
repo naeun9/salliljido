@@ -1,13 +1,18 @@
+import {
+  getPickerMine,
+  getSlotPoolOptions,
+} from "../../../../services/routineGenerator.js";
 import PickerModal from "../../../../components/plan/PickerModal.jsx";
 import AddScheduleModal from "../../../../components/plan/AddScheduleModal.jsx";
 import RegenAskModal from "../../../../components/plan/RegenAskModal.jsx";
-import SelectionCard from "../../../../components/plan/SelectionCard.jsx";
+import PlaceDetailModal from "../../../../components/plan/PlaceDetailModal.jsx";
 import TimeEditModal from "../../../../components/plan/TimeEditModal.jsx";
 
 // 체류 계획 탭이 띄우는 모달·오버레이를 한데 모았다. ScheduleTab.jsx가 300줄
 // 규칙을 넘겨서(CLAUDE.md) 떼어낸 것이고, 마크업·동작은 옮기기 전 그대로다.
 export default function ScheduleModals({
   selection,
+  selectionTypeId,
   onCloseSelection,
   timeEdit,
   setTimeEdit,
@@ -16,8 +21,10 @@ export default function ScheduleModals({
   day,
   rtPicker,
   setRtPicker,
-  pickerMine,
-  pickerPlaces,
+  savedUtilities,
+  theme,
+  cuisine,
+  listings,
   setPick,
   openCustomForm,
   cf,
@@ -29,6 +36,18 @@ export default function ScheduleModals({
   regenKeep,
   regenAll,
 }) {
+  // 대체 장소 후보는 모달을 열었을 때만 필요해서 여기서 만든다.
+  const pickerMine = getPickerMine(savedUtilities, listings);
+  const pickerPlaces = rtPicker
+    ? getSlotPoolOptions({
+        slot: rtPicker.slot,
+        dinner: rtPicker.dinner,
+        theme,
+        cuisine,
+        listings,
+      })
+    : [];
+
   return (
     <>
       <PickerModal
@@ -67,12 +86,21 @@ export default function ScheduleModals({
         onCancel={() => setCf(null)}
       />
 
-      <RegenAskModal open={regenAsk} onKeep={regenKeep} onAll={regenAll} onCancel={() => setRegenAsk(false)} />
+      <RegenAskModal
+        open={regenAsk}
+        onKeep={regenKeep}
+        onAll={regenAll}
+        onCancel={() => setRegenAsk(false)}
+      />
 
-      {/* 지도 핀을 누르면 뜨는 상세 카드. 최종 계획 화면과 같은 컴포넌트를
-          쓴다 — 원본은 핀 위에 정보 카드를 띄웠는데 주소가 길어 넘치고
-          같은 내용이 두 번 보였다(RouteMarker.jsx 주석 참고). */}
-      <SelectionCard selection={selection} onClose={onCloseSelection} />
+      {/* 지도 핀·타임라인 카드를 누르면 뜨는 상세. 최종 계획 화면과 같은
+          컴포넌트를 쓴다 — 원본은 핀 위에 정보 카드를 띄웠는데 주소가 길어
+          넘치고 같은 내용이 두 번 보였다(RouteMarker.jsx 주석 참고). */}
+      <PlaceDetailModal
+        selection={selection}
+        contentTypeId={selectionTypeId}
+        onClose={onCloseSelection}
+      />
 
       <TimeEditModal
         open={!!timeEdit}

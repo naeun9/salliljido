@@ -27,12 +27,12 @@ export function buildRoutePins(items) {
 //  화면 문구도 원본 그대로 "이동 약 N"이다.)
 //
 // 지도 핀(at)과 타임라인 항목(mapX/mapY) 양쪽을 다 받는다.
-export function routeDistanceMeters(items) {
+function routeDistanceMeters(items) {
   const points = (items || []).map((s) => s.at || toLatLng(s)).filter(Boolean);
   return points.length < 2 ? 0 : pathLength(points);
 }
 
-export function formatDistance(meters) {
+function formatDistance(meters) {
   if (!meters) return "0km";
   if (meters < 1000) return "1km 미만";
   return `${Math.round(meters / 1000)}km`;

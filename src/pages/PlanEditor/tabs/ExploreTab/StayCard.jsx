@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CardThumb from "./CardThumb.jsx";
+import { visitKoreaSearchUrl } from "../../../../utils/externalLinks.js";
 import styles from "./StayCard.module.css";
 
 // design/salliljido.extracted.html 1052-1067줄.
@@ -150,13 +151,17 @@ export default function StayCard({
           </>
         )}
 
+        {/* design은 모든 숙소가 visitkorea 메인으로 가는 링크였다(어느
+            숙소를 눌러도 같은 곳). contentId로 그 숙소의 구석구석 검색
+            결과로 보낸다. 문구도 실제 목적지에 맞게 고쳤다 — 관광공사
+            소개 페이지지 예약 사이트가 아니다(utils/externalLinks.js). */}
         <a
-          href="https://www.visitkorea.or.kr"
+          href={visitKoreaSearchUrl(stay.name)}
           target="_blank"
           rel="noopener"
           className={styles.link}
         >
-          예약 사이트에서 보기
+          구석구석에서 보기
           <svg width="12" height="12" viewBox="0 0 13 13" fill="none">
             <path
               d="M4.6 2h6.4v6.4"

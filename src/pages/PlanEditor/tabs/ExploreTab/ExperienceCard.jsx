@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CardThumb from "./CardThumb.jsx";
+import DayPicker, { dayConfirmLabel, pickerDayCount } from "./DayPicker.jsx";
 import styles from "./ExperienceCard.module.css";
 
 // design/salliljido.extracted.html 1086-1114줄, 2577-2616줄(계산식).
@@ -28,11 +29,7 @@ export default function ExperienceCard({
     priceDraft ?? (currentPrice === undefined ? "" : String(currentPrice));
 
   const btnLabel = added ? `추가됨 · ${currentDay}일차` : "내 계획에 추가";
-  const confirmLabel = added
-    ? resolvedDraft === currentDay
-      ? "계획에서 빼기"
-      : `${resolvedDraft}일차로 옮기기`
-    : `${resolvedDraft}일차에 넣기`;
+  const confirmLabel = dayConfirmLabel(added, resolvedDraft, currentDay);
 
   function handleToggle() {
     setDraft(null);
@@ -51,7 +48,7 @@ export default function ExperienceCard({
     setPriceDraft(null);
   }
 
-  const dayCount = Math.min(durDays, 8);
+  const dayCount = pickerDayCount(durDays);
 
   return (
     <div
@@ -101,29 +98,19 @@ export default function ExperienceCard({
               )}
               {btnLabel}
             </button>
-            <div
-              className={`${styles.picker} ${pickerOpen ? styles.open : ""}`}
+            <DayPicker
+              open={pickerOpen}
+              dayCount={dayCount}
+              value={resolvedDraft}
+              onChange={setDraft}
+              confirmLabel={confirmLabel}
+              onConfirm={handleConfirm}
             >
-              <span className={styles.pickerLabel}>몇 일차에 넣을까요?</span>
-              <div className={styles.dayOptions}>
-                {Array.from({ length: dayCount }, (_, i) => {
-                  const n = i + 1;
-                  return (
-                    <button
-                      key={n}
-                      type="button"
-                      className={`${styles.dayOption} ${resolvedDraft === n ? styles.selected : ""}`}
-                      onClick={() => setDraft(n)}
-                    >
-                      {n}일차
-                    </button>
-                  );
-                })}
-              </div>
-              {/* design에는 없는 입력이다. 관광공사 API에 체험 참가비가 없어서
-              (docs/03-api-check.md §14) 예상 비용 탭의 체험비를 채우려면
-              사용자가 직접 넣는 수밖에 없다. 선택 입력이라 비워두면 0원으로
-              잡히고, 나중에 예상 비용 탭에서도 고칠 수 있다. */}
+              {/* design에는 없는 추가 입력(참가비). 관광공사 API에 체험
+                  참가비가 없어서(docs/03-api-check.md §14) 예상 비용 탭의
+                  체험비를 채우려면 사용자가 직접 넣는 수밖에 없다. 선택
+                  입력이라 비워두면 0원으로 잡히고, 나중에 예상 비용 탭에서도
+                  고칠 수 있다. */}
               <label className={styles.priceRow}>
                 <span className={styles.priceLabel}>참가비 (선택)</span>
                 <span className={styles.priceInputWrap}>
@@ -139,14 +126,7 @@ export default function ExperienceCard({
                   <span className={styles.priceUnit}>원</span>
                 </span>
               </label>
-              <button
-                type="button"
-                className={styles.pickerConfirm}
-                onClick={handleConfirm}
-              >
-                {confirmLabel}
-              </button>
-            </div>
+            </DayPicker>
           </>
         )}
       </div>

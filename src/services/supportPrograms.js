@@ -34,7 +34,7 @@ export function asOfLabel() {
 
 // city("강원 정선군") 앞 두 글자가 지역 필터 값이 된다. 예전에는 region을
 // 데이터에 따로 적었는데 city와 어긋날 수 있어서 파생값으로 바꿨다.
-export function regionOf(city) {
+function regionOf(city) {
   return (city || "").slice(0, 2);
 }
 

@@ -10,14 +10,11 @@ import { buildPlanRecord } from "../../../utils/planSnapshot.js";
 import {
   won,
   resolveStaySegments,
-  computeCostBreakdown,
-  buildCostBars,
+  computePlanCost,
   DEFAULT_STAY_SEGMENT_RATE,
 } from "../../../utils/cost.js";
-import {
-  findListing,
-  findListingName,
-} from "../../../services/exploreListings.js";
+import { findListingName } from "../../../services/exploreListings.js";
+import { buildExperienceRows } from "../../../services/experienceRows.js";
 import NameDialog from "../../../components/plan/NameDialog.jsx";
 import StaySection from "./CostTab/StaySection.jsx";
 import FoodSection from "./CostTab/FoodSection.jsx";
@@ -54,53 +51,18 @@ export default function CostTab({ region, openedPlanId }) {
   );
 
   // 참가비는 관광공사 API에 없어서 사용자가 넣은 값을 쓴다
-  // (안 넣었으면 0원, docs/03-api-check.md §14).
-  const experienceRows = plan.addedExperiences
-    .map((id) => {
-      const x = findListing(listings, "체험 프로그램", id);
-      return x
-        ? {
-            id: x.id,
-            name: x.name,
-            type: x.type,
-            price: plan.experiencePrices[id],
-          }
-        : null;
-    })
-    .filter(Boolean);
+  // (안 넣었으면 0원, docs/03-api-check.md §14). 줄은 담은 id 전부를
+  // 그리고, 목록에서 못 찾은 것은 "정보 없음"으로 둔다 — 금액 계산과
+  // 화면 줄이 같은 기준이어야 최종 계획 화면과 금액이 갈리지 않는다.
+  const experienceRows = buildExperienceRows(
+    plan.addedExperiences,
+    plan.experiencePrices,
+    listings,
+  );
 
-  const breakdown = computeCostBreakdown({
-    nights,
-    nightly: plan.nightly,
-    staySplit: plan.staySplit,
-    staySegs: plan.staySegs,
-    foodStyle: plan.foodStyle,
-    foodManual: plan.foodManual,
-    foodPer: plan.foodPer,
-    tripManualTotal: plan.tripManualTotal,
-    tripExtraTotal: plan.tripExtraTotal,
-    foodByDay: plan.foodByDay,
-    foodDaily: plan.foodDaily,
-    experienceRows,
-    etcRows: plan.etcRows,
-    rtCustom: plan.rtCustom,
-    rtPick: plan.rtPick,
-  });
+  // 합계·막대 계산은 최종 계획 화면과 공유한다(utils/cost.js computePlanCost).
+  const { breakdown, bars } = computePlanCost({ plan, nights });
   const { stay, food, trip, exp, etc, total, cookedCount } = breakdown;
-
-  // 막대 계산은 최종 계획 화면과 공유한다(utils/cost.js buildCostBars).
-  const bars = buildCostBars({
-    breakdown,
-    nights,
-    nightly: plan.nightly,
-    staySplit: plan.staySplit,
-    foodStyle: plan.foodStyle,
-    foodManual: plan.foodManual,
-    foodPer: plan.foodPer,
-    foodByDay: plan.foodByDay,
-    foodDaily: plan.foodDaily,
-    experienceCount: experienceRows.length,
-  });
 
   const cbChips = [region.name, `${nights}일`, plan.themes[0] || "힐링"];
   const planSummary = `${region.name} · ${nights}일 · ${plan.themes.length ? plan.themes.join(", ") : "테마 전체"}`;
