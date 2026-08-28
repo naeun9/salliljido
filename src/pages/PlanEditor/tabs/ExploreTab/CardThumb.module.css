@@ -1,0 +1,17 @@
+/* 사진이 없는 항목의 자리 표시. design은 빗금 스와치 + 모노스페이스
+   "image" 라벨이었는데, 실데이터에서는 사진 없는 항목이 15~20%라
+   무슨 뜻인지 알 수 있게 문구로 바꿨다. 주변 보조 문구와 같은 톤. */
+.pending {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 11.5px;
+  line-height: 1.35;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--gray);
+  text-align: center;
+}

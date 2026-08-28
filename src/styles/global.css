@@ -18,19 +18,37 @@ html {
   scroll-snap-type: y proximity;
 }
 
+/* 모바일에서는 스냅을 끈다. 손가락 스크롤은 관성이 있어서 스냅이 끼면
+   손을 뗀 뒤 화면이 한 번 더 끌려가는 느낌이 나고, 좁은 화면에서는
+   섹션 하나가 뷰포트보다 훨씬 길어 스냅 지점이 오히려 방해가 된다.
+   기준 폭은 design의 narrow(760px)와 같다. */
+@media (max-width: 759px) {
+  html {
+    scroll-snap-type: none;
+  }
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
   background: #faf8f4;
-  /* design 39줄: 원본은 화면 전체를 감싸는 스크롤 컨테이너
-     (`[data-scroll-root]`, height:100vh; overflow-y:auto)에
-     `overflow-x: hidden`을 걸어 뒀다. 여기서는 문서 자체가 스크롤
-     컨테이너라 html·body에 같은 값을 준다.
+}
 
-     이게 없으면 어떤 화면이든 콘텐츠가 뷰포트보다 넓어질 때 문서 폭이
-     같이 늘어나고, position:fixed인 헤더까지 그 폭을 따라가 햄버거
-     버튼이 화면 밖으로 밀린다(390px에서 /find는 헤더가 1015px가 됐다). */
+/* design 39줄: 원본은 화면 전체를 감싸는 스크롤 컨테이너
+   (`[data-scroll-root]`, height:100vh; overflow-y:auto)에
+   `overflow-x: hidden`을 걸어 뒀다. 여기서는 문서 자체가 스크롤
+   컨테이너라 같은 값을 html에 준다.
+
+   이게 없으면 어떤 화면이든 콘텐츠가 뷰포트보다 넓어질 때 문서 폭이
+   같이 늘어나고, position:fixed인 헤더까지 그 폭을 따라가 햄버거
+   버튼이 화면 밖으로 밀린다(390px에서 /find는 헤더가 1015px가 됐다).
+
+   body에는 주지 않는다. body에 overflow가 걸리면 body가 스크롤
+   컨테이너가 되는데 실제로 스크롤되는 건 뷰포트라, 안쪽
+   position:sticky(지도·비용 요약 사이드바)가 붙지 않는다.
+   html에만 걸면 뷰포트로 전파돼서 가로 잘림은 그대로 유지된다. */
+html {
   overflow-x: hidden;
 }
 

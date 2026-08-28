@@ -21,7 +21,7 @@ import RegionGlance from "./PlanOverview/RegionGlance.jsx";
 import FullSchedule from "./PlanOverview/FullSchedule.jsx";
 import CostSummary from "./PlanOverview/CostSummary.jsx";
 import SupportSection from "./PlanOverview/SupportSection.jsx";
-import SelectionCard from "./PlanOverview/SelectionCard.jsx";
+import SelectionCard from "../components/plan/SelectionCard.jsx";
 import styles from "./PlanOverview.module.css";
 
 // design/salliljido.extracted.html 1446-1695줄(Overview 화면),

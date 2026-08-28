@@ -116,3 +116,17 @@
     var(--map-tile-dark) 14px 28px
   );
 }
+
+/* 그날 묵는 숙소 핀. 최종 계획 화면의 중심 핀(RegionGlance .centerPinInner)과
+   같은 모양·크기를 쓰되, 번호 핀보다 뒤에 놓이도록 조금 작게 뒀다. */
+.stayPin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid var(--cream);
+  background: var(--forest);
+  box-shadow: 0 6px 14px -8px rgba(43, 43, 41, 0.6);
+}

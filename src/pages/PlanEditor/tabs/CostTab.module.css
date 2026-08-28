@@ -1,6 +1,7 @@
 /* design/salliljido.extracted.html 1228-1443줄 */
 .section {
-  padding: clamp(32px, 4.5vh, 48px) clamp(20px, 5vw, 64px) clamp(64px, 9vh, 96px);
+  padding: clamp(32px, 4.5vh, 48px) clamp(20px, 5vw, 64px)
+    clamp(64px, 9vh, 96px);
 }
 .inner {
   max-width: 1180px;
@@ -183,4 +184,29 @@
   font-size: 15px;
   font-weight: 600;
   color: var(--ink);
+}
+
+/* design에 없던 보조 입력 줄(추가 교통비). 같은 카드 안 라벨·입력과
+   같은 값을 쓰되 한 단계 아래로 보이게 라벨을 왼쪽에 붙였다. */
+.subField {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+}
+.subLabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gray);
+}
+
+/* 예상 비용 탭 하단 출처 표기. 크기·색은 둘러보기 탭 .ctaSource와 같다. */
+.source {
+  margin: 20px 0 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--gray);
 }

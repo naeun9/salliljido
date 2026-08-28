@@ -3,7 +3,10 @@ import { useSearch } from "../hooks/useSearch.js";
 import { useSaved } from "../hooks/useSaved.js";
 import { useAuth } from "../hooks/useAuth.js";
 import { useConfirm } from "../hooks/useConfirm.js";
-import { getRegionByShort, getRegionInsights } from "../services/regionRecommend.js";
+import {
+  getRegionByShort,
+  getRegionInsights,
+} from "../services/regionRecommend.js";
 import { resolveStayCondition } from "../utils/date.js";
 import { hasJong } from "../utils/korean.js";
 import RegionNotFound from "../components/region/RegionNotFound.jsx";
@@ -52,9 +55,17 @@ export default function RegionIntro() {
 
   // design dtToggleSave(4409322줄): 로그인 필요 + 저장 해제 시에만 확인창.
   function toggleSave() {
-    if (!requireAuth("저장하려면 로그인이 필요해요", "이 지역을 마이페이지에 담아 두려면 로그인해 주세요.")) return;
+    if (
+      !requireAuth(
+        "저장하려면 로그인이 필요해요",
+        "이 지역을 마이페이지에 담아 두려면 로그인해 주세요.",
+      )
+    )
+      return;
     if (isSaved) {
-      ask("저장한 지역에서 뺄까요?", region.name, () => saved.toggleRegion(region.short));
+      ask("저장한 지역에서 뺄까요?", region.name, () =>
+        saved.toggleRegion(region.short),
+      );
       return;
     }
     saved.toggleRegion(region.short);
@@ -88,7 +99,11 @@ export default function RegionIntro() {
         onBack={() => navigate("/find/result")}
       />
 
-      <section data-in-reveal style={{ animationDelay: ".18s" }} className={styles.about}>
+      <section
+        data-in-reveal
+        style={{ animationDelay: ".18s" }}
+        className={styles.about}
+      >
         <div className={styles.aboutInner}>
           <div className={styles.aboutText}>
             <div className={styles.aboutEyebrow}>ABOUT</div>
@@ -101,16 +116,33 @@ export default function RegionIntro() {
 
       <section className={styles.cta}>
         <div className={styles.ctaInner}>
-          {/* design 3067줄: 둘러보기 탭(dtTab=2)으로 들어간다. 지역은
-              PlanEditor도 같은 URL 파라미터 패턴(/plan/:regionId)으로 받고,
-              기간·라이프스타일은 이미 앱 전역에 있는 SearchContext를 그대로
-              읽으면 되므로 이 화면에서 PlanContext로 따로 넘길 값은 없다. */}
-          <button type="button" className={styles.ctaBtn} onClick={() => navigate(`/plan/${regionId}`)}>
-            <span className={styles.ctaArrow}>여기서 지내보기 →</span>
-          </button>
+          {/* design 3067줄: 계획 화면(/plan/:regionId)으로 들어간다. 지역은
+              PlanEditor도 같은 URL 파라미터 패턴으로 받고, 기간·라이프스타일은
+              이미 앱 전역에 있는 SearchContext를 그대로 읽으면 되므로 이
+              화면에서 PlanContext로 따로 넘길 값은 없다.
+
+              원본은 버튼이 하나("여기서 지내보기")뿐이라 계획을 짜러 갈
+              생각이 없는 사람도 같은 문을 지나야 했다. 먼저 뭐가 있는지만
+              보고 싶은 길(둘러보기 탭)을 보조 버튼으로 따로 냈다. */}
+          <div className={styles.ctaRow}>
+            <button
+              type="button"
+              className={styles.ctaSubBtn}
+              onClick={() => navigate(`/region/${regionId}/explore`)}
+            >
+              이 지역 둘러보기
+            </button>
+            <button
+              type="button"
+              className={styles.ctaBtn}
+              onClick={() => navigate(`/plan/${regionId}?tab=schedule`)}
+            >
+              <span className={styles.ctaArrow}>이 지역에서 지내보기 →</span>
+            </button>
+          </div>
           <p className={styles.ctaFootnote}>
-            관광 정보 ⓒ한국관광공사 · 인구감소지역 지정 현황 · 행정안전부 · 비용은 공개 자료를
-            바탕으로 한 추정치입니다.
+            관광 정보 ⓒ한국관광공사 · 인구감소지역 지정 현황 · 행정안전부 ·
+            비용은 공개 자료를 바탕으로 한 추정치입니다.
           </p>
         </div>
       </section>

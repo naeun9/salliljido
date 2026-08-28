@@ -71,7 +71,7 @@
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 0;
   padding: 13px 15px;
   border-radius: var(--radius-card);
   background: var(--cream);
@@ -79,15 +79,12 @@
     border-color 0.25s ease,
     background 0.25s ease;
 }
-.swatch {
-  flex: 0 0 62px;
-  min-width: 56px;
-  height: 58px;
-  border-radius: 9px;
-}
+/* design 900줄의 62×58 스와치(사진 자리)를 뺐다. 둘러보기 카드와 달리
+   여기는 사진을 그린 적이 없어 늘 빈 색 블록만 자리를 차지했다.
+   가로 gap(14px)도 함께 없어지므로 본문이 카드 폭을 그대로 쓴다. */
 .body {
-  flex: 1 1 200px;
-  min-width: 170px;
+  flex: 1 1 100%;
+  min-width: 0;
 }
 .head {
   display: flex;
@@ -120,10 +117,15 @@
   white-space: nowrap;
 }
 
+/* design 918줄은 세로 쌓기(column)였다. 사진 자리를 빼면서 가로 공간이
+   생겼고 "시간" 버튼도 늘어 세로로 세 개까지 쌓이자 카드가 불필요하게
+   길어져서, 자리가 있으면 한 줄로 눕도록 바꿨다(좁으면 원본처럼 접힌다).
+   버튼 자체의 크기·색은 그대로다. */
 .actions {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
   gap: 8px;
   margin-top: 12px;
 }

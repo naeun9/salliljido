@@ -7,6 +7,7 @@ import Home from "./pages/Home.jsx";
 import RegionSearch from "./pages/RegionSearch.jsx";
 import RegionResult from "./pages/RegionResult.jsx";
 import RegionIntro from "./pages/RegionIntro.jsx";
+import RegionExplore from "./pages/RegionExplore.jsx";
 import PlanEditor from "./pages/PlanEditor.jsx";
 import PlanOverview from "./pages/PlanOverview.jsx";
 import SupportPrograms from "./pages/SupportPrograms.jsx";
@@ -30,8 +31,16 @@ export default function App() {
                 <Route path="/find" element={<RegionSearch />} />
                 <Route path="/find/result" element={<RegionResult />} />
                 <Route path="/region/:regionId" element={<RegionIntro />} />
+                {/* 계획을 만들지 않고 지역만 둘러보는 화면 */}
+                <Route
+                  path="/region/:regionId/explore"
+                  element={<RegionExplore />}
+                />
                 <Route path="/plan/:regionId" element={<PlanEditor />} />
-                <Route path="/plan/:regionId/overview" element={<PlanOverview />} />
+                <Route
+                  path="/plan/:regionId/overview"
+                  element={<PlanOverview />}
+                />
                 <Route path="/support" element={<SupportPrograms />} />
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/login" element={<Login />} />

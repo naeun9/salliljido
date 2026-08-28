@@ -102,3 +102,11 @@
   color: var(--gray);
   cursor: pointer;
 }
+
+/* 시간 수정 모달(TimeEditModal)의 안내 한 줄. 같은 모달 안 라벨과 같은 톤. */
+.timeHint {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--gray);
+}

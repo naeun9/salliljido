@@ -19,11 +19,13 @@ export default function ExperienceCard({
   pickerOpen,
   onTogglePicker,
   onConfirm,
+  readOnly = false,
 }) {
   const [draft, setDraft] = useState(null);
   const [priceDraft, setPriceDraft] = useState(null);
   const resolvedDraft = Math.min(draft ?? currentDay ?? 1, durDays);
-  const resolvedPrice = priceDraft ?? (currentPrice === undefined ? "" : String(currentPrice));
+  const resolvedPrice =
+    priceDraft ?? (currentPrice === undefined ? "" : String(currentPrice));
 
   const btnLabel = added ? `추가됨 · ${currentDay}일차` : "내 계획에 추가";
   const confirmLabel = added
@@ -40,7 +42,10 @@ export default function ExperienceCard({
 
   function handleConfirm() {
     // 빈 칸이면 undefined로 넘겨 "입력 안 함"을 유지한다(0원과 구분).
-    const price = resolvedPrice === "" ? undefined : Math.max(0, parseInt(resolvedPrice, 10) || 0);
+    const price =
+      resolvedPrice === ""
+        ? undefined
+        : Math.max(0, parseInt(resolvedPrice, 10) || 0);
     onConfirm(resolvedDraft, price);
     setDraft(null);
     setPriceDraft(null);
@@ -55,7 +60,11 @@ export default function ExperienceCard({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <CardThumb item={experience} imageClass={styles.image} tagClass={styles.imageTag} />
+      <CardThumb
+        item={experience}
+        imageClass={styles.image}
+        tagClass={styles.imageTag}
+      />
       <div className={styles.body}>
         <div className={styles.head}>
           <h3 className={styles.name}>{experience.name}</h3>
@@ -71,58 +80,75 @@ export default function ExperienceCard({
             <span className={styles.cost}>{experience.cost}</span>
           </div>
         )}
-        <button
-          type="button"
-          className={`${styles.toggleBtn} ${added ? styles.added : ""}`}
-          onClick={handleToggle}
-        >
-          {added && (
-            <svg width="18" height="18" viewBox="0 0 13 13" fill="none">
-              <path d="M2 7l3 3 6-6.5" stroke="#2F5D50" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          )}
-          {btnLabel}
-        </button>
-        <div className={`${styles.picker} ${pickerOpen ? styles.open : ""}`}>
-          <span className={styles.pickerLabel}>몇 일차에 넣을까요?</span>
-          <div className={styles.dayOptions}>
-            {Array.from({ length: dayCount }, (_, i) => {
-              const n = i + 1;
-              return (
-                <button
-                  key={n}
-                  type="button"
-                  className={`${styles.dayOption} ${resolvedDraft === n ? styles.selected : ""}`}
-                  onClick={() => setDraft(n)}
-                >
-                  {n}일차
-                </button>
-              );
-            })}
-          </div>
-          {/* design에는 없는 입력이다. 관광공사 API에 체험 참가비가 없어서
+        {/* 계획 없이 둘러보는 화면에서는 담기·일차 선택을 감춘다(readOnly). */}
+        {!readOnly && (
+          <>
+            <button
+              type="button"
+              className={`${styles.toggleBtn} ${added ? styles.added : ""}`}
+              onClick={handleToggle}
+            >
+              {added && (
+                <svg width="18" height="18" viewBox="0 0 13 13" fill="none">
+                  <path
+                    d="M2 7l3 3 6-6.5"
+                    stroke="#2F5D50"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              )}
+              {btnLabel}
+            </button>
+            <div
+              className={`${styles.picker} ${pickerOpen ? styles.open : ""}`}
+            >
+              <span className={styles.pickerLabel}>몇 일차에 넣을까요?</span>
+              <div className={styles.dayOptions}>
+                {Array.from({ length: dayCount }, (_, i) => {
+                  const n = i + 1;
+                  return (
+                    <button
+                      key={n}
+                      type="button"
+                      className={`${styles.dayOption} ${resolvedDraft === n ? styles.selected : ""}`}
+                      onClick={() => setDraft(n)}
+                    >
+                      {n}일차
+                    </button>
+                  );
+                })}
+              </div>
+              {/* design에는 없는 입력이다. 관광공사 API에 체험 참가비가 없어서
               (docs/03-api-check.md §14) 예상 비용 탭의 체험비를 채우려면
               사용자가 직접 넣는 수밖에 없다. 선택 입력이라 비워두면 0원으로
               잡히고, 나중에 예상 비용 탭에서도 고칠 수 있다. */}
-          <label className={styles.priceRow}>
-            <span className={styles.priceLabel}>참가비 (선택)</span>
-            <span className={styles.priceInputWrap}>
-              <input
-                type="number"
-                min="0"
-                inputMode="numeric"
-                className={styles.priceInput}
-                value={resolvedPrice}
-                placeholder="0"
-                onChange={(e) => setPriceDraft(e.target.value)}
-              />
-              <span className={styles.priceUnit}>원</span>
-            </span>
-          </label>
-          <button type="button" className={styles.pickerConfirm} onClick={handleConfirm}>
-            {confirmLabel}
-          </button>
-        </div>
+              <label className={styles.priceRow}>
+                <span className={styles.priceLabel}>참가비 (선택)</span>
+                <span className={styles.priceInputWrap}>
+                  <input
+                    type="number"
+                    min="0"
+                    inputMode="numeric"
+                    className={styles.priceInput}
+                    value={resolvedPrice}
+                    placeholder="0"
+                    onChange={(e) => setPriceDraft(e.target.value)}
+                  />
+                  <span className={styles.priceUnit}>원</span>
+                </span>
+              </label>
+              <button
+                type="button"
+                className={styles.pickerConfirm}
+                onClick={handleConfirm}
+              >
+                {confirmLabel}
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

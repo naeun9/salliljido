@@ -4,6 +4,18 @@
   min-width: 300px;
   position: sticky;
   top: 132px;
+  /* design은 .grid에 wrap-reverse를 줘서 좁은 화면에서 요약이 본문 위로
+     오게 했다. 그런데 wrap-reverse는 교차축을 뒤집기 때문에 .grid의
+     align-items:flex-start가 실제로는 "아래 정렬"로 동작해, 요약 카드가
+     본문 아래끝에 붙어 sticky가 거의 걸리지 않았다(스크롤 끝에서만 잠깐).
+     뒤집힌 축에서 위쪽은 flex-end다. */
+  align-self: flex-end;
+}
+/* 한 칸으로 접히면 요약이 본문 위에 오므로 고정하지 않는다(데스크톱만). */
+@media (max-width: 939px) {
+  .sidebar {
+    position: static;
+  }
 }
 .card {
   padding: 24px 24px 26px;
@@ -105,23 +117,4 @@
 .saveBtn:hover {
   background: var(--terracotta-strong);
   color: var(--cream);
-}
-.supportBtn {
-  height: 48px;
-  border-radius: var(--radius-card);
-  border: 1px solid var(--forest);
-  background: transparent;
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--forest);
-  cursor: pointer;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
-}
-.supportBtn:hover {
-  background: var(--forest);
-  color: var(--paper);
 }

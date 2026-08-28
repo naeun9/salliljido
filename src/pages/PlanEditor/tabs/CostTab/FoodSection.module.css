@@ -56,3 +56,71 @@
   gap: 12px;
   margin-top: 16px;
 }
+
+/* design에 없던 "하루마다 예산 짜기" 입력칸. 같은 카드 안 직접 입력
+   칸(.inputRow)의 크기·모서리·색을 그대로 가져왔다. */
+.dayGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+}
+.dayField {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.dayLabel {
+  flex: 0 0 auto;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray);
+}
+.dayInputWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--paper);
+}
+.dayInput {
+  width: 62px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: right;
+  color: var(--ink);
+  outline: none;
+}
+.dayInput::-webkit-outer-spin-button,
+.dayInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.dayUnit {
+  font-size: 13.5px;
+  color: var(--gray);
+}
+.dayMore {
+  grid-column: 1 / -1;
+  justify-self: center;
+  height: 32px;
+  padding: 0 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--cream);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray);
+  cursor: pointer;
+}

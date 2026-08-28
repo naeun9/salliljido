@@ -21,6 +21,8 @@ export default function Timeline({
   onInsertBefore,
   onSwapItem,
   onDeleteCustom,
+  onEditTime,
+  stayName,
   onSetCuisine,
   onToggleCuisineMenu,
 }) {
@@ -41,6 +43,19 @@ export default function Timeline({
           일정 추가
         </button>
       </div>
+
+      {/* 그날 묵는 숙소. design에는 없던 줄이다 — 둘러보기에서 숙소를
+          기간으로 담을 수 있게 되면서, 그날 어디서 자는지가 일정 위에
+          한 줄로 보이는 편이 자연스럽다. 동선(경로선·이동거리)에는
+          넣지 않는다(매일 오가는 곳이라 거리가 왜곡된다). */}
+      {stayName && (
+        <div className={styles.stayRow}>
+          <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
+            <path d="M3 8.2 9 3.2l6 5V15H3z" stroke="#2F5D50" strokeWidth="1.5" strokeLinejoin="round" />
+          </svg>
+          오늘 묵는 곳 · {stayName}
+        </div>
+      )}
 
       <div className={`${styles.hint} ${showHint ? styles.visible : ""}`}>
         <p className={styles.hintText}>
@@ -74,6 +89,7 @@ export default function Timeline({
               onInsertBefore={() => onInsertBefore(item.slot)}
               onSwap={() => onSwapItem(item, i)}
               onDelete={() => onDeleteCustom(item.cid)}
+              onEditTime={() => onEditTime(item)}
               onSetCuisine={onSetCuisine}
               onToggleCuisineMenu={onToggleCuisineMenu}
             />

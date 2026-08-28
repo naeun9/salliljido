@@ -1,0 +1,26 @@
+/* 둘러보기 전용 화면 헤더. 값은 계획 화면 배너(design 752-789줄)와 같아야
+   하므로 새로 쓰지 않고 composes로 그대로 가져온다. 다른 점은 제목이
+   버튼이 아니라 h1이라는 것뿐이다(이름 바꾸기가 없다). */
+.header {
+  composes: banner from "./PlanEditor/Banner.module.css";
+}
+.texture {
+  composes: texture from "./PlanEditor/Banner.module.css";
+}
+.overlay {
+  composes: overlay from "./PlanEditor/Banner.module.css";
+}
+.row {
+  composes: row from "./PlanEditor/Banner.module.css";
+}
+.left {
+  composes: left from "./PlanEditor/Banner.module.css";
+}
+.backBtn {
+  composes: backBtn from "./PlanEditor/Banner.module.css";
+}
+.title {
+  composes: title from "./PlanEditor/Banner.module.css";
+  margin-top: 14px; /* 배너의 .titleRow가 주던 간격 */
+  cursor: default;
+}

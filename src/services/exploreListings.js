@@ -158,6 +158,12 @@ export function findListing(listings, category, id) {
 // 카테고리를 모를 때 id로만 찾는다. 체류 계획의 "추천 장소"는 오전 카페·
 // 오후 관광지·저녁 식당이 섞여 있어 어느 카테고리에서 왔는지 저장하지
 // 않는다(id 하나만 담는다 — CLAUDE.md 보안 규칙).
+// 이름만 필요할 때(비용 탭의 숙박 구간 라벨 등). 못 찾으면 빈 문자열.
+export function findListingName(listings, category, id) {
+  const hit = findListing(listings, category, id);
+  return hit ? hit.name : "";
+}
+
 export function findListingAnywhere(listings, id) {
   for (const category of CATEGORIES) {
     const hit = findListing(listings, category, id);

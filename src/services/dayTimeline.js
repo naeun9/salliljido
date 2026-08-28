@@ -16,6 +16,30 @@ import {
 import { findListing, findListingAnywhere } from "./exploreListings.js";
 
 const SLOTS = ["오전", "오후", "저녁"];
+
+// design 2007-2009줄(submitCustom): 시작 시각의 시(hour)로 슬롯을 정한다.
+// 직접 추가한 일정에만 쓰던 규칙인데, 시간을 고칠 수 있게 되면서 자동
+// 생성 슬롯·담은 체험에도 같은 규칙을 적용한다 — 저녁 시간으로 바꾸면
+// 저녁 칸으로 옮겨 가야 순서가 자연스럽다.
+function slotOfStart(start, fallback) {
+  const hour = start ? parseInt(String(start).split(":")[0], 10) : NaN;
+  if (Number.isNaN(hour)) return fallback;
+  return hour < 12 ? "오전" : hour < 18 ? "오후" : "저녁";
+}
+
+// 사용자가 고친 시간이 있으면 항목의 시간·슬롯·정렬키를 바꿔 준다.
+// timeKey는 항목마다 고정이라 슬롯이 바뀌어도 설정이 따라다닌다.
+function applyTimeOverride(item, itemTimes) {
+  const override = (itemTimes || {})[item.timeKey];
+  if (!override || !override.start) return item;
+  const label = override.start + (override.end ? ` – ${override.end}` : "");
+  return {
+    ...item,
+    time: label,
+    slot: slotOfStart(override.start, item.slot),
+    sortKey: override.start,
+  };
+}
 const SLOT_ORDER = { 오전: 0, 오후: 1, 저녁: 2 };
 export const SLOT_TIME = { 오전: "09:00 – 11:30", 오후: "13:00 – 17:00", 저녁: "18:30 – 20:30" };
 
@@ -50,7 +74,7 @@ function baseSlotChain({ upToDay, themes, meals, mealOverride, regenSeed, addedE
 // 그 지역에 후보가 없는 시간대는 generateDaySlots가 null을 주고, 여기서
 // 빼서 슬롯을 비운다 — 최종 계획 화면은 그 자리를 "비어 있는 시간"으로
 // 그린다(design 1573줄).
-function toBaseItems(slots) {
+function toBaseItems(slots, day) {
   return SLOTS.map((slot, i) =>
     slots[slot]
       ? {
@@ -60,6 +84,7 @@ function toBaseItems(slots) {
           swatch: SLOT_SWATCHES[i],
           isDinner: slot === "저녁",
           sortKey: SLOT_TIME[slot],
+          timeKey: `${day}|${slot}`,
         }
       : null
   ).filter(Boolean);
@@ -86,6 +111,7 @@ function buildAddedItems({ day, addedExperiences, experienceDays, listings }) {
       swatch: SLOT_SWATCHES[i % 3],
       mine: true,
       sortKey: EXPERIENCE_TIME_DEFAULT,
+      timeKey: `exp:${x.id}`,
     }));
 }
 
@@ -140,12 +166,15 @@ function applyPicks(items, { day, rtPick, listings }) {
 
 // 여러 갈래(자동 생성·담은 체험·직접 추가)를 시간순으로 합치고 대체
 // 장소를 덮어쓴다. 하루치와 전체 일정이 같은 조립 규칙을 쓰도록 뺐다.
-function assembleDay({ baseItems, day, addedExperiences, experienceDays, rtCustom, rtPick, listings }) {
+function assembleDay({ baseItems, day, addedExperiences, experienceDays, rtCustom, rtPick, listings, itemTimes }) {
   const merged = [
     ...baseItems,
     ...buildAddedItems({ day, addedExperiences, experienceDays, listings }),
     ...buildCustomItems({ day, rtCustom }),
-  ].sort((a, b) => SLOT_ORDER[a.slot] - SLOT_ORDER[b.slot] || String(a.sortKey).localeCompare(String(b.sortKey)));
+  ]
+    // 고친 시간을 반영한 뒤 정렬해야 바뀐 시간대로 자리를 옮긴다.
+    .map((item) => applyTimeOverride(item, itemTimes))
+    .sort((a, b) => SLOT_ORDER[a.slot] - SLOT_ORDER[b.slot] || String(a.sortKey).localeCompare(String(b.sortKey)));
 
   return applyPicks(merged, { day, rtPick, listings });
 }
@@ -163,6 +192,7 @@ export function buildDayTimeline({
   rtCustom,
   rtPick,
   listings,
+  itemTimes,
 }) {
   const chain = baseSlotChain({
     upToDay: day,
@@ -175,13 +205,14 @@ export function buildDayTimeline({
   });
   const today = chain[chain.length - 1];
   return assembleDay({
-    baseItems: today ? toBaseItems(today.slots) : [],
+    baseItems: today ? toBaseItems(today.slots, today.day) : [],
     day,
     addedExperiences,
     experienceDays,
     rtCustom,
     rtPick,
     listings,
+    itemTimes,
   });
 }
 
@@ -216,6 +247,7 @@ export function buildFullSchedule({
   rtCustom,
   rtPick,
   listings,
+  itemTimes,
 }) {
   // 자동 생성 슬롯은 앞 일차부터 이어져 있으므로 한 번에 만들어 나눠 쓴다.
   const chain = baseSlotChain({
@@ -230,13 +262,14 @@ export function buildFullSchedule({
 
   return chain.map(({ day, theme, slots }) => {
     const items = assembleDay({
-      baseItems: toBaseItems(slots),
+      baseItems: toBaseItems(slots, day),
       day,
       addedExperiences,
       experienceDays,
       rtCustom,
       rtPick,
       listings,
+      itemTimes,
     });
     return {
       day,

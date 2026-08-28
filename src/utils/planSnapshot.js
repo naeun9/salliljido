@@ -13,6 +13,8 @@ const PLAN_STATE_KEYS = [
   "experienceDays",
   "experiencePrices",
   "savedUtilities",
+  "savedSpots",
+  "itemTimes",
   "themes",
   "meals",
   "routineOn",
@@ -27,6 +29,9 @@ const PLAN_STATE_KEYS = [
   "foodManual",
   "foodPer",
   "tripManualTotal",
+  "tripExtraTotal",
+  "foodDaily",
+  "foodByDay",
   "etcRows",
 ];
 
@@ -36,4 +41,32 @@ export function pickPlanSnapshot(plan) {
     snapshot[key] = plan[key];
   });
   return snapshot;
+}
+
+// 마이페이지 목록에 넣을 계획 레코드. design confirmPlanName()(2438-2457줄)은
+// 카드 요약용 필드 몇 개만 저장하지만(title/region/chips/days/cost/status),
+// 저장한 계획을 다시 열었을 때 작업 내용이 그대로 복원되도록 PlanContext
+// 전체 스냅샷(data)도 함께 담는다.
+//
+// title/planSaved를 인자로 받아 스냅샷에 덮어쓰는 이유: 방금 dispatch한
+// setPlanTitle/setPlanSaved는 이 렌더에 아직 반영되기 전이라(React state는
+// 비동기) plan에서 읽으면 옛 값이 들어간다.
+export function buildPlanRecord({ id, title, plan, region, nights, cost, condition, savedAt }) {
+  const data = pickPlanSnapshot(plan);
+  data.planTitle = title;
+  data.planSaved = true;
+  return {
+    id,
+    regionShort: region.short,
+    regionName: region.name,
+    title,
+    themes: plan.themes,
+    meals: plan.meals,
+    days: nights,
+    routineOn: plan.routineOn,
+    cost,
+    condition,
+    data,
+    savedAt,
+  };
 }

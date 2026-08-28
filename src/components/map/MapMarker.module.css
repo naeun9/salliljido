@@ -11,7 +11,9 @@
   padding: 5px 11px;
   border-radius: var(--radius-pill);
   color: var(--cream);
-  font-size: 13px;
+  /* design 13px. 목업 지도는 배경이 빗금뿐이라 괜찮았는데, 실제 지도 위에는
+     카카오 지명(11~12px)이 함께 깔려서 이 라벨만 크게 튄다. 한 단계 줄였다. */
+  font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
   box-shadow: 0 6px 14px -8px rgba(43, 43, 41, 0.5);

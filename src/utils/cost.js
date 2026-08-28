@@ -1,6 +1,7 @@
 // design/salliljido.extracted.html costVals()(2266-2508줄)의 계산식을 값
-// 그대로 옮겼다. 단가 기준값은 상수로 모아뒀고, "비용 산정 기준" 패널
-// (design 2500-2506줄) 문구도 이 상수를 그대로 참조해서 값이 어긋나지 않게 했다.
+// 그대로 옮겼다. 단가 기준값은 상수로 모아뒀다.
+// (design 2500-2506줄의 "비용 산정 기준" 패널은 제거했다 — 그 패널이 쓰던
+//  wonInMan 포맷터도 함께 지웠다.)
 
 export const DEFAULT_NIGHTLY = 55000; // design state.nightly 기본값(2102줄)
 export const DEFAULT_STAY_SEGMENT_RATE = 55000;
@@ -20,21 +21,6 @@ export const COOK_SAVINGS_RATIO = 0.65;
 
 export function won(n) {
   return Math.round(n).toLocaleString("ko-KR") + "원";
-}
-
-// "비용 산정 기준" 패널이 쓰는 만/천 단위 표기(42000 → "4만 2천 원").
-// design은 이 문구를 사람이 쓴 문자열로 박아뒀는데, 그러면 위 단가 상수를
-// 바꿔도 안내 문구가 옛 금액을 그대로 말하게 된다. 상수에서 문구를 만들도록
-// 하려고 추가한 포맷터다 — 현재 세 단가(42000/30000/18000)에 대해 원래
-// 문구와 글자 하나까지 같은 결과를 낸다.
-export function wonInMan(n) {
-  const man = Math.floor(n / 10000);
-  const chun = Math.floor((n % 10000) / 1000);
-  const parts = [];
-  if (man) parts.push(`${man}만`);
-  if (chun) parts.push(`${chun}천`);
-  // 만/천 단위로 떨어지지 않는 값은 원 단위로 그대로 보여준다.
-  return parts.length ? `${parts.join(" ")} 원` : won(n);
 }
 
 // design 2272줄: 구간을 하나도 안 나눴을 때 보여줄 기본 구간(계산에도 이걸 쓴다).
@@ -58,7 +44,21 @@ export function countCookedDinners(rtPick) {
   return Object.keys(rtPick || {}).filter((k) => k.endsWith("|저녁") && rtPick[k].id === "cook").length;
 }
 
-export function calcFoodTotal({ foodStyle, foodManual, foodPer, nights, cookedCount }) {
+// 하루마다 예산을 짠 경우: 입력한 일차의 합. 안 넣은 일차는 0원으로 본다.
+export function calcFoodDailyTotal(foodDaily, nights) {
+  let total = 0;
+  for (let d = 1; d <= nights; d++) total += Number((foodDaily || {})[d]) || 0;
+  return total;
+}
+
+export function calcFoodTotal({ foodStyle, foodManual, foodPer, nights, cookedCount, foodByDay, foodDaily }) {
+  // 하루마다 예산 짜기가 켜져 있으면 그 합이 곧 식비다(요리 할인은 적용하지
+  // 않는다 — 사용자가 이미 그날 쓸 금액을 직접 정한 것이라).
+  if (foodByDay) return calcFoodDailyTotal(foodDaily, nights);
+  return calcFoodTotalAuto({ foodStyle, foodManual, foodPer, nights, cookedCount });
+}
+
+function calcFoodTotalAuto({ foodStyle, foodManual, foodPer, nights, cookedCount }) {
   const autoPer = FOOD_RATE_BY_STYLE[foodStyle] ?? FOOD_RATE_BY_STYLE.반반;
   const per = foodManual ? (foodPer === "" || foodPer === undefined ? 0 : foodPer) : autoPer;
   const cooked = Math.min(cookedCount, nights);
@@ -100,6 +100,9 @@ export function computeCostBreakdown({
   foodManual,
   foodPer,
   tripManualTotal,
+  tripExtraTotal,
+  foodByDay,
+  foodDaily,
   experienceRows,
   etcRows,
   rtCustom,
@@ -107,8 +110,10 @@ export function computeCostBreakdown({
 }) {
   const stay = calcStayTotal({ split: staySplit, nightly, nights, staySegs });
   const cookedCount = countCookedDinners(rtPick);
-  const food = calcFoodTotal({ foodStyle, foodManual, foodPer, nights, cookedCount });
-  const trip = tripManualTotal === "" || tripManualTotal === undefined ? 0 : tripManualTotal;
+  const food = calcFoodTotal({ foodStyle, foodManual, foodPer, nights, cookedCount, foodByDay, foodDaily });
+  // 왕복 + 추가 교통비(현지 이동 등)
+  const num = (v) => (v === "" || v === undefined ? 0 : Number(v) || 0);
+  const trip = num(tripManualTotal) + num(tripExtraTotal);
   const exp = calcExperienceTotal(experienceRows);
   const customItemsTotal = calcCustomItemsTotal(rtCustom);
   const etc = calcEtcTotal(etcRows, customItemsTotal);

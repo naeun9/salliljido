@@ -1,22 +1,14 @@
 import styles from "./RouteMarker.module.css";
 
-// design/salliljido.extracted.html 981-989줄. 번호 핀 + 클릭하면 열리는
-// 정보 카드. ExploreTab의 MapMarker(라벨 필+점)와는 모양이 달라 그
-// 컴포넌트를 억지로 재사용하지 않고 이 화면 전용으로 따로 만들었다.
+// design/salliljido.extracted.html 981-989줄의 번호 핀.
+//
+// 원본에는 핀 위에 뜨는 정보 카드(이름·태그·설명·주소)가 붙어 있었는데,
+// 주소가 실데이터에서 길어 176px 박스를 넘치고 화면 우하단의 상세 카드
+// (SelectionCard)와 같은 내용을 두 번 보여 줬다. 지도에는 번호만 남기고
+// 상세는 SelectionCard 한 곳에서만 보여 준다.
+//
 // 위치는 CustomOverlay가 좌표로 잡는다. 여기서는 모양만 그린다.
-export default function RouteMarker({
-  num,
-  place,
-  tag,
-  desc,
-  addr,
-  color,
-  size,
-  selected,
-  onClick,
-  onMouseEnter,
-  onMouseLeave,
-}) {
+export default function RouteMarker({ num, color, size, selected, onClick, onMouseEnter, onMouseLeave }) {
   return (
     <div
       className={styles.markerBase}
@@ -24,13 +16,10 @@ export default function RouteMarker({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className={`${styles.info} ${selected ? styles.open : ""}`}>
-        <div className={styles.infoName}>{place}</div>
-        <div className={styles.infoTag}>{tag}</div>
-        <div className={styles.infoDesc}>{desc}</div>
-        <div className={styles.infoAddr}>{addr}</div>
-      </div>
-      <span className={styles.num} style={{ width: size, height: size, background: color }}>
+      <span
+        className={`${styles.num} ${selected ? styles.selected : ""}`}
+        style={{ width: size, height: size, background: color }}
+      >
         {num}
       </span>
     </div>

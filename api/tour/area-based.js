@@ -25,6 +25,15 @@ import { callTourApi, normalizeItems } from "../_lib/tourApi.js";
 // §3 참고 — areacode/sigungucode/cat1~3는 최신 데이터일수록 비어 있는 경우가
 // 많아 화면에서 못 쓴다). 화면단은 아직 안 건드리므로 여기서는 원본 필드명을
 // 최대한 유지하면서 자주 비는 필드만 빼는 선에서 정리했다.
+// 관광공사 이미지 URL은 같은 호스트(tong.visitkorea.or.kr)인데도 항목마다
+// http와 https가 섞여서 온다(태안 30건 중 http 12 / https 12). https로
+// 서비스하는 배포 환경에서는 http 이미지가 Mixed Content로 차단돼 사진이
+// 통째로 안 나온다. 같은 URL을 https로 바꿔 부르면 200으로 정상 응답하는
+// 것을 확인하고, 여기서 프로토콜을 맞춰 준다.
+function toHttps(url) {
+  return url.startsWith("http://") ? `https://${url.slice("http://".length)}` : url;
+}
+
 function normalizeItem(raw) {
   return {
     contentId: raw.contentid,
@@ -37,7 +46,7 @@ function normalizeItem(raw) {
     lclsSystm1: raw.lclsSystm1,
     lclsSystm2: raw.lclsSystm2,
     lclsSystm3: raw.lclsSystm3,
-    image: raw.firstimage || raw.firstimage2 || "",
+    image: toHttps(raw.firstimage || raw.firstimage2 || ""),
     mapX: raw.mapx ? Number(raw.mapx) : null,
     mapY: raw.mapy ? Number(raw.mapy) : null,
     tel: raw.tel,

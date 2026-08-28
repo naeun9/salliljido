@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react";
 import Modal from "../common/Modal.jsx";
+import TimeRangeFields from "./TimeRangeFields.jsx";
 import styles from "./AddScheduleModal.module.css";
 
 // design/salliljido.extracted.html 546-594줄, 1995-2023줄(openCustomForm/submitCustom).
-const TIME_OPTIONS = [""].concat(
-  Array.from({ length: 34 }, (_, i) => {
-    const m = 6 * 60 + i * 30;
-    return `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
-  })
-);
-
+// 시작/종료 시간 입력은 TimeRangeFields로 떼어내 타임라인 시간 수정과 공유한다.
 const BLANK = { name: "", start: "", end: "", place: "", memo: "", cost: "" };
 
 export default function AddScheduleModal({ open, editing, onSubmit, onCancel }) {
@@ -49,28 +44,12 @@ export default function AddScheduleModal({ open, editing, onSubmit, onCancel }) 
               onChange={(e) => set("name", e.target.value.slice(0, 30))}
             />
           </div>
-          <div className={styles.timeRow}>
-            <div className={styles.field}>
-              <label>시작 시간</label>
-              <select value={form.start} onChange={(e) => set("start", e.target.value)}>
-                {TIME_OPTIONS.map((t) => (
-                  <option key={t || "empty"} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className={styles.field}>
-              <label>종료 시간</label>
-              <select value={form.end} onChange={(e) => set("end", e.target.value)}>
-                {TIME_OPTIONS.map((t) => (
-                  <option key={t || "empty"} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+          <TimeRangeFields
+            start={form.start}
+            end={form.end}
+            onChangeStart={(v) => set("start", v)}
+            onChangeEnd={(v) => set("end", v)}
+          />
           <div className={styles.field}>
             <label>장소</label>
             <input
