@@ -134,3 +134,20 @@
 .gapBtn:hover {
   border-color: var(--terracotta);
 }
+
+/* 그날 묵는 숙소 한 줄. design에 없던 요소라, 바로 아래 안내 문구(.hint)의
+   배경·모서리·글자 크기를 그대로 가져와 새 톤을 만들지 않았다. */
+.stayRow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--mist);
+  background: var(--cream);
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--forest);
+}

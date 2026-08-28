@@ -12,8 +12,16 @@ import styles from "./SidebarMap.module.css";
 // 지도 범위: 목록의 좌표 전체를 담도록 맞춘다. 목업이 toPercentCoords로
 // 하던 것(그 카테고리 경계에 맞춰 핀을 펼치기)과 결과가 같아서, 카테고리를
 // 바꿔도 원본과 같은 느낌으로 핀이 화면에 꽉 찬다.
+//
+// 담은 곳 마커 색. design은 "내 계획에 추가됨"을 테라코타(#D9784E)로
+// 썼는데(1223줄 범례), 체험 프로그램 카테고리 색과 같은 주황이라 지도에서
+// 둘이 구분되지 않았다. 담은 곳은 카테고리와 겹치지 않는 진한 초록으로
+// 옮기고 체크 배지를 함께 둔다(범례도 같은 색으로 맞춘다).
+export const ADDED_MARKER_COLOR = "#1F6F4A";
+
 export default function ExploreMap({
   items,
+  addedMarkers = [],
   center,
   categoryColor,
   hoveredId,
@@ -22,10 +30,18 @@ export default function ExploreMap({
   addedIds,
   fallback,
 }) {
-  const points = useMemo(
-    () => items.map((item) => ({ item, at: toLatLng(item) })).filter((p) => p.at),
-    [items]
-  );
+  // 지금 페이지 항목 + 담은 곳(카테고리가 달라도). id가 겹치면 한 번만.
+  const points = useMemo(() => {
+    const seen = new Set();
+    return items
+      .concat(addedMarkers)
+      .map((item) => ({ item, at: toLatLng(item) }))
+      .filter((p) => {
+        if (!p.at || seen.has(p.item.id)) return false;
+        seen.add(p.item.id);
+        return true;
+      });
+  }, [items, addedMarkers]);
   const bounds = useMemo(() => boundsOf(points.map((p) => p.at)), [points]);
 
   return (
@@ -34,6 +50,7 @@ export default function ExploreMap({
       {points.map(({ item, at }) => {
         const hot = hoveredId === item.id;
         const inRoutine = addedIds.includes(item.id);
+        const color = inRoutine ? ADDED_MARKER_COLOR : hot ? "var(--terracotta)" : categoryColor;
         return (
           <MapOverlay
             key={item.id}
@@ -43,9 +60,8 @@ export default function ExploreMap({
             zIndex={hot ? 3 : inRoutine ? 2 : 1}
           >
             <MapMarker
-              overlay
               label={item.name}
-              color={hot || inRoutine ? "var(--terracotta)" : categoryColor}
+              color={color}
               size={hot ? "24px" : inRoutine ? "21px" : "16px"}
               showLabel={hot}
               checked={inRoutine}

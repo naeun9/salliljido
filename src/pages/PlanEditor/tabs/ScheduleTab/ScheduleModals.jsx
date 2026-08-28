@@ -1,10 +1,18 @@
 import PickerModal from "../../../../components/plan/PickerModal.jsx";
 import AddScheduleModal from "../../../../components/plan/AddScheduleModal.jsx";
 import RegenAskModal from "../../../../components/plan/RegenAskModal.jsx";
+import SelectionCard from "../../../../components/plan/SelectionCard.jsx";
+import TimeEditModal from "../../../../components/plan/TimeEditModal.jsx";
 
-// 체류 계획 탭이 띄우는 모달 3종을 한데 모았다. ScheduleTab.jsx가 300줄
+// 체류 계획 탭이 띄우는 모달·오버레이를 한데 모았다. ScheduleTab.jsx가 300줄
 // 규칙을 넘겨서(CLAUDE.md) 떼어낸 것이고, 마크업·동작은 옮기기 전 그대로다.
 export default function ScheduleModals({
+  selection,
+  onCloseSelection,
+  timeEdit,
+  setTimeEdit,
+  saveTime,
+  resetTime,
   day,
   rtPicker,
   setRtPicker,
@@ -60,6 +68,19 @@ export default function ScheduleModals({
       />
 
       <RegenAskModal open={regenAsk} onKeep={regenKeep} onAll={regenAll} onCancel={() => setRegenAsk(false)} />
+
+      {/* 지도 핀을 누르면 뜨는 상세 카드. 최종 계획 화면과 같은 컴포넌트를
+          쓴다 — 원본은 핀 위에 정보 카드를 띄웠는데 주소가 길어 넘치고
+          같은 내용이 두 번 보였다(RouteMarker.jsx 주석 참고). */}
+      <SelectionCard selection={selection} onClose={onCloseSelection} />
+
+      <TimeEditModal
+        open={!!timeEdit}
+        item={timeEdit}
+        onSubmit={saveTime}
+        onReset={resetTime}
+        onCancel={() => setTimeEdit(null)}
+      />
     </>
   );
 }

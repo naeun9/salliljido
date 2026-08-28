@@ -13,6 +13,7 @@ export default function TimelineItem({
   onInsertBefore,
   onSwap,
   onDelete,
+  onEditTime,
   onSetCuisine,
   cuisineMenuOpen,
   availableMeals,
@@ -47,7 +48,6 @@ export default function TimelineItem({
         </div>
 
         <div className={styles.card} style={{ border: `1px solid ${border}`, borderLeft: accent, background: cardBg }}>
-          <div className={styles.swatch} style={{ background: item.isRest ? "#EDE9E2" : item.swatch }} />
           <div className={styles.body}>
             <div className={styles.head}>
               <h3 className={styles.place}>{item.place}</h3>
@@ -101,6 +101,27 @@ export default function TimelineItem({
                     <span className={styles.cuisineNote}>이 날만 바뀝니다</span>
                   </div>
                 </div>
+              )}
+
+              {/* 시간 수정. design에는 "직접 입력" 일정에만 시간 입력이
+                  있었는데, 자동 배정된 시간(특히 담은 체험의 14:00)을 고칠
+                  방법이 없어 모든 항목에 붙였다. 직접 입력 일정은 기존
+                  "수정"이 시간까지 다루므로 여기서는 뺀다. */}
+              {!item.custom && (
+                <button
+                  type="button"
+                  className={`${styles.actionBtn} ${hot ? styles.hot : ""}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEditTime();
+                  }}
+                >
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                    <circle cx="8" cy="8" r="6.2" stroke="currentColor" strokeWidth="1.4" />
+                    <path d="M8 4.6V8l2.4 1.6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  시간
+                </button>
               )}
 
               <button

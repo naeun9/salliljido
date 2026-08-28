@@ -1,7 +1,7 @@
 import styles from "./CostBreakdown.module.css";
 
 // design/salliljido.extracted.html 1412-1440줄.
-export default function CostBreakdown({ bars, total, saveLabel, onSave, onFindSupport }) {
+export default function CostBreakdown({ bars, total, saveLabel, onSave }) {
   return (
     <div className={styles.sidebar}>
       <div className={styles.card}>
@@ -29,9 +29,6 @@ export default function CostBreakdown({ bars, total, saveLabel, onSave, onFindSu
         <div className={styles.actions}>
           <button type="button" className={styles.saveBtn} onClick={onSave}>
             {saveLabel}
-          </button>
-          <button type="button" className={styles.supportBtn} onClick={onFindSupport}>
-            지원 프로그램 찾아보기
           </button>
         </div>
       </div>

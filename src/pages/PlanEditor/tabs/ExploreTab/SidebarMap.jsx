@@ -17,6 +17,7 @@ import styles from "./SidebarMap.module.css";
 // 되지 않는 죽은 상태였다(3160-3161줄).
 export default function SidebarMap({
   items,
+  addedMarkers,
   center,
   categoryColor,
   hoveredId,
@@ -46,6 +47,7 @@ export default function SidebarMap({
       <div className={`${styles.mapBox} ${collapsed ? styles.collapsed : ""}`}>
         <ExploreMap
           items={items}
+          addedMarkers={addedMarkers}
           center={center}
           categoryColor={categoryColor}
           hoveredId={hoveredId}

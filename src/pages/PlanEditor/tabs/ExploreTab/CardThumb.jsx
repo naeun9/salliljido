@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./CardThumb.module.css";
 
 // 카드 썸네일. design 원본은 실제 사진이 없어서 늘 스와치(대각선 패턴) +
 // 모노스페이스 "image" 라벨이었는데, 실제 API에는 사진이 있는 항목과 없는
@@ -15,10 +16,16 @@ export default function CardThumb({ item, imageClass, tagClass }) {
   const [failed, setFailed] = useState(false);
   const src = failed ? "" : item.image;
 
+  // 사진이 없는 항목(지역에 따라 15~20%)은 design의 빗금 스와치 + "image"
+  // 라벨을 쓰다가, 무슨 뜻인지 알기 어려워 담백한 안내 문구로 바꿨다.
   if (!src) {
     return (
-      <div className={imageClass} style={{ background: item.swatch }}>
-        <span className={tagClass}>image</span>
+      <div className={imageClass} style={{ background: "var(--hairline)", padding: 0 }}>
+        <span className={styles.pending}>
+          이미지
+          <br />
+          준비중
+        </span>
       </div>
     );
   }

@@ -22,9 +22,17 @@ export default function CategoryList({
   removeExperience,
   savedUtilities,
   toggleUtility,
+  savedSpots,
+  toggleSpot,
+  stayPicks,
+  stayPickerId,
+  setStayPickerId,
+  onStayConfirm,
+  onStayRemove,
   durDays,
   expPickerId,
   setExpPickerId,
+  readOnly = false,
 }) {
   return (
     <>
@@ -51,15 +59,26 @@ export default function CategoryList({
                 />
               ) : (
                 <div className={styles.cardGrid}>
-                  {visibleList.map((s) => (
-                    <StayCard
-                      key={s.id}
-                      stay={s}
-                      hovered={hoverId === s.id}
-                      onMouseEnter={() => setHoverId(s.id)}
-                      onMouseLeave={() => setHoverId(null)}
-                    />
-                  ))}
+                  {visibleList.map((s) => {
+                    const pick = stayPicks.find((g) => g.stayId === s.id);
+                    return (
+                      <StayCard
+                        key={s.id}
+                        stay={s}
+                        hovered={hoverId === s.id}
+                        onMouseEnter={() => setHoverId(s.id)}
+                        onMouseLeave={() => setHoverId(null)}
+                        added={!!pick}
+                        currentRange={pick ? { from: pick.from, to: pick.to } : null}
+                        durDays={durDays}
+                        pickerOpen={stayPickerId === s.id}
+                        onTogglePicker={() => setStayPickerId(stayPickerId === s.id ? null : s.id)}
+                        onConfirm={(from, to) => onStayConfirm(s.id, from, to)}
+                        onRemove={() => onStayRemove(s.id)}
+                        readOnly={readOnly}
+                      />
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -106,6 +125,7 @@ export default function CategoryList({
                         }
                         setExpPickerId(null);
                       }}
+                      readOnly={readOnly}
                     />
                   ))}
                 </div>
@@ -139,6 +159,9 @@ export default function CategoryList({
                       hovered={hoverId === s.id}
                       onMouseEnter={() => setHoverId(s.id)}
                       onMouseLeave={() => setHoverId(null)}
+                      saved={savedSpots.includes(s.id)}
+                      onToggleSave={() => toggleSpot(s.id)}
+                      readOnly={readOnly}
                     />
                   ))}
                 </div>
@@ -173,6 +196,7 @@ export default function CategoryList({
                       onMouseEnter={() => setHoverId(u.id)}
                       onMouseLeave={() => setHoverId(null)}
                       onToggleWish={() => toggleUtility(u.id)}
+                      readOnly={readOnly}
                     />
                   ))}
                 </div>

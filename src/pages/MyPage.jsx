@@ -57,7 +57,18 @@ export default function MyPage() {
   const plans = saved.plans;
   const programs = getSavedProgramCards(saved.savedPrograms);
 
-  const allEmpty = !loading && regions.length === 0 && plans.length === 0 && programs.length === 0;
+  // 저장한 것이 하나도 없는지는 로딩과 무관하게 처음부터 알 수 있다 —
+  // 세 값 모두 localStorage에서 동기적으로 읽어 온 것이고, 아래 loading은
+  // design의 연출용 지연(startLoad("mp", 900))일 뿐 실제 비동기 로드가
+  // 아니다.
+  //
+  // 원본은 `!isLoading("mp") && ...`로 계산해서(3528-3529줄), 로딩 900ms
+  // 동안은 세 섹션의 빈 상태를 보여주다가 로딩이 끝나면 통째로 "아직
+  // 저장한 것이 없어요"로 바뀌었다. 원본은 시드 데이터(seedRegions/
+  // seedRoutines)가 항상 있어서 이 경로를 안 탔지만, 시드를 뺀 지금은
+  // 데모로 처음 로그인하면 "만든 계획" 섹션이 떴다가 사라진다.
+  // 로딩 조건을 빼서 첫 프레임부터 결론이 바뀌지 않게 했다.
+  const allEmpty = regions.length === 0 && plans.length === 0 && programs.length === 0;
 
   // design fadeOut(id, run)(240ms): 삭제 확정 후 opacity 트랜지션이 끝나면
   // 실제로 목록에서 뺀다.

@@ -103,3 +103,15 @@
 .segWarn {
   font-size: 14px;
 }
+
+/* 둘러보기에서 고른 숙소 이름. 자유 입력 메모(.memoInput)와 같은 자리를
+   쓰되 입력이 아니라 표시라 테두리 없이 글자만 둔다. */
+.stayName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--font-body);
+  font-weight: 600;
+  color: var(--forest);
+}

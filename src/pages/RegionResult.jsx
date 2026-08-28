@@ -59,7 +59,6 @@ export default function RegionResult() {
         ? "추천 결과"
         : `이 조건이라면, 이 ${recCount}곳을 권합니다`;
 
-  const scarceText = `조건에 맞는 지역이 ${recCount}곳이에요. 다른 조건도 살펴보시겠어요?`;
 
   const compareRows = [
     { label: "한적함", cells: recs.map((r) => r.quietText) },
@@ -105,7 +104,6 @@ export default function RegionResult() {
             </div>
           ) : (
             <>
-              {recCount > 0 && recCount < 3 && <p className={styles.scarce}>{scarceText}</p>}
 
               <div className={styles.resultsRow}>
                 <div className={styles.cardsCol}>

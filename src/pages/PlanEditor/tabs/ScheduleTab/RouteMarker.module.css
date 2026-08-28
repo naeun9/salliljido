@@ -6,42 +6,6 @@
   gap: 5px;
   cursor: pointer;
 }
-.info {
-  display: none;
-  width: 176px;
-  padding: 11px 13px;
-  border-radius: var(--radius-input);
-  background: var(--cream);
-  border: 1px solid var(--mist);
-  box-shadow: 0 10px 22px -14px rgba(43, 43, 41, 0.6);
-  text-align: left;
-}
-.info.open {
-  display: block;
-}
-.infoName {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-}
-.infoTag {
-  margin-top: 4px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--sage);
-}
-.infoDesc {
-  margin-top: 6px;
-  font-size: 13.5px;
-  line-height: 1.6;
-  color: var(--gray);
-}
-.infoAddr {
-  margin-top: 6px;
-  font-size: 13px;
-  color: var(--gray);
-}
 .num {
   display: flex;
   align-items: center;
@@ -49,11 +13,20 @@
   border-radius: 50%;
   border: 3px solid var(--cream);
   color: var(--cream);
-  font-size: 17.5px;
+  /* design 17.5px. 같은 이유로(실제 지도 글씨와 나란히 놓임) 한 단계 낮췄다.
+     핀 원 크기(38/48px)는 그대로다. */
+  font-size: 16px;
   font-weight: 700;
   box-shadow: 0 6px 14px -8px rgba(43, 43, 41, 0.6);
   transition:
     width 0.2s ease,
     height 0.2s ease,
     background 0.2s ease;
+}
+/* 선택된 핀은 흰 테두리를 한 겹 더 둘러 눈에 띄게 한다. 크기·색은
+   호출하는 쪽(RouteMap)이 이미 키우고 바꾸므로 여기서는 링만 더한다. */
+.num.selected {
+  box-shadow:
+    0 0 0 3px rgba(250, 248, 244, 0.85),
+    0 6px 14px -8px rgba(43, 43, 41, 0.6);
 }

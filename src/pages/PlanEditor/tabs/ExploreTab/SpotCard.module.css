@@ -59,3 +59,32 @@
   letter-spacing: -0.01em;
   text-wrap: pretty;
 }
+
+/* design에는 없던 담기 버튼. 같은 화면 식당·카페 카드(.wishBtn)의 값을
+   그대로 가져와 새 톤을 만들지 않았다. */
+.saveBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  height: 38px;
+  padding: 0 15px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--cream);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--forest);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+.saveBtn:hover {
+  border-color: var(--sage);
+}
+.saveBtn.on {
+  background: var(--mist);
+  border-color: var(--forest);
+}

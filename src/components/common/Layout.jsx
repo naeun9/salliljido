@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Header from "./Header.jsx";
 import AuthGate from "./AuthGate.jsx";
+import ScrollManager from "./ScrollManager.jsx";
 
 // 원본엔 없던 파일. 원본은 화면 전환이 display:none 토글이라 헤더가 이미
 // 항상 DOM에 한 번만 있었지만, react-router로 화면을 실제 라우트로 나누면서
@@ -9,6 +10,8 @@ import AuthGate from "./AuthGate.jsx";
 export default function Layout() {
   return (
     <>
+      {/* 라우트가 바뀌면 맨 위에서 시작하고, 뒤로 가기는 보던 위치로 돌린다. */}
+      <ScrollManager />
       <Header />
       <Outlet />
       <AuthGate />
