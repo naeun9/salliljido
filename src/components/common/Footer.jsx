@@ -32,7 +32,7 @@ export default function Footer() {
           <div className={styles.sources}>
             <div className={styles.heading}>데이터 출처</div>
             <ul className={styles.sourceList}>
-              <li>관광 정보 ⓒ한국관광공사</li>
+              <li>관광 정보·사진 ⓒ한국관광공사</li>
               <li>인구감소지역 지정 현황 · 행정안전부</li>
               <li>비용은 공개 자료를 바탕으로 한 추정치이며 실제와 다를 수 있습니다.</li>
             </ul>

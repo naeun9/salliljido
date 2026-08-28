@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { regionPhoto } from "../../data/regionPhotos.js";
 import styles from "./RegionCard.module.css";
 
 // 저장한 지역 카드. design/salliljido.extracted.html 1864-1883줄.
@@ -7,7 +8,8 @@ export default function RegionCard({ region, swatch, fading, onUnsave }) {
   return (
     <div className={`${styles.card} ${fading ? styles.fading : ""}`}>
       <div className={styles.image} style={{ background: swatch }}>
-        <span className={styles.imageNote}>image · {region.imageNote}</span>
+        {/* 사진이 깔리면 목업 라벨은 지운다(다른 화면과 같은 처리). */}
+        {!regionPhoto(region.short) && <span className={styles.imageNote}>image · {region.imageNote}</span>}
       </div>
       <button type="button" aria-label="저장 해제" className={styles.unsaveBtn} onClick={onUnsave}>
         <svg width="13" height="15" viewBox="0 0 13 15" fill="none">

@@ -1,15 +1,21 @@
 import { useState } from "react";
+import { regionPhoto, photoBackground } from "../../data/regionPhotos.js";
 import styles from "./Banner.module.css";
 
 // design/salliljido.extracted.html 679-703줄.
 export default function Banner({ region, chips, saved, onToggleSave, onBack }) {
   const [tipOpen, setTipOpen] = useState(false);
+  const photo = regionPhoto(region.short);
 
   return (
     <section className={styles.banner}>
-      <div className={styles.texture} style={{ background: region.swatch }} />
+      {/* 빗금 자리에 그 지역 관광사진을 깐다. 딥그린 오버레이는 그대로다.
+          사진이 없거나 URL이 죽으면 아래 빗금이 그대로 보인다. */}
+      <div className={styles.texture} style={{ background: photoBackground(photo, region.swatch) }} />
       <div className={styles.overlay} />
-      <div className={styles.imageNote}>image · {region.imageNote}</div>
+      {/* design의 "image · 양양 해변"은 사진이 들어갈 자리를 알려 주던 목업
+          라벨이라, 실제 사진이 깔리면 지운다(지도의 map 태그와 같은 처리). */}
+      {!photo && <div className={styles.imageNote}>image · {region.imageNote}</div>}
 
       <div className={styles.row}>
         <div className={styles.left}>

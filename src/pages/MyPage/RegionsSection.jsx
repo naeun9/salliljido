@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Skeleton from "../../components/common/Skeleton.jsx";
 import RegionCard from "./RegionCard.jsx";
+import { regionPhoto, photoBackground } from "../../data/regionPhotos.js";
 import styles from "./RegionsSection.module.css";
 
 // design mypageVals()의 swatches(12px 줄무늬) — RegionResult 카드의
@@ -40,7 +41,9 @@ export default function RegionsSection({ loading, regions, fadingShorts, onUnsav
             <RegionCard
               key={r.short}
               region={r}
-              swatch={SWATCHES[i % 3]}
+              // 빗금 자리에 그 지역 관광사진(data/regionPhotos.js). 사진이
+              // 없으면 design의 빗금이 그대로 남는다.
+              swatch={photoBackground(regionPhoto(r.short), SWATCHES[i % 3])}
               fading={fadingShorts.includes(r.short)}
               onUnsave={() => onUnsave(r)}
             />

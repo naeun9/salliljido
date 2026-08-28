@@ -127,7 +127,7 @@ export default function RegionIntro() {
             </button>
           </div>
           <p className={styles.ctaFootnote}>
-            관광 정보 ⓒ한국관광공사 · 인구감소지역 지정 현황 · 행정안전부 · 비용은 공개 자료를 바탕으로 한
+            관광 정보·사진 ⓒ한국관광공사 · 인구감소지역 지정 현황 · 행정안전부 · 비용은 공개 자료를 바탕으로 한
             추정치입니다.
           </p>
         </div>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { regionPhoto, photoBackground } from "../../data/regionPhotos.js";
 import styles from "./Banner.module.css";
 
 // design/salliljido.extracted.html 752-789줄. 삭제 버튼(dtDeleteDisplay)은
@@ -42,7 +43,12 @@ export default function Banner({
 
   return (
     <section className={styles.banner}>
-      <div className={styles.texture} style={{ background: region.swatch }} />
+      {/* 지역 소개 배너와 같은 관광사진을 깐다 — 같은 지역인데 한쪽만
+          빗금이면 화면이 갈라져 보인다(data/regionPhotos.js). */}
+      <div
+        className={styles.texture}
+        style={{ background: photoBackground(regionPhoto(region.short), region.swatch) }}
+      />
       <div className={styles.overlay} />
       <div className={styles.row}>
         <div className={styles.left}>

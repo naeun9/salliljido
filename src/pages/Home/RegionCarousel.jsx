@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSearch } from "../../hooks/useSearch.js";
+import { carouselPhoto, photoBackground } from "../../data/regionPhotos.js";
 import styles from "./RegionCarousel.module.css";
 
 // design/salliljido.extracted.html 195-238줄(#regions), 3839-3849줄(regions 데이터).
@@ -111,27 +112,34 @@ export default function RegionCarousel() {
 
         <div className={styles.track} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
           <div className={styles.trackInner} style={{ transform: `translateX(-${idx * 100}%)` }}>
-            {REGIONS.map((r) => (
-              <div key={r.name} className={styles.slide}>
-                <div className={styles.card} onClick={() => openFind(r.name)}>
-                  <div className={styles.cardImage} style={{ background: r.swatch }}>
-                    <div className={styles.cardImageNote}>image · {r.imageNote}</div>
-                  </div>
-                  <div className={styles.cardBody}>
-                    <div className={styles.cardOrder}>{r.order}</div>
-                    <h3 className={styles.cardName}>{r.name}</h3>
-                    <div className={styles.cardCities}>
-                      {r.cities.map((c) => (
-                        <span key={c} className={styles.cardCity}>
-                          {c}
-                        </span>
-                      ))}
+            {REGIONS.map((r) => {
+              // 광역 단위 카드라 대표 시군의 관광사진을 쓴다(data/regionPhotos.js).
+              const photo = carouselPhoto(r.name);
+              return (
+                <div key={r.name} className={styles.slide}>
+                  <div className={styles.card} onClick={() => openFind(r.name)}>
+                    <div
+                      className={styles.cardImage}
+                      style={{ background: photoBackground(photo, r.swatch) }}
+                    >
+                      {!photo && <div className={styles.cardImageNote}>image · {r.imageNote}</div>}
                     </div>
-                    <p className={styles.cardDesc}>{r.desc}</p>
+                    <div className={styles.cardBody}>
+                      <div className={styles.cardOrder}>{r.order}</div>
+                      <h3 className={styles.cardName}>{r.name}</h3>
+                      <div className={styles.cardCities}>
+                        {r.cities.map((c) => (
+                          <span key={c} className={styles.cardCity}>
+                            {c}
+                          </span>
+                        ))}
+                      </div>
+                      <p className={styles.cardDesc}>{r.desc}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
