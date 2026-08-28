@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { PlanProvider } from "../store/PlanContext.jsx";
 import { getRegionByShort } from "../services/regionRecommend.js";
+import { regionPhoto, photoBackground } from "../data/regionPhotos.js";
 import RegionNotFound from "../components/region/RegionNotFound.jsx";
 import ExploreTab from "./PlanEditor/tabs/ExploreTab.jsx";
 import styles from "./RegionExplore.module.css";
@@ -31,7 +32,10 @@ export default function RegionExplore() {
       {/* 헤더는 계획 화면 배너(PlanEditor/Banner)의 값을 그대로 쓰되
           계획 이름·조건 칩·저장 버튼 없이 지역명만 둔다. */}
       <section className={styles.header}>
-        <div className={styles.texture} style={{ background: region.swatch }} />
+        <div
+          className={styles.texture}
+          style={{ background: photoBackground(regionPhoto(region.short), region.swatch) }}
+        />
         <div className={styles.overlay} />
         <div className={styles.row}>
           <div className={styles.left}>
