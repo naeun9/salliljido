@@ -61,8 +61,7 @@
   --radius-pill: 999px; /* 칩, 필 배지, 필 버튼 */
 
   /* ── 폰트 패밀리 ── */
-  --font-family-base: "Pretendard Variable", Pretendard, -apple-system,
-    sans-serif;
+  --font-family-base: "Pretendard Variable", Pretendard, -apple-system, sans-serif;
   --font-family-mono: ui-monospace, Menlo, monospace; /* "screen ·"/"map ·" 라벨 전용 */
 
   /* ── 폰트 크기 : 반복 확인된 대표 값만 (전체 스케일은 0.5px 단위로

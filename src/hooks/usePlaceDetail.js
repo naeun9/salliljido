@@ -4,8 +4,7 @@ import { fetchPlaceDetail, getCachedDetail } from "../services/placeDetail.js";
 // 상세 모달이 열릴 때만 관광공사 상세를 부른다(services/placeDetail.js 주석).
 // 닫혀 있으면 아무것도 하지 않고, 이미 부른 장소는 캐시에서 바로 나온다.
 export function usePlaceDetail(open, contentId, contentTypeId) {
-  const cached =
-    open && contentId ? getCachedDetail(contentId, contentTypeId) : null;
+  const cached = open && contentId ? getCachedDetail(contentId, contentTypeId) : null;
   const [detail, setDetail] = useState(cached);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

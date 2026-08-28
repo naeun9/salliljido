@@ -134,7 +134,11 @@ export default function Header() {
                 </button>
                 {accountMenuOpen && (
                   <div className={styles.accountMenu}>
-                    <Link to="/mypage" className={styles.accountMenuItem} onClick={() => setAccountMenuOpen(false)}>
+                    <Link
+                      to="/mypage"
+                      className={styles.accountMenuItem}
+                      onClick={() => setAccountMenuOpen(false)}
+                    >
                       마이페이지
                     </Link>
                     <button type="button" className={styles.accountMenuItem} onClick={handleLogout}>
@@ -146,11 +150,7 @@ export default function Header() {
             )}
           </div>
         </div>
-        <button
-          className={styles.burger}
-          aria-label="메뉴 열기"
-          onClick={() => setMenuOpen(true)}
-        >
+        <button className={styles.burger} aria-label="메뉴 열기" onClick={() => setMenuOpen(true)}>
           <span className={styles.burgerBar} />
           <span className={styles.burgerBar} />
           <span className={styles.burgerBar} />
@@ -159,7 +159,12 @@ export default function Header() {
 
       <div className={`${menuStyles.overlay} ${menuOpen ? menuStyles.open : ""}`} data-print-hide>
         <div className={menuStyles.overlayTop}>
-          <a href="/" onClick={handleLogoClick} aria-label="살릴지도 홈으로" className={menuStyles.overlayLogo}>
+          <a
+            href="/"
+            onClick={handleLogoClick}
+            aria-label="살릴지도 홈으로"
+            className={menuStyles.overlayLogo}
+          >
             살릴지도
           </a>
           <button
@@ -193,7 +198,12 @@ export default function Header() {
               마이페이지
             </Link>
           ) : (
-            <Link to="/login" state={{ from: pathname }} className={menuStyles.overlayCta} onClick={() => setMenuOpen(false)}>
+            <Link
+              to="/login"
+              state={{ from: pathname }}
+              className={menuStyles.overlayCta}
+              onClick={() => setMenuOpen(false)}
+            >
               로그인
             </Link>
           )}

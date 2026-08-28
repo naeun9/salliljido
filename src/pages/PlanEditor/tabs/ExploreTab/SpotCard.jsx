@@ -1,10 +1,6 @@
 import { useState } from "react";
 import CardThumb from "./CardThumb.jsx";
-import DayPicker, {
-  dayConfirmLabel,
-  dayToggleLabel,
-  pickerDayCount,
-} from "./DayPicker.jsx";
+import DayPicker, { dayConfirmLabel, dayToggleLabel, pickerDayCount } from "./DayPicker.jsx";
 import styles from "./SpotCard.module.css";
 
 // design/salliljido.extracted.html 1125-1137줄. 원본은 액션 버튼 없이 정보만
@@ -42,11 +38,7 @@ export default function SpotCard({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <CardThumb
-        item={spot}
-        imageClass={styles.image}
-        tagClass={styles.imageTag}
-      />
+      <CardThumb item={spot} imageClass={styles.image} tagClass={styles.imageTag} />
       <div className={styles.body}>
         <div className={styles.head}>
           <h3 className={styles.name}>{spot.name}</h3>

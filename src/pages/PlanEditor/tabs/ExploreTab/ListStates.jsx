@@ -34,15 +34,7 @@ export default function ListStates({ loading, error, onRetry }) {
       icon={
         <svg width="28" height="28" viewBox="0 0 26 26" fill="none">
           <circle cx="13" cy="13" r="9.5" stroke="#C05F33" strokeWidth="1.5" />
-          <line
-            x1="13"
-            y1="8"
-            x2="13"
-            y2="14.5"
-            stroke="#C05F33"
-            strokeWidth="1.7"
-            strokeLinecap="round"
-          />
+          <line x1="13" y1="8" x2="13" y2="14.5" stroke="#C05F33" strokeWidth="1.7" strokeLinecap="round" />
           <line
             x1="13"
             y1="17.4"

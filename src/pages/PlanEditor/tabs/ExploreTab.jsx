@@ -4,11 +4,7 @@ import { useSearch } from "../../../hooks/useSearch.js";
 import { usePlan } from "../../../hooks/usePlan.js";
 import { useRegionListings } from "../../../hooks/useRegionListings.js";
 import { stayDays } from "../../../utils/date.js";
-import {
-  CATEGORIES,
-  CATEGORY_COLORS,
-  findListingAnywhere,
-} from "../../../services/exploreListings.js";
+import { CATEGORIES, CATEGORY_COLORS, findListingAnywhere } from "../../../services/exploreListings.js";
 import { DEFAULT_STAY_SEGMENT_RATE } from "../../../utils/cost.js";
 import CategoryList from "./ExploreTab/CategoryList.jsx";
 import SubChips from "./ExploreTab/SubChips.jsx";
@@ -35,12 +31,7 @@ const PAGE_SIZE = 6; // 한 페이지에 보여 줄 항목 수
 //             어디에도 남지 않기 때문이다(RegionExplore.jsx 주석 참고).
 //   ctaLabel  하단 버튼 문구. 기본은 "체류 계획 짜기".
 //   onCta     하단 버튼 동작. 기본은 같은 화면의 체류 계획 탭으로 이동.
-export default function ExploreTab({
-  region,
-  readOnly = false,
-  ctaLabel,
-  onCta,
-}) {
+export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const { dur, customDays } = useSearch();
   const {
@@ -82,12 +73,7 @@ export default function ExploreTab({
   // startLoad("li", 700)), 실제로는 지역 하나를 한 번만 부르고 카테고리는
   // 그 결과를 나눠 쓰는 구조라 로딩은 "지역이 바뀔 때"만 뜬다. 카테고리
   // 전환은 추가 호출 없이 즉시 바뀐다(호출 최소화).
-  const {
-    listings,
-    loading,
-    error: loadError,
-    retry,
-  } = useRegionListings(region.short);
+  const { listings, loading, error: loadError, retry } = useRegionListings(region.short);
 
   const durDays = stayDays({ dur, customDays });
 
@@ -104,16 +90,13 @@ export default function ExploreTab({
   function goPage(next) {
     setPage(next);
     setHoverId(null);
-    if (listTopRef.current)
-      listTopRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (listTopRef.current) listTopRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function toggleSub(cat, sub) {
     setSubFilters((prev) => {
       const cur = prev[cat] || [];
-      const next = cur.includes(sub)
-        ? cur.filter((v) => v !== sub)
-        : cur.concat(sub);
+      const next = cur.includes(sub) ? cur.filter((v) => v !== sub) : cur.concat(sub);
       return { ...prev, [cat]: next };
     });
     setPage(1);
@@ -125,10 +108,7 @@ export default function ExploreTab({
 
   const totalPages = Math.max(1, Math.ceil(filteredList.length / PAGE_SIZE));
   const safePage = Math.min(page, totalPages);
-  const visibleList = filteredList.slice(
-    (safePage - 1) * PAGE_SIZE,
-    safePage * PAGE_SIZE,
-  );
+  const visibleList = filteredList.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
   // 숙박은 "며칠~며칠" 구간이 붙어서 예상 비용 탭의 숙박 구간(staySegs)에
   // 직접 들어간다. 여기서는 그 구간에서 숙소 id만 뽑아 쓴다.
@@ -164,10 +144,7 @@ export default function ExploreTab({
                 onClick={() => selectCategory(cat)}
               >
                 {cat}
-                <span
-                  className={styles.chipDot}
-                  style={{ background: CATEGORY_COLORS[cat] }}
-                />
+                <span className={styles.chipDot} style={{ background: CATEGORY_COLORS[cat] }} />
               </button>
             ))}
           </div>
@@ -199,16 +176,14 @@ export default function ExploreTab({
                 utilityDays={utilityDays}
                 onConfirmUtility={(id, day) => {
                   // 이미 담겨 있고 같은 일차를 다시 고르면 빼기(체험과 동일).
-                  if (savedUtilities.includes(id) && utilityDays[id] === day)
-                    toggleUtility(id);
+                  if (savedUtilities.includes(id) && utilityDays[id] === day) toggleUtility(id);
                   else setUtilityDay(id, day);
                   setDayPickerId(null);
                 }}
                 savedSpots={savedSpots}
                 spotDays={spotDays}
                 onConfirmSpot={(id, day) => {
-                  if (savedSpots.includes(id) && spotDays[id] === day)
-                    toggleSpot(id);
+                  if (savedSpots.includes(id) && spotDays[id] === day) toggleSpot(id);
                   else setSpotDay(id, day);
                   setDayPickerId(null);
                 }}
@@ -226,11 +201,7 @@ export default function ExploreTab({
                 readOnly={readOnly}
               />
 
-              <Pagination
-                page={safePage}
-                totalPages={totalPages}
-                onChange={goPage}
-              />
+              <Pagination page={safePage} totalPages={totalPages} onChange={goPage} />
 
               {/* design 1182줄: 원본은 이 버튼이 dtTab2(현재 탭과 동일한 둘러보기)를
                   다시 호출해 아무 일도 안 일어나는 죽은 버튼이었다. 버튼 문구가
@@ -250,10 +221,7 @@ export default function ExploreTab({
                     setSearchParams(next);
                   }}
                 >
-                  {ctaLabel ||
-                    (addedCount
-                      ? `담은 ${addedCount}곳으로 계획 짜기`
-                      : "체류 계획 짜기")}{" "}
+                  {ctaLabel || (addedCount ? `담은 ${addedCount}곳으로 계획 짜기` : "체류 계획 짜기")}{" "}
                   <span>→</span>
                 </button>
                 <span className={styles.ctaSource}>출처 ⓒ한국관광공사</span>

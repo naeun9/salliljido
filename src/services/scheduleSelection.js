@@ -25,8 +25,6 @@ export function buildSelection({ selectedIndex, items, pins, day, listings }) {
     mapY: item ? item.mapY : null,
   };
 
-  const listing = selection.id
-    ? findListingAnywhere(listings, selection.id)
-    : null;
+  const listing = selection.id ? findListingAnywhere(listings, selection.id) : null;
   return { selection, contentTypeId: listing ? listing.contentTypeId : "" };
 }

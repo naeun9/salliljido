@@ -51,7 +51,11 @@ function parseOpenApiResponse(text) {
     return {
       ok: false,
       errorCode: code,
-      message: code ? describeError(code) : authMsgMatch ? authMsgMatch[1] : "알 수 없는 XML 에러 응답을 받았습니다.",
+      message: code
+        ? describeError(code)
+        : authMsgMatch
+          ? authMsgMatch[1]
+          : "알 수 없는 XML 에러 응답을 받았습니다.",
     };
   }
 
@@ -68,14 +72,22 @@ function parseOpenApiResponse(text) {
     return {
       ok: false,
       errorCode: code,
-      message: code ? describeError(code) : gatewayHeader.returnAuthMsg || gatewayHeader.errMsg || "알 수 없는 게이트웨이 에러 응답을 받았습니다.",
+      message: code
+        ? describeError(code)
+        : gatewayHeader.returnAuthMsg ||
+          gatewayHeader.errMsg ||
+          "알 수 없는 게이트웨이 에러 응답을 받았습니다.",
     };
   }
 
   // 파라미터 검증 에러: 껍데기 없이 최상위에 resultCode가 있고
   // response 필드 자체가 없다(정상 응답은 항상 response로 감싸져 있음).
   if (json?.resultCode !== undefined && json?.response === undefined) {
-    return { ok: false, errorCode: json.resultCode, message: json.resultMsg || describeError(json.resultCode) };
+    return {
+      ok: false,
+      errorCode: json.resultCode,
+      message: json.resultMsg || describeError(json.resultCode),
+    };
   }
 
   const header = json?.response?.header;
@@ -92,7 +104,11 @@ function parseOpenApiResponse(text) {
     return { ok: true, body: { items: "", totalCount: 0, numOfRows: 0, pageNo: 1 } };
   }
 
-  return { ok: false, errorCode: header.resultCode, message: describeError(header.resultCode) || header.resultMsg };
+  return {
+    ok: false,
+    errorCode: header.resultCode,
+    message: describeError(header.resultCode) || header.resultMsg,
+  };
 }
 
 async function callOpenApi(baseUrl, operation, params, { timeoutMs = 8000 } = {}) {
@@ -145,9 +161,7 @@ export function callTourApi(operation, params = {}, opts) {
 // 통째로 안 나온다. 같은 URL을 https로 바꿔 부르면 200으로 정상 응답하는
 // 것을 확인하고, 여기서 프로토콜을 맞춰 준다.
 export function toHttps(url) {
-  return url && url.startsWith("http://")
-    ? `https://${url.slice("http://".length)}`
-    : url || "";
+  return url && url.startsWith("http://") ? `https://${url.slice("http://".length)}` : url || "";
 }
 
 // items가 "" | {item: {...}} | {item: [...]} 세 가지 형태로 오는 걸

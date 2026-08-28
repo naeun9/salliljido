@@ -43,9 +43,7 @@ export default function CategoryList({
         <div className={styles.categorySection}>
           <div className={styles.sectionHead}>
             <h2 className={styles.sectionTitle}>숙박</h2>
-            <span className={styles.sectionNote}>
-              예약은 외부 서비스로 연결됩니다
-            </span>
+            <span className={styles.sectionNote}>예약은 외부 서비스로 연결됩니다</span>
           </div>
           {subChips}
           {/* design은 숙박·주변 관광지에는 빈 상태를 두지 않았다(목업이
@@ -88,14 +86,10 @@ export default function CategoryList({
                     onMouseEnter={() => setHoverId(s.id)}
                     onMouseLeave={() => setHoverId(null)}
                     added={!!pick}
-                    currentRange={
-                      pick ? { from: pick.from, to: pick.to } : null
-                    }
+                    currentRange={pick ? { from: pick.from, to: pick.to } : null}
                     durDays={durDays}
                     pickerOpen={stayPickerId === s.id}
-                    onTogglePicker={() =>
-                      setStayPickerId(stayPickerId === s.id ? null : s.id)
-                    }
+                    onTogglePicker={() => setStayPickerId(stayPickerId === s.id ? null : s.id)}
                     onConfirm={(from, to) => onStayConfirm(s.id, from, to)}
                     onRemove={() => onStayRemove(s.id)}
                     readOnly={readOnly}
@@ -117,13 +111,7 @@ export default function CategoryList({
             <EmptyState
               icon={
                 <svg width="28" height="28" viewBox="0 0 26 26" fill="none">
-                  <circle
-                    cx="13"
-                    cy="13"
-                    r="9.5"
-                    stroke="#2F5D50"
-                    strokeWidth="1.5"
-                  />
+                  <circle cx="13" cy="13" r="9.5" stroke="#2F5D50" strokeWidth="1.5" />
                   <line
                     x1="13"
                     y1="8"
@@ -153,16 +141,10 @@ export default function CategoryList({
                   currentPrice={experiencePrices[x.id]}
                   durDays={durDays}
                   pickerOpen={dayPickerId === x.id}
-                  onTogglePicker={() =>
-                    setDayPickerId(dayPickerId === x.id ? null : x.id)
-                  }
+                  onTogglePicker={() => setDayPickerId(dayPickerId === x.id ? null : x.id)}
                   onConfirm={(day, price) => {
                     const isOn = addedExperiences.includes(x.id);
-                    if (
-                      isOn &&
-                      day === experienceDays[x.id] &&
-                      price === experiencePrices[x.id]
-                    ) {
+                    if (isOn && day === experienceDays[x.id] && price === experiencePrices[x.id]) {
                       removeExperience(x.id);
                     } else {
                       setExperienceDay(x.id, day, price);
@@ -187,22 +169,9 @@ export default function CategoryList({
             <EmptyState
               icon={
                 <svg width="28" height="28" viewBox="0 0 26 26" fill="none">
-                  <circle
-                    cx="13"
-                    cy="11"
-                    r="7.5"
-                    stroke="#2F5D50"
-                    strokeWidth="1.4"
-                  />
+                  <circle cx="13" cy="11" r="7.5" stroke="#2F5D50" strokeWidth="1.4" />
                   <circle cx="13" cy="11" r="2.6" fill="#DCE8E2" />
-                  <line
-                    x1="13"
-                    y1="19"
-                    x2="13"
-                    y2="24"
-                    stroke="#2F5D50"
-                    strokeWidth="1.4"
-                  />
+                  <line x1="13" y1="19" x2="13" y2="24" stroke="#2F5D50" strokeWidth="1.4" />
                 </svg>
               }
               title="이 유형의 관광지는 아직 없어요"
@@ -221,9 +190,7 @@ export default function CategoryList({
                   currentDay={spotDays[s.id]}
                   durDays={durDays}
                   pickerOpen={dayPickerId === s.id}
-                  onTogglePicker={() =>
-                    setDayPickerId(dayPickerId === s.id ? null : s.id)
-                  }
+                  onTogglePicker={() => setDayPickerId(dayPickerId === s.id ? null : s.id)}
                   onConfirm={(day) => onConfirmSpot(s.id, day)}
                   readOnly={readOnly}
                 />
@@ -243,23 +210,8 @@ export default function CategoryList({
             <EmptyState
               icon={
                 <svg width="28" height="28" viewBox="0 0 26 26" fill="none">
-                  <rect
-                    x="3.5"
-                    y="7"
-                    width="19"
-                    height="13"
-                    rx="2.6"
-                    stroke="#2F5D50"
-                    strokeWidth="1.5"
-                  />
-                  <line
-                    x1="3.5"
-                    y1="11.4"
-                    x2="22.5"
-                    y2="11.4"
-                    stroke="#2F5D50"
-                    strokeWidth="1.5"
-                  />
+                  <rect x="3.5" y="7" width="19" height="13" rx="2.6" stroke="#2F5D50" strokeWidth="1.5" />
+                  <line x1="3.5" y1="11.4" x2="22.5" y2="11.4" stroke="#2F5D50" strokeWidth="1.5" />
                 </svg>
               }
               title="이 지역의 식당·카페 정보는 아직 준비 중이에요"
@@ -278,9 +230,7 @@ export default function CategoryList({
                   onMouseEnter={() => setHoverId(u.id)}
                   onMouseLeave={() => setHoverId(null)}
                   pickerOpen={dayPickerId === u.id}
-                  onTogglePicker={() =>
-                    setDayPickerId(dayPickerId === u.id ? null : u.id)
-                  }
+                  onTogglePicker={() => setDayPickerId(dayPickerId === u.id ? null : u.id)}
                   onConfirm={(day) => onConfirmUtility(u.id, day)}
                   readOnly={readOnly}
                 />

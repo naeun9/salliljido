@@ -1,10 +1,6 @@
 import { useState } from "react";
 import CardThumb from "./CardThumb.jsx";
-import DayPicker, {
-  dayConfirmLabel,
-  dayToggleLabel,
-  pickerDayCount,
-} from "./DayPicker.jsx";
+import DayPicker, { dayConfirmLabel, dayToggleLabel, pickerDayCount } from "./DayPicker.jsx";
 import styles from "./UtilCard.module.css";
 
 // design/salliljido.extracted.html 1148-1163줄. design의 "가보고 싶어요"
@@ -43,11 +39,7 @@ export default function UtilCard({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <CardThumb
-        item={util}
-        imageClass={styles.image}
-        tagClass={styles.imageTag}
-      />
+      <CardThumb item={util} imageClass={styles.image} tagClass={styles.imageTag} />
       <div className={styles.body}>
         <div className={styles.head}>
           <h3 className={styles.name}>{util.name}</h3>

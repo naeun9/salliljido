@@ -25,8 +25,7 @@ export default function ExperienceCard({
   const [draft, setDraft] = useState(null);
   const [priceDraft, setPriceDraft] = useState(null);
   const resolvedDraft = Math.min(draft ?? currentDay ?? 1, durDays);
-  const resolvedPrice =
-    priceDraft ?? (currentPrice === undefined ? "" : String(currentPrice));
+  const resolvedPrice = priceDraft ?? (currentPrice === undefined ? "" : String(currentPrice));
 
   const btnLabel = added ? `추가됨 · ${currentDay}일차` : "내 계획에 추가";
   const confirmLabel = dayConfirmLabel(added, resolvedDraft, currentDay);
@@ -39,10 +38,7 @@ export default function ExperienceCard({
 
   function handleConfirm() {
     // 빈 칸이면 undefined로 넘겨 "입력 안 함"을 유지한다(0원과 구분).
-    const price =
-      resolvedPrice === ""
-        ? undefined
-        : Math.max(0, parseInt(resolvedPrice, 10) || 0);
+    const price = resolvedPrice === "" ? undefined : Math.max(0, parseInt(resolvedPrice, 10) || 0);
     onConfirm(resolvedDraft, price);
     setDraft(null);
     setPriceDraft(null);
@@ -57,11 +53,7 @@ export default function ExperienceCard({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <CardThumb
-        item={experience}
-        imageClass={styles.image}
-        tagClass={styles.imageTag}
-      />
+      <CardThumb item={experience} imageClass={styles.image} tagClass={styles.imageTag} />
       <div className={styles.body}>
         <div className={styles.head}>
           <h3 className={styles.name}>{experience.name}</h3>

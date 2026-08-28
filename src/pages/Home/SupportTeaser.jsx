@@ -37,8 +37,8 @@ export default function SupportTeaser() {
           <div className={styles.eyebrow}>SUPPORT</div>
           <h2 className={styles.title}>지자체 지원 프로그램을 모았습니다</h2>
           <p className={styles.lead}>
-            숙박비 지원, 체험 프로그램, 빈집 재생까지. 공고가 흩어져 있어 놓치기 쉬운
-            사업들을 지역·기간별로 정리했습니다.
+            숙박비 지원, 체험 프로그램, 빈집 재생까지. 공고가 흩어져 있어 놓치기 쉬운 사업들을 지역·기간별로
+            정리했습니다.
           </p>
         </div>
 

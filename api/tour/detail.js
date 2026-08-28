@@ -133,9 +133,7 @@ const INTRO_FIELDS = {
 
 function buildInfo(intro, contentTypeId) {
   const fields = INTRO_FIELDS[String(parseInt(contentTypeId, 10))] || [];
-  return fields
-    .map(([label, key]) => ({ label, value: toText(intro?.[key]) }))
-    .filter((row) => row.value);
+  return fields.map(([label, key]) => ({ label, value: toText(intro?.[key]) })).filter((row) => row.value);
 }
 
 export default async function handler(req, res) {
@@ -160,9 +158,7 @@ export default async function handler(req, res) {
   ]);
 
   if (!common.ok && !intro.ok) {
-    return res
-      .status(502)
-      .json({ error: common.message, errorCode: common.errorCode });
+    return res.status(502).json({ error: common.message, errorCode: common.errorCode });
   }
 
   const base = common.ok ? normalizeItems(common.body)[0] || {} : {};
@@ -170,9 +166,7 @@ export default async function handler(req, res) {
 
   const payload = {
     contentId: String(contentId),
-    contentTypeId: contentTypeId
-      ? String(contentTypeId)
-      : base.contenttypeid || "",
+    contentTypeId: contentTypeId ? String(contentTypeId) : base.contenttypeid || "",
     title: base.title || "",
     overview: toText(base.overview),
     homepage: firstUrl(base.homepage),

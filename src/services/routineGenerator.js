@@ -125,7 +125,11 @@ function buildMorningPool(listings) {
   const entry = cacheFor(listings);
   if (!entry.morning) {
     const utils = listings["식당·카페"] || [];
-    entry.morning = fillUpTo([withSub(utils, "카페"), withSub(utils, "간이음식"), withSub(listings["주변 관광지"], "문화")]);
+    entry.morning = fillUpTo([
+      withSub(utils, "카페"),
+      withSub(utils, "간이음식"),
+      withSub(listings["주변 관광지"], "문화"),
+    ]);
   }
   return entry.morning;
 }

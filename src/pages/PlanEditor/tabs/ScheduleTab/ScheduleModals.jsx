@@ -1,7 +1,4 @@
-import {
-  getPickerMine,
-  getSlotPoolOptions,
-} from "../../../../services/routineGenerator.js";
+import { getPickerMine, getSlotPoolOptions } from "../../../../services/routineGenerator.js";
 import PickerModal from "../../../../components/plan/PickerModal.jsx";
 import AddScheduleModal from "../../../../components/plan/AddScheduleModal.jsx";
 import RegenAskModal from "../../../../components/plan/RegenAskModal.jsx";
@@ -96,11 +93,7 @@ export default function ScheduleModals({
       {/* 지도 핀·타임라인 카드를 누르면 뜨는 상세. 최종 계획 화면과 같은
           컴포넌트를 쓴다 — 원본은 핀 위에 정보 카드를 띄웠는데 주소가 길어
           넘치고 같은 내용이 두 번 보였다(RouteMarker.jsx 주석 참고). */}
-      <PlaceDetailModal
-        selection={selection}
-        contentTypeId={selectionTypeId}
-        onClose={onCloseSelection}
-      />
+      <PlaceDetailModal selection={selection} contentTypeId={selectionTypeId} onClose={onCloseSelection} />
 
       <TimeEditModal
         open={!!timeEdit}

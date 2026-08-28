@@ -12,8 +12,7 @@ import styles from "./ConditionPanel.module.css";
 // 있으면(예전에 저장한 계획) 그대로 적었을 때 화면이 거짓말을 한다.
 // pickCuisine도 후보 있는 것만 돌린다.
 function buildSummary({ themePrefs, meals, availableMeals, durDays }) {
-  const themeLabel =
-    themePrefs.length >= 3 ? `테마 ${themePrefs.length}종` : themePrefs.join("·");
+  const themeLabel = themePrefs.length >= 3 ? `테마 ${themePrefs.length}종` : themePrefs.join("·");
   const usable = availableMeals ? meals.filter((m) => availableMeals.includes(m)) : meals;
   const mealLabel =
     usable.length === 0 ? "음식 전체" : usable.length >= 3 ? `음식 ${usable.length}종` : usable.join("·");
@@ -54,7 +53,13 @@ export default function ConditionPanel({
             className={`${styles.regenIcon} ${loading ? styles.spinning : ""}`}
           >
             <path d="M12 7a5 5 0 1 1-1.5-3.6" stroke="#2F5D50" strokeWidth="1.5" strokeLinecap="round" />
-            <path d="M12.2 1.6v2.6H9.6" stroke="#2F5D50" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path
+              d="M12.2 1.6v2.6H9.6"
+              stroke="#2F5D50"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
           {loading ? "만드는 중..." : "다시 만들기"}
         </button>

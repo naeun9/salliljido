@@ -16,13 +16,10 @@ export default function RouteMap({ items, stay, center, selectedIndex, onSelect,
   // 숙소는 경로선·이동거리에서 빼고 지도 범위에만 포함한다. 매일 오가는
   // 곳이라 동선에 끼우면 하루 이동 거리가 왜곡된다.
   const stayAt = stay && stay.at ? stay.at : null;
-  const bounds = useMemo(
-    () => {
-      const all = stayAt ? points.concat([stayAt]) : points;
-      return all.length ? boundsOf(all) : center ? boundsAround(center, 8000) : null;
-    },
-    [points, stayAt, center]
-  );
+  const bounds = useMemo(() => {
+    const all = stayAt ? points.concat([stayAt]) : points;
+    return all.length ? boundsOf(all) : center ? boundsAround(center, 8000) : null;
+  }, [points, stayAt, center]);
 
   return (
     <KakaoMap className={styles.kakaoMap} center={center} bounds={bounds} fallback={fallback}>

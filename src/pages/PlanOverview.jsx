@@ -7,10 +7,7 @@ import { useConfirm } from "../hooks/useConfirm.js";
 import { useRegionListings } from "../hooks/useRegionListings.js";
 import { PlanProvider } from "../store/PlanContext.jsx";
 import { getRegionByShort } from "../services/regionRecommend.js";
-import {
-  getAllPrograms,
-  regionFilterFor,
-} from "../services/supportPrograms.js";
+import { getAllPrograms, regionFilterFor } from "../services/supportPrograms.js";
 import { buildFullSchedule } from "../services/dayTimeline.js";
 import { findListingAnywhere } from "../services/exploreListings.js";
 import { resolveStayCondition } from "../utils/date.js";
@@ -48,10 +45,7 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
   // 담은 체험·식당의 실제 이름은 둘러보기 목록에서 찾는다(지역 단위 캐시).
   const { listings } = useRegionListings(region ? region.short : null);
   // 상세 API는 타입별로 응답 필드가 달라 contentTypeId가 필요하다.
-  const selectionListing =
-    selection && selection.id
-      ? findListingAnywhere(listings, selection.id)
-      : null;
+  const selectionListing = selection && selection.id ? findListingAnywhere(listings, selection.id) : null;
 
   if (!region) {
     return <RegionNotFound />;
@@ -87,18 +81,13 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
   // 뽑히는 게 없어서, 그때는 구체적인 말 대신 지역 이름만 쓴다.
   const areas = topDistricts(
     days.flatMap((d) => d.cells.flatMap((c) => c.items)),
-    2,
+    2
   );
-  const routeAreaLabel = areas.length
-    ? areas.map((a) => `${a} 일대`).join(" · ")
-    : `${region.name} 일대`;
+  const routeAreaLabel = areas.length ? areas.map((a) => `${a} 일대`).join(" · ") : `${region.name} 일대`;
 
   const themeLine = plan.themes.length ? plan.themes.join(", ") : "테마 전체";
   const title = plan.planTitle || `${region.short} ${nights}일 계획`;
-  const placeCount = days.reduce(
-    (s, d) => s + d.cells.reduce((n, c) => n + c.items.length, 0),
-    0,
-  );
+  const placeCount = days.reduce((s, d) => s + d.cells.reduce((n, c) => n + c.items.length, 0), 0);
 
   // design 3304-3309줄.
   const metrics = [
@@ -114,9 +103,7 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
   const facts = [
     {
       label: "담은 식당",
-      value: plan.savedUtilities.length
-        ? `담은 식당 ${plan.savedUtilities.length}곳`
-        : "미정",
+      value: plan.savedUtilities.length ? `담은 식당 ${plan.savedUtilities.length}곳` : "미정",
     },
     { label: "주요 동선", value: routeAreaLabel },
     // 예전에는 design의 가짜 공식(`체류일 × 11km`)을 썼다. 실제 좌표가
@@ -231,12 +218,12 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
       <section className={styles.impact}>
         <div className={styles.impactInner}>
           <p className={styles.impactNote}>
-            {region.short}에서 {nights}일 머무는 동안의 소비가 지역에 남습니다.
-            · 인구감소지역 지정 현황 자료 행정안전부
+            {region.short}에서 {nights}일 머무는 동안의 소비가 지역에 남습니다. · 인구감소지역 지정 현황 자료
+            행정안전부
           </p>
           <p className={styles.source}>
-            출처 ⓒ한국관광공사 · 인구감소지역 지정 현황 행정안전부 · 일정과
-            비용은 공개 자료를 바탕으로 한 추정치입니다.
+            출처 ⓒ한국관광공사 · 인구감소지역 지정 현황 행정안전부 · 일정과 비용은 공개 자료를 바탕으로 한
+            추정치입니다.
           </p>
         </div>
       </section>
@@ -245,11 +232,7 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
         <button type="button" className={styles.mobileEdit} onClick={goEdit}>
           편집하기
         </button>
-        <button
-          type="button"
-          className={styles.mobileExport}
-          onClick={toggleExport}
-        >
+        <button type="button" className={styles.mobileExport} onClick={toggleExport}>
           내보내기
         </button>
       </div>
@@ -291,10 +274,7 @@ export default function PlanOverview() {
 
   return (
     <PlanProvider initial={openedPlan?.data}>
-      <PlanOverviewInner
-        openedPlanId={openedPlan ? openedPlan.id : null}
-        savedPlan={openedPlan}
-      />
+      <PlanOverviewInner openedPlanId={openedPlan ? openedPlan.id : null} savedPlan={openedPlan} />
     </PlanProvider>
   );
 }

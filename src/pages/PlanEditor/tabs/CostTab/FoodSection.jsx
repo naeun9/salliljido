@@ -27,10 +27,9 @@ export default function FoodSection({
   const [showAllDays, setShowAllDays] = useState(false);
   const shownDays = showAllDays ? nights : Math.min(nights, 7);
   // 일별 입력을 켜면 하루 단가 × 일수는 더 이상 계산 근거가 아니다.
-  const filledDays = Array.from(
-    { length: nights },
-    (_, i) => foodDaily[i + 1],
-  ).filter((v) => v !== undefined && v !== "").length;
+  const filledDays = Array.from({ length: nights }, (_, i) => foodDaily[i + 1]).filter(
+    (v) => v !== undefined && v !== ""
+  ).length;
   const basis = foodByDay
     ? filledDays
       ? `일별 입력 ${filledDays}일 합계 · 나머지 ${nights - filledDays}일은 0원`
@@ -38,9 +37,7 @@ export default function FoodSection({
     : noManualAmount
       ? "금액을 입력해주세요"
       : `1일 ${won(resolvedPer)} × ${nights}일` +
-        (cookedCount
-          ? ` · 외식 ${nights - cookedCount}끼, 직접 요리 ${cookedCount}끼`
-          : "");
+        (cookedCount ? ` · 외식 ${nights - cookedCount}끼, 직접 요리 ${cookedCount}끼` : "");
 
   return (
     <>
@@ -52,9 +49,7 @@ export default function FoodSection({
         </div>
       </div>
 
-      <div
-        className={`${foodStyles.chips} ${!foodManual ? foodStyles.visible : ""}`}
-      >
+      <div className={`${foodStyles.chips} ${!foodManual ? foodStyles.visible : ""}`}>
         {FOOD_STYLES.map((style) => (
           <button
             key={style}
@@ -67,9 +62,7 @@ export default function FoodSection({
         ))}
       </div>
 
-      <div
-        className={`${foodStyles.inputRow} ${foodManual ? foodStyles.visible : ""}`}
-      >
+      <div className={`${foodStyles.inputRow} ${foodManual ? foodStyles.visible : ""}`}>
         <div className={styles.amountInputWrap}>
           <input
             type="number"
@@ -88,28 +81,17 @@ export default function FoodSection({
       <p
         className={styles.cardBasis}
         style={{
-          color:
-            noManualAmount || (foodByDay && !filledDays)
-              ? "var(--rust)"
-              : "var(--gray)",
+          color: noManualAmount || (foodByDay && !filledDays) ? "var(--rust)" : "var(--gray)",
         }}
       >
         {basis}
       </p>
 
       <div className={styles.toggleRow}>
-        <ToggleSwitch
-          on={foodManual}
-          label="직접 입력"
-          onClick={() => onToggleFoodManual(resolvedPer)}
-        />
+        <ToggleSwitch on={foodManual} label="직접 입력" onClick={() => onToggleFoodManual(resolvedPer)} />
         {/* design에 없던 옵션. 하루 단가 × 일수로만 잡히던 식비를 날마다
             다르게 짤 수 있게 더했다. 켜면 아래 일별 입력칸의 합이 식비가 된다. */}
-        <ToggleSwitch
-          on={foodByDay}
-          label="하루마다 예산 짜기"
-          onClick={onToggleFoodByDay}
-        />
+        <ToggleSwitch on={foodByDay} label="하루마다 예산 짜기" onClick={onToggleFoodByDay} />
       </div>
 
       {foodByDay && (
@@ -129,10 +111,7 @@ export default function FoodSection({
                     placeholder="0"
                     onChange={(e) => {
                       const v = e.target.value;
-                      onSetFoodDay(
-                        d,
-                        v === "" ? "" : Math.max(0, parseInt(v, 10) || 0),
-                      );
+                      onSetFoodDay(d, v === "" ? "" : Math.max(0, parseInt(v, 10) || 0));
                     }}
                   />
                   <span className={foodStyles.dayUnit}>원</span>
@@ -141,11 +120,7 @@ export default function FoodSection({
             );
           })}
           {nights > 7 && (
-            <button
-              type="button"
-              className={foodStyles.dayMore}
-              onClick={() => setShowAllDays((v) => !v)}
-            >
+            <button type="button" className={foodStyles.dayMore} onClick={() => setShowAllDays((v) => !v)}>
               {showAllDays ? "접기" : `${nights}일 전체 보기`}
             </button>
           )}

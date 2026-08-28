@@ -15,7 +15,11 @@ export default function NotFoundView({ title, body, actions }) {
         <p className={styles.body}>{body}</p>
         <div className={styles.actions}>
           {actions.map((a) => (
-            <Link key={a.to} to={a.to} className={a.variant === "primary" ? styles.primary : styles.secondary}>
+            <Link
+              key={a.to}
+              to={a.to}
+              className={a.variant === "primary" ? styles.primary : styles.secondary}
+            >
               {a.label}
             </Link>
           ))}

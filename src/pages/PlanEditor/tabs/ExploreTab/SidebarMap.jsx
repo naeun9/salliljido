@@ -60,8 +60,24 @@ export default function SidebarMap({
           <span className={styles.errorIcon}>
             <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
               <circle cx="13" cy="13" r="9.5" stroke="#C05F33" strokeWidth="1.5" />
-              <line x1="13" y1="8" x2="13" y2="14.5" stroke="#C05F33" strokeWidth="1.7" strokeLinecap="round" />
-              <line x1="13" y1="17.4" x2="13" y2="17.7" stroke="#C05F33" strokeWidth="1.9" strokeLinecap="round" />
+              <line
+                x1="13"
+                y1="8"
+                x2="13"
+                y2="14.5"
+                stroke="#C05F33"
+                strokeWidth="1.7"
+                strokeLinecap="round"
+              />
+              <line
+                x1="13"
+                y1="17.4"
+                x2="13"
+                y2="17.7"
+                stroke="#C05F33"
+                strokeWidth="1.9"
+                strokeLinecap="round"
+              />
             </svg>
           </span>
           <div className={styles.errorTitle}>지도를 불러오지 못했어요</div>

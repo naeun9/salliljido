@@ -72,13 +72,10 @@ export function reducer(state, action) {
     }
     case "REMOVE_EXPERIENCE": {
       const { [action.id]: _removedDay, ...restDays } = state.experienceDays;
-      const { [action.id]: _removedPrice, ...restPrices } =
-        state.experiencePrices;
+      const { [action.id]: _removedPrice, ...restPrices } = state.experiencePrices;
       return {
         ...state,
-        addedExperiences: state.addedExperiences.filter(
-          (id) => id !== action.id,
-        ),
+        addedExperiences: state.addedExperiences.filter((id) => id !== action.id),
         experienceDays: restDays,
         experiencePrices: restPrices,
       };
@@ -96,9 +93,7 @@ export function reducer(state, action) {
     // (staySegs)에 stayId를 실어 한 곳에서 관리한다 — 그래야 둘러보기에서
     // 고른 숙소와 비용 탭의 구간이 어긋나지 않는다.
     case "SET_STAY_PICK": {
-      const base = state.staySegs.length
-        ? state.staySegs
-        : action.fallbackSegs || [];
+      const base = state.staySegs.length ? state.staySegs : action.fallbackSegs || [];
       const rest = base.filter((g) => g.stayId !== action.id);
       const segment = {
         from: action.from,
@@ -111,15 +106,11 @@ export function reducer(state, action) {
         ...state,
         // 숙소를 골랐다는 것은 구간을 나눠 쓰겠다는 뜻이다.
         staySplit: true,
-        staySegs: rest
-          .concat(segment)
-          .sort((a, b) => (a.from || 0) - (b.from || 0)),
+        staySegs: rest.concat(segment).sort((a, b) => (a.from || 0) - (b.from || 0)),
       };
     }
     case "REMOVE_STAY_PICK": {
-      const base = state.staySegs.length
-        ? state.staySegs
-        : action.fallbackSegs || [];
+      const base = state.staySegs.length ? state.staySegs : action.fallbackSegs || [];
       return { ...state, staySegs: base.filter((g) => g.stayId !== action.id) };
     }
 
@@ -191,18 +182,14 @@ export function reducer(state, action) {
       const on = state.themes.includes(action.theme);
       return {
         ...state,
-        themes: on
-          ? state.themes.filter((v) => v !== action.theme)
-          : state.themes.concat(action.theme),
+        themes: on ? state.themes.filter((v) => v !== action.theme) : state.themes.concat(action.theme),
       };
     }
     case "TOGGLE_MEAL": {
       const on = state.meals.includes(action.meal);
       return {
         ...state,
-        meals: on
-          ? state.meals.filter((v) => v !== action.meal)
-          : state.meals.concat(action.meal),
+        meals: on ? state.meals.filter((v) => v !== action.meal) : state.meals.concat(action.meal),
       };
     }
     case "START_ROUTINE":
@@ -225,9 +212,7 @@ export function reducer(state, action) {
       return {
         ...state,
         rtCustom: exists
-          ? state.rtCustom.map((c) =>
-              c.id === action.item.id ? action.item : c,
-            )
+          ? state.rtCustom.map((c) => (c.id === action.item.id ? action.item : c))
           : state.rtCustom.concat(action.item),
       };
     }

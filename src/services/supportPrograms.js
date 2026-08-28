@@ -128,7 +128,9 @@ export function filterPrograms(list, { regionFilter = [], statusFilter = [] } = 
 export function sortPrograms(list, sort) {
   const sorted = list.slice();
   if (sort === "recent") {
-    sorted.sort((a, b) => (a.rank === 3 ? 1 : 0) - (b.rank === 3 ? 1 : 0) || parseDate(b.posted) - parseDate(a.posted));
+    sorted.sort(
+      (a, b) => (a.rank === 3 ? 1 : 0) - (b.rank === 3 ? 1 : 0) || parseDate(b.posted) - parseDate(a.posted)
+    );
   } else {
     // 마감일이 없는(상시 모집) 항목은 같은 순위 안에서 뒤로 보낸다.
     sorted.sort((a, b) => a.rank - b.rank || (parseDate(a.end) || Infinity) - (parseDate(b.end) || Infinity));

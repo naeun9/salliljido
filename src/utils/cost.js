@@ -41,20 +41,14 @@ function segmentNights(seg) {
 }
 
 function calcStayTotal({ split, nightly, nights, staySegs }) {
-  if (!split)
-    return (nightly === "" ? 0 : (nightly ?? DEFAULT_NIGHTLY)) * nights;
+  if (!split) return (nightly === "" ? 0 : (nightly ?? DEFAULT_NIGHTLY)) * nights;
   const segs = resolveStaySegments(staySegs, nights);
-  return segs.reduce(
-    (sum, seg) => sum + segmentNights(seg) * (seg.rate || 0),
-    0,
-  );
+  return segs.reduce((sum, seg) => sum + segmentNights(seg) * (seg.rate || 0), 0);
 }
 
 // design 2043줄: 저녁을 "직접 요리"로 고른 일수(체류계획 탭 rtPick과 연동).
 function countCookedDinners(rtPick) {
-  return Object.keys(rtPick || {}).filter(
-    (k) => k.endsWith("|저녁") && rtPick[k].id === "cook",
-  ).length;
+  return Object.keys(rtPick || {}).filter((k) => k.endsWith("|저녁") && rtPick[k].id === "cook").length;
 }
 
 // 하루마다 예산을 짠 경우: 입력한 일차의 합. 안 넣은 일차는 0원으로 본다.
@@ -64,15 +58,7 @@ function calcFoodDailyTotal(foodDaily, nights) {
   return total;
 }
 
-function calcFoodTotal({
-  foodStyle,
-  foodManual,
-  foodPer,
-  nights,
-  cookedCount,
-  foodByDay,
-  foodDaily,
-}) {
+function calcFoodTotal({ foodStyle, foodManual, foodPer, nights, cookedCount, foodByDay, foodDaily }) {
   // 하루마다 예산 짜기가 켜져 있으면 그 합이 곧 식비다(요리 할인은 적용하지
   // 않는다 — 사용자가 이미 그날 쓸 금액을 직접 정한 것이라).
   if (foodByDay) return calcFoodDailyTotal(foodDaily, nights);
@@ -85,24 +71,11 @@ function calcFoodTotal({
   });
 }
 
-function calcFoodTotalAuto({
-  foodStyle,
-  foodManual,
-  foodPer,
-  nights,
-  cookedCount,
-}) {
+function calcFoodTotalAuto({ foodStyle, foodManual, foodPer, nights, cookedCount }) {
   const autoPer = FOOD_RATE_BY_STYLE[foodStyle] ?? FOOD_RATE_BY_STYLE.반반;
-  const per = foodManual
-    ? foodPer === "" || foodPer === undefined
-      ? 0
-      : foodPer
-    : autoPer;
+  const per = foodManual ? (foodPer === "" || foodPer === undefined ? 0 : foodPer) : autoPer;
   const cooked = Math.min(cookedCount, nights);
-  return (
-    per * nights -
-    cooked * Math.round(per * COOK_MEAL_FRACTION * COOK_SAVINGS_RATIO)
-  );
+  return per * nights - cooked * Math.round(per * COOK_MEAL_FRACTION * COOK_SAVINGS_RATIO);
 }
 
 export function resolveFoodPer({ foodStyle, foodManual, foodPer }) {
@@ -112,17 +85,13 @@ export function resolveFoodPer({ foodStyle, foodManual, foodPer }) {
 
 // design 2312줄: 체류 계획 탭에서 직접 추가한 일정의 비용 합(rtCustom과 연동).
 function calcCustomItemsTotal(rtCustom) {
-  return (rtCustom || []).reduce(
-    (sum, c) => sum + (parseInt(c.cost, 10) || 0),
-    0,
-  );
+  return (rtCustom || []).reduce((sum, c) => sum + (parseInt(c.cost, 10) || 0), 0);
 }
 
 function calcEtcTotal(etcRows, customItemsTotal) {
   const rowsTotal = (etcRows || []).reduce(
-    (sum, row) =>
-      sum + (row.amount === "" || row.amount === undefined ? 0 : row.amount),
-    0,
+    (sum, row) => sum + (row.amount === "" || row.amount === undefined ? 0 : row.amount),
+    0
   );
   return rowsTotal + customItemsTotal;
 }
@@ -130,10 +99,7 @@ function calcEtcTotal(etcRows, customItemsTotal) {
 // 참가비는 사용자가 직접 넣는 값이라 비어 있을 수 있다(관광공사 API에
 // 체험 가격이 없다 — docs/03-api-check.md §14). 안 넣은 항목은 0원으로 본다.
 function calcExperienceTotal(experienceRows) {
-  return (experienceRows || []).reduce(
-    (sum, x) => sum + (Number(x.price) || 0),
-    0,
-  );
+  return (experienceRows || []).reduce((sum, x) => sum + (Number(x.price) || 0), 0);
 }
 
 // design 2319줄: 전체 예상 비용. 다섯 항목의 시그니처(입력값)만 유지하면
@@ -218,9 +184,7 @@ export function buildCostBars({
     {
       label: "기타",
       v: etc,
-      basis: customItemsTotal
-        ? `직접 입력 + 추가한 일정 ${won(customItemsTotal)}`
-        : "직접 입력",
+      basis: customItemsTotal ? `직접 입력 + 추가한 일정 ${won(customItemsTotal)}` : "직접 입력",
     },
   ];
 

@@ -53,14 +53,22 @@ export default function ProgramCard({ program, saved, onToggleSave }) {
         {/* 공고 URL을 아직 못 채운 항목은 버튼을 숨긴다 — 예전에는 전부
             https://www.gov.kr로 고정된 자리표시용 링크였다. */}
         {program.url && (
-        <a href={program.url} target="_blank" rel="noopener" className={styles.applyBtn}>
-          신청 페이지로 이동
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-            <path d="M4.6 2h6.4v6.4" stroke="#FFFDFA" strokeWidth="1.4" strokeLinecap="round" />
-            <line x1="11" y1="2" x2="3.4" y2="9.6" stroke="#FFFDFA" strokeWidth="1.4" strokeLinecap="round" />
-            <path d="M8.2 11H2V4.8" stroke="#FFFDFA" strokeWidth="1.4" strokeLinecap="round" />
-          </svg>
-        </a>
+          <a href={program.url} target="_blank" rel="noopener" className={styles.applyBtn}>
+            신청 페이지로 이동
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+              <path d="M4.6 2h6.4v6.4" stroke="#FFFDFA" strokeWidth="1.4" strokeLinecap="round" />
+              <line
+                x1="11"
+                y1="2"
+                x2="3.4"
+                y2="9.6"
+                stroke="#FFFDFA"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+              />
+              <path d="M8.2 11H2V4.8" stroke="#FFFDFA" strokeWidth="1.4" strokeLinecap="round" />
+            </svg>
+          </a>
         )}
         <button
           type="button"

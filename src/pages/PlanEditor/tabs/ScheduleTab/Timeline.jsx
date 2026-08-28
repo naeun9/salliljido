@@ -37,8 +37,24 @@ export default function Timeline({
         </div>
         <button type="button" className={styles.addBtn} onClick={() => onInsertBefore("저녁")}>
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-            <line x1="8" y1="3" x2="8" y2="13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-            <line x1="3" y1="8" x2="13" y2="8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+            <line
+              x1="8"
+              y1="3"
+              x2="8"
+              y2="13"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+            />
+            <line
+              x1="3"
+              y1="8"
+              x2="13"
+              y2="8"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+            />
           </svg>
           일정 추가
         </button>

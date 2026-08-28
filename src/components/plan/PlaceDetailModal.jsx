@@ -13,17 +13,9 @@ import styles from "./PlaceDetailModal.module.css";
 //
 // 배경·카드 모양은 같은 앱의 다른 모달(AddScheduleModal, ConfirmModal)의
 // 값을 그대로 쓴다 — 새 톤을 만들지 않는다.
-export default function PlaceDetailModal({
-  selection,
-  contentTypeId,
-  onClose,
-}) {
+export default function PlaceDetailModal({ selection, contentTypeId, onClose }) {
   const open = !!selection;
-  const { detail, loading, error } = usePlaceDetail(
-    open,
-    selection?.id,
-    contentTypeId,
-  );
+  const { detail, loading, error } = usePlaceDetail(open, selection?.id, contentTypeId);
 
   // Esc로 닫기. 다른 모달과 동작을 맞춘다.
   useEffect(() => {
@@ -48,10 +40,7 @@ export default function PlaceDetailModal({
     { label: "주소", value: address },
     { label: "전화", value: tel },
     ...(detail?.info || []),
-  ].filter(
-    (row, i, all) =>
-      row.value && all.findIndex((r) => r.value === row.value) === i,
-  );
+  ].filter((row, i, all) => row.value && all.findIndex((r) => r.value === row.value) === i);
 
   return (
     <Modal open={open} onBackdropClick={onClose} zIndex={95}>
@@ -74,31 +63,10 @@ export default function PlaceDetailModal({
               )}
             </div>
           </div>
-          <button
-            type="button"
-            className={styles.closeIcon}
-            aria-label="닫기"
-            onClick={onClose}
-          >
+          <button type="button" className={styles.closeIcon} aria-label="닫기" onClick={onClose}>
             <svg width="14" height="14" viewBox="0 0 15 15" fill="none">
-              <line
-                x1="3"
-                y1="3"
-                x2="12"
-                y2="12"
-                stroke="#6E6E68"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-              <line
-                x1="12"
-                y1="3"
-                x2="3"
-                y2="12"
-                stroke="#6E6E68"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
+              <line x1="3" y1="3" x2="12" y2="12" stroke="#6E6E68" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="12" y1="3" x2="3" y2="12" stroke="#6E6E68" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </button>
         </div>
@@ -113,14 +81,7 @@ export default function PlaceDetailModal({
             </div>
           ) : (
             <>
-              {image && (
-                <img
-                  className={styles.image}
-                  src={image}
-                  alt=""
-                  loading="lazy"
-                />
-              )}
+              {image && <img className={styles.image} src={image} alt="" loading="lazy" />}
               {overview && <p className={styles.overview}>{overview}</p>}
 
               {rows.length > 0 && (
@@ -135,27 +96,16 @@ export default function PlaceDetailModal({
               )}
 
               {/* 목록에만 있는 설명(대개 주소)은 주소 줄과 겹치면 버린다. */}
-              {!overview && desc && desc !== address && (
-                <p className={styles.overview}>{desc}</p>
-              )}
+              {!overview && desc && desc !== address && <p className={styles.overview}>{desc}</p>}
 
-              {error && (
-                <p className={styles.error}>
-                  상세 정보를 불러오지 못해 기본 정보만 보여 드려요.
-                </p>
-              )}
+              {error && <p className={styles.error}>상세 정보를 불러오지 못해 기본 정보만 보여 드려요.</p>}
             </>
           )}
         </div>
 
         <div className={styles.actions}>
           {detail?.homepage && (
-            <a
-              className={styles.linkBtn}
-              href={detail.homepage}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a className={styles.linkBtn} href={detail.homepage} target="_blank" rel="noopener noreferrer">
               홈페이지
             </a>
           )}

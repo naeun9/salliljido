@@ -30,9 +30,7 @@ export async function fetchPlaceDetail(contentId, contentTypeId) {
     .then(async (res) => {
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        throw new Error(
-          body.error || `상세 정보를 불러오지 못했습니다 (${res.status})`,
-        );
+        throw new Error(body.error || `상세 정보를 불러오지 못했습니다 (${res.status})`);
       }
       return res.json();
     })

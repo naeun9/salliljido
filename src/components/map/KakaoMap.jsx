@@ -79,7 +79,9 @@ export default function KakaoMap({
     if (!ready || !mapRef.current) return;
     if (bounds) {
       const { sw, ne } = bounds;
-      mapRef.current.setBounds(new maps.LatLngBounds(new maps.LatLng(sw.lat, sw.lng), new maps.LatLng(ne.lat, ne.lng)));
+      mapRef.current.setBounds(
+        new maps.LatLngBounds(new maps.LatLng(sw.lat, sw.lng), new maps.LatLng(ne.lat, ne.lng))
+      );
       return;
     }
     mapRef.current.setLevel(level);

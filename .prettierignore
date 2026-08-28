@@ -1,0 +1,5 @@
+# design 원본(디자인 캔버스 export). 값이 한 글자라도 바뀌면 안 되므로
+# 포맷터를 대지 않는다.
+design/
+dist/
+node_modules/

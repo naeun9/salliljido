@@ -110,11 +110,7 @@
   overflow: hidden;
   border-radius: var(--radius-card);
   border: 1px solid var(--mist);
-  background: repeating-linear-gradient(
-    135deg,
-    var(--map-tile-light) 0 14px,
-    var(--map-tile-dark) 14px 28px
-  );
+  background: repeating-linear-gradient(135deg, var(--map-tile-light) 0 14px, var(--map-tile-dark) 14px 28px);
 }
 
 /* 그날 묵는 숙소 핀. 최종 계획 화면의 중심 핀(RegionGlance .centerPinInner)과

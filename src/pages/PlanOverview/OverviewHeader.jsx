@@ -104,7 +104,15 @@ export default function OverviewHeader({
                 <button type="button" className={styles.exportItem} onClick={onExportNotice}>
                   <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
                     <rect x="4" y="1.5" width="8" height="4" stroke="#2F5D50" strokeWidth="1.4" />
-                    <rect x="1.8" y="5.5" width="12.4" height="6" rx="1.4" stroke="#2F5D50" strokeWidth="1.4" />
+                    <rect
+                      x="1.8"
+                      y="5.5"
+                      width="12.4"
+                      height="6"
+                      rx="1.4"
+                      stroke="#2F5D50"
+                      strokeWidth="1.4"
+                    />
                     <rect x="4.5" y="9.5" width="7" height="5" stroke="#2F5D50" strokeWidth="1.4" />
                   </svg>
                   인쇄 / PDF로 저장

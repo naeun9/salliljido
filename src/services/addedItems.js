@@ -1,10 +1,6 @@
 // 둘러보기에서 담은 곳을 하루 타임라인 항목으로 바꾼다.
 // dayTimeline.js가 300줄을 넘어(CLAUDE.md 코드 원칙) 떼어냈다.
-import {
-  EXPERIENCE_SLOT_DEFAULT,
-  EXPERIENCE_TIME_DEFAULT,
-  SLOT_SWATCHES,
-} from "./routineGenerator.js";
+import { EXPERIENCE_SLOT_DEFAULT, EXPERIENCE_TIME_DEFAULT, SLOT_SWATCHES } from "./routineGenerator.js";
 import { findListing } from "./exploreListings.js";
 import { SLOT_TIME } from "./slots.js";
 
@@ -24,15 +20,7 @@ function slotOfAdded(category, item) {
   return EXPERIENCE_SLOT_DEFAULT;
 }
 
-function addedOfCategory({
-  day,
-  category,
-  ids,
-  days,
-  listings,
-  keyPrefix,
-  offset,
-}) {
+function addedOfCategory({ day, category, ids, days, listings, keyPrefix, offset }) {
   return (ids || [])
     .filter((id) => (days[id] || 1) === day)
     .map((id) => findListing(listings, category, id))

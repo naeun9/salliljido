@@ -41,9 +41,7 @@ export default function TransportSection({
           <span className={styles.amountUnit}>원</span>
         </div>
       </div>
-      <p className={styles.cardBasis}>
-        집에서 오가는 왕복 교통비를 입력해주세요
-      </p>
+      <p className={styles.cardBasis}>집에서 오가는 왕복 교통비를 입력해주세요</p>
 
       {/* design에 없던 항목. 현지 이동비처럼 왕복 교통비와 성격이 다른
           지출을 따로 적을 자리가 없어서 더했다. 총액에는 교통비로 합산된다. */}
@@ -59,9 +57,7 @@ export default function TransportSection({
           <span className={styles.amountUnit}>원</span>
         </div>
       </div>
-      <p className={styles.cardBasis}>
-        현지 이동 등 따로 드는 교통비가 있으면 적어주세요
-      </p>
+      <p className={styles.cardBasis}>현지 이동 등 따로 드는 교통비가 있으면 적어주세요</p>
     </>
   );
 }

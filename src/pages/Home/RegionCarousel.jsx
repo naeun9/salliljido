@@ -109,15 +109,8 @@ export default function RegionCarousel() {
           </div>
         </div>
 
-        <div
-          className={styles.track}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div
-            className={styles.trackInner}
-            style={{ transform: `translateX(-${idx * 100}%)` }}
-          >
+        <div className={styles.track} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+          <div className={styles.trackInner} style={{ transform: `translateX(-${idx * 100}%)` }}>
             {REGIONS.map((r) => (
               <div key={r.name} className={styles.slide}>
                 <div className={styles.card} onClick={() => openFind(r.name)}>

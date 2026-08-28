@@ -35,11 +35,7 @@ export default function RegionExplore() {
         <div className={styles.overlay} />
         <div className={styles.row}>
           <div className={styles.left}>
-            <button
-              type="button"
-              className={styles.backBtn}
-              onClick={() => navigate(`/region/${regionId}`)}
-            >
+            <button type="button" className={styles.backBtn} onClick={() => navigate(`/region/${regionId}`)}>
               ← 지역 소개로 돌아가기
             </button>
             <h1 className={styles.title}>{region.name}</h1>

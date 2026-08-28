@@ -6,11 +6,7 @@ import { stayDays } from "../../../utils/date.js";
 import { useRegionListings } from "../../../hooks/useRegionListings.js";
 import { findListing } from "../../../services/exploreListings.js";
 import { availableCuisines } from "../../../services/routineGenerator.js";
-import {
-  buildDayTimeline,
-  resolveThemePrefs,
-  resolveDayContext,
-} from "../../../services/dayTimeline.js";
+import { buildDayTimeline, resolveThemePrefs, resolveDayContext } from "../../../services/dayTimeline.js";
 import { buildSelection } from "../../../services/scheduleSelection.js";
 import { useRoutineActions } from "../../../hooks/useRoutineActions.js";
 import { buildRoutePins, routeDistanceLabel } from "../../../utils/route.js";
@@ -43,19 +39,12 @@ export default function ScheduleTab({ region }) {
   const [cf, setCf] = useState(null); // { editId, slot }
   const [timeEdit, setTimeEdit] = useState(null); // 시간 수정 중인 항목
   // 계획 생성·재생성(로딩 연출 포함)은 훅으로 뺐다.
-  const {
-    routineLoading,
-    regenAsk,
-    setRegenAsk,
-    makeRoutine,
-    askRegen,
-    regenKeep,
-    regenAll,
-  } = useRoutineActions(plan, () => {
-    setDay(1);
-    setWeek(0);
-    setCondOpen(false);
-  });
+  const { routineLoading, regenAsk, setRegenAsk, makeRoutine, askRegen, regenKeep, regenAll } =
+    useRoutineActions(plan, () => {
+      setDay(1);
+      setWeek(0);
+      setCondOpen(false);
+    });
 
   const durDays = stayDays({ dur, customDays });
   // 일차별 테마·메뉴 결정은 최종 계획 화면(PlanOverview)과 같은 규칙을
@@ -111,15 +100,10 @@ export default function ScheduleTab({ region }) {
     listings,
   });
 
-  const daysWithAdds = plan.addedExperiences.map(
-    (id) => plan.experienceDays[id] || 1,
-  );
+  const daysWithAdds = plan.addedExperiences.map((id) => plan.experienceDays[id] || 1);
 
   const showHint =
-    plan.routineOn &&
-    !rtHintClosed &&
-    Object.keys(plan.rtPick).length === 0 &&
-    plan.rtCustom.length === 0;
+    plan.routineOn && !rtHintClosed && Object.keys(plan.rtPick).length === 0 && plan.rtCustom.length === 0;
 
   // --- 핸들러 ---
   function openCustomForm(slot, editId) {
@@ -277,9 +261,7 @@ export default function ScheduleTab({ region }) {
         openCustomForm={openCustomForm}
         cf={cf}
         setCf={setCf}
-        editingCustom={
-          cf?.editId ? plan.rtCustom.find((c) => c.id === cf.editId) : null
-        }
+        editingCustom={cf?.editId ? plan.rtCustom.find((c) => c.id === cf.editId) : null}
         submitCustom={submitCustom}
         regenAsk={regenAsk}
         setRegenAsk={setRegenAsk}

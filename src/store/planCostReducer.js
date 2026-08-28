@@ -17,18 +17,13 @@ export function costReducer(state, action) {
     case "ADD_STAY_SEGMENT":
       return {
         ...state,
-        staySegs: (state.staySegs.length
-          ? state.staySegs
-          : action.fallbackSegs
-        ).concat(action.segment),
+        staySegs: (state.staySegs.length ? state.staySegs : action.fallbackSegs).concat(action.segment),
       };
     case "UPDATE_STAY_SEGMENT": {
       const base = state.staySegs.length ? state.staySegs : action.fallbackSegs;
       return {
         ...state,
-        staySegs: base.map((g, i) =>
-          i === action.index ? { ...g, ...action.patch } : g,
-        ),
+        staySegs: base.map((g, i) => (i === action.index ? { ...g, ...action.patch } : g)),
       };
     }
     case "REMOVE_STAY_SEGMENT": {
@@ -57,7 +52,7 @@ export function costReducer(state, action) {
       return {
         ...state,
         etcRows: state.etcRows.map((row, i) =>
-          i === action.index ? { ...row, [action.key]: action.value } : row,
+          i === action.index ? { ...row, [action.key]: action.value } : row
         ),
       };
     case "REMOVE_ETC_ROW":

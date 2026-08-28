@@ -189,11 +189,7 @@
   overflow: hidden;
   border-radius: var(--radius-card);
   border: 1px solid var(--mist);
-  background: repeating-linear-gradient(
-    135deg,
-    var(--map-tile-light) 0 14px,
-    var(--map-tile-dark) 14px 28px
-  );
+  background: repeating-linear-gradient(135deg, var(--map-tile-light) 0 14px, var(--map-tile-dark) 14px 28px);
 }
 .mapCaption {
   margin: 12px 0 0;

@@ -28,7 +28,12 @@ export default function TimelineItem({
     <>
       <div className={styles.gap}>
         <span className={styles.gapLine} />
-        <button type="button" className={styles.gapBtn} aria-label="여기에 일정 추가" onClick={onInsertBefore}>
+        <button
+          type="button"
+          className={styles.gapBtn}
+          aria-label="여기에 일정 추가"
+          onClick={onInsertBefore}
+        >
           <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
             <line x1="8" y1="3" x2="8" y2="13" stroke="#C05F33" strokeWidth="1.7" strokeLinecap="round" />
             <line x1="3" y1="8" x2="13" y2="8" stroke="#C05F33" strokeWidth="1.7" strokeLinecap="round" />
@@ -47,13 +52,19 @@ export default function TimelineItem({
           <div className={styles.slotTime}>{item.time}</div>
         </div>
 
-        <div className={styles.card} style={{ border: `1px solid ${border}`, borderLeft: accent, background: cardBg }}>
+        <div
+          className={styles.card}
+          style={{ border: `1px solid ${border}`, borderLeft: accent, background: cardBg }}
+        >
           <div className={styles.body}>
             <div className={styles.head}>
               <h3 className={styles.place}>{item.place}</h3>
               <span
                 className={styles.tag}
-                style={{ background: item.mine ? "#F5E1D5" : "#DCE8E2", color: item.mine ? "#C05F33" : "#2F5D50" }}
+                style={{
+                  background: item.mine ? "#F5E1D5" : "#DCE8E2",
+                  color: item.mine ? "#C05F33" : "#2F5D50",
+                }}
               >
                 {item.tag}
               </span>
@@ -73,7 +84,13 @@ export default function TimelineItem({
                   >
                     음식 종류 바꾸기
                     <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
-                      <path d="M2.5 4.2 6 7.8l3.5-3.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      <path
+                        d="M2.5 4.2 6 7.8l3.5-3.6"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </button>
                   <div className={`${styles.cuisineMenu} ${cuisineMenuOpen ? styles.open : ""}`}>
@@ -118,7 +135,13 @@ export default function TimelineItem({
                 >
                   <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
                     <circle cx="8" cy="8" r="6.2" stroke="currentColor" strokeWidth="1.4" />
-                    <path d="M8 4.6V8l2.4 1.6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                    <path
+                      d="M8 4.6V8l2.4 1.6"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                   시간
                 </button>
@@ -133,8 +156,19 @@ export default function TimelineItem({
                 }}
               >
                 <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-                  <path d="M2 6a5 5 0 0 1 8.6-2.6M14 10a5 5 0 0 1-8.6 2.6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-                  <path d="M10.6 1.4v2.6h-2.6M5.4 14.6V12h2.6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                  <path
+                    d="M2 6a5 5 0 0 1 8.6-2.6M14 10a5 5 0 0 1-8.6 2.6"
+                    stroke="currentColor"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M10.6 1.4v2.6h-2.6M5.4 14.6V12h2.6"
+                    stroke="currentColor"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
                 {swapLabel}
               </button>
@@ -150,7 +184,12 @@ export default function TimelineItem({
                   }}
                 >
                   <svg width="13" height="13" viewBox="0 0 15 16" fill="none">
-                    <path d="M2.5 4.5h10M6 2.2h3M3.8 4.5l.6 9h6.2l.6-9" stroke="#6E6E68" strokeWidth="1.3" strokeLinecap="round" />
+                    <path
+                      d="M2.5 4.5h10M6 2.2h3M3.8 4.5l.6 9h6.2l.6-9"
+                      stroke="#6E6E68"
+                      strokeWidth="1.3"
+                      strokeLinecap="round"
+                    />
                   </svg>
                 </button>
               )}

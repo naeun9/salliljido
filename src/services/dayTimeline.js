@@ -55,15 +55,7 @@ export { SLOT_TIME };
 // 나온 곳이 오늘 오후에 또" 나오는 경우를 못 막는다. 그래서 전날 나온
 // 곳을 다음 날 후보에서 뺀다 — 앞 일차 결과가 필요하니 순서대로 만든다.
 // 난수는 쓰지 않으므로 몇 번을 다시 계산해도 결과는 같다.
-function baseSlotChain({
-  upToDay,
-  themes,
-  meals,
-  mealOverride,
-  regenSeed,
-  addedIds,
-  listings,
-}) {
+function baseSlotChain({ upToDay, themes, meals, mealOverride, regenSeed, addedIds, listings }) {
   const chain = [];
   let prevIds = [];
   for (let d = 1; d <= upToDay; d++) {
@@ -105,21 +97,13 @@ function toBaseItems(slots, day) {
           sortKey: SLOT_TIME[slot],
           timeKey: `${day}|${slot}`,
         }
-      : null,
+      : null
   ).filter(Boolean);
 }
 
 // 여러 갈래(자동 생성·담은 체험·직접 추가)를 시간순으로 합치고 대체
 // 장소를 덮어쓴다. 하루치와 전체 일정이 같은 조립 규칙을 쓰도록 뺐다.
-function assembleDay({
-  baseItems,
-  day,
-  added,
-  rtCustom,
-  rtPick,
-  listings,
-  itemTimes,
-}) {
+function assembleDay({ baseItems, day, added, rtCustom, rtPick, listings, itemTimes }) {
   const addedItems = buildAddedItems({ day, listings, ...added });
 
   // 담은 곳이 있는 시간대는 자동 생성 항목을 비운다. 사용자가 직접 고른
@@ -129,8 +113,7 @@ function assembleDay({
   //
   // 시간을 고친 항목은 옮겨 간 시간대 기준으로 판단해야 해서 시간 반영을
   // 먼저 한다(applyTimeOverride가 slot을 바꾼다).
-  const withTimes = (list) =>
-    list.map((item) => applyTimeOverride(item, itemTimes));
+  const withTimes = (list) => list.map((item) => applyTimeOverride(item, itemTimes));
   const timedAdded = withTimes(addedItems);
   const takenSlots = new Set(timedAdded.map((x) => x.slot));
 
@@ -142,9 +125,7 @@ function assembleDay({
     // 시간은 위에서 이미 반영했다(바뀐 시간대로 자리를 옮기려면 정렬 전에
     // 반영해야 한다).
     .sort(
-      (a, b) =>
-        SLOT_ORDER[a.slot] - SLOT_ORDER[b.slot] ||
-        String(a.sortKey).localeCompare(String(b.sortKey)),
+      (a, b) => SLOT_ORDER[a.slot] - SLOT_ORDER[b.slot] || String(a.sortKey).localeCompare(String(b.sortKey))
     );
 
   return applyPicks(merged, { day, rtPick, listings });
@@ -193,13 +174,7 @@ export function resolveThemePrefs(themes) {
   return themes && themes.length ? themes : ALL_THEMES;
 }
 
-export function resolveDayContext({
-  day,
-  themes,
-  meals,
-  mealOverride,
-  listings,
-}) {
+export function resolveDayContext({ day, themes, meals, mealOverride, listings }) {
   const prefs = resolveThemePrefs(themes);
   return {
     theme: prefs[(day - 1) % prefs.length],

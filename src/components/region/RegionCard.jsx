@@ -24,10 +24,7 @@ export default function RegionCard({ region, best, hovered, onMouseEnter, onMous
               <span className={styles.metricLabel}>{m.label}</span>
               <span className={styles.metricDots}>
                 {[1, 2, 3].map((n) => (
-                  <span
-                    key={n}
-                    className={`${styles.metricDot} ${n <= m.level ? styles.filled : ""}`}
-                  />
+                  <span key={n} className={`${styles.metricDot} ${n <= m.level ? styles.filled : ""}`} />
                 ))}
               </span>
             </div>

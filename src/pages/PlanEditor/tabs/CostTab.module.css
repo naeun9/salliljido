@@ -1,7 +1,6 @@
 /* design/salliljido.extracted.html 1228-1443줄 */
 .section {
-  padding: clamp(32px, 4.5vh, 48px) clamp(20px, 5vw, 64px)
-    clamp(64px, 9vh, 96px);
+  padding: clamp(32px, 4.5vh, 48px) clamp(20px, 5vw, 64px) clamp(64px, 9vh, 96px);
 }
 .inner {
   max-width: 1180px;
