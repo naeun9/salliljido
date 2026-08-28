@@ -4,7 +4,17 @@ import styles from "./PlansSection.module.css";
 // design/salliljido.extracted.html 1895-1934줄. 저장한 지역 섹션과 달리
 // 로딩 스켈레톤이 없다(원본도 mpRoutinesDisplay/mpRoutinesEmpty가
 // isLoading과 무관하게 routines.length만 본다) — 그대로 옮겼다.
-export default function PlansSection({ plans, fadingIds, renamingId, renameDraft, onDraftChange, onStartEdit, onSaveEdit, onOpen, onRemove }) {
+export default function PlansSection({
+  plans,
+  fadingIds,
+  renamingId,
+  renameDraft,
+  onDraftChange,
+  onStartEdit,
+  onSaveEdit,
+  onOpen,
+  onRemove,
+}) {
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
@@ -38,7 +48,9 @@ export default function PlansSection({ plans, fadingIds, renamingId, renameDraft
               <line x1="9" y1="20" x2="18" y2="20" stroke="#4A7C6F" strokeWidth="1.4" />
             </svg>
             <div className={styles.emptyTitle}>지역을 고르면 하루 일정을 만들어 드립니다</div>
-            <p className={styles.emptyDesc}>저장한 지역에서 "이어서 보기"를 누르면 계획 만들기로 넘어갑니다.</p>
+            <p className={styles.emptyDesc}>
+              저장한 지역에서 "이어서 보기"를 누르면 계획 만들기로 넘어갑니다.
+            </p>
           </div>
         )}
       </div>

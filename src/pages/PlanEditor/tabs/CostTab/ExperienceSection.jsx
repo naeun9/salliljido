@@ -39,10 +39,31 @@ export default function ExperienceSection({ rows, expTotal, onRemove, onSetPrice
               />
               <span className={expStyles.costUnit}>원</span>
             </span>
-            <button type="button" className={expStyles.removeBtn} aria-label="제외" onClick={() => onRemove(x.id)}>
+            <button
+              type="button"
+              className={expStyles.removeBtn}
+              aria-label="제외"
+              onClick={() => onRemove(x.id)}
+            >
               <svg width="13" height="13" viewBox="0 0 15 15" fill="none">
-                <line x1="3" y1="3" x2="12" y2="12" stroke="#6E6E68" strokeWidth="1.4" strokeLinecap="round" />
-                <line x1="12" y1="3" x2="3" y2="12" stroke="#6E6E68" strokeWidth="1.4" strokeLinecap="round" />
+                <line
+                  x1="3"
+                  y1="3"
+                  x2="12"
+                  y2="12"
+                  stroke="#6E6E68"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                />
+                <line
+                  x1="12"
+                  y1="3"
+                  x2="3"
+                  y2="12"
+                  stroke="#6E6E68"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                />
               </svg>
             </button>
           </div>

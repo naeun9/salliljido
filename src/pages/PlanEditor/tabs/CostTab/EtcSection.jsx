@@ -45,8 +45,24 @@ export default function EtcSection({ rows, etcTotal, onUpdateRow, onRemoveRow, o
               onClick={() => onRemoveRow(i)}
             >
               <svg width="13" height="13" viewBox="0 0 15 15" fill="none">
-                <line x1="3" y1="3" x2="12" y2="12" stroke="#6E6E68" strokeWidth="1.4" strokeLinecap="round" />
-                <line x1="12" y1="3" x2="3" y2="12" stroke="#6E6E68" strokeWidth="1.4" strokeLinecap="round" />
+                <line
+                  x1="3"
+                  y1="3"
+                  x2="12"
+                  y2="12"
+                  stroke="#6E6E68"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                />
+                <line
+                  x1="12"
+                  y1="3"
+                  x2="3"
+                  y2="12"
+                  stroke="#6E6E68"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                />
               </svg>
             </button>
           </div>

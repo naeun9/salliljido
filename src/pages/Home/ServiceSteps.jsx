@@ -52,10 +52,13 @@ export default function ServiceSteps() {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
           const i = cards.indexOf(entry.target);
-          setTimeout(() => {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "none";
-          }, Math.max(0, i) * 110);
+          setTimeout(
+            () => {
+              entry.target.style.opacity = "1";
+              entry.target.style.transform = "none";
+            },
+            Math.max(0, i) * 110
+          );
           io.unobserve(entry.target);
         });
       },
@@ -78,7 +81,8 @@ export default function ServiceSteps() {
           <div className={styles.eyebrow}>SERVICE</div>
           <h2 className={styles.title}>
             머무는 데 필요한 것들을,
-            <br />한자리에서
+            <br />
+            한자리에서
           </h2>
           <p className={styles.lead}>짧은 체류를 준비하는 과정을 순서대로 안내합니다.</p>
         </div>

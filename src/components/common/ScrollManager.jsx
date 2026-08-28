@@ -84,9 +84,7 @@ export default function ScrollManager() {
         stopped = true;
       };
       const events = ["wheel", "touchstart", "keydown"];
-      events.forEach((e) =>
-        window.addEventListener(e, stop, { passive: true, once: true }),
-      );
+      events.forEach((e) => window.addEventListener(e, stop, { passive: true, once: true }));
 
       const retry = () => {
         if (stopped || performance.now() > deadline) return;

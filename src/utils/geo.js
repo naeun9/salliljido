@@ -13,7 +13,7 @@ function median(values) {
 }
 
 // 좌표가 있는 항목들의 중앙값 지점. 하나도 없으면 null.
-export function medianCenter(items) {
+function medianCenter(items) {
   const lats = [];
   const lngs = [];
   (items || []).forEach((x) => {
@@ -26,10 +26,6 @@ export function medianCenter(items) {
 }
 
 // 둘러보기 목록(카테고리별 객체) 전체의 중심.
-export function listingsCenter(listings) {
-  const all = Object.values(listings || {}).flat();
-  return medianCenter(all);
-}
 
 // 중심에서 radius(m)만큼 떨어진 사각 범위. 지도를 이 범위에 맞추면
 // 반경 원이 화면에 꽉 차게 들어온다.
@@ -46,13 +42,12 @@ export function boundsAround(center, radiusMeters) {
 // 두 지점 사이 거리(m). 지도 위에서 라벨이 서로 겹치는지 판단하는 데 쓴다.
 const EARTH_RADIUS_M = 6371000;
 
-export function distanceMeters(a, b) {
+function distanceMeters(a, b) {
   if (!a || !b) return Infinity;
   const rad = (d) => (d * Math.PI) / 180;
   const dLat = rad(b.lat - a.lat);
   const dLng = rad(b.lng - a.lng);
-  const h =
-    Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLng / 2) ** 2;
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLng / 2) ** 2;
   return 2 * EARTH_RADIUS_M * Math.asin(Math.sqrt(h));
 }
 

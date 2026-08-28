@@ -1,4 +1,4 @@
-// 한국관광공사 오픈API(KorService2, GoCamping) 공용 호출 유틸. api/tour/*.js가
+// 한국관광공사 오픈API(KorService2) 공용 호출 유틸. api/tour/*.js가
 // 공유한다. 파일명이 _lib인 이유: Vercel은 api/ 아래에서 밑줄로 시작하는
 // 폴더를 라우트로 취급하지 않는다(공식 컨벤션) — 그래서 여기엔 진짜
 // 엔드포인트가 아니라 공용 코드만 둔다.
@@ -9,7 +9,6 @@
 // 이중 인코딩(+가 %2B가 아니라 %252B가 되는 식)이 되어 인증 오류가 난다.
 // → 이 파일 밖에서는 절대로 serviceKey를 직접 만들거나 인코딩하지 말 것.
 const KOR_SERVICE_BASE = "http://apis.data.go.kr/B551011/KorService2";
-const GOCAMPING_BASE = "http://apis.data.go.kr/B551011/GoCamping";
 
 // 공공데이터포털 공통 에러코드(returnReasonCode/resultCode 공용 표).
 const ERROR_MESSAGES = {
@@ -40,7 +39,7 @@ function describeError(code) {
 //   1) 정상 응답            { response: { header: {resultCode,...}, body: {...} } }
 //   2) 게이트웨이 에러(JSON) { OpenAPI_ServiceResponse: { cmmMsgHeader: {returnReasonCode,...} } }
 //   3) 게이트웨이 에러(XML) 위와 같은 내용이 XML 태그로 옴(_type=json이어도)
-//   4) 상품(오퍼레이션) 레벨 파라미터 에러 — GoCamping에서 발견:
+//   4) 상품(오퍼레이션) 레벨 파라미터 에러(고캠핑 API에서 확인했던 형태):
 //      { responseTime, resultCode, resultMsg } 처럼 껍데기 없이 최상위에 바로 옴
 function parseOpenApiResponse(text) {
   const trimmed = text.trim();
@@ -52,7 +51,11 @@ function parseOpenApiResponse(text) {
     return {
       ok: false,
       errorCode: code,
-      message: code ? describeError(code) : authMsgMatch ? authMsgMatch[1] : "알 수 없는 XML 에러 응답을 받았습니다.",
+      message: code
+        ? describeError(code)
+        : authMsgMatch
+          ? authMsgMatch[1]
+          : "알 수 없는 XML 에러 응답을 받았습니다.",
     };
   }
 
@@ -69,14 +72,22 @@ function parseOpenApiResponse(text) {
     return {
       ok: false,
       errorCode: code,
-      message: code ? describeError(code) : gatewayHeader.returnAuthMsg || gatewayHeader.errMsg || "알 수 없는 게이트웨이 에러 응답을 받았습니다.",
+      message: code
+        ? describeError(code)
+        : gatewayHeader.returnAuthMsg ||
+          gatewayHeader.errMsg ||
+          "알 수 없는 게이트웨이 에러 응답을 받았습니다.",
     };
   }
 
-  // GoCamping의 파라미터 검증 에러: 껍데기 없이 최상위에 resultCode가 있고
+  // 파라미터 검증 에러: 껍데기 없이 최상위에 resultCode가 있고
   // response 필드 자체가 없다(정상 응답은 항상 response로 감싸져 있음).
   if (json?.resultCode !== undefined && json?.response === undefined) {
-    return { ok: false, errorCode: json.resultCode, message: json.resultMsg || describeError(json.resultCode) };
+    return {
+      ok: false,
+      errorCode: json.resultCode,
+      message: json.resultMsg || describeError(json.resultCode),
+    };
   }
 
   const header = json?.response?.header;
@@ -93,7 +104,11 @@ function parseOpenApiResponse(text) {
     return { ok: true, body: { items: "", totalCount: 0, numOfRows: 0, pageNo: 1 } };
   }
 
-  return { ok: false, errorCode: header.resultCode, message: describeError(header.resultCode) || header.resultMsg };
+  return {
+    ok: false,
+    errorCode: header.resultCode,
+    message: describeError(header.resultCode) || header.resultMsg,
+  };
 }
 
 async function callOpenApi(baseUrl, operation, params, { timeoutMs = 8000 } = {}) {
@@ -140,9 +155,13 @@ export function callTourApi(operation, params = {}, opts) {
   return callOpenApi(KOR_SERVICE_BASE, operation, params, opts);
 }
 
-// 고캠핑(GoCamping) API 호출. operation 예: "basedList", "searchList".
-export function callGoCampingApi(operation, params = {}, opts) {
-  return callOpenApi(GOCAMPING_BASE, operation, params, opts);
+// 관광공사 이미지 URL은 같은 호스트(tong.visitkorea.or.kr)인데도 항목마다
+// http와 https가 섞여서 온다(태안 30건 중 http 12 / https 12). https로
+// 서비스하는 배포 환경에서는 http 이미지가 Mixed Content로 차단돼 사진이
+// 통째로 안 나온다. 같은 URL을 https로 바꿔 부르면 200으로 정상 응답하는
+// 것을 확인하고, 여기서 프로토콜을 맞춰 준다.
+export function toHttps(url) {
+  return url && url.startsWith("http://") ? `https://${url.slice("http://".length)}` : url || "";
 }
 
 // items가 "" | {item: {...}} | {item: [...]} 세 가지 형태로 오는 걸

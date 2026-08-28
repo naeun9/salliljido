@@ -54,11 +54,7 @@ export default function StaySection({
       </div>
 
       <div className={styles.toggleRow}>
-        <ToggleSwitch
-          on={split}
-          label="숙소를 나눠서 입력하기"
-          onClick={onToggleSplit}
-        />
+        <ToggleSwitch on={split} label="숙소를 나눠서 입력하기" onClick={onToggleSplit} />
 
         <div className={`${segStyles.segList} ${split ? segStyles.open : ""}`}>
           {segs.map((g, i) => (
@@ -67,17 +63,13 @@ export default function StaySection({
                 <input
                   type="number"
                   value={g.from}
-                  onChange={(e) =>
-                    onUpdateSeg(i, { from: numOr0(e.target.value) })
-                  }
+                  onChange={(e) => onUpdateSeg(i, { from: numOr0(e.target.value) })}
                 />
                 <span>~</span>
                 <input
                   type="number"
                   value={g.to}
-                  onChange={(e) =>
-                    onUpdateSeg(i, { to: numOr0(e.target.value) })
-                  }
+                  onChange={(e) => onUpdateSeg(i, { to: numOr0(e.target.value) })}
                 />
                 <span>일차</span>
               </div>
@@ -85,9 +77,7 @@ export default function StaySection({
                 <input
                   type="number"
                   value={g.rate}
-                  onChange={(e) =>
-                    onUpdateSeg(i, { rate: numOr0(e.target.value) })
-                  }
+                  onChange={(e) => onUpdateSeg(i, { rate: numOr0(e.target.value) })}
                 />
                 <span>원/박</span>
               </div>
@@ -96,10 +86,7 @@ export default function StaySection({
                   숙소인지 바로 알 수 있게. 직접 만든 구간은 원본대로
                   자유 입력 메모다. */}
               {g.stayId ? (
-                <span
-                  className={segStyles.stayName}
-                  title={stayNameOf(g.stayId)}
-                >
+                <span className={segStyles.stayName} title={stayNameOf(g.stayId)}>
                   {stayNameOf(g.stayId) || "담은 숙소"}
                 </span>
               ) : (
@@ -112,9 +99,7 @@ export default function StaySection({
                 />
               )}
               <span className={segStyles.subtotal}>
-                {won(
-                  Math.max(0, (g.to || 0) - (g.from || 0) + 1) * (g.rate || 0),
-                )}
+                {won(Math.max(0, (g.to || 0) - (g.from || 0) + 1) * (g.rate || 0))}
               </span>
               <button
                 type="button"
@@ -146,11 +131,7 @@ export default function StaySection({
             </div>
           ))}
           <div className={segStyles.segFooter}>
-            <button
-              type="button"
-              className={segStyles.addSegBtn}
-              onClick={onAddSeg}
-            >
+            <button type="button" className={segStyles.addSegBtn} onClick={onAddSeg}>
               구간 추가
             </button>
             <span className={segStyles.segWarn} style={{ color: segWarnColor }}>

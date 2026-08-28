@@ -58,7 +58,8 @@ function PlanEditorInner({ openedPlanId }) {
   }
 
   function toggleRegionSave() {
-    if (!requireAuth("저장하려면 로그인이 필요해요", "이 지역을 마이페이지에 담아 두려면 로그인해 주세요.")) return;
+    if (!requireAuth("저장하려면 로그인이 필요해요", "이 지역을 마이페이지에 담아 두려면 로그인해 주세요."))
+      return;
     if (regionSaved) {
       ask("저장한 지역에서 뺄까요?", region.name, () => saved.toggleRegion(region.short));
       return;

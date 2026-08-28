@@ -47,8 +47,7 @@ export default function RegionResult() {
   const recCount = recs.length;
 
   const chipRegion = region === "상관없음" ? "지역 상관없음" : region;
-  const chipDuration =
-    dur === "직접 입력" ? `${stayDays(search)}일 체류` : `${dur} 체류`;
+  const chipDuration = dur === "직접 입력" ? `${stayDays(search)}일 체류` : `${dur} 체류`;
   const chipPlace = place;
 
   const resultsHeading = loading
@@ -58,7 +57,6 @@ export default function RegionResult() {
       : recCount === 0
         ? "추천 결과"
         : `이 조건이라면, 이 ${recCount}곳을 권합니다`;
-
 
   const compareRows = [
     { label: "한적함", cells: recs.map((r) => r.quietText) },
@@ -104,7 +102,6 @@ export default function RegionResult() {
             </div>
           ) : (
             <>
-
               <div className={styles.resultsRow}>
                 <div className={styles.cardsCol}>
                   {recs.map((r, i) => (
@@ -165,9 +162,7 @@ export default function RegionResult() {
                     onHover={setHoverIdx}
                     fallback={<MapPlaceholder label="추천 지역 위치" className={styles.map} />}
                   />
-                  <p className={styles.mapCaption}>
-                    카드에 마우스를 올리면 해당 지역 마커가 강조됩니다.
-                  </p>
+                  <p className={styles.mapCaption}>카드에 마우스를 올리면 해당 지역 마커가 강조됩니다.</p>
                 </div>
               </div>
             </>

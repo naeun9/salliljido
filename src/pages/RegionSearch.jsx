@@ -55,8 +55,7 @@ function TownIcon({ color }) {
 }
 
 export default function RegionSearch() {
-  const { region, dur, place, customDays, setRegion, setDur, setPlace, setCustomDays } =
-    useSearch();
+  const { region, dur, place, customDays, setRegion, setDur, setPlace, setCustomDays } = useSearch();
   const navigate = useNavigate();
 
   const ready = !!(region && dur && place);
@@ -123,13 +122,7 @@ export default function RegionSearch() {
             </div>
             <div className={`${styles.customDur} ${showCustomDur ? styles.open : ""}`}>
               <div className={styles.customDurInputWrap}>
-                <input
-                  type="number"
-                  value={customDays}
-                  min={1}
-                  max={30}
-                  onChange={handleCustomDaysChange}
-                />
+                <input type="number" value={customDays} min={1} max={30} onChange={handleCustomDaysChange} />
                 <span className={styles.customDurUnit}>일</span>
               </div>
               <span

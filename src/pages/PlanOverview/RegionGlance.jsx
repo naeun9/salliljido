@@ -4,7 +4,16 @@ import styles from "./RegionGlance.module.css";
 // design/salliljido.extracted.html 1499-1540줄.
 // 지도는 카카오맵(RegionGlanceMap)이고, SDK를 못 불러오면 원본 목업
 // (빗금 배경 + 반경 원 + 클러스터 라벨)으로 폴백한다.
-export default function RegionGlance({ region, regionName, intro, facts, clusters, rangeNote, onGoIntro, onGoRoute }) {
+export default function RegionGlance({
+  region,
+  regionName,
+  intro,
+  facts,
+  clusters,
+  rangeNote,
+  onGoIntro,
+  onGoRoute,
+}) {
   // 카카오맵 SDK를 못 불러오거나(키 없음·도메인 미등록·네트워크) 좌표가
   // 아직 없을 때 쓰는 목업 지도. 지도 자리가 화면의 절반을 차지해서
   // 에러 상자로 바꾸면 레이아웃이 비어 보이고, 목업은 이미 원본 디자인

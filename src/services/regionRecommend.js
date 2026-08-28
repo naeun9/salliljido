@@ -13,7 +13,6 @@
 // 지역 목록 자체는 data/regions.js 하나에서 온다(그 파일 주석 참고).
 import { REGIONS, REGION_BY_SHORT } from "../data/regions.js";
 
-
 const SWATCHES = [
   "repeating-linear-gradient(135deg, #DCE8E2 0 10px, #CFE0D8 10px 20px)",
   "repeating-linear-gradient(135deg, #F0E3D2 0 10px, #E7D8C4 10px 20px)",

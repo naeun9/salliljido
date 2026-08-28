@@ -30,14 +30,6 @@
   margin-bottom: 0;
 }
 
-/* 카테고리 칩과 세부 칩을 두 단계로 갈라 주는 선. design은 세부 칩을
-   카테고리 칩 바로 아래(margin-top: -8px)에 붙여 뒀는데, 두 줄이 한
-   덩어리로 보여 어느 게 상위인지 읽히지 않았다. */
-.chipDivider {
-  height: 1px;
-  margin: 16px 0 0;
-  background: var(--hairline);
-}
 .chip {
   flex: 0 0 auto;
   display: inline-flex;
@@ -77,8 +69,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
-  /* 구분선 아래 한 단계 들여쓴 자리. 왼쪽 들여쓰기(14px)는 design 값 그대로. */
-  margin: 14px 0 22px 14px;
+  /* 카테고리 제목 줄 아래(그 줄이 이미 밑선을 갖고 있다)에 한 단계
+     들여쓴 자리. 왼쪽 들여쓰기(14px)는 design 값 그대로. */
+  margin: 14px 0 0 14px;
 }
 .subChip {
   flex: 0 0 auto;

@@ -7,8 +7,10 @@
 //
 // 읍면동이 주소에 없는 항목도 흔하다("강원특별자치도 속초시 해오름로 204"
 // 처럼 시 바로 아래 도로명만 있는 경우). 그럴 땐 null을 돌려준다.
-export function districtOf(addr) {
-  const tokens = String(addr || "").trim().split(/\s+/);
+function districtOf(addr) {
+  const tokens = String(addr || "")
+    .trim()
+    .split(/\s+/);
   if (tokens.length < 3) return null;
   const third = tokens[2];
   return /(읍|면|동)$/.test(third) ? third : null;
@@ -25,5 +27,7 @@ export function topDistricts(items, limit = 2) {
     if (!counts.has(d)) order.push(d);
     counts.set(d, (counts.get(d) || 0) + 1);
   });
-  return order.sort((a, b) => counts.get(b) - counts.get(a) || order.indexOf(a) - order.indexOf(b)).slice(0, limit);
+  return order
+    .sort((a, b) => counts.get(b) - counts.get(a) || order.indexOf(a) - order.indexOf(b))
+    .slice(0, limit);
 }

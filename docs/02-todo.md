@@ -609,3 +609,104 @@ MapZoomControl / MapMarker).
   - [ ] 나중에 담기를 열려면: 담은 id를 SavedContext처럼 지역 단위
         localStorage에 두고 PlanEditor가 진입 시 흡수하는 구조가 필요하다.
         (지금은 "계획 = 화면 하나"라는 전제가 곳곳에 깔려 있다.)
+
+## 상세 모달 + 담기 일차 지정 외 3건 (2026-08-28)
+
+- **하위 칩 위치** — 카테고리 제목 줄(이미 밑선이 있다) 바로 아래로 옮기고
+  따로 두던 `.chipDivider`는 지웠다(선을 새로 만들지 않는다).
+- **담기 일차 지정 확대** — 식당·카페, 주변 관광지도 체험과 같은 피커로
+  일차를 고른다. 피커는 `ExploreTab/DayPicker.jsx`로 떼어내 세 카드가 함께
+  쓴다. 상태는 `PlanContext.utilityDays / spotDays`(체험의 experienceDays와
+  같은 모양), 저장 스냅샷에도 들어간다.
+  - 시간대 규칙(`services/addedItems.js`): 카페 → 오전, 그 밖의 식당 →
+    저녁, 주변 관광지 → 오후. 관광공사 API에 운영 시간대가 없어서
+    (docs/03-api-check.md §14) 자동 생성 슬롯과 같은 기준을 썼다.
+    마음에 안 들면 타임라인 "시간"으로 고칠 수 있다.
+  - 담은 곳은 자동 생성 후보에서 제외한다(같은 날 두 번 나오지 않게).
+  - [ ] 담은 곳과 자동 생성이 같은 시간대에 겹치면 두 항목이 같은 슬롯에
+        나란히 뜬다(체험도 원래 그랬다). 겹칠 때 자동 생성을 비울지는
+        결정 필요.
+- **상세 모달** — `api/tour/detail.js`(detailCommon2 + detailIntro2),
+  `services/placeDetail.js`(메모리 캐시), `hooks/usePlaceDetail.js`,
+  `components/plan/PlaceDetailModal.jsx`. 기존 `SelectionCard`는 삭제했고
+  체류 계획 탭·최종 계획 화면이 같은 모달을 쓴다.
+  - 호출은 모달을 열 때만, 같은 장소는 세션 동안 재사용(측정: 같은 장소를
+    두 번 열어도 요청 1건). 캐시는 메모리뿐 — localStorage에 관광공사
+    응답을 남기지 않는다.
+  - 최종 계획 화면 카드에 있던 "루틴 편집으로" 버튼은 뺐다(상단 "편집"이
+    같은 이동을 이미 갖고 있다).
+  - [ ] 고캠핑에서 온 숙소는 contentId가 관광공사 것이 아니라 상세가
+        비어 있을 수 있다(기본 정보만 나온다). 확인 필요.
+- **일정 추가 버튼** — 테두리만 있던 것을 테라코타 채움으로 올렸다.
+  같은 화면에서 행동을 유도하는 버튼이 이것 하나라 위계가 어긋나지 않는다.
+- **덤으로 고친 것**
+  - 담은 곳 빼기가 체험만 처리하고 있었다(식당·관광지를 빼도 안 빠짐).
+    타임라인 `timeKey` 접두어로 어느 목록인지 가려 뺀다.
+  - 최종 계획 화면의 예상 비용이 예상 비용 탭과 달랐다 — 추가 교통비·
+    일별 식비를 넘기지 않고 있었다. 두 화면이 `utils/cost.js`의
+    `computePlanCost` 하나를 같이 쓰도록 합쳤다.
+  - 300줄 규칙에 맞춰 분리: `ExploreTab/SubChips`·`ListStates`,
+    `services/scheduleSelection`·`addedItems`·`dayItems`·`slots`,
+    `hooks/useRoutineActions`, `store/planReducer`·`planCostReducer`.
+
+## 겹침 처리·고캠핑 확인·전체 점검 3차 (2026-08-28)
+
+### 처리한 것
+- **담은 곳 우선** — 같은 시간대에 담은 곳이 있으면 자동 생성 항목을 비운다
+  (`services/dayTimeline.js` assembleDay). 시간을 고친 항목은 옮겨 간
+  시간대 기준으로 판단하도록 시간 반영을 정렬보다 먼저 한다.
+  담은 것을 빼면 자동 생성이 그대로 돌아온다(상태로만 계산한다).
+- **고캠핑 정리** — 숙박 목록은 전부 areaBasedList2(AC 분류)에서 온다.
+  프론트가 부르는 엔드포인트는 `area-based`와 `detail` 둘뿐이라
+  `api/tour/camping.js`는 죽은 코드였고 지웠다(`callGoCampingApi`,
+  GoCamping base URL 포함).
+  캠핑 항목은 contentTypeId=28(레포츠)이라 상세 조회는 정상 동작한다.
+- **상세 필드 보강** — 숙박(32)에 객실 유형·부대시설·취사, 레포츠(28)에
+  주차요금을 더했다(실응답 확인).
+
+### 점검 3차에서 나온 것 (고치지 않음)
+- 숙박 카드 "예약 사이트에서 보기"가 모든 숙소에서 visitkorea 메인으로
+  간다. contentId를 알고 있으므로 상세 URL로 바꿀 수 있다.
+- `api/tour/stay.js`가 501 스텁으로 남아 있다(아무 데서도 안 부름).
+  스캐폴딩 스텁 12개도 그대로다.
+- `toHttps`가 `api/tour/area-based.js`와 `detail.js`에 중복 정의돼 있다
+  (`api/_lib`로 뺄 수 있다).
+- 파일 안에서만 쓰는데 export된 함수가 여럿이다(cost.js의 calc*,
+  geo.js의 medianCenter 등). 동작에는 영향 없다.
+- `listingsCenter`(utils/geo.js)는 어디서도 쓰지 않는다.
+- 프로젝트에 prettier 설정이 없다. 내가 손댄 파일만 기본 설정(printWidth 80)
+  으로 다시 포맷돼 나머지 파일과 줄바꿈 규칙이 다르다.
+  `.prettierrc`(printWidth 110 정도)를 두고 한 번에 맞추는 편이 낫다.
+- 저장된 계획의 `condition.dur`이 빈 문자열로 들어가는 경우가 있다
+  (조건을 안 고르고 바로 계획을 만들면). 다시 열 때 기본값(1주)으로
+  잡혀서 결과는 맞지만 값 자체는 비어 있다.
+- 예상 비용 탭은 체험비를 목록에서 찾은 항목만으로 계산하고, 최종 계획
+  화면은 담은 id 전부로 계산한다. 목록에 없는 id가 생기면(지역이 바뀐
+  오래된 저장 계획 등) 두 화면 금액이 갈릴 수 있다.
+
+## 점검 3차 후속 처리 (2026-08-28)
+
+- **체험비 기준 통일** — "담은 id 전부"로 맞췄다(`utils/cost.js`
+  computePlanCost). 사용자가 넣은 금액은 목록 상태와 무관한 계획의 값이라
+  id가 기준이다. 목록에서 못 찾은 항목은 줄을 지우지 않고 이름만
+  "정보 없음"으로 둔다(`services/experienceRows.js`) — 줄이 사라지면 금액만
+  남고 무엇에 대한 금액인지 알 수 없다.
+  검증: 목록에 없는 id를 섞어도 예상 비용 탭·최종 계획 모두 630,000원.
+- **숙박 예약 링크 개별화** — 구석구석 상세 URL(`/detail/ms_detail.do?cotid=`)은
+  cotid가 contentId(숫자)와 다른 내부 식별자라 만들 수 없었다(cotid·contentid
+  어느 이름으로 넣어도 안내 페이지). 검색 URL은 장소명으로 정확히 걸려서
+  그쪽으로 보낸다(`utils/externalLinks.js`). 문구도 "구석구석에서 보기"로
+  고쳤다 — 목적지가 예약 사이트가 아니다.
+  - [ ] 숙소별 예약 링크가 꼭 필요하면 detailCommon2의 homepage를 써야
+        하는데, 그러려면 카드마다 상세를 불러야 해서 호출이 크게 는다.
+- **상세 조회 서버 캐시** — `api/tour/detail.js`에 메모리 Map(TTL 12시간,
+  상한 300건, 오래된 것부터 폐기). 반쪽 응답(partial)은 캐시하지 않는다.
+  파일·DB에 남기지 않는다. 실측: 첫 호출 93~210ms → 캐시 1~5ms.
+- **코드 정리** — `toHttps`를 `api/_lib/tourApi.js`로 통합, `bySub` 동명
+  함수를 `filterBySelectedSubs`(둘러보기) / `withSub`(생성기)로 분리,
+  스캐폴딩 스텁 12개 + `api/tour/stay.js`·`plan/generate.js`·
+  `region/recommend.js`·`region/stats.js` 삭제, `listingsCenter` 삭제,
+  파일 안에서만 쓰던 export 19개는 export를 뗐다.
+  - 배운 것: `npm run build`는 import 누락(정의되지 않은 전역)을 잡지 못한다.
+    실제로 이번에 `buildExperienceRows` 누락이 빌드는 통과하고 화면에서만
+    깨졌다. 리팩터링 뒤에는 전 라우트 런타임 점검을 꼭 같이 돌릴 것.

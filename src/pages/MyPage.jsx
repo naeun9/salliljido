@@ -37,7 +37,10 @@ export default function MyPage() {
   // 상태로 직접 들어오면 게이트를 띄우고 홈으로 돌려보낸다.
   useEffect(() => {
     if (!auth.auth) {
-      auth.requireAuth("마이페이지는 로그인 후 볼 수 있어요", "저장한 지역과 계획을 계정에 담아 두려면 로그인이 필요합니다.");
+      auth.requireAuth(
+        "마이페이지는 로그인 후 볼 수 있어요",
+        "저장한 지역과 계획을 계정에 담아 두려면 로그인이 필요합니다."
+      );
       navigate("/", { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,11 +84,15 @@ export default function MyPage() {
   }
 
   function unsaveRegion(region) {
-    ask("저장한 지역에서 뺄까요?", region.name, () => fadeThenRun(`rg-${region.short}`, () => saved.toggleRegion(region.short)));
+    ask("저장한 지역에서 뺄까요?", region.name, () =>
+      fadeThenRun(`rg-${region.short}`, () => saved.toggleRegion(region.short))
+    );
   }
 
   function removePlan(plan) {
-    ask("이 계획을 삭제할까요?", plan.title, () => fadeThenRun(`rt-${plan.id}`, () => saved.removePlan(plan.id)));
+    ask("이 계획을 삭제할까요?", plan.title, () =>
+      fadeThenRun(`rt-${plan.id}`, () => saved.removePlan(plan.id))
+    );
   }
 
   function unsaveProgram(program) {
@@ -139,7 +146,12 @@ export default function MyPage() {
           <div className={styles.allEmptyInner}>
             <span className={styles.allEmptyIcon}>
               <svg width="30" height="30" viewBox="0 0 26 26" fill="none">
-                <path d="M6.5 3.5h13v19l-6.5-5.2-6.5 5.2z" stroke="#2F5D50" strokeWidth="1.5" strokeLinejoin="round" />
+                <path
+                  d="M6.5 3.5h13v19l-6.5-5.2-6.5 5.2z"
+                  stroke="#2F5D50"
+                  strokeWidth="1.5"
+                  strokeLinejoin="round"
+                />
               </svg>
             </span>
             <div className={styles.allEmptyTitle}>아직 저장한 것이 없어요</div>
@@ -151,7 +163,12 @@ export default function MyPage() {
         </section>
       ) : (
         <>
-          <RegionsSection loading={loading} regions={regions} fadingShorts={fadingIds} onUnsave={unsaveRegion} />
+          <RegionsSection
+            loading={loading}
+            regions={regions}
+            fadingShorts={fadingIds}
+            onUnsave={unsaveRegion}
+          />
           <PlansSection
             plans={plans}
             fadingIds={fadingIds}

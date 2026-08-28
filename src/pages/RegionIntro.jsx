@@ -3,10 +3,7 @@ import { useSearch } from "../hooks/useSearch.js";
 import { useSaved } from "../hooks/useSaved.js";
 import { useAuth } from "../hooks/useAuth.js";
 import { useConfirm } from "../hooks/useConfirm.js";
-import {
-  getRegionByShort,
-  getRegionInsights,
-} from "../services/regionRecommend.js";
+import { getRegionByShort, getRegionInsights } from "../services/regionRecommend.js";
 import { resolveStayCondition } from "../utils/date.js";
 import { hasJong } from "../utils/korean.js";
 import RegionNotFound from "../components/region/RegionNotFound.jsx";
@@ -55,17 +52,10 @@ export default function RegionIntro() {
 
   // design dtToggleSave(4409322줄): 로그인 필요 + 저장 해제 시에만 확인창.
   function toggleSave() {
-    if (
-      !requireAuth(
-        "저장하려면 로그인이 필요해요",
-        "이 지역을 마이페이지에 담아 두려면 로그인해 주세요.",
-      )
-    )
+    if (!requireAuth("저장하려면 로그인이 필요해요", "이 지역을 마이페이지에 담아 두려면 로그인해 주세요."))
       return;
     if (isSaved) {
-      ask("저장한 지역에서 뺄까요?", region.name, () =>
-        saved.toggleRegion(region.short),
-      );
+      ask("저장한 지역에서 뺄까요?", region.name, () => saved.toggleRegion(region.short));
       return;
     }
     saved.toggleRegion(region.short);
@@ -99,11 +89,7 @@ export default function RegionIntro() {
         onBack={() => navigate("/find/result")}
       />
 
-      <section
-        data-in-reveal
-        style={{ animationDelay: ".18s" }}
-        className={styles.about}
-      >
+      <section data-in-reveal style={{ animationDelay: ".18s" }} className={styles.about}>
         <div className={styles.aboutInner}>
           <div className={styles.aboutText}>
             <div className={styles.aboutEyebrow}>ABOUT</div>
@@ -141,8 +127,8 @@ export default function RegionIntro() {
             </button>
           </div>
           <p className={styles.ctaFootnote}>
-            관광 정보 ⓒ한국관광공사 · 인구감소지역 지정 현황 · 행정안전부 ·
-            비용은 공개 자료를 바탕으로 한 추정치입니다.
+            관광 정보 ⓒ한국관광공사 · 인구감소지역 지정 현황 · 행정안전부 · 비용은 공개 자료를 바탕으로 한
+            추정치입니다.
           </p>
         </div>
       </section>

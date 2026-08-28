@@ -1,0 +1,182 @@
+/* design에는 없던 모달(원본은 우하단 카드 ovSel, 1684-1694줄).
+   카드 껍데기·글자 값은 같은 앱의 다른 모달과 없어진 그 카드의 값을
+   그대로 가져왔다 — 새 톤을 만들지 않는다.
+     .card    → AddScheduleModal.module.css의 .card
+     .place / .tag / .meta / .overview → SelectionCard의 .place/.tag/.meta/.desc
+     .closeBtn → SelectionCard의 .closeBtn */
+.card {
+  width: min(480px, 100%);
+  max-height: 84vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-card);
+  background: var(--white);
+  box-shadow: 0 24px 50px -26px rgba(43, 43, 41, 0.6);
+  overflow: hidden;
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 24px 26px 16px;
+  border-bottom: 1px solid var(--hairline);
+}
+.headText {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.place {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+.tag {
+  display: inline-block;
+  padding: 4px 11px;
+  border-radius: var(--radius-pill);
+  background: var(--mist);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--forest);
+}
+.meta {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sage);
+}
+
+.closeIcon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.closeIcon:hover {
+  border-color: var(--sage);
+}
+
+.body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 20px 26px 4px;
+}
+.loading {
+  padding-bottom: 16px;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: var(--mist);
+}
+
+.overview {
+  margin: 16px 0 0;
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+  white-space: pre-line;
+  text-wrap: pretty;
+}
+
+.info {
+  margin: 18px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 18px;
+  border-radius: var(--radius-input);
+  background: var(--cream);
+}
+.infoRow {
+  display: flex;
+  gap: 14px;
+}
+.infoLabel {
+  flex: 0 0 76px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--sage);
+}
+.infoValue {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.error {
+  margin: 16px 0 0;
+  font-size: 13.5px;
+  color: var(--rust);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 18px 26px 22px;
+}
+.linkBtn {
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--gray);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+.linkBtn:hover {
+  border-color: var(--sage);
+  color: var(--forest);
+}
+.closeBtn {
+  flex: 0 0 auto;
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: none;
+  background: var(--mist);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--forest);
+  cursor: pointer;
+}

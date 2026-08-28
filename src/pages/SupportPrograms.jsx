@@ -57,7 +57,13 @@ export default function SupportPrograms() {
   // design 4357175줄: 로그인 필요 + 등록 해제 전에만 확인창. 등록 시
   // 토스트는 ToastStack이 아직 없어(docs/02-todo.md) 생략했다.
   function toggleSave(program) {
-    if (!requireAuth("관심 등록하려면 로그인이 필요해요", "마감일을 챙겨 드리려면 계정에 담아 둘 필요가 있어요.")) return;
+    if (
+      !requireAuth(
+        "관심 등록하려면 로그인이 필요해요",
+        "마감일을 챙겨 드리려면 계정에 담아 둘 필요가 있어요."
+      )
+    )
+      return;
     if (saved.savedPrograms.includes(program.id)) {
       ask("관심 목록에서 뺄까요?", program.name, () => saved.toggleProgram(program.id));
       return;

@@ -5,7 +5,17 @@ import styles from "./ScheduleMap.module.css";
 // design/salliljido.extracted.html 971-1007줄, 2954-2963줄(pins/path/dist).
 // 계획 생성 전에는 핀·경로·이동거리를 아예 안 그린다(items가 빈 배열).
 // 지도는 별도 상태 없이 items(타임라인에서 파생)만 받아 그린다.
-export default function ScheduleMap({ routineOn, items, stay, distance, center, mapLabel, selectedIndex, onSelect, onHover }) {
+export default function ScheduleMap({
+  routineOn,
+  items,
+  stay,
+  distance,
+  center,
+  mapLabel,
+  selectedIndex,
+  onSelect,
+  onHover,
+}) {
   const hasItems = items.length > 0;
 
   const emptyOverlay = !hasItems && (

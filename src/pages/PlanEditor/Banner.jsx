@@ -56,7 +56,12 @@ export default function Banner({
                 {titleText}
               </button>
               {dirty && <span className={styles.unsavedBadge}>임시 저장 안 됨</span>}
-              <button type="button" className={styles.renameBtn} onClick={startRename} aria-label="계획 이름 짓기">
+              <button
+                type="button"
+                className={styles.renameBtn}
+                onClick={startRename}
+                aria-label="계획 이름 짓기"
+              >
                 <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
                   <path d="M2 12h3l7-7-3-3-7 7z" stroke="#FFFDFA" strokeWidth="1.4" strokeLinejoin="round" />
                 </svg>

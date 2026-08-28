@@ -7,17 +7,9 @@ import { useRegionListings } from "../../../hooks/useRegionListings.js";
 import { useAuth } from "../../../hooks/useAuth.js";
 import { stayDays, formatSavedDate } from "../../../utils/date.js";
 import { buildPlanRecord } from "../../../utils/planSnapshot.js";
-import {
-  won,
-  resolveStaySegments,
-  computeCostBreakdown,
-  buildCostBars,
-  DEFAULT_STAY_SEGMENT_RATE,
-} from "../../../utils/cost.js";
-import {
-  findListing,
-  findListingName,
-} from "../../../services/exploreListings.js";
+import { won, resolveStaySegments, computePlanCost, DEFAULT_STAY_SEGMENT_RATE } from "../../../utils/cost.js";
+import { findListingName } from "../../../services/exploreListings.js";
+import { buildExperienceRows } from "../../../services/experienceRows.js";
 import NameDialog from "../../../components/plan/NameDialog.jsx";
 import StaySection from "./CostTab/StaySection.jsx";
 import FoodSection from "./CostTab/FoodSection.jsx";
@@ -48,59 +40,17 @@ export default function CostTab({ region, openedPlanId }) {
 
   const nights = stayDays({ dur, customDays });
   const segs = resolveStaySegments(plan.staySegs, nights);
-  const segNights = segs.reduce(
-    (sum, g) => sum + Math.max(0, (g.to || 0) - (g.from || 0) + 1),
-    0,
-  );
+  const segNights = segs.reduce((sum, g) => sum + Math.max(0, (g.to || 0) - (g.from || 0) + 1), 0);
 
   // 참가비는 관광공사 API에 없어서 사용자가 넣은 값을 쓴다
-  // (안 넣었으면 0원, docs/03-api-check.md §14).
-  const experienceRows = plan.addedExperiences
-    .map((id) => {
-      const x = findListing(listings, "체험 프로그램", id);
-      return x
-        ? {
-            id: x.id,
-            name: x.name,
-            type: x.type,
-            price: plan.experiencePrices[id],
-          }
-        : null;
-    })
-    .filter(Boolean);
+  // (안 넣었으면 0원, docs/03-api-check.md §14). 줄은 담은 id 전부를
+  // 그리고, 목록에서 못 찾은 것은 "정보 없음"으로 둔다 — 금액 계산과
+  // 화면 줄이 같은 기준이어야 최종 계획 화면과 금액이 갈리지 않는다.
+  const experienceRows = buildExperienceRows(plan.addedExperiences, plan.experiencePrices, listings);
 
-  const breakdown = computeCostBreakdown({
-    nights,
-    nightly: plan.nightly,
-    staySplit: plan.staySplit,
-    staySegs: plan.staySegs,
-    foodStyle: plan.foodStyle,
-    foodManual: plan.foodManual,
-    foodPer: plan.foodPer,
-    tripManualTotal: plan.tripManualTotal,
-    tripExtraTotal: plan.tripExtraTotal,
-    foodByDay: plan.foodByDay,
-    foodDaily: plan.foodDaily,
-    experienceRows,
-    etcRows: plan.etcRows,
-    rtCustom: plan.rtCustom,
-    rtPick: plan.rtPick,
-  });
+  // 합계·막대 계산은 최종 계획 화면과 공유한다(utils/cost.js computePlanCost).
+  const { breakdown, bars } = computePlanCost({ plan, nights });
   const { stay, food, trip, exp, etc, total, cookedCount } = breakdown;
-
-  // 막대 계산은 최종 계획 화면과 공유한다(utils/cost.js buildCostBars).
-  const bars = buildCostBars({
-    breakdown,
-    nights,
-    nightly: plan.nightly,
-    staySplit: plan.staySplit,
-    foodStyle: plan.foodStyle,
-    foodManual: plan.foodManual,
-    foodPer: plan.foodPer,
-    foodByDay: plan.foodByDay,
-    foodDaily: plan.foodDaily,
-    experienceCount: experienceRows.length,
-  });
 
   const cbChips = [region.name, `${nights}일`, plan.themes[0] || "힐링"];
   const planSummary = `${region.name} · ${nights}일 · ${plan.themes.length ? plan.themes.join(", ") : "테마 전체"}`;
@@ -129,18 +79,13 @@ export default function CostTab({ region, openedPlanId }) {
   // 토스트를 띄우느라 120ms 뒤에 옮기는데, 토스트가 아직 없으므로
   // (docs/02-todo.md ToastStack) 지연 없이 바로 이동한다.
   function goOverview(id) {
-    navigate(
-      `/plan/${encodeURIComponent(region.short)}/overview?planId=${encodeURIComponent(id)}`,
-    );
+    navigate(`/plan/${encodeURIComponent(region.short)}/overview?planId=${encodeURIComponent(id)}`);
   }
 
   // design 2465-2478줄(cbSavePlan).
   function handleSave() {
     if (
-      !requireAuth(
-        "계획을 저장하려면 로그인이 필요해요",
-        "만든 일정과 예상 비용을 마이페이지에 담아 둡니다.",
-      )
+      !requireAuth("계획을 저장하려면 로그인이 필요해요", "만든 일정과 예상 비용을 마이페이지에 담아 둡니다.")
     )
       return;
     if (plan.planTitle) {
@@ -184,9 +129,7 @@ export default function CostTab({ region, openedPlanId }) {
             <div className={styles.total}>{won(total)}</div>
             <div className={styles.daily}>하루 평균 {won(total / nights)}</div>
           </div>
-          <p className={styles.disclaimer}>
-            공개 자료를 바탕으로 한 추정치이며 실제와 다를 수 있습니다.
-          </p>
+          <p className={styles.disclaimer}>공개 자료를 바탕으로 한 추정치이며 실제와 다를 수 있습니다.</p>
         </div>
 
         <div className={styles.grid}>
@@ -201,9 +144,7 @@ export default function CostTab({ region, openedPlanId }) {
                 segNights={segNights}
                 onSetNightly={plan.setNightly}
                 onToggleSplit={() => plan.toggleStaySplit(segs)}
-                onUpdateSeg={(i, patch) =>
-                  plan.updateStaySegment(i, patch, segs)
-                }
+                onUpdateSeg={(i, patch) => plan.updateStaySegment(i, patch, segs)}
                 onRemoveSeg={(i) => plan.removeStaySegment(i, segs)}
                 // 담은 숙소 이름은 id로 그때그때 찾는다(localStorage에 API
                 // 콘텐츠를 남기지 않으려고 id만 저장한다 — 체험도 같다).
@@ -218,7 +159,7 @@ export default function CostTab({ region, openedPlanId }) {
                       rate: DEFAULT_STAY_SEGMENT_RATE,
                       memo: "",
                     },
-                    segs,
+                    segs
                   );
                 }}
               />
@@ -284,9 +225,7 @@ export default function CostTab({ region, openedPlanId }) {
         {/* 출처 표기. 원래 "비용 산정 기준" 패널 안에 있었는데 패널을
             없애면서 이 화면에서 사라졌다. 문구·크기·색은 둘러보기 탭
             CTA 옆 표기와 같다. */}
-        <p className={styles.source}>
-          출처 ⓒ한국관광공사 · 비용은 공개 자료를 바탕으로 한 추정치입니다.
-        </p>
+        <p className={styles.source}>출처 ⓒ한국관광공사 · 비용은 공개 자료를 바탕으로 한 추정치입니다.</p>
       </div>
 
       <NameDialog

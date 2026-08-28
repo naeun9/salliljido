@@ -25,7 +25,8 @@ function buildStats(region, insights) {
     {
       label: "생활 편의",
       icon: "M3.5 7h13l-1 9.5h-11z M7 7V4.8a3 3 0 0 1 6 0V7",
-      note: convLevel >= 3 ? "마트와 병원, 시장이 읍내에 모여 있어요" : "기본 편의시설은 있지만 선택지는 적어요",
+      note:
+        convLevel >= 3 ? "마트와 병원, 시장이 읍내에 모여 있어요" : "기본 편의시설은 있지만 선택지는 적어요",
     },
     {
       label: "워케이션 환경",
@@ -35,7 +36,10 @@ function buildStats(region, insights) {
     {
       label: "교통 접근",
       icon: "M6 3.5h8v11H6z M8 17h4 M8 6.5h4",
-      note: quietLevel <= 1 ? "버스 위주라 현지 이동은 여유를 두는 게 좋아요" : "고속버스와 기차로 수도권에서 2시간 안팎이에요",
+      note:
+        quietLevel <= 1
+          ? "버스 위주라 현지 이동은 여유를 두는 게 좋아요"
+          : "고속버스와 기차로 수도권에서 2시간 안팎이에요",
     },
   ];
 }
@@ -58,7 +62,13 @@ export default function Features({ region, insights }) {
             <div key={s.label} className={styles.stat}>
               <span className={styles.statIcon}>
                 <svg width="26" height="26" viewBox="0 0 20 20" fill="none">
-                  <path d={s.icon} stroke="#2F5D50" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path
+                    d={s.icon}
+                    stroke="#2F5D50"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </span>
               <div className={styles.statBody}>

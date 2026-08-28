@@ -19,7 +19,9 @@ export default function TimeEditModal({ open, item, onSubmit, onReset, onCancel 
   // 열릴 때마다 지금 값으로 초기화한다. "09:00 – 11:30" 형태를 갈라서 채운다.
   useEffect(() => {
     if (!open || !item) return;
-    const [s = "", e = ""] = String(item.time || "").split("–").map((t) => t.trim());
+    const [s = "", e = ""] = String(item.time || "")
+      .split("–")
+      .map((t) => t.trim());
     setStart(s);
     setEnd(e);
   }, [open, item]);

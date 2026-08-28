@@ -3,11 +3,7 @@ import styles from "./ProgramFilter.module.css";
 // 지역/상태 필터 칩 + 정렬 버튼. design/salliljido.extracted.html 1706-1732줄.
 function Chip({ label, active, onClick }) {
   return (
-    <button
-      type="button"
-      className={`${styles.chip} ${active ? styles.chipActive : ""}`}
-      onClick={onClick}
-    >
+    <button type="button" className={`${styles.chip} ${active ? styles.chipActive : ""}`} onClick={onClick}>
       {label}
     </button>
   );

@@ -3,7 +3,17 @@ import { REST_OPTIONS } from "../../services/routineGenerator.js";
 import styles from "./PickerModal.module.css";
 
 // design/salliljido.extracted.html 596-635줄, 3204-3221줄(계산식).
-export default function PickerModal({ open, slot, mine, places, onPickMine, onPickPlace, onPickRest, onCustom, onClose }) {
+export default function PickerModal({
+  open,
+  slot,
+  mine,
+  places,
+  onPickMine,
+  onPickPlace,
+  onPickRest,
+  onCustom,
+  onClose,
+}) {
   return (
     <Modal open={open} onBackdropClick={onClose} zIndex={95}>
       <div className={styles.card} onClick={(e) => e.stopPropagation()}>
@@ -31,7 +41,12 @@ export default function PickerModal({ open, slot, mine, places, onPickMine, onPi
 
           <div className={styles.sectionLabel}>추천 장소</div>
           {places.map((p) => (
-            <button key={p.id || p.place} type="button" className={styles.option} onClick={() => onPickPlace(p)}>
+            <button
+              key={p.id || p.place}
+              type="button"
+              className={styles.option}
+              onClick={() => onPickPlace(p)}
+            >
               <span className={styles.optionName}>{p.place}</span>
               <span className={styles.optionMeta}>
                 {p.tag} · {p.desc}
@@ -43,7 +58,13 @@ export default function PickerModal({ open, slot, mine, places, onPickMine, onPi
           {REST_OPTIONS.map((r) => (
             <button key={r.id} type="button" className={styles.restOption} onClick={() => onPickRest(r)}>
               <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
-                <path d={r.icon} stroke="#6E6E68" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d={r.icon}
+                  stroke="#6E6E68"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
               <span className={styles.restName}>{r.name}</span>
             </button>
