@@ -23,7 +23,11 @@ export default function NameDialog({ open, value, onChange, summary, onConfirm, 
 
   return (
     <div className={`${styles.backdrop} ${open ? styles.open : ""}`} onClick={onCancel}>
-      <div className={styles.card} onClick={(e) => e.stopPropagation()} onKeyDown={handleKeyDown}>
+      <div
+        className={`${styles.card} slj-anim-rise-both`}
+        onClick={(e) => e.stopPropagation()}
+        onKeyDown={handleKeyDown}
+      >
         <div className={styles.title}>계획에 이름을 붙여주세요</div>
         <input
           ref={inputRef}

@@ -15,7 +15,7 @@ export default function AuthGate() {
   }
 
   return (
-    <div className={`${styles.gate} ${gate ? styles.open : ""}`}>
+    <div className={`${styles.gate} ${gate ? `${styles.open} slj-anim-fade` : ""}`}>
       {gate && (
         <>
           <div className={styles.head}>

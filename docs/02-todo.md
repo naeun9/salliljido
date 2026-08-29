@@ -744,3 +744,25 @@ MapZoomControl / MapMarker).
 - **정적 자산 캐시 헤더** — `/assets/*`는 파일명에 해시가 있어 내용이 바뀌면
   이름이 바뀐다. `max-age=31536000, immutable`로 주고, 그 외 경로(index.html
   포함)는 `max-age=0, must-revalidate`로 둬서 항상 최신을 받게 했다.
+
+## 애니메이션 전멸 버그 + 캐러셀 시작 위치 (2026-08-29)
+
+- **CSS Modules가 animation 이름을 해시해서 애니메이션 8개가 전부 죽어 있었다.**
+  `@keyframes`는 `styles/global.css`(전역)에 있는데 모듈(.module.css)에서
+  `animation: slj-bob …`으로 부르면 이름이 `_slj-bob_해시_1`로 바뀌어
+  정의를 못 찾는다. 실측으로 확인했다 — SCROLL 표시 이동량 0px.
+  죽어 있던 것: 히어로 SCROLL bob, Skeleton shimmer, 다시 만들기 스피너,
+  AuthGate·ExploreTab 페이드, ConfirmModal 페이드·라이즈, NameDialog 라이즈.
+  - 고친 방법: 전역 유틸리티 클래스(`.slj-anim-*`)를 global.css에 두고 JSX에서
+    모듈 클래스와 함께 붙인다. `animation: :global(name)` 문법은 Vite postcss가
+    파싱하지 못한다("Double colon" 에러). 값은 옮기기 전 그대로다.
+  - [ ] 앞으로 모듈 CSS에 `animation:`을 새로 쓰면 같은 함정에 빠진다.
+        전역 클래스를 쓰거나 keyframes를 그 모듈 안에 정의할 것.
+- **캐러셀 시작 위치** — design은 페이지 로드와 함께 타이머를 돌려서(2185-2190줄)
+  홈 위쪽을 읽다 내려오면 이미 2~3번째 지역이 떠 있었다. IntersectionObserver로
+  섹션이 절반 보일 때 1번부터 시작하고 화면 밖에서는 멈추게 했다. 사용자가 직접
+  넘긴 뒤에는 자동재생을 되살리지 않는다(design halt 규칙 유지).
+- **검증 방법을 바꿨다**: 정지 스크린샷 대신 실제 값 변화로 확인한다.
+  bob은 요소 top이 827→833(6px), shimmer는 background-position 변화,
+  스피너는 transform 8프레임 모두 다른 값, 캐러셀은 transform 기준
+  슬라이드 인덱스 추적.
