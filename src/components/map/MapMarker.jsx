@@ -8,6 +8,8 @@ import styles from "./MapMarker.module.css";
 // 이 컴포넌트는 모양만 그린다.
 export default function MapMarker({
   label,
+  // 라벨 아래 한 줄 더(숙박은 담긴 기간 "1~5일차"). 없으면 안 그린다.
+  subLabel,
   color,
   size = "11px",
   showLabel = true,
@@ -28,6 +30,7 @@ export default function MapMarker({
       {showLabel && (
         <span className={styles.pill} style={{ background: color }}>
           {label}
+          {subLabel && <span className={styles.pillSub}>{subLabel}</span>}
         </span>
       )}
       <span className={styles.dotWrap} style={{ width: size, height: size }}>

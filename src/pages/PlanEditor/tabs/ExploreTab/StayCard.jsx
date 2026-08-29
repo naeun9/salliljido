@@ -57,10 +57,12 @@ export default function StayCard({
         </div>
         <div className={styles.location}>{stay.location}</div>
 
-        {/* 계획 없이 둘러보는 화면에서는 담기·구간 선택을 감춘다(readOnly).
+        {/* 담기 버튼과 예약 링크는 한 줄에 둔다. 담은 뒤 버튼 문구가
+            길어져 줄이 바뀌어도 왼쪽 끝이 어긋나지 않는다.
+            계획 없이 둘러보는 화면에서는 담기·구간 선택을 감춘다(readOnly).
             예약 사이트 링크는 그대로 둔다 — 보기 전용에서도 쓸모가 있다. */}
-        {!readOnly && (
-          <>
+        <div className={styles.actions}>
+          {!readOnly && (
             <button
               type="button"
               className={`${styles.toggleBtn} ${added ? styles.added : ""}`}
@@ -79,74 +81,83 @@ export default function StayCard({
               )}
               {added ? `추가됨 · ${currentRange.from}~${currentRange.to}일차` : "계획에 추가"}
             </button>
+          )}
+          {/* design은 모든 숙소가 visitkorea 메인으로 가는 링크였다(어느
+              숙소를 눌러도 같은 곳). contentId로 그 숙소의 구석구석 검색
+              결과로 보낸다. 문구도 실제 목적지에 맞게 고쳤다 — 관광공사
+              소개 페이지지 예약 사이트가 아니다(utils/externalLinks.js). */}
+          <a href={visitKoreaSearchUrl(stay.name)} target="_blank" rel="noopener" className={styles.link}>
+            구석구석에서 보기
+            <svg width="12" height="12" viewBox="0 0 13 13" fill="none">
+              <path d="M4.6 2h6.4v6.4" stroke="#2F5D50" strokeWidth="1.4" strokeLinecap="round" />
+              <line
+                x1="11"
+                y1="2"
+                x2="3.4"
+                y2="9.6"
+                stroke="#2F5D50"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+              />
+              <path d="M8.2 11H2V4.8" stroke="#2F5D50" strokeWidth="1.4" strokeLinecap="round" />
+            </svg>
+          </a>
+        </div>
 
-            <div className={`${styles.picker} ${pickerOpen ? styles.open : ""}`}>
-              <span className={styles.pickerLabel}>며칠부터 며칠까지 묵으실 건가요?</span>
-              <div className={styles.rangeRow}>
-                <label className={styles.rangeField}>
-                  <span className={styles.rangeLabel}>시작</span>
-                  <select
-                    className={styles.rangeSelect}
-                    value={from}
-                    onChange={(e) => setFrom(Number(e.target.value))}
-                  >
-                    {Array.from({ length: durDays }, (_, i) => (
-                      <option key={i + 1} value={i + 1}>
-                        {i + 1}일차
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <span className={styles.rangeDash}>~</span>
-                <label className={styles.rangeField}>
-                  <span className={styles.rangeLabel}>종료</span>
-                  <select
-                    className={styles.rangeSelect}
-                    value={to}
-                    onChange={(e) => setTo(Number(e.target.value))}
-                  >
-                    {Array.from({ length: durDays }, (_, i) => (
-                      <option key={i + 1} value={i + 1} disabled={i + 1 < from}>
-                        {i + 1}일차
-                      </option>
-                    ))}
-                  </select>
-                </label>
-              </div>
-              <p className={styles.rangeHint}>{nights}박 예정 · 예상 비용의 숙박 구간에 함께 반영됩니다</p>
-              <div className={styles.pickerActions}>
-                <button
-                  type="button"
-                  className={styles.confirmBtn}
-                  onClick={() => {
-                    onConfirm(from, to);
-                    setDraft(null);
-                  }}
+        {!readOnly && (
+          <div className={`${styles.picker} ${pickerOpen ? styles.open : ""}`}>
+            <span className={styles.pickerLabel}>며칠부터 며칠까지 묵으실 건가요?</span>
+            <div className={styles.rangeRow}>
+              <label className={styles.rangeField}>
+                <span className={styles.rangeLabel}>시작</span>
+                <select
+                  className={styles.rangeSelect}
+                  value={from}
+                  onChange={(e) => setFrom(Number(e.target.value))}
                 >
-                  {added ? "구간 저장" : "계획에 추가"}
-                </button>
-                {added && (
-                  <button type="button" className={styles.removeBtn} onClick={onRemove}>
-                    빼기
-                  </button>
-                )}
-              </div>
+                  {Array.from({ length: durDays }, (_, i) => (
+                    <option key={i + 1} value={i + 1}>
+                      {i + 1}일차
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <span className={styles.rangeDash}>~</span>
+              <label className={styles.rangeField}>
+                <span className={styles.rangeLabel}>종료</span>
+                <select
+                  className={styles.rangeSelect}
+                  value={to}
+                  onChange={(e) => setTo(Number(e.target.value))}
+                >
+                  {Array.from({ length: durDays }, (_, i) => (
+                    <option key={i + 1} value={i + 1} disabled={i + 1 < from}>
+                      {i + 1}일차
+                    </option>
+                  ))}
+                </select>
+              </label>
             </div>
-          </>
+            <p className={styles.rangeHint}>{nights}박 예정 · 예상 비용의 숙박 구간에 함께 반영됩니다</p>
+            <div className={styles.pickerActions}>
+              <button
+                type="button"
+                className={styles.confirmBtn}
+                onClick={() => {
+                  onConfirm(from, to);
+                  setDraft(null);
+                }}
+              >
+                {added ? "구간 저장" : "계획에 추가"}
+              </button>
+              {added && (
+                <button type="button" className={styles.removeBtn} onClick={onRemove}>
+                  빼기
+                </button>
+              )}
+            </div>
+          </div>
         )}
-
-        {/* design은 모든 숙소가 visitkorea 메인으로 가는 링크였다(어느
-            숙소를 눌러도 같은 곳). contentId로 그 숙소의 구석구석 검색
-            결과로 보낸다. 문구도 실제 목적지에 맞게 고쳤다 — 관광공사
-            소개 페이지지 예약 사이트가 아니다(utils/externalLinks.js). */}
-        <a href={visitKoreaSearchUrl(stay.name)} target="_blank" rel="noopener" className={styles.link}>
-          구석구석에서 보기
-          <svg width="12" height="12" viewBox="0 0 13 13" fill="none">
-            <path d="M4.6 2h6.4v6.4" stroke="#2F5D50" strokeWidth="1.4" strokeLinecap="round" />
-            <line x1="11" y1="2" x2="3.4" y2="9.6" stroke="#2F5D50" strokeWidth="1.4" strokeLinecap="round" />
-            <path d="M8.2 11H2V4.8" stroke="#2F5D50" strokeWidth="1.4" strokeLinecap="round" />
-          </svg>
-        </a>
       </div>
     </div>
   );

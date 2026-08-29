@@ -110,9 +110,11 @@ export default function RegionCarousel() {
 
   // design 3909-3914줄: 카드를 클릭하면 해당 지역을 선택한 채로 조건 선택
   // 화면으로 이동한다.
+  // 지역 찾기 화면은 진입할 때 조건을 초기화한다(RegionSearch 주석).
+  // 여기서 고른 지역은 초기화 뒤에도 남아야 해서 state로 함께 넘긴다.
   function openFind(regionName) {
     setRegion(regionName);
-    navigate("/find");
+    navigate("/find", { state: { region: regionName } });
   }
 
   return (

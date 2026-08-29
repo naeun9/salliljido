@@ -113,6 +113,11 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
   // 숙박은 "며칠~며칠" 구간이 붙어서 예상 비용 탭의 숙박 구간(staySegs)에
   // 직접 들어간다. 여기서는 그 구간에서 숙소 id만 뽑아 쓴다.
   const stayPicks = staySegs.filter((g) => g.stayId);
+  // 담은 숙소는 지도 라벨에 기간을 함께 보여 준다("1~5일차"). 담지 않은
+  // 숙소에는 붙이지 않는다.
+  const markerSubLabels = Object.fromEntries(
+    stayPicks.map((g) => [g.stayId, `${g.from}~${g.to}일차`]),
+  );
   const addedIds = addedExperiences
     .concat(savedUtilities)
     .concat(savedSpots)
@@ -237,6 +242,7 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
         <SidebarMap
           items={visibleList}
           addedMarkers={addedMarkers}
+          markerSubLabels={markerSubLabels}
           center={{ lat: region.lat, lng: region.lng }}
           categoryColor={CATEGORY_COLORS[category]}
           hoveredId={hoverId}

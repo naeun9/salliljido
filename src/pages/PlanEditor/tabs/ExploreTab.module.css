@@ -122,7 +122,9 @@
 .categorySection {
   display: flex;
   flex-direction: column;
-  margin-top: 6px;
+  /* design 6px. 하위 칩을 이 아래로 내리면서 카테고리 칩 줄과 제목·안내
+     문구가 붙어 보여 한 단계 띄웠다(칩 사이 간격 8px의 두 배). */
+  margin-top: 16px;
   /* 애니메이션은 전역 클래스(styles/global.css의 .slj-anim-*)로 붙인다 —
      모듈 안에서 이름을 쓰면 해시돼서 keyframes를 못 찾는다. */
 }

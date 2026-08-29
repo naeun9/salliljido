@@ -124,13 +124,15 @@
   font-weight: 600;
   letter-spacing: -0.01em;
   box-shadow: 0 16px 34px -16px rgba(24, 48, 41, 0.75);
+  /* design은 0.2s에 -2px였는데 커서를 스칠 때마다 버튼이 튀어 올라
+     산만했다. 시간을 늘리고 이동 거리를 줄여 눌리는 느낌만 남긴다. */
   transition:
-    transform 0.2s ease,
-    background 0.2s ease;
+    transform 0.35s ease,
+    background 0.35s ease;
 }
 .primaryCta:hover {
   background: #e4855c;
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   color: var(--cream);
 }
 .primaryCtaArrow {

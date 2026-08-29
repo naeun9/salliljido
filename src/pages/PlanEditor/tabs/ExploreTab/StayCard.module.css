@@ -56,14 +56,21 @@
   font-size: 15px;
   color: var(--gray);
 }
+/* 담기 버튼과 예약 링크를 한 줄에 두되, 담은 뒤 버튼 문구가 길어져
+   ("추가됨 · 1~3일차") 줄이 바뀌어도 왼쪽 끝이 어긋나지 않게 묶는다.
+   다른 카테고리 카드처럼 왼쪽 정렬이 기준이다. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
 .link {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  margin-top: 12px;
-  /* "계획에 추가" 버튼과 나란히 놓이는데 둘 사이가 붙어 하나처럼 보였다.
-     간격은 같은 카드 피커의 버튼 간격(.pickerActions gap: 8px)에 맞춘다. */
-  margin-left: 8px;
   height: 38px;
   padding: 0 15px;
   border-radius: 9px;

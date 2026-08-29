@@ -51,13 +51,15 @@
   border-radius: var(--radius-card);
   border: 1px solid var(--mist);
   background: var(--cream);
+  /* design은 0.3s에 -3px였다. 커서가 지나가기만 해도 카드가 튀어 올라
+     섹션 전체가 들썩였다. 시간을 늘리고 거리를 줄인다. */
   transition:
-    border-color 0.3s ease,
-    transform 0.3s ease;
+    border-color 0.4s ease,
+    transform 0.4s ease;
 }
 .card:hover {
   border-color: var(--sage);
-  transform: translateY(-3px);
+  transform: translateY(-1px);
 }
 .cardHead {
   display: flex;
@@ -127,9 +129,11 @@
   font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.01em;
+  /* design 0.2s. 투명 → 딥그린으로 한 번에 뒤집혀 깜빡이듯 보였다.
+     색 전환 시간만 늘린다(움직임은 원래 없다). */
   transition:
-    background 0.2s ease,
-    color 0.2s ease;
+    background 0.4s ease,
+    color 0.4s ease;
 }
 .cta:hover {
   background: var(--forest);

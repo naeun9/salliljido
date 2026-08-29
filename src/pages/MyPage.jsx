@@ -61,17 +61,6 @@ export default function MyPage() {
   const programs = getSavedProgramCards(saved.savedPrograms);
 
   // 저장한 것이 하나도 없는지는 로딩과 무관하게 처음부터 알 수 있다 —
-  // 세 값 모두 localStorage에서 동기적으로 읽어 온 것이고, 아래 loading은
-  // design의 연출용 지연(startLoad("mp", 900))일 뿐 실제 비동기 로드가
-  // 아니다.
-  //
-  // 원본은 `!isLoading("mp") && ...`로 계산해서(3528-3529줄), 로딩 900ms
-  // 동안은 세 섹션의 빈 상태를 보여주다가 로딩이 끝나면 통째로 "아직
-  // 저장한 것이 없어요"로 바뀌었다. 원본은 시드 데이터(seedRegions/
-  // seedRoutines)가 항상 있어서 이 경로를 안 탔지만, 시드를 뺀 지금은
-  // 데모로 처음 로그인하면 "만든 계획" 섹션이 떴다가 사라진다.
-  // 로딩 조건을 빼서 첫 프레임부터 결론이 바뀌지 않게 했다.
-  const allEmpty = regions.length === 0 && plans.length === 0 && programs.length === 0;
 
   // design fadeOut(id, run)(240ms): 삭제 확정 후 opacity 트랜지션이 끝나면
   // 실제로 목록에서 뺀다.
@@ -141,48 +130,23 @@ export default function MyPage() {
         </div>
       </section>
 
-      {allEmpty ? (
-        <section className={styles.allEmpty}>
-          <div className={styles.allEmptyInner}>
-            <span className={styles.allEmptyIcon}>
-              <svg width="30" height="30" viewBox="0 0 26 26" fill="none">
-                <path
-                  d="M6.5 3.5h13v19l-6.5-5.2-6.5 5.2z"
-                  stroke="#2F5D50"
-                  strokeWidth="1.5"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-            <div className={styles.allEmptyTitle}>아직 저장한 것이 없어요</div>
-            <p className={styles.allEmptyDesc}>마음에 드는 지역을 찾아 계획을 세워보세요</p>
-            <button type="button" className={styles.allEmptyBtn} onClick={() => navigate("/find")}>
-              지역 찾아보기 <span>→</span>
-            </button>
-          </div>
-        </section>
-      ) : (
-        <>
-          <RegionsSection
-            loading={loading}
-            regions={regions}
-            fadingShorts={fadingIds}
-            onUnsave={unsaveRegion}
-          />
-          <PlansSection
-            plans={plans}
-            fadingIds={fadingIds}
-            renamingId={renamingId}
-            renameDraft={renameDraft}
-            onDraftChange={setRenameDraft}
-            onStartEdit={startEdit}
-            onSaveEdit={saveEdit}
-            onOpen={openPlan}
-            onRemove={removePlan}
-          />
-          <ProgramsSection programs={programs} onUnsave={unsaveProgram} />
-        </>
-      )}
+      {/* 세 섹션은 각자 빈 상태를 갖고 있다. 예전에는 셋 다 비면 통합 안내
+          하나로 덮었는데, 그러면 "저장한 지역"만 있고 계획이 없는 사람은
+          섹션별 안내를 보는 반면 처음 온 사람은 아무 섹션도 못 봐서 무엇을
+          할 수 있는 자리인지 알 수 없었다. 항상 세 섹션을 그린다. */}
+      <RegionsSection loading={loading} regions={regions} fadingShorts={fadingIds} onUnsave={unsaveRegion} />
+      <PlansSection
+        plans={plans}
+        fadingIds={fadingIds}
+        renamingId={renamingId}
+        renameDraft={renameDraft}
+        onDraftChange={setRenameDraft}
+        onStartEdit={startEdit}
+        onSaveEdit={saveEdit}
+        onOpen={openPlan}
+        onRemove={removePlan}
+      />
+      <ProgramsSection programs={programs} onUnsave={unsaveProgram} />
 
       <section className={styles.logoutSection}>
         <button

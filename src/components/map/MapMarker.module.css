@@ -8,6 +8,9 @@
   transition: transform 0.25s ease;
 }
 .pill {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
   padding: 5px 11px;
   border-radius: var(--radius-pill);
   color: var(--cream);
@@ -17,6 +20,13 @@
   font-weight: 600;
   white-space: nowrap;
   box-shadow: 0 6px 14px -8px rgba(43, 43, 41, 0.5);
+}
+/* 담긴 기간처럼 라벨 아래 붙는 보조 줄. 라벨과 같은 필 안에 두어
+   길어져도 잘리지 않는다(필 자체가 내용만큼 늘어난다). */
+.pillSub {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.85;
 }
 .dotWrap {
   position: relative;

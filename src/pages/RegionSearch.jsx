@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSearch } from "../hooks/useSearch.js";
 import styles from "./RegionSearch.module.css";
 
@@ -55,8 +56,26 @@ function TownIcon({ color }) {
 }
 
 export default function RegionSearch() {
-  const { region, dur, place, customDays, setRegion, setDur, setPlace, setCustomDays } = useSearch();
+  const { region, dur, place, customDays, setRegion, setDur, setPlace, setCustomDays, reset } = useSearch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const didReset = useRef(false);
+
+  // 이 화면에 들어올 때마다 조건을 새로 고른다. 조건은 localStorage에 남아
+  // 있어서 예전에 고른 값이 선택된 채 열렸는데, "지역 찾기"는 처음부터
+  // 고르는 자리라 이전 선택이 남아 있으면 방금 고른 것처럼 보인다.
+  //
+  // 저장된 계획을 여는 경로는 영향받지 않는다 — 그쪽은 /plan/:id 에서
+  // search.restore(계획의 condition)으로 되돌리고, 이 화면을 거치지 않는다.
+  //
+  // 홈 캐러셀에서 지역을 누르고 들어온 경우(location.state.region)만 그
+  // 지역을 남긴다. 그러지 않으면 방금 누른 선택이 초기화돼 버린다.
+  useEffect(() => {
+    if (didReset.current) return;
+    didReset.current = true;
+    reset(location.state?.region);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const ready = !!(region && dur && place);
   const showCustomDur = dur === "직접 입력";
