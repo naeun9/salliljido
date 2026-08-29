@@ -22,6 +22,8 @@ export const ADDED_MARKER_COLOR = "#1F6F4A";
 export default function ExploreMap({
   items,
   addedMarkers = [],
+  // { [숙소id]: "1~5일차" } — 담긴 숙소만 기간을 라벨에 함께 보여 준다.
+  markerSubLabels = {},
   center,
   categoryColor,
   hoveredId,
@@ -51,6 +53,11 @@ export default function ExploreMap({
         const hot = hoveredId === item.id;
         const inRoutine = addedIds.includes(item.id);
         const color = inRoutine ? ADDED_MARKER_COLOR : hot ? "var(--terracotta)" : categoryColor;
+        // 담은 숙소는 라벨에 기간("1~5일차")이 한 줄 더 붙는다.
+        // 라벨을 항상 띄워도 봤는데, 가까운 숙소 둘을 담으면 라벨끼리 겹쳐
+        // 읽기 어려웠다(태안 갯벌부흥펜션·골든코스트). design대로 hover에서만
+        // 띄우고, 그때 기간이 함께 보이게 한다.
+        const stayRange = markerSubLabels[item.id];
         return (
           <MapOverlay
             key={item.id}
@@ -61,6 +68,7 @@ export default function ExploreMap({
           >
             <MapMarker
               label={item.name}
+              subLabel={stayRange}
               color={color}
               size={hot ? "24px" : inRoutine ? "21px" : "16px"}
               showLabel={hot}

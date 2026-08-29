@@ -52,7 +52,7 @@ export default function RegionExplore() {
           region={region}
           readOnly
           ctaLabel="이 지역에서 지내보기"
-          onCta={() => navigate(`/plan/${regionId}?tab=schedule`)}
+          onCta={() => navigate(`/plan/${regionId}`)}
         />
       </PlanProvider>
     </div>

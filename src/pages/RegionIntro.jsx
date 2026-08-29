@@ -121,7 +121,7 @@ export default function RegionIntro() {
             <button
               type="button"
               className={styles.ctaBtn}
-              onClick={() => navigate(`/plan/${regionId}?tab=schedule`)}
+              onClick={() => navigate(`/plan/${regionId}`)}
             >
               <span className={styles.ctaArrow}>이 지역에서 지내보기 →</span>
             </button>

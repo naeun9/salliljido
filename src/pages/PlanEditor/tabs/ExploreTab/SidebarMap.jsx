@@ -18,6 +18,7 @@ import styles from "./SidebarMap.module.css";
 export default function SidebarMap({
   items,
   addedMarkers,
+  markerSubLabels,
   center,
   categoryColor,
   hoveredId,
@@ -48,6 +49,7 @@ export default function SidebarMap({
         <ExploreMap
           items={items}
           addedMarkers={addedMarkers}
+          markerSubLabels={markerSubLabels}
           center={center}
           categoryColor={categoryColor}
           hoveredId={hoveredId}

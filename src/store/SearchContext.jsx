@@ -39,6 +39,12 @@ function reducer(state, action) {
     // 맞춰둬야 한다.
     case "RESTORE":
       return { ...state, ...action.condition };
+    // 지역 찾기 화면에 들어올 때마다 조건을 비운다. 조건은 localStorage에
+    // 남아 있어서, 예전에 고른 값이 그대로 선택된 채로 화면이 열렸다.
+    // 저장된 계획을 여는 경로(PlanEditor/PlanOverview)는 RESTORE로 그
+    // 계획의 조건을 되돌리므로 영향받지 않는다.
+    case "RESET":
+      return { ...initialState, region: action.region || "" };
     default:
       return state;
   }
@@ -56,6 +62,7 @@ export function SearchProvider({ children }) {
       setPlace: (place) => dispatch({ type: "SET_PLACE", place }),
       setCustomDays: (customDays) => dispatch({ type: "SET_CUSTOM_DAYS", customDays }),
       restore: (condition) => dispatch({ type: "RESTORE", condition }),
+      reset: (region) => dispatch({ type: "RESET", region }),
     }),
     [state]
   );
