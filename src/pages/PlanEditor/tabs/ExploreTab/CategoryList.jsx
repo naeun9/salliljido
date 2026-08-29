@@ -40,7 +40,7 @@ export default function CategoryList({
   return (
     <>
       {category === "숙박" && (
-        <div className={styles.categorySection}>
+        <div className={`${styles.categorySection} slj-anim-fade`}>
           <div className={styles.sectionHead}>
             <h2 className={styles.sectionTitle}>숙박</h2>
             <span className={styles.sectionNote}>예약은 외부 서비스로 연결됩니다</span>
@@ -102,7 +102,7 @@ export default function CategoryList({
       )}
 
       {category === "체험 프로그램" && (
-        <div className={styles.categorySection}>
+        <div className={`${styles.categorySection} slj-anim-fade`}>
           <div className={styles.sectionHeadPlain}>
             <h2 className={styles.sectionTitle}>체험 프로그램</h2>
           </div>
@@ -160,7 +160,7 @@ export default function CategoryList({
       )}
 
       {category === "주변 관광지" && (
-        <div className={styles.categorySection}>
+        <div className={`${styles.categorySection} slj-anim-fade`}>
           <div className={styles.sectionHeadPlain}>
             <h2 className={styles.sectionTitle}>주변 관광지</h2>
           </div>
@@ -201,7 +201,7 @@ export default function CategoryList({
       )}
 
       {category === "식당·카페" && (
-        <div className={styles.categorySection}>
+        <div className={`${styles.categorySection} slj-anim-fade`}>
           <div className={styles.sectionHeadPlain}>
             <h2 className={styles.sectionTitle}>식당·카페</h2>
           </div>

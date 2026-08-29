@@ -39,12 +39,44 @@ export default function RegionCarousel() {
   const [idx, setIdx] = useState(0);
   const timerRef = useRef(null);
   const touchXRef = useRef(null);
+  const sectionRef = useRef(null);
+  // 사용자가 화살표·점·스와이프로 직접 넘긴 뒤에는 자동재생을 되살리지
+  // 않는다(design 2192줄 halt와 같은 규칙). 화면 밖으로 나갔다 들어와도
+  // 마찬가지라 ref로 들고 있는다.
+  const haltedRef = useRef(false);
   const navigate = useNavigate();
   const { setRegion } = useSearch();
 
+  // design은 페이지가 열리는 순간부터 타이머를 돌린다(2185-2190줄). 그러면
+  // 홈 맨 위에서 한참 읽고 내려왔을 때 이미 2~3번째 지역이 떠 있어서, 세 곳을
+  // 소개하는 섹션인데 첫 지역을 못 보고 지나친다. 섹션이 화면에 들어올 때
+  // 1번부터 시작하고 나가면 멈추도록 바꿨다(간격 7초는 원본 그대로).
   useEffect(() => {
-    startTimer();
-    return () => clearInterval(timerRef.current);
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      startTimer();
+      return () => clearInterval(timerRef.current);
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (haltedRef.current) return;
+          setIdx(0);
+          startTimer();
+        } else {
+          clearInterval(timerRef.current);
+        }
+      },
+      // 절반쯤 보이면 "도착했다"로 친다 — 카드가 화면에 걸치기만 해도
+      // 타이머가 돌면 첫 장을 놓치는 문제가 그대로 남는다.
+      { threshold: 0.5 }
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      clearInterval(timerRef.current);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -57,6 +89,7 @@ export default function RegionCarousel() {
 
   // design 2192줄: 수동 조작 시 자동재생을 멈춘다(다시 시작하지 않음).
   function halt() {
+    haltedRef.current = true;
     clearInterval(timerRef.current);
   }
 
@@ -83,7 +116,7 @@ export default function RegionCarousel() {
   }
 
   return (
-    <section id="regions" data-screen-label="Regions" className={styles.regions}>
+    <section id="regions" data-screen-label="Regions" className={styles.regions} ref={sectionRef}>
       <div className={styles.inner}>
         <div className={styles.head}>
           <div className={styles.headText}>

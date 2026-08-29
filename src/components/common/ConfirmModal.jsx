@@ -19,8 +19,11 @@ export default function ConfirmModal({ open, title, target, onConfirm, onCancel 
   }
 
   return (
-    <div className={`${styles.backdrop} ${open ? styles.open : ""}`} onKeyDown={handleKeyDown}>
-      <div className={styles.card}>
+    <div
+      className={`${styles.backdrop} ${open ? `${styles.open} slj-anim-fade-fast` : ""}`}
+      onKeyDown={handleKeyDown}
+    >
+      <div className={`${styles.card} slj-anim-rise`}>
         <div className={styles.title}>{title}</div>
         {target && <div className={styles.target}>{target}</div>}
         <div className={styles.actions}>

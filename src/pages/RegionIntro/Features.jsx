@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { hasJong } from "../../utils/korean.js";
+import { regionPhotoSlides } from "../../data/regionPhotos.js";
 import styles from "./Features.module.css";
 
 // design/salliljido.extracted.html 718-740줄, 3075-3079줄(inStats),
-// 2995-3000줄(inSlides). 슬라이드 배경색은 목업 "사진" 자리라 값 그대로 두었다.
+// 2995-3000줄(inSlides).
+//
+// design의 슬라이드 4장은 "여기에 사진이 들어간다"는 목업 그라데이션이었다
+// (2995줄). 그 자리에 그 지역 관광사진 4장을 넣는다 — 장수·간격·크로스페이드는
+// 원본 그대로다. 사진이 없는 지역은 예전 그라데이션으로 돌아간다.
 const SLIDE_BACKGROUNDS = [
   "repeating-linear-gradient(118deg, #8B9A80 0 22px, #9EAB8E 22px 44px)",
   "repeating-linear-gradient(118deg, #A2A48F 0 22px, #B2B39E 22px 44px)",
@@ -53,6 +58,16 @@ export default function Features({ region, insights }) {
   }, []);
 
   const stats = buildStats(region, insights);
+  const photos = regionPhotoSlides(region.short);
+  // 사진이 있으면 사진 4장, 없으면 목업 그라데이션 4장.
+  const slides = SLIDE_BACKGROUNDS.map((bg, i) => {
+    const photo = photos[i];
+    return {
+      key: photo ? photo.url : bg,
+      background: photo ? `url("${photo.url}") center / cover no-repeat` : bg,
+      title: photo ? photo.title : "",
+    };
+  });
 
   return (
     <section data-in-reveal style={{ animationDelay: ".31s" }} className={styles.section}>
@@ -79,14 +94,20 @@ export default function Features({ region, insights }) {
           ))}
         </div>
         <div className={styles.imageCol}>
-          {SLIDE_BACKGROUNDS.map((bg, i) => (
+          {slides.map((s, i) => (
             <div
-              key={bg}
+              key={s.key}
               className={styles.slide}
-              style={{ background: bg, opacity: slideIdx === i ? 1 : 0 }}
+              style={{ background: s.background, opacity: slideIdx === i ? 1 : 0 }}
+              role="img"
+              aria-label={s.title || `${region.short} 풍경`}
             />
           ))}
-          <span className={styles.imageCaption}>image · {region.short} 풍경</span>
+          {/* 목업 라벨(image · ○○ 풍경) 자리에는 지금 보이는 사진의 제목을
+              쓴다. 사진이 없으면 예전 라벨 그대로. */}
+          <span className={styles.imageCaption}>
+            {slides[slideIdx].title || `image · ${region.short} 풍경`}
+          </span>
         </div>
       </div>
     </section>

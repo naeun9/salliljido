@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { regionPhoto, photoBackground } from "../../data/regionPhotos.js";
 import styles from "./RegionCard.module.css";
 
 // 추천 결과 카드. design/salliljido.extracted.html 430-457줄.
@@ -10,7 +11,12 @@ export default function RegionCard({ region, best, hovered, onMouseEnter, onMous
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className={styles.swatch} style={{ background: region.swatch }} />
+      {/* 빗금 자리에 그 지역 관광사진(다른 화면과 같은 방식).
+          사진이 없거나 URL이 죽으면 아래 빗금이 그대로 보인다. */}
+      <div
+        className={styles.swatch}
+        style={{ background: photoBackground(regionPhoto(region.short), region.swatch) }}
+      />
       <div className={styles.body}>
         <div className={styles.head}>
           <h3 className={styles.name}>{region.name}</h3>

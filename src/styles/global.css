@@ -130,6 +130,48 @@ body {
   }
 }
 
+/* 애니메이션 유틸리티 클래스.
+//
+   CSS Modules(.module.css)는 파일 안의 animation 이름을 파일 단위로 해시한다.
+   그래서 모듈에서 `animation: slj-bob …`이라고 쓰면 여기 정의된 keyframes가
+   아니라 존재하지 않는 이름(_slj-bob_해시_1)을 가리켜 애니메이션이 아예 안
+   돈다 — 실측으로 확인했다(요소 이동량 0px, 2026-08-29). 값 선언 자체를
+   전역에 두고 JSX에서 모듈 클래스와 함께 붙인다. 값은 옮기기 전 그대로다.
+   `animation: :global(name)` 문법은 Vite의 postcss가 파싱하지 못한다. */
+.slj-anim-bob {
+  animation: slj-bob 2s ease-in-out infinite;
+}
+.slj-anim-spin {
+  animation: slj-spin 0.9s linear infinite;
+}
+.slj-anim-shimmer {
+  animation: slj-shimmer 1.5s linear infinite;
+}
+.slj-anim-fade {
+  animation: slj-fade 0.25s ease;
+}
+.slj-anim-fade-fast {
+  animation: slj-fade 0.18s ease;
+}
+.slj-anim-rise {
+  animation: slj-rise 0.22s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.slj-anim-rise-both {
+  animation: slj-rise 0.22s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slj-anim-bob,
+  .slj-anim-spin,
+  .slj-anim-shimmer,
+  .slj-anim-fade,
+  .slj-anim-fade-fast,
+  .slj-anim-rise,
+  .slj-anim-rise-both {
+    animation: none;
+  }
+}
+
 [data-in-reveal] {
   animation: slj-in-rise 0.46s cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }

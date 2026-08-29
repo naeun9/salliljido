@@ -167,9 +167,7 @@
      이건 안내 표시라, 굵게 붙어 있으면 라벨처럼 도드라진다. */
   font-weight: 400;
   color: rgba(250, 248, 244, 0.72);
-  /* 화살표까지 함께 위아래로 은은하게. 주기는 2초.
-     prefers-reduced-motion에서는 아래에서 멈춘다. */
-  animation: slj-bob 2s ease-in-out infinite;
+  /* 화살표까지 함께 위아래로 은은하게(전역 .slj-anim-bob, 주기 2초). */
 }
 
 /* 자간을 넓히면 마지막 글자 뒤에도 그만큼 공백이 붙어 글자 덩어리가

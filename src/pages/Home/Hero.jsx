@@ -45,7 +45,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <a href="#service" className={styles.scrollHint}>
+      <a href="#service" className={`${styles.scrollHint} slj-anim-bob`}>
         <span className={styles.scrollLabel}>SCROLL</span>
         <svg width="12" height="18" viewBox="0 0 12 18" fill="none">
           <line x1="6" y1="0" x2="6" y2="15" stroke="#FAF8F4" strokeWidth="1" />

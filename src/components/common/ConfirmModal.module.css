@@ -11,7 +11,8 @@
 }
 .backdrop.open {
   display: flex;
-  animation: slj-fade 0.18s ease;
+  /* 애니메이션은 전역 클래스(styles/global.css의 .slj-anim-*)로 붙인다 —
+     모듈 안에서 이름을 쓰면 해시돼서 keyframes를 못 찾는다. */
 }
 
 .card {
@@ -22,7 +23,6 @@
   border-radius: var(--radius-card);
   background: var(--white);
   box-shadow: var(--shadow-pop);
-  animation: slj-rise 0.22s cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 
 .title {
