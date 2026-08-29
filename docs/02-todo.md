@@ -727,3 +727,20 @@ MapZoomControl / MapMarker).
       지역마다 여러 장을 넣고 월별로 고르는 방법이 있다.
 - [ ] 홍성은 지역명 검색으로 쓸 만한 사진이 거의 없어 스카이타워 야경을 썼다.
       더 나은 사진이 있으면 URL만 바꾸면 된다.
+
+## 배포 환경 점검 후속 (2026-08-29)
+
+배포 검증에서 나온 3건을 처리했다(측정값은 아래 보고 참고).
+
+- **서버리스 리전을 서울로** — `vercel.json`에 `"regions": ["icn1"]`.
+  점검 때 `X-Vercel-Id: icn1::iad1::…`이었다. 요청은 서울 엣지로 들어오는데
+  함수는 워싱턴에서 돌아서 한국 → 미국 → 관광공사(한국) → 미국 → 한국을
+  왕복했다. 로컬 93~210ms인 상세 조회가 배포에서 500~900ms였던 이유다.
+  - [ ] Hobby 플랜에서 `regions`가 무시되면 대시보드
+        (Settings → Functions → Function Region)에서 Seoul로 바꿔야 한다.
+- **추천 결과 카드 사진** — `components/region/RegionCard.jsx`만 빗금으로
+  남아 있어 같은 흐름에서 이 화면만 달라 보였다. 다른 화면과 같은
+  `regionPhoto` + `photoBackground` 방식으로 맞췄다.
+- **정적 자산 캐시 헤더** — `/assets/*`는 파일명에 해시가 있어 내용이 바뀌면
+  이름이 바뀐다. `max-age=31536000, immutable`로 주고, 그 외 경로(index.html
+  포함)는 `max-age=0, must-revalidate`로 둬서 항상 최신을 받게 했다.
