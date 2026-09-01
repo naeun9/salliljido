@@ -50,6 +50,10 @@
   padding: clamp(40px, 5vh, 56px) clamp(20px, 5vw, 64px) clamp(72px, 10vh, 104px);
   background: var(--sand);
   border-top: 1px solid var(--sand-strong);
+  /* 로그아웃은 되돌리기 어려운 동작이라 본문 흐름 왼쪽 끝이 아니라
+     오른쪽 끝에 둔다(다른 화면의 보조 동작과 같은 자리). */
+  display: flex;
+  justify-content: flex-end;
 }
 .logoutBtn {
   height: 44px;

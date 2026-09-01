@@ -1,5 +1,7 @@
 import { useState } from "react";
 import CardThumb from "./CardThumb.jsx";
+// 카드 본문(버튼·링크 제외)을 누르면 상세 모달을 연다 — cardClick.js 주석 참고.
+import { cardBodyClick } from "./cardClick.js";
 import { visitKoreaSearchUrl } from "../../../../utils/externalLinks.js";
 import styles from "./StayCard.module.css";
 
@@ -22,6 +24,7 @@ export default function StayCard({
   onConfirm,
   onRemove,
   readOnly = false,
+  onOpenDetail,
 }) {
   const [draft, setDraft] = useState(null);
   const range = draft || currentRange || { from: 1, to: Math.min(3, durDays) };
@@ -48,6 +51,7 @@ export default function StayCard({
       data-listing-id={stay.id}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      onClick={onOpenDetail ? cardBodyClick(onOpenDetail) : undefined}
     >
       <CardThumb item={stay} imageClass={styles.image} tagClass={styles.imageTag} />
       <div className={styles.body}>

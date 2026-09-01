@@ -102,6 +102,22 @@
   text-wrap: pretty;
 }
 
+/* 개요를 펼치는 "더 보기". 문장 끝에 이어 붙는 작은 글자라 링크처럼 둔다. */
+.moreBtn {
+  margin-left: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--forest);
+  cursor: pointer;
+}
+.moreBtn:hover {
+  text-decoration: underline;
+}
+
 .info {
   margin: 18px 0 0;
   display: flex;
