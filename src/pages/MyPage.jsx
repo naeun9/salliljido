@@ -5,6 +5,7 @@ import { useSearch } from "../hooks/useSearch.js";
 import { useAuth } from "../hooks/useAuth.js";
 import { useConfirm } from "../hooks/useConfirm.js";
 import { useToast } from "../hooks/useToast.js";
+import { uniquePlanName } from "../utils/planName.js";
 import { getRegionByShort } from "../services/regionRecommend.js";
 import { getSavedProgramCards } from "../services/supportPrograms.js";
 import ConfirmModal from "../components/common/ConfirmModal.jsx";
@@ -114,7 +115,9 @@ export default function MyPage() {
     setRenameDraft(plan.title);
   }
   function saveEdit(plan) {
-    const title = renameDraft.trim();
+    const draft = renameDraft.trim();
+    // 이름 수정도 저장과 같은 규칙을 쓴다 — 자기 자신은 중복에서 뺀다.
+    const title = uniquePlanName(draft, saved.plans, plan.id);
     if (title) saved.savePlan({ ...plan, title });
     setRenamingId(null);
   }

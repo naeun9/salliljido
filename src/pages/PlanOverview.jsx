@@ -5,6 +5,7 @@ import { usePlan } from "../hooks/usePlan.js";
 import { useSaved } from "../hooks/useSaved.js";
 import { useConfirm } from "../hooks/useConfirm.js";
 import { useToast } from "../hooks/useToast.js";
+import { uniquePlanName } from "../utils/planName.js";
 import { useRegionListings } from "../hooks/useRegionListings.js";
 import { PlanProvider } from "../store/PlanContext.jsx";
 import { getRegionByShort } from "../services/regionRecommend.js";
@@ -137,12 +138,14 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
   // 이름은 PlanContext와 저장된 계획 양쪽을 함께 갱신해야 새로고침 뒤에도
   // 유지된다(design은 planTitle과 planTitles를 같이 고친다, 3357-3363줄).
   function commitTitle(next) {
-    plan.setPlanTitle(next);
+    // 저장과 같은 규칙으로 이름 중복을 막는다(utils/planName.js).
+    const title = uniquePlanName(next, saved.plans, openedPlanId);
+    plan.setPlanTitle(title);
     if (savedPlan)
       saved.savePlan({
         ...savedPlan,
-        title: next,
-        data: { ...savedPlan.data, planTitle: next },
+        title,
+        data: { ...savedPlan.data, planTitle: title },
       });
   }
 
