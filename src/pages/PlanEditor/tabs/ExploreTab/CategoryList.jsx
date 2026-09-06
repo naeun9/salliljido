@@ -36,6 +36,7 @@ export default function CategoryList({
   setDayPickerId,
   readOnly = false,
   subChips = null,
+  onOpenDetail,
 }) {
   return (
     <>
@@ -93,6 +94,7 @@ export default function CategoryList({
                     onConfirm={(from, to) => onStayConfirm(s.id, from, to)}
                     onRemove={() => onStayRemove(s.id)}
                     readOnly={readOnly}
+                    onOpenDetail={() => onOpenDetail(s)}
                   />
                 );
               })}
@@ -152,6 +154,7 @@ export default function CategoryList({
                     setDayPickerId(null);
                   }}
                   readOnly={readOnly}
+                  onOpenDetail={() => onOpenDetail(x)}
                 />
               ))}
             </div>
@@ -193,6 +196,7 @@ export default function CategoryList({
                   onTogglePicker={() => setDayPickerId(dayPickerId === s.id ? null : s.id)}
                   onConfirm={(day) => onConfirmSpot(s.id, day)}
                   readOnly={readOnly}
+                  onOpenDetail={() => onOpenDetail(s)}
                 />
               ))}
             </div>
@@ -233,6 +237,7 @@ export default function CategoryList({
                   onTogglePicker={() => setDayPickerId(dayPickerId === u.id ? null : u.id)}
                   onConfirm={(day) => onConfirmUtility(u.id, day)}
                   readOnly={readOnly}
+                  onOpenDetail={() => onOpenDetail(u)}
                 />
               ))}
             </div>

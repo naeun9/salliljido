@@ -12,6 +12,7 @@ import ListStates from "./ExploreTab/ListStates.jsx";
 import Pagination from "./ExploreTab/Pagination.jsx";
 import { ADDED_MARKER_COLOR } from "./ExploreTab/ExploreMap.jsx";
 import SidebarMap from "./ExploreTab/SidebarMap.jsx";
+import PlaceDetailModal from "../../../components/plan/PlaceDetailModal.jsx";
 import styles from "./ExploreTab.module.css";
 
 // 하위 칩(여러 개 선택 가능)으로 목록을 거른다. routineGenerator에도 하위
@@ -60,6 +61,8 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
   const [dayPickerId, setDayPickerId] = useState(null);
   const [stayPickerId, setStayPickerId] = useState(null);
   const [mapCollapsed, setMapCollapsed] = useState(false);
+  // 카드 본문을 누르면 뜨는 장소 상세. 체류 계획·최종 계획과 같은 모달이다.
+  const [detailItem, setDetailItem] = useState(null);
   const listTopRef = useRef(null);
 
   // 지도 마커를 누르면 그 카드로 목록을 스크롤하고 강조 상태로 둔다.
@@ -115,9 +118,7 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
   const stayPicks = staySegs.filter((g) => g.stayId);
   // 담은 숙소는 지도 라벨에 기간을 함께 보여 준다("1~5일차"). 담지 않은
   // 숙소에는 붙이지 않는다.
-  const markerSubLabels = Object.fromEntries(
-    stayPicks.map((g) => [g.stayId, `${g.from}~${g.to}일차`]),
-  );
+  const markerSubLabels = Object.fromEntries(stayPicks.map((g) => [g.stayId, `${g.from}~${g.to}일차`]));
   const addedIds = addedExperiences
     .concat(savedUtilities)
     .concat(savedSpots)
@@ -160,6 +161,7 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
             <>
               <CategoryList
                 category={category}
+                onOpenDetail={setDetailItem}
                 subChips={
                   <SubChips
                     category={category}
@@ -266,6 +268,26 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
           }
         />
       </div>
+
+      {/* 목록 카드에서 연 장소 상세. 담기 버튼·링크 클릭과는 구분된다
+          (ExploreTab/cardClick.js). 상세 조회는 모달을 열 때만 부른다. */}
+      <PlaceDetailModal
+        selection={
+          detailItem
+            ? {
+                id: detailItem.id,
+                place: detailItem.name,
+                tag: detailItem.type,
+                desc: detailItem.desc || detailItem.note || "",
+                addr: detailItem.addr,
+                mapX: detailItem.mapX,
+                mapY: detailItem.mapY,
+              }
+            : null
+        }
+        contentTypeId={detailItem ? detailItem.contentTypeId : ""}
+        onClose={() => setDetailItem(null)}
+      />
     </section>
   );
 }

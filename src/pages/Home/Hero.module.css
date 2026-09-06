@@ -124,15 +124,13 @@
   font-weight: 600;
   letter-spacing: -0.01em;
   box-shadow: 0 16px 34px -16px rgba(24, 48, 41, 0.75);
-  /* design은 0.2s에 -2px였는데 커서를 스칠 때마다 버튼이 튀어 올라
-     산만했다. 시간을 늘리고 이동 거리를 줄여 눌리는 느낌만 남긴다. */
-  transition:
-    transform 0.35s ease,
-    background 0.35s ease;
+  /* design은 0.2s에 -2px 떠오르고 색도 눈에 띄게 밝아졌는데, 커서가 스칠
+     때마다 버튼이 튀어서 산만했다. 움직임은 아예 빼고 색만 아주 조금
+     밝아지게 남긴다(#D9784E → #DE7F55, 원래 목표색 #E4855C의 절반쯤). */
+  transition: background 0.45s ease;
 }
 .primaryCta:hover {
-  background: #e4855c;
-  transform: translateY(-1px);
+  background: #de7f55;
   color: var(--cream);
 }
 .primaryCtaArrow {

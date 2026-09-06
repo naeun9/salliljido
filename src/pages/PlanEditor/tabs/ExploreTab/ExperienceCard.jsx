@@ -1,5 +1,7 @@
 import { useState } from "react";
 import CardThumb from "./CardThumb.jsx";
+// 카드 본문(버튼·링크 제외)을 누르면 상세 모달을 연다 — cardClick.js 주석 참고.
+import { cardBodyClick } from "./cardClick.js";
 import DayPicker, { dayConfirmLabel, pickerDayCount } from "./DayPicker.jsx";
 import styles from "./ExperienceCard.module.css";
 
@@ -21,6 +23,7 @@ export default function ExperienceCard({
   onTogglePicker,
   onConfirm,
   readOnly = false,
+  onOpenDetail,
 }) {
   const [draft, setDraft] = useState(null);
   const [priceDraft, setPriceDraft] = useState(null);
@@ -52,6 +55,7 @@ export default function ExperienceCard({
       data-listing-id={experience.id}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      onClick={onOpenDetail ? cardBodyClick(onOpenDetail) : undefined}
     >
       <CardThumb item={experience} imageClass={styles.image} tagClass={styles.imageTag} />
       <div className={styles.body}>

@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../common/Modal.jsx";
 import Skeleton from "../common/Skeleton.jsx";
 import { usePlaceDetail } from "../../hooks/usePlaceDetail.js";
 import { kakaoMapUrl } from "../../utils/externalLinks.js";
+import { summarize, firstItems } from "../../utils/text.js";
 import styles from "./PlaceDetailModal.module.css";
 
 // 일정 항목을 눌렀을 때 뜨는 장소 상세. design의 우하단 카드(ovSel,
@@ -16,6 +17,12 @@ import styles from "./PlaceDetailModal.module.css";
 export default function PlaceDetailModal({ selection, contentTypeId, onClose }) {
   const open = !!selection;
   const { detail, loading, error } = usePlaceDetail(open, selection?.id, contentTypeId);
+  const [expanded, setExpanded] = useState(false);
+
+  // 장소가 바뀌면 개요는 다시 접은 상태로 시작한다.
+  useEffect(() => {
+    setExpanded(false);
+  }, [selection?.id]);
 
   // Esc로 닫기. 다른 모달과 동작을 맞춘다.
   useEffect(() => {
@@ -31,6 +38,9 @@ export default function PlaceDetailModal({ selection, contentTypeId, onClose }) 
   // 상세를 못 불러왔을 때 쓰는 값은 이미 목록에 있는 것들이다.
   const address = detail?.addr || addr || "";
   const overview = detail?.overview || "";
+  // 개요는 270~440자가 예사라 그대로 넣으면 정보 목록이 스크롤 밖으로
+  // 밀린다. 문장 단위로 줄이고, 잘렸을 때만 "더 보기"를 붙인다.
+  const summary = summarize(overview);
   const image = detail?.image || "";
   const tel = detail?.tel || "";
 
@@ -39,7 +49,10 @@ export default function PlaceDetailModal({ selection, contentTypeId, onClose }) 
   const rows = [
     { label: "주소", value: address },
     { label: "전화", value: tel },
-    ...(detail?.info || []),
+    // 취급메뉴는 "A / B / C / …"로 길게 오는 경우가 있어 앞 다섯 개만 남긴다.
+    ...(detail?.info || []).map((row) =>
+      row.label === "취급메뉴" ? { ...row, value: firstItems(row.value) } : row
+    ),
   ].filter((row, i, all) => row.value && all.findIndex((r) => r.value === row.value) === i);
 
   return (
@@ -82,7 +95,16 @@ export default function PlaceDetailModal({ selection, contentTypeId, onClose }) 
           ) : (
             <>
               {image && <img className={styles.image} src={image} alt="" loading="lazy" />}
-              {overview && <p className={styles.overview}>{overview}</p>}
+              {overview && (
+                <p className={styles.overview}>
+                  {expanded ? overview : summary.short}
+                  {summary.truncated && (
+                    <button type="button" className={styles.moreBtn} onClick={() => setExpanded((v) => !v)}>
+                      {expanded ? "접기" : "더 보기"}
+                    </button>
+                  )}
+                </p>
+              )}
 
               {rows.length > 0 && (
                 <dl className={styles.info}>

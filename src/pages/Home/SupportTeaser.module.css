@@ -129,13 +129,12 @@
   font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.01em;
-  /* design 0.2s. 투명 → 딥그린으로 한 번에 뒤집혀 깜빡이듯 보였다.
-     색 전환 시간만 늘린다(움직임은 원래 없다). */
-  transition:
-    background 0.4s ease,
-    color 0.4s ease;
+  /* design은 투명 → 딥그린 채움 + 글자색 반전이라, 커서가 닿는 순간
+     버튼이 통째로 뒤집혀 깜빡이는 것처럼 보였다. 채움을 연한 그린 틴트
+     (--mist, 앱의 hover 배경 토큰)로 낮추고 글자는 그대로 둔다. */
+  transition: background 0.45s ease;
 }
 .cta:hover {
-  background: var(--forest);
-  color: var(--paper);
+  background: var(--mist);
+  color: var(--forest);
 }
