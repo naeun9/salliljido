@@ -14,7 +14,7 @@ export default function Footer() {
   const section = (id) => (isHome ? `#${id}` : `/#${id}`);
 
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} data-print-hide>
       <div className={styles.inner}>
         <div className={styles.row}>
           <div className={styles.brand}>
