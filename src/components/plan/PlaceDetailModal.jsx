@@ -16,7 +16,7 @@ import styles from "./PlaceDetailModal.module.css";
 // 값을 그대로 쓴다 — 새 톤을 만들지 않는다.
 export default function PlaceDetailModal({ selection, contentTypeId, onClose }) {
   const open = !!selection;
-  const { detail, loading, error } = usePlaceDetail(open, selection?.id, contentTypeId);
+  const { detail, loading, error, errorCode } = usePlaceDetail(open, selection?.id, contentTypeId);
   const [expanded, setExpanded] = useState(false);
 
   // 장소가 바뀌면 개요는 다시 접은 상태로 시작한다.
@@ -120,7 +120,15 @@ export default function PlaceDetailModal({ selection, contentTypeId, onClose }) 
               {/* 목록에만 있는 설명(대개 주소)은 주소 줄과 겹치면 버린다. */}
               {!overview && desc && desc !== address && <p className={styles.overview}>{desc}</p>}
 
-              {error && <p className={styles.error}>상세 정보를 불러오지 못해 기본 정보만 보여 드려요.</p>}
+              {/* 관광공사 서버가 응답하지 않을 때는 그렇게 적는다 —
+                  우리 서비스가 고장 난 것으로 읽히지 않게(ListStates.jsx와 같은 이유). */}
+              {error && (
+                <p className={styles.error}>
+                  {errorCode === "TIMEOUT"
+                    ? "관광공사 서버가 응답하지 않아 기본 정보만 보여 드려요."
+                    : "상세 정보를 불러오지 못해 기본 정보만 보여 드려요."}
+                </p>
+              )}
             </>
           )}
         </div>

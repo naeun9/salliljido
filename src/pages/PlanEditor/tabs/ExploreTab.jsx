@@ -76,7 +76,13 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
   // startLoad("li", 700)), 실제로는 지역 하나를 한 번만 부르고 카테고리는
   // 그 결과를 나눠 쓰는 구조라 로딩은 "지역이 바뀔 때"만 뜬다. 카테고리
   // 전환은 추가 호출 없이 즉시 바뀐다(호출 최소화).
-  const { listings, loading, error: loadError, retry } = useRegionListings(region.short);
+  const {
+    listings,
+    loading,
+    error: loadError,
+    errorCode: loadErrorCode,
+    retry,
+  } = useRegionListings(region.short);
 
   const durDays = stayDays({ dur, customDays });
 
@@ -156,7 +162,7 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
           </div>
 
           {loading || loadError ? (
-            <ListStates loading={loading} error={loadError} onRetry={retry} />
+            <ListStates loading={loading} error={loadError} errorCode={loadErrorCode} onRetry={retry} />
           ) : (
             <>
               <CategoryList
