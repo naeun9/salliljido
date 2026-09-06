@@ -30,20 +30,31 @@
   flex: 1 1 220px;
   min-width: 190px;
 }
+/* 이름이 길면 두 줄로 넘어가고 배지까지 아래로 밀려서(안동 "게스트하우스
+   play at home(플레이앳홈)"은 head 23px → 74px), 같은 줄의 다른 카드보다
+   51px 높아지고 아래 버튼 줄의 위치도 카드마다 어긋났다. design은 짧은
+   목업 이름만 있어서 드러나지 않던 자리다. 이름 줄은 한 줄로 고정하고
+   넘치면 말줄임한다 — 전체 이름은 title 툴팁과 카드를 눌러 여는 상세
+   모달에서 볼 수 있다. */
 .head {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 9px;
 }
 .name {
   margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: var(--ink);
 }
 .badge {
+  flex: 0 0 auto;
   padding: 4px 10px;
   border-radius: var(--radius-pill);
   background: var(--mist);
@@ -96,7 +107,9 @@
   justify-content: center;
   gap: 7px;
   height: 42px;
-  margin-top: 14px;
+  /* margin-top은 뺐다. 이 버튼이 .actions 줄로 들어오면서 위 여백은
+     .actions가 주는데, 남아 있던 14px이 옆의 링크보다 버튼만 5px 아래로
+     내려앉게 만들고 있었다. */
   border-radius: var(--radius-input);
   border: 1px solid var(--terracotta);
   background: var(--terracotta);

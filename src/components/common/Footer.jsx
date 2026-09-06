@@ -19,9 +19,8 @@ export default function Footer() {
         <div className={styles.row}>
           <div className={styles.brand}>
             <div className={styles.brandName}>살릴지도</div>
-            <p className={styles.brandDesc}>
-              인구감소지역에서 며칠~한 달 살기를 준비하는 사람들을 위한 안내 서비스
-            </p>
+            {/* 히어로 서브 카피와 같은 문장이다 — 한쪽만 바꾸면 어긋난다. */}
+            <p className={styles.brandDesc}>며칠이든 한 달이든, 조용한 지역에서 지내볼 준비를 돕습니다</p>
           </div>
           <div className={styles.links}>
             <div className={styles.heading}>바로가기</div>
