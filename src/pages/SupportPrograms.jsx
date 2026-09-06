@@ -12,6 +12,7 @@ import {
 import { useSaved } from "../hooks/useSaved.js";
 import { useAuth } from "../hooks/useAuth.js";
 import { useConfirm } from "../hooks/useConfirm.js";
+import { useToast } from "../hooks/useToast.js";
 import Skeleton from "../components/common/Skeleton.jsx";
 import ConfirmModal from "../components/common/ConfirmModal.jsx";
 import ProgramFilter from "../components/support/ProgramFilter.jsx";
@@ -35,6 +36,7 @@ export default function SupportPrograms() {
   const saved = useSaved();
   const { requireAuth } = useAuth();
   const { confirm, ask, cancel, doConfirm } = useConfirm();
+  const { showToast } = useToast();
   const [loading, setLoading] = useState(true);
 
   // design 4148줄(goScreen의 startLoad("sup", 900)): 화면 진입 시 900ms
@@ -65,10 +67,15 @@ export default function SupportPrograms() {
     )
       return;
     if (saved.savedPrograms.includes(program.id)) {
-      ask("관심 목록에서 뺄까요?", program.name, () => saved.toggleProgram(program.id));
+      ask("관심 목록에서 뺄까요?", program.name, () => {
+        saved.toggleProgram(program.id);
+        showToast("관심 목록에서 뺐어요");
+      });
       return;
     }
     saved.toggleProgram(program.id);
+    // design 2258줄
+    showToast("관심 프로그램에 담았어요", { link: true });
   }
 
   const shown = sortPrograms(filterPrograms(ALL_PROGRAMS, { regionFilter, statusFilter }), sort);

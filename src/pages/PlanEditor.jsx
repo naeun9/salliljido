@@ -3,7 +3,8 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useSearch } from "../hooks/useSearch.js";
 import { usePlan } from "../hooks/usePlan.js";
 import { useSaved } from "../hooks/useSaved.js";
-import { useAuth } from "../hooks/useAuth.js";
+import { useRegionSave } from "../hooks/useRegionSave.js";
+import { useToast } from "../hooks/useToast.js";
 import { useConfirm } from "../hooks/useConfirm.js";
 import { PlanProvider } from "../store/PlanContext.jsx";
 import { getRegionByShort } from "../services/regionRecommend.js";
@@ -32,13 +33,13 @@ function PlanEditorInner({ openedPlanId }) {
   const search = useSearch();
   const plan = usePlan();
   const saved = useSaved();
-  const { requireAuth } = useAuth();
   const { confirm, ask, cancel, doConfirm } = useConfirm();
+  const { showToast } = useToast();
 
   const region = getRegionByShort(regionId);
 
   // 지역 저장(북마크)은 RegionIntro의 dtToggleSave와 같은 SavedContext를 쓴다.
-  const regionSaved = region ? saved.savedRegions.some((r) => r.short === region.short) : false;
+  const { isSaved: regionSaved, toggleSave: toggleRegionSave } = useRegionSave(region, ask);
 
   if (!region) {
     return <RegionNotFound />;
@@ -57,22 +58,13 @@ function PlanEditorInner({ openedPlanId }) {
     setSearchParams(next, { replace: false });
   }
 
-  function toggleRegionSave() {
-    if (!requireAuth("저장하려면 로그인이 필요해요", "이 지역을 마이페이지에 담아 두려면 로그인해 주세요."))
-      return;
-    if (regionSaved) {
-      ask("저장한 지역에서 뺄까요?", region.name, () => saved.toggleRegion(region.short));
-      return;
-    }
-    saved.toggleRegion(region.short);
-  }
-
   // design dtDeletePlan(4405197줄): 마이페이지에서 연 계획일 때만(openedPlanId)
   // 배너에 삭제 버튼이 뜬다.
   function deletePlan() {
     if (!openedPlanId) return;
     ask("이 계획을 삭제할까요?", plan.planTitle || "", () => {
       saved.removePlan(openedPlanId);
+      showToast("삭제했어요");
       navigate("/mypage");
     });
   }

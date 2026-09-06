@@ -4,6 +4,7 @@ import { useSearch } from "../hooks/useSearch.js";
 import { usePlan } from "../hooks/usePlan.js";
 import { useSaved } from "../hooks/useSaved.js";
 import { useConfirm } from "../hooks/useConfirm.js";
+import { useToast } from "../hooks/useToast.js";
 import { useRegionListings } from "../hooks/useRegionListings.js";
 import { PlanProvider } from "../store/PlanContext.jsx";
 import { getRegionByShort } from "../services/regionRecommend.js";
@@ -34,6 +35,7 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
   const plan = usePlan();
   const saved = useSaved();
   const { confirm, ask, cancel, doConfirm } = useConfirm();
+  const { showToast } = useToast();
 
   const [view, setView] = useState("card");
   const [expanded, setExpanded] = useState(false);
@@ -148,6 +150,7 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
     if (!openedPlanId) return;
     ask("이 계획을 삭제할까요?", title, () => {
       saved.removePlan(openedPlanId);
+      showToast("삭제했어요");
       navigate("/mypage");
     });
   }

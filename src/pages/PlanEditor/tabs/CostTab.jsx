@@ -4,6 +4,7 @@ import { useSearch } from "../../../hooks/useSearch.js";
 import { usePlan } from "../../../hooks/usePlan.js";
 import { useSaved } from "../../../hooks/useSaved.js";
 import { useRegionListings } from "../../../hooks/useRegionListings.js";
+import { useToast } from "../../../hooks/useToast.js";
 import { useAuth } from "../../../hooks/useAuth.js";
 import { stayDays, formatSavedDate } from "../../../utils/date.js";
 import { buildPlanRecord } from "../../../utils/planSnapshot.js";
@@ -25,6 +26,7 @@ export default function CostTab({ region, openedPlanId }) {
   const plan = usePlan();
   const saved = useSaved();
   const { requireAuth } = useAuth();
+  const { showToast } = useToast();
   // 담은 체험의 실제 이름을 찾기 위해 둘러보기 목록을 함께 본다
   // (지역별 메모리 캐시라 추가 호출 없음).
   const { listings } = useRegionListings(region.short);
@@ -93,6 +95,8 @@ export default function CostTab({ region, openedPlanId }) {
       if (!savedPlanId) setSavedPlanId(id);
       saved.savePlan(makeRecord(id, plan.planTitle));
       plan.setPlanSaved(true);
+      // design 2469줄: 이미 이름이 있는 계획을 다시 저장하는 경우.
+      showToast("변경사항을 저장했어요", { link: true });
       goOverview(id);
       return;
     }
@@ -111,6 +115,8 @@ export default function CostTab({ region, openedPlanId }) {
     plan.setPlanSaved(true);
     saved.savePlan(makeRecord(id, title));
     setNameDialogOpen(false);
+    // design 2455줄
+    showToast("계획을 저장했어요", { link: true });
     goOverview(id);
   }
 

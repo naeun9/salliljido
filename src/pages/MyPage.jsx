@@ -4,6 +4,7 @@ import { useSaved } from "../hooks/useSaved.js";
 import { useSearch } from "../hooks/useSearch.js";
 import { useAuth } from "../hooks/useAuth.js";
 import { useConfirm } from "../hooks/useConfirm.js";
+import { useToast } from "../hooks/useToast.js";
 import { getRegionByShort } from "../services/regionRecommend.js";
 import { getSavedProgramCards } from "../services/supportPrograms.js";
 import ConfirmModal from "../components/common/ConfirmModal.jsx";
@@ -25,6 +26,7 @@ export default function MyPage() {
   const search = useSearch();
   const auth = useAuth();
   const { confirm, ask, cancel, doConfirm } = useConfirm();
+  const { showToast } = useToast();
 
   const [loading, setLoading] = useState(true);
   const [fadingIds, setFadingIds] = useState([]);
@@ -74,18 +76,27 @@ export default function MyPage() {
 
   function unsaveRegion(region) {
     ask("저장한 지역에서 뺄까요?", region.name, () =>
-      fadeThenRun(`rg-${region.short}`, () => saved.toggleRegion(region.short))
+      fadeThenRun(`rg-${region.short}`, () => {
+        saved.toggleRegion(region.short);
+        showToast("저장한 지역에서 뺐어요");
+      })
     );
   }
 
   function removePlan(plan) {
     ask("이 계획을 삭제할까요?", plan.title, () =>
-      fadeThenRun(`rt-${plan.id}`, () => saved.removePlan(plan.id))
+      fadeThenRun(`rt-${plan.id}`, () => {
+        saved.removePlan(plan.id);
+        showToast("삭제했어요");
+      })
     );
   }
 
   function unsaveProgram(program) {
-    ask("관심 목록에서 뺄까요?", program.name, () => saved.toggleProgram(program.id));
+    ask("관심 목록에서 뺄까요?", program.name, () => {
+      saved.toggleProgram(program.id);
+      showToast("관심 목록에서 뺐어요");
+    });
   }
 
   // design mpVals()의 t.open(4428920줄 부근): 계획을 만들 당시 조건부터

@@ -159,6 +159,10 @@ body {
 .slj-anim-rise-both {
   animation: slj-rise 0.22s cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
+/* 토스트만 0.28s다(design 524줄). 다른 rise(0.22s)와 값이 달라 따로 둔다. */
+.slj-anim-rise-toast {
+  animation: slj-rise 0.28s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .slj-anim-bob,
@@ -167,7 +171,8 @@ body {
   .slj-anim-fade,
   .slj-anim-fade-fast,
   .slj-anim-rise,
-  .slj-anim-rise-both {
+  .slj-anim-rise-both,
+  .slj-anim-rise-toast {
     animation: none;
   }
 }
