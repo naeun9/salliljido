@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./Footer.module.css";
 
 // design/salliljido.extracted.html 279-307줄. 원본은 랜딩 전용이었지만
@@ -39,7 +39,12 @@ export default function Footer() {
         </div>
         <div className={styles.bottom}>
           <span>© 2026 살릴지도 · 파일럿 서비스</span>
-          <a href="mailto:contact@sallil.kr">contact@sallil.kr</a>
+          {/* design에는 없던 줄. 구글 OAuth 게시에 약관·처리방침 링크가 필요하다. */}
+          <div className={styles.policyLinks}>
+            <Link to="/terms">서비스 이용약관</Link>
+            <Link to="/privacy">개인정보처리방침</Link>
+            <a href="mailto:contact@sallil.kr">contact@sallil.kr</a>
+          </div>
         </div>
       </div>
     </footer>
