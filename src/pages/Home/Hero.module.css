@@ -24,32 +24,106 @@
   background-size: cover;
 }
 
-/* 사진 layer. 여러 장을 겹쳐 두고 opacity만 바꿔 크로스페이드한다 —
-   지역 소개 본문 슬라이드(Features.module.css .slide)와 같은 방식·같은
-   1.1초다. 사진이 죽으면 아래 .texture(빗금)가 그대로 보인다. */
+/* 사진 layer.
+   예전에는 여러 장을 겹쳐 두고 서로 opacity를 반대로 움직였는데, 그러면
+   전환 한가운데서 두 장 모두 반투명해져 뒤의 빗금(.texture)이 비쳤다
+   (0.5 × 0.5 = 25%가 그대로 보인다). 지금은 바닥 한 장을 불투명하게 둔 채
+   그 위에 다음 장을 덮어씌우기만 한다 — 어느 순간에도 100% 가려진다.
+   사진이 죽으면 아래 .texture(빗금)가 그대로 보이는 것은 전과 같다. */
 .photo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+/* 확대(Ken Burns)는 안쪽 층에서 돈다. 바깥은 페이드만 맡는다 — 한 요소에
+   둘을 같이 걸면 클래스를 뗄 때 확대까지 다시 시작된다. */
+.image {
   position: absolute;
   inset: 0;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  transition: opacity 1.1s ease;
 }
+
+@keyframes heroFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* 페이드 길이는 Hero.jsx의 FADE_MS와 같아야 한다(둘이 어긋나면 다 덮이기
+   전에 바닥이 바뀐다). 지역 소개 본문 슬라이드와 같은 1.1초다. */
+.fadeIn {
+  animation: heroFade 1.1s ease forwards;
+}
+
+/* 사진이 머무는 동안 아주 천천히 커진다. 9초 간격 + 1.1초 겹침 =
+   한 장이 보이는 10.1초에 걸쳐 1 → 1.08. 초당 0.8%라 눈으로 움직임을
+   좇기 어렵고, 정지 화면과 비교해야 알아볼 정도다. */
+@keyframes heroZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+.zoom {
+  animation: heroZoom 10.1s linear forwards;
+  will-change: transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .photo {
-    transition: none;
+  .fadeIn,
+  .zoom {
+    animation: none;
   }
 }
 
+/* 브랜드 딥그린 톤은 그대로 두고 농도만 낮췄다(78/66/82% → 42/34/46%).
+   사진이 훨씬 드러나는 대신, 글자가 놓이는 쪽은 아래 .textScrim이 따로
+   덮어서 가독성을 지킨다. 검은 레이어는 쓰지 않는다. */
 .overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(47, 93, 80, 0.78) 0%,
-    rgba(47, 93, 80, 0.66) 45%,
-    rgba(35, 71, 61, 0.82) 100%
+    rgba(47, 93, 80, 0.42) 0%,
+    rgba(47, 93, 80, 0.34) 45%,
+    rgba(35, 71, 61, 0.46) 100%
   );
+}
+
+/* 글자가 놓이는 왼쪽에만 딥그린을 한 겹 더 얹는다. 오른쪽 끝은 0이라
+   사진이 그대로 보인다.
+   진한 구간(0~45%)은 카피 폭(제목·서브 모두 왼쪽 600px 안)을 덮게 잡았다 —
+   처음엔 38%에서 옅어지게 뒀는데 서브 카피 오른쪽 끝이 falloff에 걸려
+   대비가 3.5:1까지 떨어졌다(실측). 합성 농도 1-(1-0.42)(1-0.55) ≈ 0.74로
+   예전 전면 오버레이(0.78)와 비슷해 카피는 그대로 읽힌다. */
+.textScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    rgba(35, 71, 61, 0.6) 0%,
+    rgba(35, 71, 61, 0.55) 45%,
+    rgba(35, 71, 61, 0.22) 72%,
+    rgba(35, 71, 61, 0) 88%
+  );
+}
+/* 좁은 화면에서는 카피가 폭을 거의 다 쓴다. 가로 방향 대신 글자가 있는
+   위쪽을 덮는다. */
+@media (max-width: 759px) {
+  .textScrim {
+    background: linear-gradient(
+      180deg,
+      rgba(35, 71, 61, 0.5) 0%,
+      rgba(35, 71, 61, 0.5) 62%,
+      rgba(35, 71, 61, 0.18) 100%
+    );
+  }
 }
 
 .imageNote {
