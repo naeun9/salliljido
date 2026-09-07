@@ -9,7 +9,13 @@ import { uniquePlanName } from "../../../utils/planName.js";
 import { useAuth } from "../../../hooks/useAuth.js";
 import { stayDays, formatSavedDate } from "../../../utils/date.js";
 import { buildPlanRecord } from "../../../utils/planSnapshot.js";
-import { won, resolveStaySegments, computePlanCost, DEFAULT_STAY_SEGMENT_RATE } from "../../../utils/cost.js";
+import {
+  won,
+  resolveStaySegments,
+  stayCoverage,
+  computePlanCost,
+  DEFAULT_STAY_SEGMENT_RATE,
+} from "../../../utils/cost.js";
 import { findListingName } from "../../../services/exploreListings.js";
 import { buildExperienceRows } from "../../../services/experienceRows.js";
 import NameDialog from "../../../components/plan/NameDialog.jsx";
@@ -43,7 +49,9 @@ export default function CostTab({ region, openedPlanId }) {
 
   const nights = stayDays({ dur, customDays });
   const segs = resolveStaySegments(plan.staySegs, nights);
-  const segNights = segs.reduce((sum, g) => sum + Math.max(0, (g.to || 0) - (g.from || 0) + 1), 0);
+  // 구간이 덮은 박·비어 있는 박(겹침과 범위 초과까지 감안). 안내 문구와
+  // 숙박비 계산이 같은 기준을 쓰도록 utils/cost.js에서 한 번에 구한다.
+  const coverage = stayCoverage(segs, nights);
 
   // 참가비는 관광공사 API에 없어서 사용자가 넣은 값을 쓴다
   // (안 넣었으면 0원, docs/03-api-check.md §14). 줄은 담은 id 전부를
@@ -153,7 +161,7 @@ export default function CostTab({ region, openedPlanId }) {
                 stayTotal={stay}
                 split={plan.staySplit}
                 segs={segs}
-                segNights={segNights}
+                coverage={coverage}
                 onSetNightly={plan.setNightly}
                 onToggleSplit={() => plan.toggleStaySplit(segs)}
                 onUpdateSeg={(i, patch) => plan.updateStaySegment(i, patch, segs)}

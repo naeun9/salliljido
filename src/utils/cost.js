@@ -40,10 +40,46 @@ function segmentNights(seg) {
   return Math.max(0, (seg.to || 0) - (seg.from || 0) + 1);
 }
 
+// 구간이 실제로 덮은 박을 센다. 구간은 겹칠 수도(1~3박과 2~5박),
+// 체류 기간을 벗어날 수도 있어서(7일 계획에 1~10박) 길이를 그냥 더하면
+// 안 된다. 1박부터 nights박까지를 놓고 덮인 날만 센다.
+export function stayCoverage(staySegs, nights) {
+  const total = Math.max(0, nights || 0);
+  const covered = new Set();
+  let segNights = 0;
+  let segTotal = 0;
+
+  (staySegs || []).forEach((seg) => {
+    segNights += segmentNights(seg);
+    segTotal += segmentNights(seg) * (seg.rate || 0);
+    const lo = Math.max(1, Math.min(seg.from || 0, seg.to || 0));
+    const hi = Math.min(total, Math.max(seg.from || 0, seg.to || 0));
+    for (let d = lo; d <= hi; d++) covered.add(d);
+  });
+
+  const coveredCount = covered.size;
+  return {
+    segNights, // 구간 길이의 단순 합(겹침 포함)
+    segTotal, // 구간에 적은 금액의 합
+    covered: coveredCount, // 실제로 덮인 박
+    uncovered: Math.max(0, total - coveredCount), // 비어 있는 박
+    // 겹치거나 체류 기간을 벗어난 박. 화면의 "N일 초과" 안내에 쓴다.
+    overflow: Math.max(0, segNights - coveredCount),
+  };
+}
+
+// 비어 있는 박에 매길 단가. 구간별 입력을 켜면 "1박 금액" 칸은 잠기므로
+// (StaySection.jsx) 사용자가 정한 값이 없다 — 기본 단가를 쓴다.
+export const UNCOVERED_NIGHT_RATE = DEFAULT_STAY_SEGMENT_RATE;
+
 function calcStayTotal({ split, nightly, nights, staySegs }) {
   if (!split) return (nightly === "" ? 0 : (nightly ?? DEFAULT_NIGHTLY)) * nights;
   const segs = resolveStaySegments(staySegs, nights);
-  return segs.reduce((sum, seg) => sum + segmentNights(seg) * (seg.rate || 0), 0);
+  const { segTotal, uncovered } = stayCoverage(segs, nights);
+  // 담은 숙소가 며칠만 덮어도 나머지 박은 어딘가에서 자야 한다. 그 박을
+  // 0원으로 두면 총액이 실제보다 적게 나와 예산 도구로 못 쓴다 —
+  // 기본 단가로 채워 두고, 채웠다는 사실을 근거 문구와 안내에 드러낸다.
+  return segTotal + uncovered * UNCOVERED_NIGHT_RATE;
 }
 
 // design 2043줄: 저녁을 "직접 요리"로 고른 일수(체류계획 탭 rtPick과 연동).
@@ -158,11 +194,24 @@ export const COST_PART_COLORS = {
 // basis(근거 문구)는 원본에서 최종 계획 화면(1624줄)에만 자리가 있고
 // 비용 탭 마크업(1416-1426줄)에는 없다. 계산은 공유하고 표시 여부만
 // 각 화면이 정한다.
+//
+// 숙박비 근거 문구: 구간별 입력을 켰는데 덮이지 않은 박이 있으면 그 박을
+// 기본 단가로 채워 계산하므로(calcStayTotal), 채운 만큼을 문구에 드러낸다.
+// 금액만 맞고 왜 그 금액인지 안 보이면 오히려 더 헷갈린다.
+function stayBasis({ staySplit, staySegs, nights, perNight }) {
+  if (!staySplit) return `${won(perNight)} × ${nights}박`;
+  const segs = resolveStaySegments(staySegs, nights);
+  const { covered, segTotal, uncovered } = stayCoverage(segs, nights);
+  if (!uncovered) return "구간별 입력 합산";
+  return `${covered}박 ${won(segTotal)} + 미지정 ${uncovered}박 ${won(uncovered * UNCOVERED_NIGHT_RATE)}`;
+}
+
 export function buildCostBars({
   breakdown,
   nights,
   nightly,
   staySplit,
+  staySegs,
   foodStyle,
   foodManual,
   foodPer,
@@ -176,7 +225,7 @@ export function buildCostBars({
     {
       label: "숙박비",
       v: stay,
-      basis: staySplit ? "구간별 입력 합산" : `${won(perNight)} × ${nights}박`,
+      basis: stayBasis({ staySplit, staySegs, nights, perNight }),
     },
     { label: "식비", v: food, basis: `1일 ${won(per)} × ${nights}일` },
     { label: "교통비", v: trip, basis: "왕복 직접 입력" },
@@ -240,6 +289,7 @@ export function computePlanCost({ plan, nights }) {
     nights,
     nightly: plan.nightly,
     staySplit: plan.staySplit,
+    staySegs: plan.staySegs,
     foodStyle: plan.foodStyle,
     foodManual: plan.foodManual,
     foodPer: plan.foodPer,
