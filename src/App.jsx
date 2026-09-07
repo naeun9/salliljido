@@ -15,6 +15,8 @@ import PlanOverview from "./pages/PlanOverview.jsx";
 import SupportPrograms from "./pages/SupportPrograms.jsx";
 import MyPage from "./pages/MyPage.jsx";
 import Login from "./pages/Login.jsx";
+import Privacy from "./pages/Privacy.jsx";
+import Terms from "./pages/Terms.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 // 화면 목록과 경로는 docs/01-analysis.md §1 표를 따른다.
@@ -43,6 +45,9 @@ export default function App() {
                   <Route path="/support" element={<SupportPrograms />} />
                   <Route path="/mypage" element={<MyPage />} />
                   <Route path="/login" element={<Login />} />
+                  {/* design에는 없는 화면. 구글 OAuth 게시에 필요하다. */}
+                  <Route path="/privacy" element={<Privacy />} />
+                  <Route path="/terms" element={<Terms />} />
                   {/* 없는 주소도 헤더가 있는 안내 화면으로 받는다. Layout 안에
                     두어야 헤더가 같이 나온다. */}
                   <Route path="*" element={<NotFound />} />
