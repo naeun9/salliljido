@@ -99,18 +99,21 @@
   color: var(--forest);
 }
 
-/* design에는 숙박 담기가 없었다. 같은 화면 체험 카드(ExperienceCard)의
-   버튼·피커 값을 그대로 가져와 새 톤을 만들지 않았다. */
+/* design에는 숙박 담기가 없었다. 색·글자는 같은 화면 체험 카드
+   (ExperienceCard)의 버튼에서 가져와 새 톤을 만들지 않았다. */
 .toggleBtn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 7px;
-  height: 42px;
-  /* margin-top은 뺐다. 이 버튼이 .actions 줄로 들어오면서 위 여백은
-     .actions가 주는데, 남아 있던 14px이 옆의 링크보다 버튼만 5px 아래로
-     내려앉게 만들고 있었다. */
-  border-radius: var(--radius-input);
+  /* 옆의 "구석구석에서 보기" 링크와 같은 줄에 나란히 서는 버튼이라 높이·
+     좌우 여백·모서리를 그 링크에 맞춘다. 원래 값(42px, 여백 없음, 10px)은
+     체험 카드에서 가져온 것인데, 그쪽은 카드 맨 아래 한 줄을 혼자 채우는
+     버튼이라 여백이 없어도 됐다. 여기서는 둘의 높이가 4px 어긋나 보였다.
+     margin-top도 뺐다 — 위 여백은 .actions가 준다. */
+  height: 38px;
+  padding: 0 15px;
+  border-radius: 9px;
   border: 1px solid var(--terracotta);
   background: var(--terracotta);
   font-family: inherit;
