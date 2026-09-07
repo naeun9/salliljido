@@ -192,6 +192,9 @@ export function buildCostBars({
     label: p.label,
     basis: p.basis,
     amount: won(p.v),
+    // 화면은 amount(서식 있는 문자열)를 쓰지만, 엑셀로 내보낼 때는
+    // 계산할 수 있는 숫자가 필요하다(services/planExport.js).
+    value: p.v,
     color: COST_PART_COLORS[p.label],
     width: total ? `${Math.round((p.v / total) * 100)}%` : "0%",
     pct: total ? `${Math.round((p.v / total) * 100)}%` : "0%",

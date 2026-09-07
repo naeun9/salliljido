@@ -6,7 +6,8 @@ export default function SupportSection({ programs, onGoSupport }) {
   if (programs.length === 0) return null;
 
   return (
-    <section className={styles.section}>
+    /* 지원 프로그램은 신청 링크가 핵심이라 종이에서는 의미가 없다. */
+    <section className={styles.section} data-print-hide>
       <div className={styles.inner}>
         <h2 className={styles.heading}>이 지역 지원 프로그램</h2>
         <p className={styles.lead}>지원을 받으면 비용이 줄어들 수 있어요.</p>

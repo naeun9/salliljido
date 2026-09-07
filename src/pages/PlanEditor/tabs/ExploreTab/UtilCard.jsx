@@ -46,7 +46,9 @@ export default function UtilCard({
       <CardThumb item={util} imageClass={styles.image} tagClass={styles.imageTag} />
       <div className={styles.body}>
         <div className={styles.head}>
-          <h3 className={styles.name}>{util.name}</h3>
+          <h3 className={styles.name} title={util.name}>
+            {util.name}
+          </h3>
           <span className={styles.badge}>{util.type}</span>
         </div>
         <p className={styles.note}>{util.note}</p>

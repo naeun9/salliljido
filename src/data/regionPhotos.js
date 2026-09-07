@@ -360,13 +360,46 @@ const PHOTOS = {
   ],
 };
 
-// 홈 히어로 배경. 특정 시군을 대표하지 않아도 되는 자리라 "며칠 살아보는
-// 여행"의 분위기에 맞는 넓은 풍경 한 장을 골랐다.
-export const HERO_PHOTO = {
-  url: "https://tong.visitkorea.or.kr/cms2/website/52/2537152.jpg",
-  title: "천장호 전경",
-  photographer: "김순자",
-};
+// 홈 히어로 배경. 특정 시군을 대표하는 자리가 아니라, 파일럿 세 광역
+// (충남·강원·경북)이 고루 나오도록 위 60장 중에서 5장을 뽑아 돌린다.
+//
+// 고른 기준: 히어로 오버레이는 지역 배너보다 진하다(78%→66%→82%). 이
+// 오버레이를 씌운 상태로 히어로를 그대로 렌더해 놓고 고른 것들이라,
+// 다섯 장 모두 형태가 남고 흰 제목이 묻히지 않는다. 평평한 백사장·잔잔한
+// 수면처럼 오버레이 아래에서 단색이 되는 사진은 전부 뺐다.
+// 첫 장은 원래 쓰던 천장호 전경 그대로다 — 첫 화면의 인상은 바뀌지 않는다.
+export const HERO_PHOTOS = [
+  {
+    url: "https://tong.visitkorea.or.kr/cms2/website/52/2537152.jpg",
+    title: "천장호 전경",
+    photographer: "김순자",
+    region: "충남 청양",
+  },
+  {
+    url: "https://tong.visitkorea.or.kr/cms2/website/67/2818467.jpg",
+    title: "병방치 스카이워크",
+    photographer: "두드림",
+    region: "강원 정선",
+  },
+  {
+    url: "https://tong.visitkorea.or.kr/cms2/website/61/2620261.jpg",
+    title: "외나무다리",
+    photographer: "이복현",
+    region: "경북 영주",
+  },
+  {
+    url: "https://tong.visitkorea.or.kr/cms2/website/13/3567213.jpg",
+    title: "안면암의 봄",
+    photographer: "박정아",
+    region: "충남 태안",
+  },
+  {
+    url: "https://tong.visitkorea.or.kr/cms2/website/43/1961943.jpg",
+    title: "가을빛 따스한 청량사탑",
+    photographer: "김혜경",
+    region: "경북 봉화",
+  },
+];
 
 // 홈 캐러셀은 시군이 아니라 광역(강원·충남·경북) 단위라 대표 시군의 사진을 쓴다.
 const CAROUSEL_REGION = { 강원: "양양", 충남: "태안", 경북: "안동" };

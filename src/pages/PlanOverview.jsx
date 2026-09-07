@@ -4,6 +4,9 @@ import { useSearch } from "../hooks/useSearch.js";
 import { usePlan } from "../hooks/usePlan.js";
 import { useSaved } from "../hooks/useSaved.js";
 import { useConfirm } from "../hooks/useConfirm.js";
+import { useToast } from "../hooks/useToast.js";
+import { usePlanExport } from "./PlanOverview/useExport.js";
+import { uniquePlanName } from "../utils/planName.js";
 import { useRegionListings } from "../hooks/useRegionListings.js";
 import { PlanProvider } from "../store/PlanContext.jsx";
 import { getRegionByShort } from "../services/regionRecommend.js";
@@ -34,16 +37,24 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
   const plan = usePlan();
   const saved = useSaved();
   const { confirm, ask, cancel, doConfirm } = useConfirm();
+  const { showToast } = useToast();
 
   const [view, setView] = useState("card");
   const [expanded, setExpanded] = useState(false);
-  const [exportOpen, setExportOpen] = useState(false);
-  const [exportNotice, setExportNotice] = useState(false);
   const [selection, setSelection] = useState(null);
 
   const region = getRegionByShort(regionId);
   // 담은 체험·식당의 실제 이름은 둘러보기 목록에서 찾는다(지역 단위 캐시).
   const { listings } = useRegionListings(region ? region.short : null);
+  // 내보내기(인쇄·엑셀). 훅이라 조기 반환보다 먼저 부른다. 넘기는 값은
+  // 버튼을 누르는 순간 읽으므로 아래에서 만들어지는 title/days/bars를 써도 된다.
+  const { exportOpen, toggleExport, handlePrint, handleExportXlsx } = usePlanExport(() => ({
+    title,
+    regionName: region.name,
+    days,
+    bars,
+    total: breakdown.total,
+  }));
   // 상세 API는 타입별로 응답 필드가 달라 contentTypeId가 필요하다.
   const selectionListing = selection && selection.id ? findListingAnywhere(listings, selection.id) : null;
 
@@ -135,12 +146,14 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
   // 이름은 PlanContext와 저장된 계획 양쪽을 함께 갱신해야 새로고침 뒤에도
   // 유지된다(design은 planTitle과 planTitles를 같이 고친다, 3357-3363줄).
   function commitTitle(next) {
-    plan.setPlanTitle(next);
+    // 저장과 같은 규칙으로 이름 중복을 막는다(utils/planName.js).
+    const title = uniquePlanName(next, saved.plans, openedPlanId);
+    plan.setPlanTitle(title);
     if (savedPlan)
       saved.savePlan({
         ...savedPlan,
-        title: next,
-        data: { ...savedPlan.data, planTitle: next },
+        title,
+        data: { ...savedPlan.data, planTitle: title },
       });
   }
 
@@ -148,6 +161,7 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
     if (!openedPlanId) return;
     ask("이 계획을 삭제할까요?", title, () => {
       saved.removePlan(openedPlanId);
+      showToast("삭제했어요");
       navigate("/mypage");
     });
   }
@@ -169,11 +183,6 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
     setSelection({ ...it, day: d.day, slot: c.slot });
   }
 
-  function toggleExport() {
-    setExportOpen((v) => !v);
-    setExportNotice(false);
-  }
-
   return (
     <div className={styles.page}>
       <OverviewHeader
@@ -185,8 +194,8 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
         onDelete={openedPlanId ? deletePlan : null}
         exportOpen={exportOpen}
         onToggleExport={toggleExport}
-        exportNotice={exportNotice}
-        onExportNotice={() => setExportNotice(true)}
+        onPrint={handlePrint}
+        onExportXlsx={handleExportXlsx}
       />
 
       <MetricsRow metrics={metrics} />
@@ -215,7 +224,8 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
 
       <SupportSection programs={programs} onGoSupport={goSupport} />
 
-      <section className={styles.impact}>
+      {/* 딥그린 색면 + 흰 글자라 인쇄에서는 색을 되돌린다(출처 표기는 남긴다). */}
+      <section className={styles.impact} data-print-dark>
         <div className={styles.impactInner}>
           <p className={styles.impactNote}>
             {region.short}에서 {nights}일 머무는 동안의 소비가 지역에 남습니다. · 인구감소지역 지정 현황 자료

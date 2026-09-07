@@ -60,7 +60,9 @@ export default function ExperienceCard({
       <CardThumb item={experience} imageClass={styles.image} tagClass={styles.imageTag} />
       <div className={styles.body}>
         <div className={styles.head}>
-          <h3 className={styles.name}>{experience.name}</h3>
+          <h3 className={styles.name} title={experience.name}>
+            {experience.name}
+          </h3>
           <span className={styles.badge}>{experience.type}</span>
         </div>
         <p className={styles.desc}>{experience.desc}</p>

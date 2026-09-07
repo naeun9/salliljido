@@ -4,6 +4,8 @@ import { useSearch } from "../../../hooks/useSearch.js";
 import { usePlan } from "../../../hooks/usePlan.js";
 import { useSaved } from "../../../hooks/useSaved.js";
 import { useRegionListings } from "../../../hooks/useRegionListings.js";
+import { useToast } from "../../../hooks/useToast.js";
+import { uniquePlanName } from "../../../utils/planName.js";
 import { useAuth } from "../../../hooks/useAuth.js";
 import { stayDays, formatSavedDate } from "../../../utils/date.js";
 import { buildPlanRecord } from "../../../utils/planSnapshot.js";
@@ -25,6 +27,7 @@ export default function CostTab({ region, openedPlanId }) {
   const plan = usePlan();
   const saved = useSaved();
   const { requireAuth } = useAuth();
+  const { showToast } = useToast();
   // 담은 체험의 실제 이름을 찾기 위해 둘러보기 목록을 함께 본다
   // (지역별 메모리 캐시라 추가 호출 없음).
   const { listings } = useRegionListings(region.short);
@@ -91,8 +94,14 @@ export default function CostTab({ region, openedPlanId }) {
     if (plan.planTitle) {
       const id = savedPlanId || `p${Date.now()}`;
       if (!savedPlanId) setSavedPlanId(id);
-      saved.savePlan(makeRecord(id, plan.planTitle));
+      // 아직 저장된 적 없는 계획이 이미 있는 이름을 들고 있을 수 있다
+      // (마이페이지에서 연 계획을 그대로 다시 저장하는 경우 등).
+      const title = uniquePlanName(plan.planTitle, saved.plans, id);
+      if (title !== plan.planTitle) plan.setPlanTitle(title);
+      saved.savePlan(makeRecord(id, title));
       plan.setPlanSaved(true);
+      // design 2469줄: 이미 이름이 있는 계획을 다시 저장하는 경우.
+      showToast("변경사항을 저장했어요", { link: true });
       goOverview(id);
       return;
     }
@@ -100,17 +109,20 @@ export default function CostTab({ region, openedPlanId }) {
     setNameDialogOpen(true);
   }
 
-  // design 2438-2457줄(confirmPlanName). uniquePlanName 중복 처리는 아직
-  // 하지 않는다(docs/02-todo.md).
+  // design 2438-2457줄(confirmPlanName). 같은 이름이 이미 있으면 뒤에 번호를
+  // 붙인다(utils/planName.js) — 원본은 같은 이름을 그대로 여러 개 만들었다.
   function confirmName() {
-    const title = nameDraft.trim();
-    if (!title) return;
+    const draft = nameDraft.trim();
+    if (!draft) return;
     const id = savedPlanId || `p${Date.now()}`;
+    const title = uniquePlanName(draft, saved.plans, id);
     setSavedPlanId(id);
     plan.setPlanTitle(title);
     plan.setPlanSaved(true);
     saved.savePlan(makeRecord(id, title));
     setNameDialogOpen(false);
+    // design 2455줄
+    showToast("계획을 저장했어요", { link: true });
     goOverview(id);
   }
 

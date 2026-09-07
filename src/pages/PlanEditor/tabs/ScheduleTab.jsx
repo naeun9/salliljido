@@ -12,6 +12,7 @@ import { useRoutineActions } from "../../../hooks/useRoutineActions.js";
 import { buildRoutePins, routeDistanceLabel } from "../../../utils/route.js";
 import { toLatLng } from "../../../utils/geo.js";
 import ScheduleModals from "./ScheduleTab/ScheduleModals.jsx";
+import { useRemoveWithUndo } from "./ScheduleTab/removeWithUndo.js";
 import ScheduleStates from "./ScheduleTab/ScheduleStates.jsx";
 import ConditionPanel from "./ScheduleTab/ConditionPanel.jsx";
 import DayNav from "./ScheduleTab/DayNav.jsx";
@@ -23,6 +24,8 @@ import styles from "./ScheduleTab.module.css";
 export default function ScheduleTab({ region }) {
   const { dur, customDays } = useSearch();
   const plan = usePlan();
+  // 일정에서 뺄 때는 되돌릴 수 있게 안내한다(removeWithUndo.js).
+  const { removeAdded, removeCustom } = useRemoveWithUndo(plan);
   const [searchParams, setSearchParams] = useSearchParams();
   // 담은 체험·식당의 실제 이름/주소/좌표는 둘러보기 목록에서 찾아 쓴다.
   // 같은 지역이면 이미 메모리에 캐싱돼 있어 추가 호출이 없다.
@@ -128,12 +131,7 @@ export default function ScheduleTab({ region }) {
     if (item.custom) {
       openCustomForm(item.slot, item.cid);
     } else if (item.mine) {
-      // 담은 곳은 세 종류(체험·식당카페·관광지)라 어느 목록에서 뺄지
-      // timeKey 접두어로 가린다(services/addedItems.js에서 붙인다).
-      const kind = String(item.timeKey || "").split(":")[0];
-      if (kind === "util") plan.toggleUtility(item.id);
-      else if (kind === "spot") plan.toggleSpot(item.id);
-      else plan.removeExperience(item.id);
+      removeAdded(item);
     } else {
       setCuisineMenuOpen(false);
       setRtPicker({ slot: item.slot, dinner: !!item.isDinner });
@@ -202,7 +200,7 @@ export default function ScheduleTab({ region }) {
                 onSelectItem={selectMapItem}
                 onInsertBefore={(slot) => openCustomForm(slot, null)}
                 onSwapItem={handleSwap}
-                onDeleteCustom={(cid) => plan.removeCustomItem(cid)}
+                onDeleteCustom={removeCustom}
                 onEditTime={(item) => setTimeEdit(item)}
                 stayName={stayMarker ? stayMarker.place : null}
                 onSetCuisine={(c) => {

@@ -2,8 +2,8 @@ import { useState } from "react";
 import styles from "./OverviewHeader.module.css";
 
 // design/salliljido.extracted.html 1447-1486줄.
-// 내보내기(인쇄/PDF·엑셀)는 UI만 옮기고 동작은 아직 붙이지 않았다 —
-// 로그인 화면의 구글 버튼과 같은 방식으로 안내만 띄운다(docs/02-todo.md).
+// 내보내기 두 항목은 services/planExport.js가 실제로 처리한다
+// (design은 문구만 있고 동작이 없었다).
 export default function OverviewHeader({
   title,
   subline,
@@ -13,8 +13,8 @@ export default function OverviewHeader({
   onDelete,
   exportOpen,
   onToggleExport,
-  exportNotice,
-  onExportNotice,
+  onPrint,
+  onExportXlsx,
 }) {
   const [renaming, setRenaming] = useState(false);
   const [draft, setDraft] = useState("");
@@ -34,7 +34,7 @@ export default function OverviewHeader({
   }
 
   return (
-    <section className={styles.header}>
+    <section className={styles.header} data-print-dark>
       <div className={styles.row}>
         <div className={styles.left}>
           <button type="button" className={styles.backBtn} onClick={onBackMy} data-print-hide>
@@ -101,7 +101,7 @@ export default function OverviewHeader({
             </button>
             {exportOpen && (
               <div className={styles.exportMenu}>
-                <button type="button" className={styles.exportItem} onClick={onExportNotice}>
+                <button type="button" className={styles.exportItem} onClick={onPrint}>
                   <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
                     <rect x="4" y="1.5" width="8" height="4" stroke="#2F5D50" strokeWidth="1.4" />
                     <rect
@@ -117,7 +117,7 @@ export default function OverviewHeader({
                   </svg>
                   인쇄 / PDF로 저장
                 </button>
-                <button type="button" className={styles.exportItem} onClick={onExportNotice}>
+                <button type="button" className={styles.exportItem} onClick={onExportXlsx}>
                   <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
                     <rect x="2.5" y="2" width="11" height="12" rx="1.4" stroke="#2F5D50" strokeWidth="1.4" />
                     <line x1="2.5" y1="6" x2="13.5" y2="6" stroke="#2F5D50" strokeWidth="1.2" />
@@ -125,9 +125,6 @@ export default function OverviewHeader({
                   </svg>
                   엑셀(.xlsx)로 내보내기
                 </button>
-                {/* TODO(내보내기 구현): 인쇄용 CSS와 xlsx 생성이 붙기 전까지는
-                    안내만 한다. design 2046줄 exportXlsx / 3384줄 ovPrint 참고. */}
-                {exportNotice && <p className={styles.exportNotice}>내보내기는 아직 준비 중이에요.</p>}
               </div>
             )}
           </div>

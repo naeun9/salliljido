@@ -1,5 +1,6 @@
 import { createContext, useMemo, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage.js";
+import { useToast } from "../hooks/useToast.js";
 
 // 로그인 상태. design state의 auth("google"|"demo"|null)/hasLoggedInBefore
 // (2102줄)에 대응한다. 새로고침해도 유지되도록 auth/hasLoggedInBefore만
@@ -10,13 +11,20 @@ export const AuthContext = createContext(null);
 const STORAGE_KEY = "salliljido.auth.v1";
 const initialPersisted = { auth: null, hasLoggedInBefore: false };
 
+// design finishLogin()(3788-3794줄)의 이름 그대로. 이 서비스에는 아직 계정
+// 이름 개념이 없어서 로그인 종류로만 부른다.
+const NAMES = { demo: "데모 이용자", google: "김서연" };
+
 export function AuthProvider({ children }) {
   const [persisted, setPersisted] = useLocalStorage(STORAGE_KEY, initialPersisted);
   const [gate, setGate] = useState(null); // { title, body } | null — design state.gate
+  const { showToast } = useToast();
 
   function login(kind) {
+    const first = !persisted.hasLoggedInBefore;
     setPersisted({ auth: kind, hasLoggedInBefore: true });
     setGate(null);
+    showToast(first ? `환영합니다, ${NAMES[kind] || "이용자"}님` : "다시 오셨네요");
   }
   function logout() {
     setPersisted((prev) => ({ ...prev, auth: null }));

@@ -10,7 +10,7 @@ export default function FullSchedule({ days, view, onSetView, expanded, onToggle
   const showExpand = days.length > EXPAND_LIMIT && !table;
 
   return (
-    <section className={styles.section}>
+    <section className={styles.section} data-print-plain>
       <div className={styles.inner}>
         <div className={styles.head}>
           <h2 className={styles.heading}>전체 일정</h2>

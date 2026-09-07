@@ -5,10 +5,10 @@ import { usePlan } from "../../../hooks/usePlan.js";
 import { useRegionListings } from "../../../hooks/useRegionListings.js";
 import { stayDays } from "../../../utils/date.js";
 import { CATEGORIES, CATEGORY_COLORS, findListingAnywhere } from "../../../services/exploreListings.js";
-import { DEFAULT_STAY_SEGMENT_RATE } from "../../../utils/cost.js";
 import CategoryList from "./ExploreTab/CategoryList.jsx";
 import SubChips from "./ExploreTab/SubChips.jsx";
 import ListStates from "./ExploreTab/ListStates.jsx";
+import { useExploreAdd } from "./ExploreTab/useExploreAdd.js";
 import Pagination from "./ExploreTab/Pagination.jsx";
 import { ADDED_MARKER_COLOR } from "./ExploreTab/ExploreMap.jsx";
 import SidebarMap from "./ExploreTab/SidebarMap.jsx";
@@ -39,19 +39,11 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
     addedExperiences,
     experienceDays,
     experiencePrices,
-    setExperienceDay,
-    removeExperience,
     savedUtilities,
     utilityDays,
-    toggleUtility,
-    setUtilityDay,
     savedSpots,
     spotDays,
-    toggleSpot,
-    setSpotDay,
     staySegs,
-    setStayPick,
-    removeStayPick,
   } = usePlan();
 
   const [category, setCategory] = useState("숙박");
@@ -65,6 +57,12 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
   const [detailItem, setDetailItem] = useState(null);
   const listTopRef = useRef(null);
 
+  // 담기/빼기 동작과 안내 토스트는 한곳에 모아 뒀다(useExploreAdd.js).
+  const { confirmUtility, confirmSpot, confirmExperience, confirmStay, removeStay } = useExploreAdd(
+    setDayPickerId,
+    setStayPickerId
+  );
+
   // 지도 마커를 누르면 그 카드로 목록을 스크롤하고 강조 상태로 둔다.
   function focusListItem(id) {
     setHoverId(id);
@@ -76,7 +74,13 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
   // startLoad("li", 700)), 실제로는 지역 하나를 한 번만 부르고 카테고리는
   // 그 결과를 나눠 쓰는 구조라 로딩은 "지역이 바뀔 때"만 뜬다. 카테고리
   // 전환은 추가 호출 없이 즉시 바뀐다(호출 최소화).
-  const { listings, loading, error: loadError, retry } = useRegionListings(region.short);
+  const {
+    listings,
+    loading,
+    error: loadError,
+    errorCode: loadErrorCode,
+    retry,
+  } = useRegionListings(region.short);
 
   const durDays = stayDays({ dur, customDays });
 
@@ -131,11 +135,6 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
     .map((id) => findListingAnywhere(listings, id))
     .filter((x) => x && !visibleList.some((v) => v.id === x.id));
 
-  function handleStayConfirm(id, from, to) {
-    setStayPick(id, from, to, DEFAULT_STAY_SEGMENT_RATE, staySegs);
-    setStayPickerId(null);
-  }
-
   return (
     <section className={styles.section}>
       <div className={styles.grid}>
@@ -156,7 +155,7 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
           </div>
 
           {loading || loadError ? (
-            <ListStates loading={loading} error={loadError} onRetry={retry} />
+            <ListStates loading={loading} error={loadError} errorCode={loadErrorCode} onRetry={retry} />
           ) : (
             <>
               <CategoryList
@@ -177,31 +176,18 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
                 addedExperiences={addedExperiences}
                 experienceDays={experienceDays}
                 experiencePrices={experiencePrices}
-                setExperienceDay={setExperienceDay}
-                removeExperience={removeExperience}
+                onConfirmExperience={confirmExperience}
                 savedUtilities={savedUtilities}
                 utilityDays={utilityDays}
-                onConfirmUtility={(id, day) => {
-                  // 이미 담겨 있고 같은 일차를 다시 고르면 빼기(체험과 동일).
-                  if (savedUtilities.includes(id) && utilityDays[id] === day) toggleUtility(id);
-                  else setUtilityDay(id, day);
-                  setDayPickerId(null);
-                }}
+                onConfirmUtility={confirmUtility}
                 savedSpots={savedSpots}
                 spotDays={spotDays}
-                onConfirmSpot={(id, day) => {
-                  if (savedSpots.includes(id) && spotDays[id] === day) toggleSpot(id);
-                  else setSpotDay(id, day);
-                  setDayPickerId(null);
-                }}
+                onConfirmSpot={confirmSpot}
                 stayPicks={stayPicks}
                 stayPickerId={stayPickerId}
                 setStayPickerId={setStayPickerId}
-                onStayConfirm={handleStayConfirm}
-                onStayRemove={(id) => {
-                  removeStayPick(id, staySegs);
-                  setStayPickerId(null);
-                }}
+                onStayConfirm={confirmStay}
+                onStayRemove={removeStay}
                 durDays={durDays}
                 dayPickerId={dayPickerId}
                 setDayPickerId={setDayPickerId}

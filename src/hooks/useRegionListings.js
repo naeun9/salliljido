@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { EMPTY_LISTINGS, fetchRegionListings } from "../services/exploreListings.js";
+import { useToast } from "./useToast.js";
 
 // 지역 한 곳의 둘러보기 목록을 가져오는 훅. 둘러보기·체류 계획·예상 비용
 // 세 탭이 같이 쓴다.
@@ -12,14 +13,21 @@ import { EMPTY_LISTINGS, fetchRegionListings } from "../services/exploreListings
 export function useRegionListings(regionShort) {
   const [listings, setListings] = useState(EMPTY_LISTINGS);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // { message, code }. code가 "TIMEOUT"이면 관광공사 서버가 응답하지 않은
+  // 경우라 화면 안내를 다르게 한다(ExploreTab/ListStates.jsx).
+  const [failure, setFailure] = useState(null);
   // "다시 시도"를 누르면 값이 올라가면서 아래 effect가 다시 돈다.
   const [retryCount, setRetryCount] = useState(0);
+  const { showToast } = useToast();
+  // 처음 들어와서 실패한 것은 화면 안내(ListStates)로 충분하다. 사용자가
+  // "다시 시도"를 눌렀는데 또 실패한 경우에만 토스트로 한 번 더 알린다 —
+  // 버튼을 눌렀는데 화면이 그대로면 눌린 건지조차 알 수 없다.
+  const retried = useRef(false);
 
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
-    setError(null);
+    setFailure(null);
 
     fetchRegionListings(regionShort)
       .then((data) => {
@@ -30,8 +38,17 @@ export function useRegionListings(regionShort) {
       .catch((err) => {
         if (cancelled) return;
         setListings(EMPTY_LISTINGS);
-        setError(err.message || "관광 정보를 불러오지 못했습니다.");
+        setFailure({
+          message: err.message || "관광 정보를 불러오지 못했습니다.",
+          code: err.code || null,
+        });
         setLoading(false);
+        if (retried.current) {
+          showToast(
+            err.code === "TIMEOUT" ? "관광공사 서버가 아직 응답하지 않아요" : "다시 불러오지 못했어요",
+            { kind: "fail" }
+          );
+        }
       });
 
     return () => {
@@ -39,5 +56,14 @@ export function useRegionListings(regionShort) {
     };
   }, [regionShort, retryCount]);
 
-  return { listings, loading, error, retry: () => setRetryCount((n) => n + 1) };
+  return {
+    listings,
+    loading,
+    error: failure ? failure.message : null,
+    errorCode: failure ? failure.code : null,
+    retry: () => {
+      retried.current = true;
+      setRetryCount((n) => n + 1);
+    },
+  };
 }

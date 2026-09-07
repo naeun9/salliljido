@@ -45,7 +45,9 @@ export default function SpotCard({
       <CardThumb item={spot} imageClass={styles.image} tagClass={styles.imageTag} />
       <div className={styles.body}>
         <div className={styles.head}>
-          <h3 className={styles.name}>{spot.name}</h3>
+          <h3 className={styles.name} title={spot.name}>
+            {spot.name}
+          </h3>
           <span className={styles.badge}>{spot.type}</span>
         </div>
         <p className={styles.desc}>{spot.desc}</p>

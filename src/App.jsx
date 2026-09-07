@@ -2,7 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./store/AuthContext.jsx";
 import { SearchProvider } from "./store/SearchContext.jsx";
 import { SavedProvider } from "./store/SavedContext.jsx";
+import { ToastProvider } from "./store/ToastContext.jsx";
 import Layout from "./components/common/Layout.jsx";
+import ToastStack from "./components/common/ToastStack.jsx";
 import Home from "./pages/Home.jsx";
 import RegionSearch from "./pages/RegionSearch.jsx";
 import RegionResult from "./pages/RegionResult.jsx";
@@ -22,30 +24,36 @@ import NotFound from "./pages/NotFound.jsx";
 export default function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <SearchProvider>
-          <SavedProvider>
-            <Routes>
-              <Route element={<Layout />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/find" element={<RegionSearch />} />
-                <Route path="/find/result" element={<RegionResult />} />
-                <Route path="/region/:regionId" element={<RegionIntro />} />
-                {/* 계획을 만들지 않고 지역만 둘러보는 화면 */}
-                <Route path="/region/:regionId/explore" element={<RegionExplore />} />
-                <Route path="/plan/:regionId" element={<PlanEditor />} />
-                <Route path="/plan/:regionId/overview" element={<PlanOverview />} />
-                <Route path="/support" element={<SupportPrograms />} />
-                <Route path="/mypage" element={<MyPage />} />
-                <Route path="/login" element={<Login />} />
-                {/* 없는 주소도 헤더가 있는 안내 화면으로 받는다. Layout 안에
+      {/* ToastProvider가 가장 바깥이다 — AuthContext(로그인 완료 안내)처럼
+          다른 store도 토스트를 띄우기 때문이다. */}
+      <ToastProvider>
+        <AuthProvider>
+          <SearchProvider>
+            <SavedProvider>
+              <Routes>
+                <Route element={<Layout />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/find" element={<RegionSearch />} />
+                  <Route path="/find/result" element={<RegionResult />} />
+                  <Route path="/region/:regionId" element={<RegionIntro />} />
+                  {/* 계획을 만들지 않고 지역만 둘러보는 화면 */}
+                  <Route path="/region/:regionId/explore" element={<RegionExplore />} />
+                  <Route path="/plan/:regionId" element={<PlanEditor />} />
+                  <Route path="/plan/:regionId/overview" element={<PlanOverview />} />
+                  <Route path="/support" element={<SupportPrograms />} />
+                  <Route path="/mypage" element={<MyPage />} />
+                  <Route path="/login" element={<Login />} />
+                  {/* 없는 주소도 헤더가 있는 안내 화면으로 받는다. Layout 안에
                     두어야 헤더가 같이 나온다. */}
-                <Route path="*" element={<NotFound />} />
-              </Route>
-            </Routes>
-          </SavedProvider>
-        </SearchProvider>
-      </AuthProvider>
+                  <Route path="*" element={<NotFound />} />
+                </Route>
+              </Routes>
+            </SavedProvider>
+          </SearchProvider>
+        </AuthProvider>
+        {/* design 522줄: 화면 오른쪽 아래 고정. 라우트 밖에 한 번만 둔다. */}
+        <ToastStack />
+      </ToastProvider>
     </BrowserRouter>
   );
 }

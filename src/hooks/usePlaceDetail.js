@@ -7,7 +7,8 @@ export function usePlaceDetail(open, contentId, contentTypeId) {
   const cached = open && contentId ? getCachedDetail(contentId, contentTypeId) : null;
   const [detail, setDetail] = useState(cached);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // { message, code }. code가 "TIMEOUT"이면 관광공사 서버 무응답이다.
+  const [failure, setFailure] = useState(null);
 
   useEffect(() => {
     if (!open || !contentId) return undefined;
@@ -16,14 +17,14 @@ export function usePlaceDetail(open, contentId, contentTypeId) {
     if (hit) {
       setDetail(hit);
       setLoading(false);
-      setError(null);
+      setFailure(null);
       return undefined;
     }
 
     let cancelled = false;
     setDetail(null);
     setLoading(true);
-    setError(null);
+    setFailure(null);
 
     fetchPlaceDetail(contentId, contentTypeId)
       .then((data) => {
@@ -34,7 +35,10 @@ export function usePlaceDetail(open, contentId, contentTypeId) {
       .catch((err) => {
         if (cancelled) return;
         // 조회에 실패해도 모달은 목록에 이미 있는 기본 정보로 그린다.
-        setError(err.message || "상세 정보를 불러오지 못했습니다.");
+        setFailure({
+          message: err.message || "상세 정보를 불러오지 못했습니다.",
+          code: err.code || null,
+        });
         setLoading(false);
       });
 
@@ -43,5 +47,10 @@ export function usePlaceDetail(open, contentId, contentTypeId) {
     };
   }, [open, contentId, contentTypeId]);
 
-  return { detail, loading, error };
+  return {
+    detail,
+    loading,
+    error: failure ? failure.message : null,
+    errorCode: failure ? failure.code : null,
+  };
 }

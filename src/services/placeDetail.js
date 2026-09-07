@@ -30,7 +30,10 @@ export async function fetchPlaceDetail(contentId, contentTypeId) {
     .then(async (res) => {
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        throw new Error(body.error || `상세 정보를 불러오지 못했습니다 (${res.status})`);
+        // 목록과 같은 이유로 errorCode를 들고 올라간다(exploreListings.js 주석).
+        const err = new Error(body.error || `상세 정보를 불러오지 못했습니다 (${res.status})`);
+        err.code = body.errorCode || null;
+        throw err;
       }
       return res.json();
     })

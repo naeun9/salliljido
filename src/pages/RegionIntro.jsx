@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useSearch } from "../hooks/useSearch.js";
-import { useSaved } from "../hooks/useSaved.js";
-import { useAuth } from "../hooks/useAuth.js";
+import { useRegionSave } from "../hooks/useRegionSave.js";
 import { useConfirm } from "../hooks/useConfirm.js";
 import { getRegionByShort, getRegionInsights } from "../services/regionRecommend.js";
 import { resolveStayCondition } from "../utils/date.js";
@@ -40,25 +39,12 @@ export default function RegionIntro() {
   const navigate = useNavigate();
   const search = useSearch();
   const region = getRegionByShort(regionId);
-  const saved = useSaved();
-  const { requireAuth } = useAuth();
   const { confirm, ask, cancel, doConfirm } = useConfirm();
+  // design dtToggleSave(4409322줄): 로그인 필요 + 저장 해제 시에만 확인창.
+  const { isSaved, toggleSave } = useRegionSave(region, ask);
 
   if (!region) {
     return <RegionNotFound />;
-  }
-
-  const isSaved = saved.savedRegions.some((r) => r.short === region.short);
-
-  // design dtToggleSave(4409322줄): 로그인 필요 + 저장 해제 시에만 확인창.
-  function toggleSave() {
-    if (!requireAuth("저장하려면 로그인이 필요해요", "이 지역을 마이페이지에 담아 두려면 로그인해 주세요."))
-      return;
-    if (isSaved) {
-      ask("저장한 지역에서 뺄까요?", region.name, () => saved.toggleRegion(region.short));
-      return;
-    }
-    saved.toggleRegion(region.short);
   }
 
   // 표시와 계산이 같은 조건에서 나오도록 공용 리졸버를 쓴다.
@@ -118,17 +104,13 @@ export default function RegionIntro() {
             >
               이 지역 둘러보기
             </button>
-            <button
-              type="button"
-              className={styles.ctaBtn}
-              onClick={() => navigate(`/plan/${regionId}`)}
-            >
+            <button type="button" className={styles.ctaBtn} onClick={() => navigate(`/plan/${regionId}`)}>
               <span className={styles.ctaArrow}>이 지역에서 지내보기 →</span>
             </button>
           </div>
           <p className={styles.ctaFootnote}>
-            관광 정보·사진 ⓒ한국관광공사 · 인구감소지역 지정 현황 · 행정안전부 · 비용은 공개 자료를 바탕으로 한
-            추정치입니다.
+            관광 정보·사진 ⓒ한국관광공사 · 인구감소지역 지정 현황 · 행정안전부 · 비용은 공개 자료를 바탕으로
+            한 추정치입니다.
           </p>
         </div>
       </section>

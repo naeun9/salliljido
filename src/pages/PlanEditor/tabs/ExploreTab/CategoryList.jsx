@@ -18,8 +18,7 @@ export default function CategoryList({
   addedExperiences,
   experienceDays,
   experiencePrices,
-  setExperienceDay,
-  removeExperience,
+  onConfirmExperience,
   savedUtilities,
   utilityDays,
   onConfirmUtility,
@@ -144,15 +143,7 @@ export default function CategoryList({
                   durDays={durDays}
                   pickerOpen={dayPickerId === x.id}
                   onTogglePicker={() => setDayPickerId(dayPickerId === x.id ? null : x.id)}
-                  onConfirm={(day, price) => {
-                    const isOn = addedExperiences.includes(x.id);
-                    if (isOn && day === experienceDays[x.id] && price === experiencePrices[x.id]) {
-                      removeExperience(x.id);
-                    } else {
-                      setExperienceDay(x.id, day, price);
-                    }
-                    setDayPickerId(null);
-                  }}
+                  onConfirm={(day, price) => onConfirmExperience(x.id, day, price)}
                   readOnly={readOnly}
                   onOpenDetail={() => onOpenDetail(x)}
                 />

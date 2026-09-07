@@ -9,7 +9,7 @@ import styles from "../ExploreTab.module.css";
 // 켜지지 않는 죽은 마크업이었다 — SidebarMap.jsx 주석 참고). 실제 API를
 // 붙이면 실패가 실제로 일어날 수 있어 최소한으로 만들었고, 문구·아이콘·
 // 버튼 스타일은 그 죽어 있던 지도 에러 오버레이의 것을 그대로 맞췄다.
-export default function ListStates({ loading, error, onRetry }) {
+export default function ListStates({ loading, error, errorCode, onRetry }) {
   if (loading) {
     return (
       <div className={styles.loadGrid}>
@@ -29,6 +29,12 @@ export default function ListStates({ loading, error, onRetry }) {
 
   if (!error) return null;
 
+  // 관광공사(공공데이터포털) 서버가 응답하지 않는 경우와 그 밖의 실패를
+  // 나눠 안내한다. 제목에 "관광공사 서버"라고 적어야 우리 서비스가 고장 난
+  // 것으로 읽히지 않는다 — 실제로 2026-09-06에 게이트웨이가 몇 시간 동안
+  // 응답하지 않는 일이 있었다. "다시 시도" 버튼은 두 경우 모두 그대로 쓴다.
+  const timedOut = errorCode === "TIMEOUT";
+
   return (
     <EmptyState
       icon={
@@ -46,7 +52,7 @@ export default function ListStates({ loading, error, onRetry }) {
           />
         </svg>
       }
-      title="정보를 불러오지 못했어요"
+      title={timedOut ? "관광공사 서버가 응답하지 않습니다" : "정보를 불러오지 못했어요"}
       description="잠시 후 다시 시도해 주세요"
       action={
         <button type="button" className={styles.moreBtn} onClick={onRetry}>

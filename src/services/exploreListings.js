@@ -136,7 +136,11 @@ async function requestRegion(regionShort) {
   const res = await fetch(`/api/tour/area-based?${qs.toString()}`);
   const data = await res.json().catch(() => null);
   if (!res.ok) {
-    throw new Error(data?.error || "관광 정보를 불러오지 못했습니다.");
+    // errorCode를 같이 들고 올라간다. "TIMEOUT"(관광공사 서버 무응답)일 때는
+    // 화면에서 다른 안내를 보여 준다 — 우리 서비스 문제로 읽히지 않게.
+    const err = new Error(data?.error || "관광 정보를 불러오지 못했습니다.");
+    err.code = data?.errorCode || null;
+    throw err;
   }
 
   const grouped = { 숙박: [], "식당·카페": [], "체험 프로그램": [], "주변 관광지": [] };

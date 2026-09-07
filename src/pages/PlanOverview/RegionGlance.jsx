@@ -60,7 +60,8 @@ export default function RegionGlance({
             </a>
           </div>
 
-          <div className={styles.right}>
+          {/* 지도는 종이에서 눌러볼 수도 확대할 수도 없어서 인쇄에서 뺀다. */}
+          <div className={styles.right} data-print-hide>
             <RegionGlanceMap region={region} fallback={mockMap} />
             <div className={styles.mapFoot}>
               <span className={styles.rangeNote}>{rangeNote}</span>

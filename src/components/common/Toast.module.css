@@ -1,0 +1,61 @@
+/* design/salliljido.extracted.html 522-531줄. 값은 그대로 옮겼다.
+   (애니메이션 slj-rise .28s는 전역 클래스 .slj-anim-rise-toast로 붙인다 —
+   CSS Modules가 animation 이름을 해시해서 모듈 안에서는 못 쓴다.
+   global.css의 유틸리티 클래스 주석 참고.) */
+.stack {
+  position: fixed;
+  right: clamp(16px, 4vw, 32px);
+  bottom: clamp(16px, 4vw, 32px);
+  z-index: 95;
+  display: flex;
+  /* column-reverse라 먼저 뜬 것이 아래, 새로 뜬 것이 그 위로 쌓인다. */
+  flex-direction: column-reverse;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 13px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--mist);
+  background: var(--white);
+  box-shadow: 0 16px 34px -22px rgba(43, 43, 41, 0.5);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--mist);
+}
+.icon.fail {
+  background: var(--clay-tint);
+}
+
+.text {
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.action {
+  border: none;
+  background: transparent;
+  padding: 0 0 0 4px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--forest);
+  border-bottom: 1px solid var(--mist);
+  cursor: pointer;
+}
+.action:hover {
+  border-color: var(--terracotta);
+}

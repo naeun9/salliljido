@@ -56,7 +56,9 @@ export default function StayCard({
       <CardThumb item={stay} imageClass={styles.image} tagClass={styles.imageTag} />
       <div className={styles.body}>
         <div className={styles.head}>
-          <h3 className={styles.name}>{stay.name}</h3>
+          <h3 className={styles.name} title={stay.name}>
+            {stay.name}
+          </h3>
           <span className={styles.badge}>{stay.type}</span>
         </div>
         <div className={styles.location}>{stay.location}</div>

@@ -111,7 +111,50 @@ function parseOpenApiResponse(text) {
   };
 }
 
-async function callOpenApi(baseUrl, operation, params, { timeoutMs = 8000 } = {}) {
+// 게이트웨이가 응답하지 않을 때(연결은 받아 놓고 답을 주지 않는 상태)
+// 화면에서 다른 실패와 다르게 안내하기 위한 표시. 프론트가 문구를 문자열로
+// 비교하지 않도록 코드로 준다(공공데이터포털 에러코드는 전부 숫자라 겹치지 않는다).
+export const TIMEOUT_ERROR_CODE = "TIMEOUT";
+const TIMEOUT_MESSAGE = "관광공사 서버가 응답하지 않습니다. 잠시 후 다시 시도해 주세요.";
+
+// 시도 1회 제한시간과 시도 횟수.
+//
+// 2026-09-06 apis.data.go.kr 게이트웨이 장애 때 관찰한 것:
+//  - 응답이 오지 않는 연결은 30초를 줘도 끝내 오지 않는다. 같은 소켓을 더
+//    오래 붙들고 있어 봐야 얻는 게 없다(9초 12회 전부 실패).
+//  - 대신 새로 연 연결은 가끔 뚫린다(12번 중 1번, 7.5초).
+// 그래서 "한 번 길게 기다리기"보다 "짧게 두 번"이 낫다고 봤다. 정상일 때
+// 이 호출의 실측 응답은 114~317ms라(docs/03-api-check.md §13, 500건 조회
+// 기준) 4.2초는 13배 넘는 여유다 — 짧게 잡아도 정상 응답을 자르지 않는다.
+//
+// 총예산 4.2 × 2 = 8.4초. Vercel Hobby 함수 실행 한도 10초 안에 파싱·직렬화
+// 여유 1.6초를 남긴다. 이 두 값을 바꿀 때는 곱한 값이 10초를 넘지 않는지
+// 반드시 다시 계산할 것.
+const ATTEMPT_TIMEOUT_MS = 4200;
+const MAX_ATTEMPTS = 2;
+
+// 관광공사에 닿지 못한 실패인지(= 다시 걸어 볼 가치가 있는지) 가른다.
+// 응답을 받아 온 실패(에러코드)는 다시 불러도 같은 답이라 재시도하지 않는다.
+function isUnreachable(err) {
+  if (err.name === "AbortError") return true; // 우리가 건 제한시간
+  const code = err.cause?.code || err.code || "";
+  return /TIMEOUT|ECONN|ENOTFOUND|EAI_AGAIN|SOCKET/i.test(code);
+}
+
+async function fetchOnce(url, timeoutMs) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    return { text: await response.text() };
+  } catch (err) {
+    return { err };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function callOpenApi(baseUrl, operation, params, { timeoutMs = ATTEMPT_TIMEOUT_MS } = {}) {
   const apiKey = process.env.TOUR_API_KEY;
   if (!apiKey) {
     return { ok: false, errorCode: null, message: "TOUR_API_KEY가 서버 환경변수에 설정되어 있지 않습니다." };
@@ -129,23 +172,21 @@ async function callOpenApi(baseUrl, operation, params, { timeoutMs = 8000 } = {}
 
   const url = `${baseUrl}/${operation}?${qs.toString()}`;
 
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-  let text;
-  try {
-    const response = await fetch(url, { signal: controller.signal });
-    text = await response.text();
-  } catch (err) {
-    return {
-      ok: false,
-      errorCode: null,
-      message: err.name === "AbortError" ? "요청 시간이 초과됐습니다." : `요청 실패: ${err.message}`,
-    };
-  } finally {
-    clearTimeout(timer);
+  // 백오프 없이 곧바로 다시 건다. 기다렸다 거는 게 의미가 있으려면 상대가
+  // 회복 중이어야 하는데, 여기서 노리는 건 "이 연결만 죽은 경우"라 새 연결을
+  // 바로 여는 편이 낫고 예산도 아낀다.
+  let failure = null;
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    const result = await fetchOnce(url, timeoutMs);
+    if (!result.err) return parseOpenApiResponse(result.text);
+    failure = result.err;
+    if (!isUnreachable(failure)) break;
   }
 
-  return parseOpenApiResponse(text);
+  if (isUnreachable(failure)) {
+    return { ok: false, errorCode: TIMEOUT_ERROR_CODE, message: TIMEOUT_MESSAGE };
+  }
+  return { ok: false, errorCode: null, message: `요청 실패: ${failure.message}` };
 }
 
 // operation 예: "areaBasedList2", "ldongCode2". params는 serviceKey/MobileOS/
