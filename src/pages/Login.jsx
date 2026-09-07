@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth.js";
 import styles from "./Login.module.css";
 
@@ -69,8 +69,8 @@ export default function Login() {
           </p>
 
           <p className={styles.terms}>
-            로그인하면 <a href="#login">서비스 이용약관</a>과 <a href="#login">개인정보 처리방침</a>에
-            동의하는 것으로 간주됩니다.
+            로그인하면 <Link to="/terms">서비스 이용약관</Link>과 <Link to="/privacy">개인정보처리방침</Link>
+            에 동의하는 것으로 간주됩니다.
           </p>
         </div>
       </div>

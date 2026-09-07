@@ -80,6 +80,14 @@
   gap: 12px;
   justify-content: space-between;
 }
+/* 약관·처리방침·문의를 한 덩어리로 오른쪽에 둔다. 좁은 화면에서는
+   줄바꿈되도록 flex-wrap. */
+.policyLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
 .bottom span,
 .bottom a {
   font-size: 14px;
