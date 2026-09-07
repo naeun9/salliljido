@@ -1,4 +1,4 @@
-import { won } from "../../../../utils/cost.js";
+import { UNCOVERED_NIGHT_RATE, won } from "../../../../utils/cost.js";
 import styles from "../CostTab.module.css";
 import segStyles from "./StaySection.module.css";
 import ToggleSwitch from "./ToggleSwitch.jsx";
@@ -10,7 +10,7 @@ export default function StaySection({
   stayTotal,
   split,
   segs,
-  segNights,
+  coverage,
   onSetNightly,
   onToggleSplit,
   onUpdateSeg,
@@ -18,13 +18,15 @@ export default function StaySection({
   onAddSeg,
   stayNameOf,
 }) {
-  const segWarn =
-    segNights === nights
-      ? `총 ${nights}박이 모두 채워졌습니다`
-      : segNights < nights
-        ? `${nights - segNights}일이 비어 있습니다`
-        : `${segNights - nights}일이 초과되었습니다`;
-  const segWarnColor = segNights === nights ? "var(--gray)" : "var(--rust)";
+  // 구간이 겹치거나 체류 기간을 벗어날 수 있어서 길이 합이 아니라 실제로
+  // 덮인 박(coverage)을 기준으로 안내한다(utils/cost.js stayCoverage).
+  const { uncovered, overflow } = coverage;
+  const segWarn = uncovered
+    ? `${uncovered}일이 비어 있습니다`
+    : overflow
+      ? `${overflow}일이 초과되었습니다`
+      : `총 ${nights}박이 모두 채워졌습니다`;
+  const segWarnColor = uncovered || overflow ? "var(--rust)" : "var(--gray)";
 
   return (
     <>
@@ -137,6 +139,16 @@ export default function StaySection({
             <span className={segStyles.segWarn} style={{ color: segWarnColor }}>
               {segWarn}
             </span>
+          </div>
+          {/* 비어 있는 박도 어딘가에서 자야 하므로 총액에는 기본 단가로
+              채워 넣는다(utils/cost.js calcStayTotal). 안내만 하고 금액을
+              0원으로 두면 총 예상 비용이 실제보다 적게 나온다. */}
+          <div className={segStyles.segFooter}>
+            {!!uncovered && (
+              <span className={segStyles.fillNote}>
+                비어 있는 {uncovered}박은 1박 {won(UNCOVERED_NIGHT_RATE)}으로 채워 계산했습니다
+              </span>
+            )}
           </div>
         </div>
       </div>
