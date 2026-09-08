@@ -9,25 +9,34 @@ import { useToast } from "../hooks/useToast.js";
 export const AuthContext = createContext(null);
 
 const STORAGE_KEY = "salliljido.auth.v1";
-const initialPersisted = { auth: null, hasLoggedInBefore: false };
+// profile: 구글 로그인일 때만 채워진다 — { name, email, picture }.
+// 토큰(액세스·ID)은 여기에도, localStorage에도 넣지 않는다. 프로필을 한 번
+// 읽는 데만 쓰고 버린다(services/googleAuth.js, 개인정보처리방침 §1·§3).
+const initialPersisted = { auth: null, hasLoggedInBefore: false, profile: null };
 
-// design finishLogin()(3788-3794줄)의 이름 그대로. 이 서비스에는 아직 계정
-// 이름 개념이 없어서 로그인 종류로만 부른다.
-const NAMES = { demo: "데모 이용자", google: "김서연" };
+// 데모 계정의 표시 이름. design finishLogin()(3788-3794줄)의 값 그대로다.
+// 구글 로그인은 실제 계정 이름을 쓴다.
+const DEMO_NAME = "데모 이용자";
 
 export function AuthProvider({ children }) {
   const [persisted, setPersisted] = useLocalStorage(STORAGE_KEY, initialPersisted);
   const [gate, setGate] = useState(null); // { title, body } | null — design state.gate
   const { showToast } = useToast();
 
-  function login(kind) {
+  // profile은 구글 로그인일 때만 넘어온다(데모는 없음).
+  function login(kind, profile = null) {
     const first = !persisted.hasLoggedInBefore;
-    setPersisted({ auth: kind, hasLoggedInBefore: true });
+    const safe = profile
+      ? { name: profile.name || "", email: profile.email || "", picture: profile.picture || "" }
+      : null;
+    setPersisted({ auth: kind, hasLoggedInBefore: true, profile: safe });
     setGate(null);
-    showToast(first ? `환영합니다, ${NAMES[kind] || "이용자"}님` : "다시 오셨네요");
+    const name = safe?.name || DEMO_NAME;
+    showToast(first ? `환영합니다, ${name}님` : "다시 오셨네요");
   }
   function logout() {
-    setPersisted((prev) => ({ ...prev, auth: null }));
+    // 계정 정보도 같이 지운다 — 로그아웃했는데 이름·사진이 남아 있으면 안 된다.
+    setPersisted((prev) => ({ ...prev, auth: null, profile: null }));
   }
   function openGate(title, body) {
     setGate({ title, body });
@@ -50,6 +59,7 @@ export function AuthProvider({ children }) {
     () => ({
       auth: persisted.auth,
       hasLoggedInBefore: persisted.hasLoggedInBefore,
+      profile: persisted.profile || null,
       gate,
       login,
       logout,
