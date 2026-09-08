@@ -68,4 +68,9 @@ function devApiPlugin() {
 
 export default defineConfig({
   plugins: [react(), devApiPlugin()],
+  // 포트를 고정한다. 구글 OAuth는 "승인된 자바스크립트 원본"에 적힌 주소에서만
+  // 동작하는데, 기본값(포트가 비어 있으면 다음 번호로 넘어감)이면 5173·5174·
+  // 5175로 옮겨 다녀 그때마다 등록된 주소와 어긋난다. 포트가 이미 쓰이는
+  // 중이면 조용히 옮기지 말고 실패하게 둔다(strictPort).
+  server: { port: 5173, strictPort: true },
 });

@@ -29,7 +29,7 @@ const MYPAGE_GATE = [
 export default function Header() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { auth, requireAuth, logout } = useAuth();
+  const { auth, profile, requireAuth, logout } = useAuth();
   const [rawScrolled, setRawScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
@@ -130,10 +130,27 @@ export default function Header() {
                   className={styles.avatarBtn}
                   onClick={() => setAccountMenuOpen((v) => !v)}
                 >
-                  {auth === "demo" ? "데" : "나"}
+                  {/* 구글 계정이면 프로필 사진, 없으면 design 원본대로 글자 한 자.
+                      사진 주소가 죽어도 아래 글자가 그대로 보인다. */}
+                  {profile?.picture && (
+                    <img
+                      className={styles.avatarImage}
+                      src={profile.picture}
+                      alt=""
+                      referrerPolicy="no-referrer"
+                    />
+                  )}
+                  {auth === "demo" ? "데" : profile?.name?.trim()?.[0] || "나"}
                 </button>
                 {accountMenuOpen && (
                   <div className={styles.accountMenu}>
+                    {/* 어느 계정으로 들어와 있는지 한눈에. 데모에는 계정 정보가 없다. */}
+                    {profile && (
+                      <div className={styles.accountInfo}>
+                        <span className={styles.accountName}>{profile.name}</span>
+                        {profile.email && <span className={styles.accountEmail}>{profile.email}</span>}
+                      </div>
+                    )}
                     <Link
                       to="/mypage"
                       className={styles.accountMenuItem}
