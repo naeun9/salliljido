@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth.js";
+import { useGoogleLogin } from "../../hooks/useGoogleLogin.js";
 import styles from "./AuthGate.module.css";
 
 // 로그인 게이트 팝업. design/salliljido.extracted.html 663-676줄.
@@ -8,11 +8,11 @@ import styles from "./AuthGate.module.css";
 // 공유된다.
 export default function AuthGate() {
   const { gate, closeGate, login } = useAuth();
-  const [googleNotice, setGoogleNotice] = useState(false);
-
-  function handleGoogleClick() {
-    setGoogleNotice(true);
-  }
+  // /login 화면과 같은 흐름을 쓴다(hooks/useGoogleLogin.js). 성공하면
+  // login()이 게이트를 닫으므로 여기서 따로 할 일은 없다 — 사용자가 하려던
+  // 동작(저장 등)을 자동으로 재시도하지 않는 것은 원본과 같다
+  // (store/AuthContext.jsx requireAuth 주석).
+  const { notice: googleNotice, busy: googleBusy, start: handleGoogleClick } = useGoogleLogin();
 
   return (
     <div className={`${styles.gate} ${gate ? `${styles.open} slj-anim-fade` : ""}`}>
@@ -26,14 +26,17 @@ export default function AuthGate() {
           </div>
           <p className={styles.body}>{gate.body}</p>
           <div className={styles.actions}>
-            {/* design loginGoogle(4463080줄)은 실제로도 목업이라 클릭하면
-                바로 로그인 처리됐지만, 우리는 VITE_GOOGLE_CLIENT_ID가
-                비어 있는 동안은 실제 OAuth를 흉내내지 않고 안내만 한다.
-                TODO(구글 OAuth 연동): VITE_GOOGLE_CLIENT_ID가 채워지면
-                이 버튼을 실제 구글 로그인 흐름(authorization code 교환 등)
-                으로 교체할 것 — 자리는 이 onClick 하나뿐이라 여기만
-                손대면 된다. */}
-            <button type="button" className={styles.googleBtn} onClick={handleGoogleClick}>
+            {/* design loginGoogle(4463080줄)은 목업이라 클릭하면 바로
+                로그인 처리됐다. design 버튼을 그대로 두고 클릭에서 구글
+                팝업을 띄운다 — 구글이 주는 기본 버튼을 쓰면 이 자리가
+                구글 버튼으로 바뀌어 화면이 달라진다(/login과 같은 이유).
+                VITE_GOOGLE_CLIENT_ID가 비어 있으면 예전처럼 안내만 한다. */}
+            <button
+              type="button"
+              className={styles.googleBtn}
+              onClick={handleGoogleClick}
+              disabled={googleBusy}
+            >
               <svg width="16" height="16" viewBox="0 0 18 18">
                 <path
                   fill="#4285F4"
@@ -52,11 +55,9 @@ export default function AuthGate() {
                   d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A8.997 8.997 0 0 0 .96 4.94l3.01 2.34C4.68 5.16 6.66 3.58 9 3.58z"
                 />
               </svg>
-              구글 로그인
+              {googleBusy ? "구글 계정 확인 중…" : "구글 로그인"}
             </button>
-            {googleNotice && (
-              <p className={styles.googleNotice}>구글 로그인은 아직 준비 중이에요. 데모로 먼저 둘러보세요.</p>
-            )}
+            {googleNotice && <p className={styles.googleNotice}>{googleNotice}</p>}
             <button type="button" className={styles.demoBtn} onClick={() => login("demo")}>
               데모로 계속하기
             </button>

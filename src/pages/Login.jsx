@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth.js";
-import { isGoogleLoginEnabled, signInWithGoogle } from "../services/googleAuth.js";
+import { useGoogleLogin } from "../hooks/useGoogleLogin.js";
 import styles from "./Login.module.css";
 
 // design/salliljido.extracted.html 496-521줄(#login).
@@ -9,38 +8,21 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  // 실패·안내 문구 한 줄. 클라이언트 ID가 없으면 예전처럼 "준비 중" 안내다.
-  const [googleNotice, setGoogleNotice] = useState("");
-  const [googleBusy, setGoogleBusy] = useState(false);
 
   // design finishLogin()(4447998줄): 로그인 성공 후 원래 있던 화면으로
   // 돌려보낸다(없으면 홈). Header의 goLogin이 navigate state로 넘긴다.
   const from = location.state?.from || "/";
 
+  // 실패·안내 문구 한 줄. 클라이언트 ID가 없으면 예전처럼 "준비 중" 안내다.
+  const {
+    notice: googleNotice,
+    busy: googleBusy,
+    start: handleGoogleLogin,
+  } = useGoogleLogin(() => navigate(from, { replace: true }));
+
   function handleDemoLogin() {
     login("demo");
     navigate(from, { replace: true });
-  }
-
-  // 구글 로그인. 실패해도 화면은 그대로 두고 문구만 바꾼다 — 데모 로그인은
-  // 계속 쓸 수 있어야 한다(services/googleAuth.js가 사유별 문구를 준다).
-  async function handleGoogleLogin() {
-    if (googleBusy) return;
-    if (!isGoogleLoginEnabled()) {
-      setGoogleNotice("구글 로그인은 아직 준비 중이에요. 데모로 먼저 둘러보세요.");
-      return;
-    }
-    setGoogleNotice("");
-    setGoogleBusy(true);
-    try {
-      const profile = await signInWithGoogle();
-      login("google", profile);
-      navigate(from, { replace: true });
-    } catch (err) {
-      setGoogleNotice(err.message);
-    } finally {
-      setGoogleBusy(false);
-    }
   }
 
   return (
