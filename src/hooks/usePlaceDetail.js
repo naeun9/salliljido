@@ -1,9 +1,19 @@
 import { useEffect, useState } from "react";
 import { fetchPlaceDetail, getCachedDetail } from "../services/placeDetail.js";
 
+// 관광공사 contentId는 항상 숫자다. 두루누비 걷기 코스는 crsIdx
+// ("T_CRS_MNG0000005655")를 id로 쓰는데, 그대로 상세를 부르면 있지도 않은
+// 콘텐츠를 조회하느라 일 1,000건 한도만 축낸다(실측: 코스 카드를 누를
+// 때마다 1건). 숫자가 아니면 아예 부르지 않고 목록에 있는 정보로만 그린다.
+function isTourContentId(id) {
+  return /^\d+$/.test(String(id || ""));
+}
+
 // 상세 모달이 열릴 때만 관광공사 상세를 부른다(services/placeDetail.js 주석).
 // 닫혀 있으면 아무것도 하지 않고, 이미 부른 장소는 캐시에서 바로 나온다.
-export function usePlaceDetail(open, contentId, contentTypeId) {
+export function usePlaceDetail(open, rawContentId, contentTypeId) {
+  // 관광공사 콘텐츠가 아니면 조회 대상이 아니다.
+  const contentId = isTourContentId(rawContentId) ? rawContentId : null;
   const cached = open && contentId ? getCachedDetail(contentId, contentTypeId) : null;
   const [detail, setDetail] = useState(cached);
   const [loading, setLoading] = useState(false);

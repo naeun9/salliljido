@@ -1,0 +1,112 @@
+/* 최종 계획 "지도 보기". 원본 디자인에 없는 뷰라 값은 전부 이 페이지의
+   기존 것에서 가져왔다 — 카드·태그·빈 상태는 FullSchedule.module.css의
+   .itemBtn/.itemTag/.empty와 같은 값이고, 색은 토큰 그대로다. */
+.wrap {
+  margin-top: 18px;
+}
+
+/* 지도와 목록. 체류 계획 탭(ScheduleTab)의 좌우 배치와 같은 비율이다. */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 20px;
+  margin-top: 16px;
+  align-items: start;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--hairline);
+  background: var(--paper);
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.row:hover,
+.row.rowOn {
+  border-color: var(--sage);
+}
+
+/* 지도 번호 핀과 같은 순서·같은 초록. */
+.num {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--forest);
+  color: var(--cream);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.slot {
+  font-size: 12.5px;
+  color: var(--gray);
+}
+.place {
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  word-break: keep-all;
+}
+.addr {
+  font-size: 12.5px;
+  color: var(--gray);
+  word-break: keep-all;
+}
+
+.tag {
+  flex: 0 0 auto;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--mist);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--forest);
+}
+.tag.mine {
+  background: var(--clay-tint);
+  color: var(--rust);
+}
+
+.empty {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px dashed var(--border);
+  font-size: 13.5px;
+  color: var(--gray);
+}
+
+/* 좁은 화면에서는 지도가 위, 목록이 아래. 일차 선택은 DayNav가 이미
+   가로 스크롤로 처리한다. */
+@media (max-width: 959px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

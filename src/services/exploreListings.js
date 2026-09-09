@@ -12,9 +12,11 @@ export const CATEGORY_COLORS = {
   "체험 프로그램": "#D9784E",
   "주변 관광지": "#4A7C6F",
   "식당·카페": "#8C6A4F",
+  // 걷기 코스는 관광지(초록)·체험(주황)과 구분되는 청록으로 둔다.
+  "걷기 코스": "#3F7D8C",
 };
 
-export const CATEGORIES = ["숙박", "식당·카페", "체험 프로그램", "주변 관광지"];
+export const CATEGORIES = ["숙박", "식당·카페", "체험 프로그램", "주변 관광지", "걷기 코스"];
 
 // design의 하위 필터 목록 그대로 + 숙박에 "캠핑·야영장"만 추가했다.
 // 추가 근거: 일반 숙박만으로는 소도시 숙박 데이터가 너무 얇은데
@@ -25,6 +27,15 @@ export const SUB_FILTERS = {
   "식당·카페": ["한식", "외국식", "간이음식", "카페", "주점"],
   "체험 프로그램": ["전통체험", "공예체험", "농촌·어촌체험", "템플스테이", "웰니스", "산업관광"],
   "주변 관광지": ["자연", "역사", "문화", "레저스포츠"],
+  // 두루누비에는 걷기(brdDiv=DNWW)만 있고 자전거 코스가 없어(142건 전수
+  // 확인) 걷기/자전거로 나눌 수가 없다.
+  //
+  // 처음에는 난이도(crsLevel)로 칩을 만들었는데 실측해 보니 쓸모가 없었다 —
+  // 파일럿 지역 30개 코스의 난이도별 소요시간 중앙값이 쉬움·보통·어려움
+  // 모두 270분으로 같다. 난이도로 걸러도 하루가 얼마나 들어가는지는 전혀
+  // 달라지지 않는다. 며칠~한 달 머무는 서비스에서 실제로 알아야 하는 건
+  // "이 코스가 내 반나절을 가져가는가"라 소요시간으로 바꿨다.
+  "걷기 코스": ["3시간 이내", "반나절", "하루"],
 };
 
 // 아직 목록을 못 받았을 때 쓰는 빈 값. 매번 새 객체를 만들면 useEffect
@@ -34,6 +45,7 @@ export const EMPTY_LISTINGS = Object.freeze({
   "식당·카페": [],
   "체험 프로그램": [],
   "주변 관광지": [],
+  "걷기 코스": [],
 });
 
 const SWATCHES = [
@@ -119,6 +131,98 @@ function normalize(raw, index) {
   return { category, item: shapeForCategory(category, base) };
 }
 
+// 소요시간 구간. 파일럿 지역 코스는 150~420분에 몰려 있어(2시간 이하는
+// 0건) 이 세 칸이면 실제 분포가 갈린다.
+const COURSE_HALF_DAY_MIN = 180; // 이 이상이면 반나절
+const COURSE_FULL_DAY_MIN = 300; // 이 이상이면 하루
+
+export function courseLoadLabel(minutes) {
+  const m = Number(minutes) || 0;
+  if (!m) return "";
+  if (m > COURSE_FULL_DAY_MIN) return "하루";
+  if (m > COURSE_HALF_DAY_MIN) return "반나절";
+  return "3시간 이내";
+}
+
+// 분 단위를 "3시간 30분"처럼 읽는 말로 바꾼다.
+function durationText(minutes) {
+  const m = Number(minutes) || 0;
+  if (!m) return "";
+  const h = Math.floor(m / 60);
+  const rest = m % 60;
+  if (!h) return `${rest}분`;
+  return rest ? `${h}시간 ${rest}분` : `${h}시간`;
+}
+
+// 두루누비 코스를 체험 프로그램 카드와 같은 모양으로 맞춘다.
+// 카드를 새로 만들지 않고 ExperienceCard를 그대로 쓰기 위해서다 — 담기·
+// 일차 선택·비용·일정 배치가 전부 체험과 같은 경로를 타게 된다.
+// duration/cost 두 칸은 실데이터에서 늘 비어 있던 자리인데(관광공사 지역기반
+// API에 없는 값), 코스에는 소요시간과 거리가 있어 그 자리를 채운다.
+function shapeCourse(course, index) {
+  return {
+    id: String(course.id),
+    name: course.name,
+    // 배지는 난이도를 그대로 둔다(참고 정보로는 쓸모가 있다). 거르는 기준만
+    // 소요시간으로 옮겼다.
+    type: course.levelName || "걷기",
+    sub: courseLoadLabel(course.minutes),
+    image: "",
+    swatch: swatchFor(index),
+    addr: course.sigun || "",
+    // 시작점 좌표. GPX에서 뽑아 온 값이라 없을 수도 있다(지도에만 영향).
+    mapX: course.start ? course.start.lng : null,
+    mapY: course.start ? course.start.lat : null,
+    contentTypeId: null,
+    // 카드 본문
+    desc: course.summary ? course.summary.split("\n")[0].replace(/^-\s*/, "") : course.sigun,
+    duration: durationText(course.minutes),
+    cost: course.distanceKm ? `${course.distanceKm}km` : "",
+    price: 0,
+    // 일정 배치에서 쓰는 값(services/dayTimeline.js).
+    courseMinutes: course.minutes,
+    courseKm: course.distanceKm,
+    // 카드에서 소요시간을 강조할 때 쓴다("반나절"·"하루").
+    courseLoad: courseLoadLabel(course.minutes),
+    // 지도에 그릴 경로. 서버가 GPX를 솎아 100점 안팎으로 내려 준다
+    // (api/tour/duru.js). 못 받았으면 빈 배열이라 선만 안 그려진다.
+    path: course.path || [],
+  };
+}
+
+async function requestCourses(regionShort) {
+  const region = REGION_BY_SHORT[regionShort];
+  if (!region) return [];
+  // 두루누비 sigun은 "강원 고성군"처럼 시도+시군 한 문자열이다.
+  const sigun = `${region.region} ${region.name.split(" ").pop()}`;
+  try {
+    const res = await fetch(`/api/tour/duru?sigun=${encodeURIComponent(sigun)}`);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return (data.items || []).map(shapeCourse);
+  } catch {
+    // 코스는 부가 정보다 — 못 받아도 나머지 네 카테고리는 그대로 보여 준다.
+    return [];
+  }
+}
+
+// 코스는 지역 소개 화면에서도 쓰기 때문에 둘러보기와 따로 캐시한다.
+// 둘 다 이 함수를 거치므로 한 지역을 두 화면에서 봐도 요청은 1번이다.
+const courseCache = new Map();
+
+export function fetchRegionCourses(regionShort) {
+  if (!courseCache.has(regionShort)) {
+    courseCache.set(
+      regionShort,
+      requestCourses(regionShort).catch(() => {
+        courseCache.delete(regionShort);
+        return [];
+      })
+    );
+  }
+  return courseCache.get(regionShort);
+}
+
 async function requestRegion(regionShort) {
   const codes = REGION_BY_SHORT[regionShort];
   if (!codes) {
@@ -133,7 +237,12 @@ async function requestRegion(regionShort) {
     arrange: "A",
   });
 
-  const res = await fetch(`/api/tour/area-based?${qs.toString()}`);
+  // 관광 목록과 걷기 코스는 서로 독립이라 같이 보낸다. 코스 쪽이 실패해도
+  // 관광 목록은 그대로 쓴다.
+  const [res, courses] = await Promise.all([
+    fetch(`/api/tour/area-based?${qs.toString()}`),
+    fetchRegionCourses(regionShort),
+  ]);
   const data = await res.json().catch(() => null);
   if (!res.ok) {
     // errorCode를 같이 들고 올라간다. "TIMEOUT"(관광공사 서버 무응답)일 때는
@@ -143,7 +252,7 @@ async function requestRegion(regionShort) {
     throw err;
   }
 
-  const grouped = { 숙박: [], "식당·카페": [], "체험 프로그램": [], "주변 관광지": [] };
+  const grouped = { 숙박: [], "식당·카페": [], "체험 프로그램": [], "주변 관광지": [], "걷기 코스": courses };
   (data.items || []).forEach((raw, i) => {
     const normalized = normalize(raw, i);
     if (normalized) grouped[normalized.category].push(normalized.item);

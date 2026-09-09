@@ -1,6 +1,11 @@
 /* design/salliljido.extracted.html 1895-1934줄 */
+/* 이 섹션만 배경 띠(--sand)가 화면 폭을 가득 채워야 해서 .section에
+   max-width를 걸 수 없다. 그래서 가로 여백을 .inner로 내려 위아래 섹션
+   (RegionsSection·ProgramsSection)과 글 시작 위치를 맞춘다 — 그쪽은
+   max-width 1180px 안쪽에 같은 여백을 두고 있어서, 여백을 .section에
+   두면 이 섹션만 64px 왼쪽으로 밀렸다. 값은 두 섹션과 같은 clamp()다. */
 .section {
-  padding: clamp(48px, 6vh, 72px) clamp(20px, 5vw, 64px);
+  padding: clamp(48px, 6vh, 72px) 0;
   background: var(--sand);
   border-top: 1px solid var(--sand-strong);
   border-bottom: 1px solid var(--sand-strong);
@@ -8,6 +13,7 @@
 .inner {
   max-width: 1180px;
   margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 64px);
 }
 .title {
   margin: 0 0 18px;

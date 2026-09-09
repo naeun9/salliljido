@@ -15,6 +15,9 @@ export function buildRoutePins(items) {
     desc: s.desc,
     addr: s.addr,
     mine: s.mine,
+    // 걷기 코스만 값이 있다. 고른 코스의 실제 경로를 지도에 그리는 데 쓴다
+    // (ScheduleTab/RouteMap.jsx).
+    path: s.path || [],
   }));
 }
 

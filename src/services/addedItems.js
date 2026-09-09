@@ -2,6 +2,7 @@
 // dayTimeline.js가 300줄을 넘어(CLAUDE.md 코드 원칙) 떼어냈다.
 import { EXPERIENCE_SLOT_DEFAULT, EXPERIENCE_TIME_DEFAULT, SLOT_SWATCHES } from "./routineGenerator.js";
 import { findListing } from "./exploreListings.js";
+import { toLatLng } from "../utils/geo.js";
 import { SLOT_TIME } from "./slots.js";
 
 // 둘러보기에서 담은 곳 중 오늘 일차인 것.
@@ -14,7 +15,15 @@ import { SLOT_TIME } from "./slots.js";
 //   식당  → 저녁
 //   관광지 → 오후
 // 배정된 시간이 마음에 안 들면 타임라인에서 "시간"으로 고칠 수 있다.
+// 걷기 코스는 소요시간으로 시간대를 정한다. 3시간 이하면 오전에 걷고 남은
+// 하루를 쓸 수 있지만, 그보다 길면 오후를 통째로 쓰는 편이 현실적이다 —
+// 한 슬롯에는 한 곳만 들어가므로 오후에 넣으면 그 시간대를 다 차지한다.
+const COURSE_LONG_MINUTES = 180;
+
 function slotOfAdded(category, item) {
+  if (category === "걷기 코스") {
+    return (item.courseMinutes || 0) > COURSE_LONG_MINUTES ? "오후" : "오전";
+  }
   if (category === "주변 관광지") return "오후";
   if (category === "식당·카페") return item.sub === "카페" ? "오전" : "저녁";
   return EXPERIENCE_SLOT_DEFAULT;
@@ -41,6 +50,9 @@ function addedOfCategory({ day, category, ids, days, listings, keyPrefix, offset
         addr: x.addr,
         mapX: x.mapX,
         mapY: x.mapY,
+        // 걷기 코스만 값이 있다. 체류 계획 지도에서 고른 코스의 경로를
+        // 그리는 데 쓴다(없으면 빈 배열이라 선이 안 생긴다).
+        path: x.path || [],
         swatch: SLOT_SWATCHES[(offset + i) % 3],
         mine: true,
         isDinner: slot === "저녁",
@@ -87,7 +99,19 @@ export function buildAddedItems({
     keyPrefix: "spot",
     offset: exp.length + util.length,
   });
-  return exp.concat(util, spot);
+  // 걷기 코스는 둘러보기에서 체험과 같은 목록(addedExperiences)에 담긴다.
+  // id가 관광공사 contentId와 두루누비 crsIdx로 서로 달라서 같은 id 배열을
+  // 두 카테고리에서 찾아도 겹치지 않는다.
+  const course = addedOfCategory({
+    day,
+    category: "걷기 코스",
+    ids: addedExperiences,
+    days: experienceDays || {},
+    listings,
+    keyPrefix: "course",
+    offset: exp.length + util.length + spot.length,
+  });
+  return exp.concat(util, spot, course);
 }
 
 // 담은 곳(체험·식당카페·관광지)을 한 덩어리로 다룬다. 두 화면(체류 계획
@@ -106,4 +130,12 @@ export function resolveAdded(input) {
 // 자동 생성에서 빼야 할 id 전부(담은 곳은 아래에서 따로 넣으므로 겹치면 안 된다).
 export function allAddedIds(added) {
   return added.addedExperiences.concat(added.savedUtilities, added.savedSpots);
+}
+
+// 그날 묵는 숙소 마커. 구간(staySegs)에서 오늘이 포함된 것을 찾아 목록에서
+// 좌표를 얻는다. 체류 계획 탭과 최종 계획의 지도 보기가 같이 쓴다.
+export function findStayMarker(staySegs, day, listings) {
+  const seg = (staySegs || []).find((g) => g.stayId && g.from <= day && day <= g.to);
+  const listing = seg ? findListing(listings, "숙박", seg.stayId) : null;
+  return listing ? { place: listing.name, at: toLatLng(listing) } : null;
 }

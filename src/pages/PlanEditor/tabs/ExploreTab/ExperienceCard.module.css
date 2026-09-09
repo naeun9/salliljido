@@ -83,6 +83,27 @@
   color: var(--ink);
 }
 
+/* 걷기 코스용. 소요시간을 앞세우고(진하게) 거리는 뒤로 물린다 —
+   체험 프로그램의 .duration/.cost 값은 그대로 두고 클래스만 갈라 쓴다. */
+.durationStrong {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.distance {
+  font-size: 14px;
+  color: var(--gray);
+}
+/* 반나절·하루처럼 오후를 통째로 쓰는 코스에만 붙는 표시. */
+.loadTag {
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--clay-tint);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rust);
+}
+
 .toggleBtn {
   display: inline-flex;
   align-items: center;

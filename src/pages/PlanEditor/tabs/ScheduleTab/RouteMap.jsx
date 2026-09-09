@@ -11,7 +11,16 @@ import styles from "./ScheduleMap.module.css";
 // 번호 핀·정보 카드 모양은 RouteMarker가 그대로 들고 있고, 여기서는 위치와
 // 경로선만 실제 좌표로 준다. 목업의 SVG 점선 polyline은
 // kakao.maps.Polyline으로 바뀌었다(색·굵기·투명도는 그대로).
+// 걷기 코스 경로선. 둘러보기 지도와 같은 청록·실선이라 두 화면에서 같은
+// 것으로 읽힌다. 하루 동선(MapPolyline 기본값)은 점선이라 서로 구분된다.
+const COURSE_LINE = { color: "#3F7D8C", weight: 3, opacity: 0.7 };
+
 export default function RouteMap({ items, stay, center, selectedIndex, onSelect, onHover, fallback }) {
+  // 그날 일정에 든 걷기 코스의 경로. "고를 때만 보이게" 하는 것도 생각했지만
+  // 하루에 코스는 많아야 하나고 번호 핀도 2~3개뿐이라 지도가 복잡해지지
+  // 않는다. 늘 보이는 편이 그날 오후가 어디로 이어지는지 바로 읽힌다.
+  // 고르거나 마우스를 올린 코스는 진하게, 나머지는 옅게 둔다.
+  const courseItems = items.filter((x) => (x.path || []).length > 1);
   const points = useMemo(() => items.map((x) => x.at).filter(Boolean), [items]);
   // 숙소는 경로선·이동거리에서 빼고 지도 범위에만 포함한다. 매일 오가는
   // 곳이라 동선에 끼우면 하루 이동 거리가 왜곡된다.
@@ -25,6 +34,21 @@ export default function RouteMap({ items, stay, center, selectedIndex, onSelect,
     <KakaoMap className={styles.kakaoMap} center={center} bounds={bounds} fallback={fallback}>
       <MapZoomControl className={styles.zoomCluster} buttonClassName={styles.zoomBtn} />
       <MapPolyline points={points} />
+
+      {/* 걷기 코스의 실제 경로. 점선 동선과 달리 실선이다. */}
+      {courseItems.map((c, i) => {
+        const hot = c.hot || selectedIndex === items.indexOf(c);
+        return (
+          <MapPolyline
+            key={`course-${i}`}
+            points={c.path}
+            strokeColor={COURSE_LINE.color}
+            strokeWeight={hot ? COURSE_LINE.weight + 1 : COURSE_LINE.weight}
+            strokeOpacity={hot ? 0.95 : COURSE_LINE.opacity}
+            strokeStyle="solid"
+          />
+        );
+      })}
 
       {/* 그날 묵는 숙소. 번호 핀·경로선과 분리해 집 아이콘으로 둔다. */}
       {stayAt && (
