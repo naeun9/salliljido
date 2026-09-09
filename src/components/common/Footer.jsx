@@ -30,9 +30,15 @@ export default function Footer() {
           </div>
           <div className={styles.sources}>
             <div className={styles.heading}>데이터 출처</div>
+            {/* 화면마다 흩어져 있던 출처 표기(지역 소개 · 둘러보기 탭 ·
+                예상 비용 탭)를 여기 한 곳으로 모았다. 화면 안에서는
+                본문을 가리기만 하고, 어차피 모두 같은 출처라 한 번만
+                적으면 된다. */}
             <ul className={styles.sourceList}>
               <li>관광 정보·사진 ⓒ한국관광공사</li>
+              <li>걷기 코스 ⓒ한국관광공사 두루누비</li>
               <li>인구감소지역 지정 현황 · 행정안전부</li>
+              <li>지도 ⓒ카카오</li>
               <li>비용은 공개 자료를 바탕으로 한 추정치이며 실제와 다를 수 있습니다.</li>
             </ul>
           </div>

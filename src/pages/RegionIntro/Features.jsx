@@ -123,7 +123,6 @@ export default function Features({ region, insights }) {
                   </span>
                 </div>
               ))}
-              <div className={styles.coursesSource}>걷기 코스 ⓒ한국관광공사 두루누비</div>
             </div>
           )}
         </div>

@@ -10,10 +10,14 @@
   inset: 0;
   opacity: 0.5;
 }
+/* 홈 히어로·지역 소개 배너와 같은 검은 반투명으로 맞췄다. 원래 값
+   (딥그린 86/92%)을 그대로 환산하면 67/80%라 사진이 거의 안 보여서,
+   같은 계열 안에서 조금 옅게 잡았다(58/68%). 위 .texture가 이미
+   opacity 0.5로 깔려 있어 이 정도면 흰 글자가 충분히 읽힌다. */
 .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(47, 93, 80, 0.86) 0%, rgba(38, 76, 65, 0.92) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.58) 0%, rgba(0, 0, 0, 0.68) 100%);
 }
 .row {
   position: relative;

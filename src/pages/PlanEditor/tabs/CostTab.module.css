@@ -201,11 +201,3 @@
   font-weight: 600;
   color: var(--gray);
 }
-
-/* 예상 비용 탭 하단 출처 표기. 크기·색은 둘러보기 탭 .ctaSource와 같다. */
-.source {
-  margin: 20px 0 0;
-  font-size: 14px;
-  line-height: 1.65;
-  color: var(--gray);
-}

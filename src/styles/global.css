@@ -207,10 +207,25 @@ body {
     height: auto !important;
     overflow: visible !important;
   }
-  /* 하루치 일정과 비용 항목이 페이지 경계에서 반으로 갈리지 않게. */
+  /* 비용 항목이 페이지 경계에서 반으로 갈리지 않게. */
   [data-ov-block] {
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+  /* 하루 일정은 한 장에 하나씩 나간다. 카드가 페이지 중간에서 잘리지 않도록
+     안쪽을 묶고(break-inside), 뒤에서 반드시 끊는다(break-after). 마지막
+     날에도 끊어 두면 예상 비용이 새 장에서 시작한다. */
+  [data-ov-day] {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    break-after: page;
+    page-break-after: always;
+  }
+  /* "전체 일정"은 새 장에서 시작한다 — 안 그러면 제목만 앞 장 맨 아래에
+     혼자 남고 1일차는 다음 장으로 넘어간다. */
+  [data-ov-schedule] {
+    break-before: page;
+    page-break-before: always;
   }
   /* 넓은 색면은 잉크만 먹는다. 배경만 지우는 자리와, 짙은 배경에 흰 글자라
      글자색까지 되돌려야 하는 자리를 나눠 뒀다. */

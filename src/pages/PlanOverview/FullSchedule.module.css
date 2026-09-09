@@ -203,6 +203,22 @@
   color: #faf8f4;
 }
 
+/* 인쇄에만 남기는 자리. 표/지도 보기를 켜 뒀거나 카드가 접혀 있어도
+   PDF에는 전체 일정이 카드로 나가야 해서, 날짜 카드는 항상 그려 두고
+   화면에서만 감춘다. 인쇄에서는 원래 display 값으로 되돌린다. */
+.screenOff,
+.screenOffBlock {
+  display: none;
+}
+@media print {
+  .screenOff {
+    display: flex;
+  }
+  .screenOffBlock {
+    display: block;
+  }
+}
+
 /* --- 표 보기 --- */
 .tableWrap {
   margin-top: 24px;

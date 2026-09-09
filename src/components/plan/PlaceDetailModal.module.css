@@ -5,7 +5,7 @@
      .place / .tag / .meta / .overview → SelectionCard의 .place/.tag/.meta/.desc
      .closeBtn → SelectionCard의 .closeBtn */
 .card {
-  width: min(480px, 100%);
+  width: min(520px, 100%);
   max-height: 84vh;
   display: flex;
   flex-direction: column;
@@ -28,7 +28,7 @@
 }
 .place {
   margin: 0;
-  font-size: 20px;
+  font-size: 22.5px;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: var(--ink);
@@ -46,12 +46,12 @@
   padding: 4px 11px;
   border-radius: var(--radius-pill);
   background: var(--mist);
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 600;
   color: var(--forest);
 }
 .meta {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--sage);
 }
@@ -94,7 +94,7 @@
 
 .overview {
   margin: 16px 0 0;
-  font-size: 14.5px;
+  font-size: 16px;
   line-height: 1.75;
   color: var(--gray);
   letter-spacing: -0.01em;
@@ -109,7 +109,7 @@
   border: none;
   background: none;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--forest);
   cursor: pointer;
@@ -132,8 +132,8 @@
   gap: 14px;
 }
 .infoLabel {
-  flex: 0 0 76px;
-  font-size: 13.5px;
+  flex: 0 0 82px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--sage);
 }
@@ -141,7 +141,7 @@
   flex: 1 1 auto;
   min-width: 0;
   margin: 0;
-  font-size: 14px;
+  font-size: 15.5px;
   line-height: 1.6;
   color: var(--ink);
   word-break: keep-all;
@@ -159,7 +159,10 @@
 }
 
 /* 메뉴 섹션. 정보 목록(.info)과 같은 크림 카드 위에 올려 두 블록이 한 벌로
-   보이게 한다 — 값은 .info / .infoLabel / .infoValue에서 그대로 가져왔다. */
+   보이게 한다 — 제목은 .infoLabel, 항목 글자는 .infoValue와 같은 값이다.
+   예전에는 대표메뉴는 15px 굵게, 나머지는 13.5px 필 모양 칩이라 같은
+   "메뉴"인데 크기·색·모양이 셋 다 달랐다. 이제 한 줄씩 같은 크기·같은
+   색으로 세우고, 대표메뉴만 "대표" 칩과 굵기로 구분한다. */
 .menu {
   margin: 12px 0 0;
   padding: 16px 18px;
@@ -168,54 +171,47 @@
 }
 .menuTitle {
   margin: 0;
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--sage);
 }
-.menuFirst {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin: 10px 0 0;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.5;
-  color: var(--ink);
-  word-break: keep-all;
-  overflow-wrap: anywhere;
-}
-/* "대표" 배지. 머리말의 .tag와 같은 필 모양이되 한 단계 작게. */
-.menuBadge {
-  flex: 0 0 auto;
-  padding: 3px 9px;
-  border-radius: var(--radius-pill);
-  background: var(--mist);
-  font-size: 11.5px;
-  font-weight: 600;
-  color: var(--forest);
-}
 .menuList {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px 8px;
+  flex-direction: column;
+  gap: 8px;
   margin: 12px 0 0;
   padding: 0;
   list-style: none;
 }
 .menuItem {
-  padding: 5px 11px;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--border);
-  background: var(--white);
-  font-size: 13.5px;
-  line-height: 1.4;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 15.5px;
+  line-height: 1.6;
   color: var(--ink);
   word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+/* 대표메뉴만 굵게. 크기·색은 다른 항목과 같다. */
+.menuItem.first {
+  font-weight: 700;
+}
+/* "대표" 칩. 머리말의 .tag와 같은 필 모양이되 한 단계 작게. 이름 뒤에
+   붙어서 목록의 왼쪽 끝이 한 줄로 맞는다. */
+.menuBadge {
+  flex: 0 0 auto;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--mist);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--forest);
 }
 
 .error {
   margin: 16px 0 0;
-  font-size: 13.5px;
+  font-size: 14.5px;
   color: var(--rust);
 }
 
@@ -236,7 +232,7 @@
   border: 1px solid var(--border);
   background: var(--paper);
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 15.5px;
   font-weight: 600;
   color: var(--gray);
   cursor: pointer;
@@ -256,7 +252,7 @@
   border: none;
   background: var(--mist);
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 15.5px;
   font-weight: 600;
   color: var(--forest);
   cursor: pointer;

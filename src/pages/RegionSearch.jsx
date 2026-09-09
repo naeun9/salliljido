@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSearch } from "../hooks/useSearch.js";
 import styles from "./RegionSearch.module.css";
@@ -70,7 +70,12 @@ export default function RegionSearch() {
   //
   // 홈 캐러셀에서 지역을 누르고 들어온 경우(location.state.region)만 그
   // 지역을 남긴다. 그러지 않으면 방금 누른 선택이 초기화돼 버린다.
-  useEffect(() => {
+  //
+  // useEffect가 아니라 useLayoutEffect다. useEffect는 브라우저가 화면을
+  // 한 번 그린 뒤에 돌아서, 예전 선택이 잠깐 켜졌다가 풀리는 게 보였다.
+  // useLayoutEffect는 그리기 전에 돌고 그 안에서 일어난 상태 변경도
+  // 같은 프레임에 반영되므로, 처음부터 빈 상태로 그려진다.
+  useLayoutEffect(() => {
     if (didReset.current) return;
     didReset.current = true;
     reset(location.state?.region);
