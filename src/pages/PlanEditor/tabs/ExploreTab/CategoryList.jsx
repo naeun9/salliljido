@@ -158,6 +158,7 @@ export default function CategoryList({
                   onConfirm={(day, price) => onConfirmExperience(x.id, day, price)}
                   readOnly={readOnly}
                   onOpenDetail={() => onOpenDetail(x)}
+                  showThumb={category !== "걷기 코스"}
                 />
               ))}
             </div>

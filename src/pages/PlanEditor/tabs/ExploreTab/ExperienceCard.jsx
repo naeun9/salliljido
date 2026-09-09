@@ -24,6 +24,10 @@ export default function ExperienceCard({
   onConfirm,
   readOnly = false,
   onOpenDetail,
+  // 썸네일을 그릴지. 걷기 코스는 두루누비 응답에 사진 필드가 아예 없어서
+  // 늘 "이미지 준비중" 자리만 남는다 — 그 카테고리에서만 끈다.
+  // 체험 프로그램은 사진이 있는 항목이 섞여 있어 기본값 그대로 둔다.
+  showThumb = true,
 }) {
   const [draft, setDraft] = useState(null);
   const [priceDraft, setPriceDraft] = useState(null);
@@ -57,7 +61,9 @@ export default function ExperienceCard({
       onMouseLeave={onMouseLeave}
       onClick={onOpenDetail ? cardBodyClick(onOpenDetail) : undefined}
     >
-      <CardThumb item={experience} imageClass={styles.image} tagClass={styles.imageTag} />
+      {showThumb && (
+        <CardThumb item={experience} imageClass={styles.image} tagClass={styles.imageTag} />
+      )}
       <div className={styles.body}>
         <div className={styles.head}>
           <h3 className={styles.name} title={experience.name}>
