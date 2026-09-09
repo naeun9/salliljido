@@ -184,7 +184,10 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
   }
 
   return (
-    <div className={styles.page}>
+    // data-bottom-bar: 좁은 화면에서 아래 .mobileBar가 화면에 고정된다.
+    // 그 바가 Layout이 뒤에 그리는 푸터의 마지막 줄을 가려서, 이 표시를
+    // 보고 푸터가 바 높이만큼 아래를 띄운다(styles/global.css).
+    <div className={styles.page} data-bottom-bar>
       <OverviewHeader
         title={title}
         subline={`${region.name} · ${nights}일 · ${themeLine}`}

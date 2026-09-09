@@ -1,4 +1,3 @@
-import Footer from "../../components/common/Footer.jsx";
 import styles from "./LegalDoc.module.css";
 
 // 약관·개인정보처리방침이 쓰는 문서 껍데기. 두 화면이 제목과 조항 목록만
@@ -8,29 +7,24 @@ import styles from "./LegalDoc.module.css";
 // 조항마다 달라서 문자열로 묶기 어렵다).
 export default function LegalDoc({ title, updated, lead, sections }) {
   return (
-    <>
-      <div className={styles.page}>
-        <div className={styles.inner}>
-          <h1 className={styles.title}>{title}</h1>
-          <p className={styles.updated}>시행일 {updated}</p>
-          {lead && <p className={styles.lead}>{lead}</p>}
+    <div className={styles.page}>
+      <div className={styles.inner}>
+        <h1 className={styles.title}>{title}</h1>
+        <p className={styles.updated}>시행일 {updated}</p>
+        {lead && <p className={styles.lead}>{lead}</p>}
 
-          <div className={styles.body}>
-            {sections.map((s, i) => (
-              <section key={s.heading} className={styles.section}>
-                <h2 className={styles.heading}>
-                  {i + 1}. {s.heading}
-                </h2>
-                {s.body}
-              </section>
-            ))}
-          </div>
+        <div className={styles.body}>
+          {sections.map((s, i) => (
+            <section key={s.heading} className={styles.section}>
+              <h2 className={styles.heading}>
+                {i + 1}. {s.heading}
+              </h2>
+              {s.body}
+            </section>
+          ))}
         </div>
       </div>
-      {/* 푸터는 화면마다 각자 그린다(design은 랜딩 전용이었다). 약관·처리방침도
-          다른 화면과 같은 마무리를 갖도록 여기서 붙인다. */}
-      <Footer />
-    </>
+    </div>
   );
 }
 

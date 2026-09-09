@@ -2,7 +2,9 @@ import { Link, useLocation } from "react-router-dom";
 import styles from "./Footer.module.css";
 
 // design/salliljido.extracted.html 279-307줄. 원본은 랜딩 전용이었지만
-// 없는 경로 안내(pages/NotFound)에서도 쓴다.
+// 지금은 Layout이 모든 라우트 아래에 한 번 그린다 — 데이터 출처 표기를
+// 여기로 모았기 때문에, 관광공사 데이터를 쓰는 화면이면 어디서든 출처가
+// 보여야 한다.
 //
 // 바로가기 링크는 전부 Home 안의 섹션으로 가는 앵커다. Home에서는 페이지 내
 // 앵커(#service)로 두어 전역 scroll-behavior의 부드러운 스크롤을 그대로 쓰고,
