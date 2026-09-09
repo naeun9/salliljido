@@ -61,6 +61,13 @@ export default function Hero() {
   const layers = [{ url: HERO_PHOTOS[current].url, fade: false }];
   if (incoming !== null) layers.push({ url: HERO_PHOTOS[incoming].url, fade: true });
 
+  // 사진 정보는 "지금 위에 보이는" 장을 따라간다. 전환 중이면 올라오는
+  // 쪽(incoming)이 곧 화면을 덮으므로 그때 같이 바뀌어야 어긋나 보이지
+  // 않는다. key를 바꿔 다시 그리면 .creditIn 페이드가 처음부터 재생된다
+  // (길이도 사진 페이드와 같은 1.1초다).
+  const shownIndex = incoming !== null ? incoming : current;
+  const shown = HERO_PHOTOS[shownIndex];
+
   return (
     <section id="top" data-screen-label="Hero" className={styles.hero}>
       {/* design의 빗금 텍스처 자리에 관광사진을 깐다. 사진이 죽으면 아래
@@ -110,6 +117,17 @@ export default function Hero() {
             </a>
           </div>
         </div>
+      </div>
+
+      {/* 지금 보이는 사진이 어디인지. 우하단이라 카피(왼쪽)·SCROLL(가운데)과
+          겹치지 않는다. 오버레이 위에 얹히는 아주 작은 글자라 읽히기만 하고
+          시선을 끌지 않는다. */}
+      <div key={shownIndex} className={`${styles.photoCredit} ${styles.creditIn}`}>
+        <span className={styles.creditRegion}>{shown.region}</span>
+        <span className={styles.creditDot} aria-hidden="true">
+          ·
+        </span>
+        <span className={styles.creditTitle}>{shown.title}</span>
       </div>
 
       <a href="#service" className={`${styles.scrollHint} slj-anim-bob`}>
