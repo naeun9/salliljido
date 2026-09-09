@@ -151,6 +151,12 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
     .concat(stayPicks.map((g) => g.stayId));
   const addedCount = addedIds.length;
 
+  // 걷기 코스를 보고 있을 때만 경로선을 그린다. 다른 카테고리에서 코스
+  // 선까지 깔면 지도가 읽히지 않는다. 지금 페이지에 깔린 카드만 대상이라
+  // 목록과 지도가 어긋나지 않는다.
+  const coursePaths =
+    category === "걷기 코스" ? visibleList.filter((x) => (x.path || []).length > 1) : [];
+
   // 담은 곳은 지금 보고 있는 카테고리가 아니어도 지도에 계속 남는다.
   // 카테고리를 바꾸면 사라져서 "내가 뭘 담았더라"를 놓치기 쉬웠다.
   const addedMarkers = addedIds
@@ -251,6 +257,7 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
             담은 곳은 카테고리를 바꿔도 계속 남게 따로 얹는다. */}
         <SidebarMap
           items={visibleList}
+          coursePaths={coursePaths}
           addedMarkers={addedMarkers}
           markerSubLabels={markerSubLabels}
           center={{ lat: region.lat, lng: region.lng }}

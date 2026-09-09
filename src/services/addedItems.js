@@ -49,6 +49,9 @@ function addedOfCategory({ day, category, ids, days, listings, keyPrefix, offset
         addr: x.addr,
         mapX: x.mapX,
         mapY: x.mapY,
+        // 걷기 코스만 값이 있다. 체류 계획 지도에서 고른 코스의 경로를
+        // 그리는 데 쓴다(없으면 빈 배열이라 선이 안 생긴다).
+        path: x.path || [],
         swatch: SLOT_SWATCHES[(offset + i) % 3],
         mine: true,
         isDinner: slot === "저녁",

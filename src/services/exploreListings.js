@@ -184,6 +184,9 @@ function shapeCourse(course, index) {
     courseKm: course.distanceKm,
     // 카드에서 소요시간을 강조할 때 쓴다("반나절"·"하루").
     courseLoad: courseLoadLabel(course.minutes),
+    // 지도에 그릴 경로. 서버가 GPX를 솎아 100점 안팎으로 내려 준다
+    // (api/tour/duru.js). 못 받았으면 빈 배열이라 선만 안 그려진다.
+    path: course.path || [],
   };
 }
 

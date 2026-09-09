@@ -3,6 +3,7 @@ import KakaoMap from "../../../../components/map/KakaoMap.jsx";
 import MapOverlay from "../../../../components/map/MapOverlay.jsx";
 import MapZoomControl from "../../../../components/map/MapZoomControl.jsx";
 import MapMarker from "../../../../components/map/MapMarker.jsx";
+import MapPolyline from "../../../../components/map/MapPolyline.jsx";
 import { boundsOf, toLatLng } from "../../../../utils/geo.js";
 import styles from "./SidebarMap.module.css";
 
@@ -29,8 +30,22 @@ export const ADDED_MARKER_COLOR = "#E0A32E";
 // 읽힌다. 체크 배지의 선도 같은 잉크를 써야 골드 위에서 또렷하다.
 export const ADDED_MARKER_BORDER = "#2B2B29";
 
+// 걷기 코스 경로선. 색은 카테고리 색(청록)을 그대로 쓰고, 체류 계획 탭의
+// 하루 동선과는 선 모양으로 가른다 — 그쪽은 점선(shortdash)이고 코스는
+// 실선이다. 같은 지도에 둘이 같이 나와도 무엇이 길이고 무엇이 이동인지
+// 헷갈리지 않는다.
+const COURSE_LINE_COLOR = "#3F7D8C";
+// 강조하지 않을 때는 옅게 깔아 두고, 카드에 마우스를 올린 코스만 진하게
+// 띄운다. 12개를 같은 굵기로 그리면 어느 선이 어느 코스인지 알 수 없다.
+const LINE_IDLE = { weight: 3, opacity: 0.45 };
+const LINE_HOT = { weight: 5, opacity: 0.95 };
+const LINE_MUTED = { weight: 2, opacity: 0.15 };
+
 export default function ExploreMap({
   items,
+  // 걷기 코스를 보고 있을 때만 채워진다. 다른 카테고리에서는 빈 배열이라
+  // 선이 그려지지 않는다.
+  coursePaths = [],
   addedMarkers = [],
   // { [숙소id]: "1~5일차" } — 담긴 숙소만 기간을 라벨에 함께 보여 준다.
   markerSubLabels = {},
@@ -59,6 +74,24 @@ export default function ExploreMap({
   return (
     <KakaoMap className={styles.kakaoMap} center={center} bounds={bounds} fallback={fallback}>
       <MapZoomControl className={styles.zoomCluster} buttonClassName={styles.zoomBtn} />
+
+      {/* 코스 경로. 마커보다 먼저 그려야 선 위에 마커가 얹힌다. */}
+      {coursePaths.map((c) => {
+        const hot = hoveredId === c.id;
+        const dimmed = hoveredId && !hot;
+        const style = hot ? LINE_HOT : dimmed ? LINE_MUTED : LINE_IDLE;
+        return (
+          <MapPolyline
+            key={c.id}
+            points={c.path}
+            strokeColor={COURSE_LINE_COLOR}
+            strokeWeight={style.weight}
+            strokeOpacity={style.opacity}
+            strokeStyle="solid"
+          />
+        );
+      })}
+
       {points.map(({ item, at }) => {
         const hot = hoveredId === item.id;
         const inRoutine = addedIds.includes(item.id);
