@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { hasJong } from "../../utils/korean.js";
+import { hasJong, joinWithGwa } from "../../utils/korean.js";
 import { regionPhotoSlides } from "../../data/regionPhotos.js";
 import styles from "./Features.module.css";
 
@@ -25,7 +25,7 @@ function buildStats(region, insights) {
     {
       label: "자연환경",
       icon: "M3 15l4.5-6 3.5 4.2L14 9l3 6z M13.5 5.5a1.6 1.6 0 1 0 0-.1",
-      note: places.join("와 ") + (hasJong(last) ? "이" : "가") + " 걸어서 닿는 거리에 있어요",
+      note: joinWithGwa(places) + (hasJong(last) ? "이" : "가") + " 걸어서 닿는 거리에 있어요",
     },
     {
       label: "생활 편의",
