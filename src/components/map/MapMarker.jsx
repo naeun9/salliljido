@@ -14,6 +14,9 @@ export default function MapMarker({
   size = "11px",
   showLabel = true,
   checked = false,
+  // 체크 배지의 테두리·아이콘 색. 기본은 마커 색과 같고, 마커가 밝은 색일
+  // 때만 따로 넘겨 대비를 살린다(ExploreTab의 담은 곳 마커).
+  checkColor,
   dotBorder = "2px solid #FFFDFA",
   dotShadow = "none",
   onClick,
@@ -39,11 +42,11 @@ export default function MapMarker({
             테라코타 고정이었는데, 담은 곳 마커가 초록으로 바뀌면서
             배지만 주황으로 남으면 어긋나 보인다. */}
         {checked && (
-          <span className={styles.check} style={{ borderColor: color }}>
+          <span className={styles.check} style={{ borderColor: checkColor || color }}>
             <svg width="12" height="12" viewBox="0 0 13 13" fill="none">
               <path
                 d="M2 7l3 3 6-6.5"
-                stroke={color}
+                stroke={checkColor || color}
                 strokeWidth="2.6"
                 strokeLinecap="round"
                 strokeLinejoin="round"

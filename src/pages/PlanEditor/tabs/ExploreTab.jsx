@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useSearch } from "../../../hooks/useSearch.js";
 import { usePlan } from "../../../hooks/usePlan.js";
@@ -109,6 +109,28 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
     setPage(1);
   }
 
+  // 그 지역에 실제로 항목이 있는 카테고리만 칩으로 보여 준다. 칩을 눌렀는데
+  // 빈 화면만 나오면 데이터가 없는 건지 우리가 고장 난 건지 알 수 없다 —
+  // 지역 소개의 걷기 코스 하이라이트도 같은 이유로 없으면 통째로 감춘다.
+  //
+  // 카테고리를 박아 두지 않고 건수로 판단하는 이유: 지금 0건이 생기는 건
+  // 걷기 코스뿐이지만(15개 시군 실측 — 나머지 넷은 최소 3건), 관광공사
+  // 자료가 바뀌어 다른 카테고리가 비어도 같은 규칙이 그대로 걸린다.
+  //
+  // 불러오는 중에는 전부 보여 준다. 그때는 목록이 아직 비어 있을 뿐이라
+  // 여기서 걸러 버리면 칩이 사라졌다 다시 생긴다.
+  const visibleCategories =
+    loading || loadError ? CATEGORIES : CATEGORIES.filter((c) => (listings[c] || []).length > 0);
+
+  // 고른 카테고리가 이 지역에 없으면(지역을 옮겼을 때) 첫 번째 것으로 돌린다.
+  useEffect(() => {
+    if (loading || loadError) return;
+    if (visibleCategories.length && !visibleCategories.includes(category)) {
+      selectCategory(visibleCategories[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, loadError, visibleCategories.join("|"), category]);
+
   const activeSubSel = subFilters[category] || [];
   const fullList = listings[category] || [];
   const filteredList = filterBySelectedSubs(fullList, activeSubSel);
@@ -141,7 +163,7 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
         <div className={styles.list}>
           <div ref={listTopRef} />
           <div className={styles.chips}>
-            {CATEGORIES.map((cat) => (
+            {visibleCategories.map((cat) => (
               <button
                 key={cat}
                 type="button"
@@ -242,13 +264,15 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
           onToggleCollapse={() => setMapCollapsed((v) => !v)}
           legend={
             readOnly
-              ? CATEGORIES.map((c) => ({ label: c, color: CATEGORY_COLORS[c] }))
-              : CATEGORIES.map((c) => ({
-                  label: c,
-                  color: CATEGORY_COLORS[c],
-                })).concat([
-                  // 체험 프로그램 카테고리 색(주황)과 겹쳐 구분이 안 돼서
-                  // 담은 곳은 진한 초록으로 옮겼다(ExploreMap.ADDED_MARKER_COLOR).
+              ? visibleCategories.map((c) => ({ label: c, color: CATEGORY_COLORS[c] }))
+              : visibleCategories
+                  .map((c) => ({
+                    label: c,
+                    color: CATEGORY_COLORS[c],
+                  }))
+                  .concat([
+                  // 담은 곳은 카테고리 다섯 색 어느 것과도 겹치지 않는 골드다
+                  // (ExploreMap.ADDED_MARKER_COLOR 주석 참고).
                   { label: "계획에 추가됨", color: ADDED_MARKER_COLOR },
                 ])
           }

@@ -15,9 +15,19 @@ import styles from "./SidebarMap.module.css";
 //
 // 담은 곳 마커 색. design은 "내 계획에 추가됨"을 테라코타(#D9784E)로
 // 썼는데(1223줄 범례), 체험 프로그램 카테고리 색과 같은 주황이라 지도에서
-// 둘이 구분되지 않았다. 담은 곳은 카테고리와 겹치지 않는 진한 초록으로
-// 옮기고 체크 배지를 함께 둔다(범례도 같은 색으로 맞춘다).
-export const ADDED_MARKER_COLOR = "#1F6F4A";
+// 둘이 구분되지 않았다. 그래서 진한 초록(#1F6F4A)으로 옮겼는데 이번에는
+// 숙박(#2F5D50)·주변 관광지(#4A7C6F)와 같은 초록 계열인 데다 지도 바탕도
+// 녹색이라 "담았다"는 표시가 묻혔다.
+//
+// 카테고리 다섯 색이 초록 둘·청록·갈색·주황을 이미 쓰고 있어서, 어느 것과도
+// 겹치지 않는 골드로 옮긴다. 지도 바탕(연녹·베이지)에서 가장 먼저 눈에
+// 들어오는 색이다. 범례도 이 값을 그대로 쓴다.
+export const ADDED_MARKER_COLOR = "#E0A32E";
+
+// 담은 곳만 테두리를 크림 대신 잉크로 준다. 나머지 마커는 전부 크림
+// 테두리라, 테두리만 봐도 담은 곳이 구분된다 — 색약이 있어도 형태 차이로
+// 읽힌다. 체크 배지의 선도 같은 잉크를 써야 골드 위에서 또렷하다.
+export const ADDED_MARKER_BORDER = "#2B2B29";
 
 export default function ExploreMap({
   items,
@@ -73,7 +83,8 @@ export default function ExploreMap({
               size={hot ? "24px" : inRoutine ? "21px" : "16px"}
               showLabel={hot}
               checked={inRoutine}
-              dotBorder="3px solid #FFFDFA"
+              checkColor={inRoutine ? ADDED_MARKER_BORDER : undefined}
+              dotBorder={inRoutine ? `3px solid ${ADDED_MARKER_BORDER}` : "3px solid #FFFDFA"}
               dotShadow="0 4px 10px -6px rgba(43,43,41,.55)"
               onClick={() => onSelectItem(item.id)}
               onMouseEnter={() => onHoverItem(item.id)}
