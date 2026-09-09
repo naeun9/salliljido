@@ -376,9 +376,13 @@ export const HERO_PHOTOS = [
     region: "충남 청양",
   },
   {
-    url: "https://tong.visitkorea.or.kr/cms2/website/67/2818467.jpg",
-    title: "병방치 스카이워크",
-    photographer: "두드림",
+    // 같은 정선이지만 병방치 스카이워크(2818467) 대신 몰운대를 쓴다. 앞의
+    // 사진은 1280x853인데도 150KB(bpp 1.13, 양자화 테이블 합 1477)로 세게
+    // 눌려 있어 히어로처럼 화면을 꽉 채우면 블록 노이즈가 그대로 보였다.
+    // 몰운대는 같은 크기에 1860KB(bpp 13.96, 합 86)로 60장 중 가장 여유롭다.
+    url: "https://tong.visitkorea.or.kr/cms2/website/76/2516876.jpg",
+    title: "몰운대",
+    photographer: "한국관광공사 김지호",
     region: "강원 정선",
   },
   {

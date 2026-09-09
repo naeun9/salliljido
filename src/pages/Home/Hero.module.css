@@ -241,6 +241,63 @@
   border-color: var(--clay);
 }
 
+/* 지금 보이는 사진의 지역·제목. SCROLL(가운데 아래)과 같은 높이의 우하단에
+   두어 카피·CTA와 겹치지 않는다. 오버레이 위라 밝은 색에 투명도만 준다 —
+   배경 판을 깔면 이 작은 글자가 오히려 라벨처럼 도드라진다. */
+.photoCredit {
+  position: absolute;
+  right: clamp(20px, 5vw, 64px);
+  bottom: 34px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 11.5px;
+  letter-spacing: 0.01em;
+  color: rgba(250, 248, 244, 0.72);
+  text-shadow: 0 1px 6px rgba(35, 71, 61, 0.45);
+  pointer-events: none;
+}
+.creditRegion {
+  font-weight: 600;
+}
+.creditDot {
+  opacity: 0.6;
+}
+.creditTitle {
+  font-weight: 400;
+  opacity: 0.92;
+}
+
+/* 사진 페이드(1.1초)와 같은 길이로 함께 바뀐다. */
+@keyframes heroCreditIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.creditIn {
+  animation: heroCreditIn 1.1s ease forwards;
+}
+
+/* 좁은 화면에서는 한 단계 더 작고 옅게. 히어로 카피가 세로로 길어져
+   아래쪽이 빡빡해지는 자리라 존재만 남긴다. */
+@media (max-width: 759px) {
+  .photoCredit {
+    right: 16px;
+    bottom: 16px;
+    font-size: 10.5px;
+    color: rgba(250, 248, 244, 0.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .creditIn {
+    animation: none;
+  }
+}
+
 .scrollHint {
   position: absolute;
   left: 50%;
