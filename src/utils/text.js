@@ -33,12 +33,44 @@ export function summarize(text, { max = 150, hardMax = 190 } = {}) {
   return { short: full.slice(0, cut), truncated: cut < full.length };
 }
 
-// 목록형 값("A / B / C / D …")을 앞에서 몇 개만 남긴다. 취급메뉴처럼
-// 나열이 길어질 수 있는 줄에 쓴다.
-export function firstItems(value, { count = 5, separator = " / " } = {}) {
+// 문장 단위로 자른다. 끝맺음 부호를 문장에 붙여 둔 채로 돌려준다.
+function splitSentences(text) {
+  const parts = String(text).match(/[^.!?。]+[.!?。]+|[^.!?。]+$/g);
+  return parts ? parts.map((s) => s.trim()).filter(Boolean) : [];
+}
+
+// 펼친 개요를 문단으로 나눈다. 300자가 넘는 글을 한 덩어리로 두면 줄만
+// 빽빽하게 쌓여 읽던 자리를 놓친다. 2~3문장(기본 3)마다 끊는다.
+//
+// 원문에 이미 줄바꿈이 있으면(detailCommon2의 <br>을 api/tour/detail.js가
+// "\n"으로 바꿔 준다) 그 경계를 먼저 지킨다 — 글쓴이가 나눈 자리다.
+export function toParagraphs(text, { per = 3 } = {}) {
+  const full = String(text || "").trim();
+  if (!full) return [];
+  const out = [];
+  for (const block of full.split(/\n+/)) {
+    const sentences = splitSentences(block.trim());
+    for (let i = 0; i < sentences.length; i += per) {
+      out.push(sentences.slice(i, i + per).join(" "));
+    }
+  }
+  return out;
+}
+
+// 구분자로 이어진 목록형 값("A / B / C 등")을 항목 배열로 편다.
+// 취급메뉴(treatmenu)가 이 형태로 온다 — 구분자는 자료마다 슬래시·쉼표·
+// 가운뎃점이 섞여 있어 셋 다 받는다.
+export function splitList(value) {
   const parts = String(value || "")
-    .split(/\s*\/\s*|\s*,\s*/)
+    .split(/\s*[/,·]\s*/)
+    .map((s) => s.trim())
     .filter(Boolean);
-  if (parts.length <= count) return value;
-  return parts.slice(0, count).join(separator) + " 등";
+  // 원문 끝의 "등"은 목록으로 세워 놓으면 군더더기라 마지막 항목에서만 뗀다
+  // ("양양표고버섯라떼 등" → "양양표고버섯라떼").
+  if (parts.length) {
+    const last = parts[parts.length - 1].replace(/\s*등$/, "").trim();
+    if (last) parts[parts.length - 1] = last;
+    else parts.pop();
+  }
+  return parts;
 }
