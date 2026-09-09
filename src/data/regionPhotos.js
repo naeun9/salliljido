@@ -19,6 +19,13 @@
 //    바다는 오버레이 아래에서 단색이 돼 버려서 전부 뺐다(태안 몽산포,
 //    서천 춘장대, 안동 하회마을이 그래서 교체됐다).
 //  - 가로형, 인물이 크게 나오지 않는 것.
+//  - (2026-09-09 추가) 압축 화질도 본다. 같은 1280px라도 파일이 작게 눌린
+//    것이 섞여 있어(양자화 테이블 합 1477 = 블록 노이즈) 화면을 꽉 채우면
+//    깨져 보인다. bpp와 양자화 합을 재서 여유 있는 것만 남겼다.
+//
+// 파일럿 지역 교체(2026-09-09): 속초·인제·홍성은 행정안전부 인구감소지역이
+// 아니라(속초·인제는 관심지역, 홍성은 미지정) 평창·고성·공주로 바꿨다.
+// 세 지역의 12장은 위 기준으로 새로 골랐고 나머지 48장은 그대로다.
 //
 // 저작권: 전부 한국관광공사 관광사진 갤러리 제공 사진이다. 이 API에는
 // 사진별 저작권 유형(cpyrhtDivCd) 필드가 없다 — 장소 상세 API(detailImage2)에만
@@ -72,26 +79,26 @@ const PHOTOS = {
       photographer: "한국관광공사 김지호",
     },
   ],
-  인제: [
+  고성: [
     {
-      url: "https://tong.visitkorea.or.kr/cms2/website/31/1127231.jpg",
-      title: "백담사계곡",
-      photographer: "한국관광공사 김지호",
+      url: "https://tong.visitkorea.or.kr/cms2/website/16/1842516.jpg",
+      title: "공현진해수욕장",
+      photographer: "한국관광공사 이범수",
     },
     {
-      url: "https://tong.visitkorea.or.kr/cms2/website/41/1960241.jpg",
-      title: "방태산의 가을",
-      photographer: "홍순국",
+      url: "https://tong.visitkorea.or.kr/cms2/website/49/2504249.jpg",
+      title: "설국으로 가는 길",
+      photographer: "황선구",
     },
     {
-      url: "https://tong.visitkorea.or.kr/cms2/website/29/1127129.jpg",
-      title: "인제 백담사",
-      photographer: "한국관광공사 김지호",
+      url: "https://tong.visitkorea.or.kr/cms2/website/21/2456121.jpg",
+      title: "왕곡마을",
+      photographer: "한국관광공사 이범수",
     },
     {
-      url: "https://tong.visitkorea.or.kr/cms2/website/59/1840359.jpg",
-      title: "원대리 자작나무 숲(속삭이는 자작나무 숲)",
-      photographer: "한국관광공사 박은경",
+      url: "https://tong.visitkorea.or.kr/cms2/website/20/1842520.jpg",
+      title: "송지호해수욕장",
+      photographer: "한국관광공사 이범수",
     },
   ],
   삼척: [
@@ -116,26 +123,26 @@ const PHOTOS = {
       photographer: "한국관광공사 이범수",
     },
   ],
-  속초: [
+  평창: [
     {
-      url: "https://tong.visitkorea.or.kr/cms2/website/07/1691207.jpg",
-      title: "속초시 전경",
+      url: "https://tong.visitkorea.or.kr/cms2/website/40/2575940.jpg",
+      title: "양떼목장",
+      photographer: "명준욱",
+    },
+    {
+      url: "https://tong.visitkorea.or.kr/cms2/website/55/2504255.jpg",
+      title: "오대산 설국 속 상원사",
+      photographer: "박상훈",
+    },
+    {
+      url: "https://tong.visitkorea.or.kr/cms2/website/72/2564572.jpg",
+      title: "효석달빛언덕",
       photographer: "한국관광공사 김지호",
     },
     {
-      url: "https://tong.visitkorea.or.kr/cms2/website/26/1691326.jpg",
-      title: "속초항",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/56/2029056.jpg",
-      title: "속초 엑스포타워",
-      photographer: "한국관광공사 이범수",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/17/1879317.jpg",
-      title: "영금정 일출",
-      photographer: "한국관광공사 김지호",
+      url: "https://tong.visitkorea.or.kr/cms2/website/64/2525864.jpg",
+      title: "대관령 전경",
+      photographer: "IR 스튜디오",
     },
   ],
   태안: [
@@ -204,25 +211,25 @@ const PHOTOS = {
       photographer: "한국관광공사 김지호",
     },
   ],
-  홍성: [
+  공주: [
     {
-      url: "https://tong.visitkorea.or.kr/cms2/website/67/3414767.jpg",
-      title: "화려한 하늘 멋진 타워",
-      photographer: "이미경",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/66/1194266.jpg",
-      title: "김좌진장군생가지",
+      url: "https://tong.visitkorea.or.kr/cms2/website/83/1791183.jpg",
+      title: "공산성",
       photographer: "한국관광공사 김지호",
     },
     {
-      url: "https://tong.visitkorea.or.kr/cms2/website/83/2048383.jpg",
-      title: "홍주읍성",
+      url: "https://tong.visitkorea.or.kr/cms2/website/99/2563899.jpg",
+      title: "마곡사의 겨울",
+      photographer: "이중일",
+    },
+    {
+      url: "https://tong.visitkorea.or.kr/cms2/website/28/1790428.jpg",
+      title: "공주한옥마을",
       photographer: "한국관광공사 김지호",
     },
     {
-      url: "https://tong.visitkorea.or.kr/cms2/website/66/2048166.jpg",
-      title: "광천토굴새우젓 전통시장",
+      url: "https://tong.visitkorea.or.kr/cms2/website/54/1040154.jpg",
+      title: "공주 갑사",
       photographer: "한국관광공사 김지호",
     },
   ],

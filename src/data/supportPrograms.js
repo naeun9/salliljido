@@ -67,9 +67,9 @@ export const supportPrograms = [
     checkedAt: "",
   },
   {
-    id: "inje",
-    name: "인제 숲속 한달살기",
-    city: "강원 인제군",
+    id: "pyeongchang",
+    name: "평창 숲속 한달살기",
+    city: "강원 평창군",
     benefits: ["산촌 게스트하우스 4주 제공", "숲길 프로그램 참여비 지원", "왕복 교통비 일부 정산"],
     start: "2026-07-20",
     end: "2026-09-05",

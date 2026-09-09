@@ -9,7 +9,7 @@ const REGIONS = [
   {
     order: "01 / 03",
     name: "강원",
-    cities: ["속초", "삼척", "양양", "정선"],
+    cities: ["평창", "고성", "양양", "삼척"],
     desc: "바다와 산이 30분 거리에 함께 있습니다. 아침엔 해안을 걷고 오후엔 폐선로와 탄광촌을 지나며, 계절마다 다른 속도로 흐르는 곳.",
     swatch: "repeating-linear-gradient(135deg, #DCE8E2 0 12px, #CFE0D8 12px 24px)",
     imageNote: "동해 해안선",
@@ -17,7 +17,7 @@ const REGIONS = [
   {
     order: "02 / 03",
     name: "충남",
-    cities: ["서산", "태안", "보령", "홍성"],
+    cities: ["공주", "태안", "보령", "서천"],
     desc: "서해의 낮은 지평선과 갯벌, 넓은 농지가 이어집니다. 수도권에서 두 시간 남짓, 처음 머물러 보기에 부담이 적은 지역.",
     swatch: "repeating-linear-gradient(135deg, #F0E3D2 0 12px, #E7D8C4 12px 24px)",
     imageNote: "서해 갯벌과 염전",

@@ -6,8 +6,8 @@ import styles from "./RegionSearch.module.css";
 // design/salliljido.extracted.html 309-393줄(#find), 3591-3609줄(pickVals),
 // 3985-4005줄(regionCards/ctaBg 등 계산식). 값은 원본 그대로.
 const REGION_OPTIONS = [
-  { value: "강원", sub: "속초·삼척·양양·정선" },
-  { value: "충남", sub: "서산·태안·보령·홍성" },
+  { value: "강원", sub: "평창·고성·양양·삼척" },
+  { value: "충남", sub: "공주·태안·보령·서천" },
   { value: "경북", sub: "안동·영주·봉화·의성" },
   { value: "상관없음", sub: "세 지역에서 모두 찾아드려요" },
 ];
