@@ -5,6 +5,7 @@ import { usePlan } from "../../../hooks/usePlan.js";
 import { stayDays } from "../../../utils/date.js";
 import { useRegionListings } from "../../../hooks/useRegionListings.js";
 import { findListing } from "../../../services/exploreListings.js";
+import { findStayMarker } from "../../../services/addedItems.js";
 import { availableCuisines } from "../../../services/routineGenerator.js";
 import { buildDayTimeline, resolveThemePrefs, resolveDayContext } from "../../../services/dayTimeline.js";
 import { buildSelection } from "../../../services/scheduleSelection.js";
@@ -270,10 +271,3 @@ export default function ScheduleTab({ region }) {
   );
 }
 
-// 그날 묵는 숙소 마커. 구간(staySegs)에서 오늘이 포함된 것을 찾아
-// 목록에서 좌표를 얻는다.
-function findStayMarker(staySegs, day, listings) {
-  const seg = staySegs.find((g) => g.stayId && g.from <= day && day <= g.to);
-  const listing = seg ? findListing(listings, "숙박", seg.stayId) : null;
-  return listing ? { place: listing.name, at: toLatLng(listing) } : null;
-}

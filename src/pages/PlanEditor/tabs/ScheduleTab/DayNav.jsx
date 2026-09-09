@@ -1,7 +1,7 @@
 import styles from "./DayNav.module.css";
 
 // design/salliljido.extracted.html 865-877줄, 3162-3186줄(week/day 계산).
-export default function DayNav({ durDays, week, day, onPickWeek, onPickDay, daysWithAdds }) {
+export default function DayNav({ durDays, week, day, onPickWeek, onPickDay, daysWithAdds = [] }) {
   const weekCount = Math.ceil(durDays / 7);
   const showWeekTabs = durDays > 7;
   const dayCount = Math.min(7, durDays - week * 7);

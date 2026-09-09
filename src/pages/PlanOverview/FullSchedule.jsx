@@ -1,13 +1,26 @@
+import ScheduleMapView from "./ScheduleMapView.jsx";
 import styles from "./FullSchedule.module.css";
 
 const SLOTS = ["오전", "오후", "저녁"];
 const EXPAND_LIMIT = 5; // design 3337줄: 5일까지는 접기 버튼 없이 다 보여준다
 
 // design/salliljido.extracted.html 1542-1613줄.
-export default function FullSchedule({ days, view, onSetView, expanded, onToggleExpand, onSelectItem }) {
+export default function FullSchedule({
+  days,
+  view,
+  onSetView,
+  expanded,
+  onToggleExpand,
+  onSelectItem,
+  // 지도 보기에만 필요한 값(지역 중심 좌표·숙박 구간·목록). 카드/표 보기는
+  // 쓰지 않는다.
+  mapRegion,
+}) {
   const table = view === "table";
+  const map = view === "map";
+  const cards = !table && !map;
   const shown = expanded || days.length <= EXPAND_LIMIT ? days : days.slice(0, EXPAND_LIMIT);
-  const showExpand = days.length > EXPAND_LIMIT && !table;
+  const showExpand = days.length > EXPAND_LIMIT && cards;
 
   return (
     <section className={styles.section} data-print-plain>
@@ -17,7 +30,7 @@ export default function FullSchedule({ days, view, onSetView, expanded, onToggle
           <div className={styles.tabs} data-print-hide>
             <button
               type="button"
-              className={`${styles.tab} ${table ? "" : styles.tabOn}`}
+              className={`${styles.tab} ${cards ? styles.tabOn : ""}`}
               onClick={() => onSetView("card")}
             >
               카드 보기
@@ -29,10 +42,21 @@ export default function FullSchedule({ days, view, onSetView, expanded, onToggle
             >
               표 보기
             </button>
+            <button
+              type="button"
+              className={`${styles.tab} ${map ? styles.tabOn : ""}`}
+              onClick={() => onSetView("map")}
+            >
+              지도 보기
+            </button>
           </div>
         </div>
 
-        {!table && (
+        {/* 지도 보기. 인쇄에서는 빠진다(ScheduleMapView의 data-print-hide) —
+            인쇄물은 예전처럼 카드 보기 내용만 나간다. */}
+        {map && <ScheduleMapView days={days} region={mapRegion} onSelectItem={onSelectItem} />}
+
+        {cards && (
           <div className={styles.cards}>
             {shown.map((d) => (
               <div key={d.day} className={styles.dayBlock} data-ov-block>

@@ -218,6 +218,9 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
         expanded={expanded}
         onToggleExpand={() => setExpanded((v) => !v)}
         onSelectItem={selectItem}
+        // 지도 보기가 쓰는 값. 지역 중심 좌표에 숙박 구간·목록을 얹어
+        // 넘긴다(그날 묵는 숙소 아이콘과 걷기 코스 경로에 필요하다).
+        mapRegion={{ ...region, staySegs: plan.staySegs, listings }}
       />
 
       <CostSummary bars={bars} total={won(breakdown.total)} />
@@ -227,10 +230,6 @@ function PlanOverviewInner({ openedPlanId, savedPlan }) {
       {/* 딥그린 색면 + 흰 글자라 인쇄에서는 색을 되돌린다(출처 표기는 남긴다). */}
       <section className={styles.impact} data-print-dark>
         <div className={styles.impactInner}>
-          <p className={styles.impactNote}>
-            {region.short}에서 {nights}일 머무는 동안의 소비가 지역에 남습니다. · 인구감소지역 지정 현황 자료
-            행정안전부
-          </p>
           <p className={styles.source}>
             출처 ⓒ한국관광공사 · 인구감소지역 지정 현황 행정안전부 · 일정과 비용은 공개 자료를 바탕으로 한
             추정치입니다.

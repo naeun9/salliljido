@@ -2,6 +2,7 @@
 // dayTimeline.js가 300줄을 넘어(CLAUDE.md 코드 원칙) 떼어냈다.
 import { EXPERIENCE_SLOT_DEFAULT, EXPERIENCE_TIME_DEFAULT, SLOT_SWATCHES } from "./routineGenerator.js";
 import { findListing } from "./exploreListings.js";
+import { toLatLng } from "../utils/geo.js";
 import { SLOT_TIME } from "./slots.js";
 
 // 둘러보기에서 담은 곳 중 오늘 일차인 것.
@@ -129,4 +130,12 @@ export function resolveAdded(input) {
 // 자동 생성에서 빼야 할 id 전부(담은 곳은 아래에서 따로 넣으므로 겹치면 안 된다).
 export function allAddedIds(added) {
   return added.addedExperiences.concat(added.savedUtilities, added.savedSpots);
+}
+
+// 그날 묵는 숙소 마커. 구간(staySegs)에서 오늘이 포함된 것을 찾아 목록에서
+// 좌표를 얻는다. 체류 계획 탭과 최종 계획의 지도 보기가 같이 쓴다.
+export function findStayMarker(staySegs, day, listings) {
+  const seg = (staySegs || []).find((g) => g.stayId && g.from <= day && day <= g.to);
+  const listing = seg ? findListing(listings, "숙박", seg.stayId) : null;
+  return listing ? { place: listing.name, at: toLatLng(listing) } : null;
 }

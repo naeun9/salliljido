@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import KakaoMap from "../../../../components/map/KakaoMap.jsx";
 import MapOverlay from "../../../../components/map/MapOverlay.jsx";
 import MapZoomControl from "../../../../components/map/MapZoomControl.jsx";
@@ -41,6 +41,13 @@ const LINE_IDLE = { weight: 3, opacity: 0.45 };
 const LINE_HOT = { weight: 5, opacity: 0.95 };
 const LINE_MUTED = { weight: 2, opacity: 0.15 };
 
+// 카드에 마우스를 올린 뒤 지도를 옮기기까지 기다리는 시간. 목록을 훑을
+// 때마다 지도가 따라 움직이면 어지러워서, 한 카드에 잠깐 머무를 때만
+// 그 코스로 맞춘다.
+const HOVER_FIT_DELAY_MS = 300;
+// 코스 범위에 두는 여백(m). 딱 맞게 잡으면 선이 지도 가장자리에 붙는다.
+const COURSE_FIT_PAD = 700;
+
 export default function ExploreMap({
   items,
   // 걷기 코스를 보고 있을 때만 채워진다. 다른 카테고리에서는 빈 배열이라
@@ -71,8 +78,33 @@ export default function ExploreMap({
   }, [items, addedMarkers]);
   const bounds = useMemo(() => boundsOf(points.map((p) => p.at)), [points]);
 
+  // 잠깐 머문 코스 하나만 지도에 꽉 채운다. hoveredId를 그대로 쓰지 않고
+  // 0.3초 늦춰 받는다 — 카드 위를 스치기만 해도 지도가 튀지 않게.
+  const [fitId, setFitId] = useState(null);
+  useEffect(() => {
+    if (!hoveredId) {
+      setFitId(null);
+      return undefined;
+    }
+    const timer = setTimeout(() => setFitId(hoveredId), HOVER_FIT_DELAY_MS);
+    return () => clearTimeout(timer);
+  }, [hoveredId]);
+
+  // 머문 코스의 경로 전체가 보이는 범위. 코스가 아니거나(마커만 있는 항목)
+  // 경로를 못 받았으면 null이라 전체 범위를 그대로 쓴다.
+  const fitBounds = useMemo(() => {
+    if (!fitId) return null;
+    const hit = coursePaths.find((c) => c.id === fitId);
+    return hit ? boundsOf(hit.path, COURSE_FIT_PAD) : null;
+  }, [fitId, coursePaths]);
+
   return (
-    <KakaoMap className={styles.kakaoMap} center={center} bounds={bounds} fallback={fallback}>
+    <KakaoMap
+      className={styles.kakaoMap}
+      center={center}
+      bounds={fitBounds || bounds}
+      fallback={fallback}
+    >
       <MapZoomControl className={styles.zoomCluster} buttonClassName={styles.zoomBtn} />
 
       {/* 코스 경로. 마커보다 먼저 그려야 선 위에 마커가 얹힌다. */}
