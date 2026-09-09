@@ -8,7 +8,10 @@ import styles from "./Hero.module.css";
 // 사진 한 장이 머무는 시간. 지역 소개 본문 슬라이드(Features.jsx)는 3.6초인데,
 // 여기는 첫 화면이고 글을 읽는 동안 배경이 자꾸 바뀌면 산만해서 훨씬 길게 뒀다.
 // 겹치는 시간(1.1초)은 지역 소개 슬라이드와 같은 값이다(Hero.module.css).
-const SLIDE_INTERVAL_MS = 9000;
+// 9초에서 조금 줄였다 — 다섯 장을 한 바퀴 도는 데 걸리는 시간이 50.5초에서
+// 48초가 된다. 이 값을 바꾸면 Hero.module.css의 .zoom 길이도 같이 맞춰야
+// 한다(한 장이 보이는 8.5 + 1.1 = 9.6초).
+const SLIDE_INTERVAL_MS = 8500;
 // Hero.module.css의 .incoming 페이드 길이와 같아야 한다 — 이 시간이 지나야
 // 새 사진이 완전히 덮으므로, 그때 바닥 사진을 갈아 끼운다.
 const FADE_MS = 1100;

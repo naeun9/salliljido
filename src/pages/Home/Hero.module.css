@@ -59,19 +59,21 @@
   animation: heroFade 1.1s ease forwards;
 }
 
-/* 사진이 머무는 동안 아주 천천히 커진다. 9초 간격 + 1.1초 겹침 =
-   한 장이 보이는 10.1초에 걸쳐 1 → 1.08. 초당 0.8%라 눈으로 움직임을
-   좇기 어렵고, 정지 화면과 비교해야 알아볼 정도다. */
+/* 사진이 머무는 동안 아주 천천히 커진다. 8.5초 간격 + 1.1초 겹침 =
+   한 장이 보이는 9.6초에 걸쳐 1 → 1.05. 초당 0.52%로, 앞서 쓰던
+   0.79%(10.1초에 1.08)보다 한 단계 더 느리다 — 정지 화면과 나란히 놓고
+   봐야 알아챌 정도다. 길이는 Hero.jsx의 SLIDE_INTERVAL_MS + FADE_MS와
+   같아야 한다(짧으면 사진이 아직 보이는 동안 확대가 멈춰 버린다). */
 @keyframes heroZoom {
   from {
     transform: scale(1);
   }
   to {
-    transform: scale(1.08);
+    transform: scale(1.05);
   }
 }
 .zoom {
-  animation: heroZoom 10.1s linear forwards;
+  animation: heroZoom 9.6s linear forwards;
   will-change: transform;
 }
 
@@ -251,7 +253,7 @@
   display: flex;
   align-items: baseline;
   gap: 6px;
-  font-size: 11.5px;
+  font-size: 13px;
   letter-spacing: 0.01em;
   color: rgba(250, 248, 244, 0.72);
   text-shadow: 0 1px 6px rgba(35, 71, 61, 0.45);
@@ -287,7 +289,7 @@
   .photoCredit {
     right: 16px;
     bottom: 16px;
-    font-size: 10.5px;
+    font-size: 11.5px;
     color: rgba(250, 248, 244, 0.6);
   }
 }
