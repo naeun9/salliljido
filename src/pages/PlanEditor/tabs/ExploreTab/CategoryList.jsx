@@ -102,10 +102,14 @@ export default function CategoryList({
         </div>
       )}
 
-      {category === "체험 프로그램" && (
+      {/* 걷기 코스는 체험 프로그램과 카드가 같다. 두루누비 코스도 이름·배지·
+          설명·메타 두 칸(소요시간·거리)에 담기·일차 선택이 필요해서 모양이
+          정확히 겹친다 — 카드를 새로 만들지 않고 같은 가지를 쓴다. 그래야
+          담은 뒤 일정 배치·비용 계산도 체험과 같은 경로를 탄다. */}
+      {(category === "체험 프로그램" || category === "걷기 코스") && (
         <div className={`${styles.categorySection} slj-anim-fade`}>
           <div className={styles.sectionHeadPlain}>
-            <h2 className={styles.sectionTitle}>체험 프로그램</h2>
+            <h2 className={styles.sectionTitle}>{category}</h2>
           </div>
           {subChips}
           {filteredList.length === 0 ? (
@@ -125,8 +129,16 @@ export default function CategoryList({
                   <circle cx="13" cy="17.5" r="1" fill="#2F5D50" />
                 </svg>
               }
-              title="이 유형의 체험 프로그램은 아직 없어요"
-              description="다른 유형을 골라보시겠어요?"
+              title={
+                category === "걷기 코스"
+                  ? "이 난이도의 걷기 코스는 아직 없어요"
+                  : "이 유형의 체험 프로그램은 아직 없어요"
+              }
+              description={
+                category === "걷기 코스"
+                  ? "다른 난이도를 골라보시겠어요?"
+                  : "다른 유형을 골라보시겠어요?"
+              }
             />
           ) : (
             <div className={styles.cardGrid}>

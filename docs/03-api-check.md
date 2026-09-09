@@ -707,3 +707,75 @@ galPhotographer / galSearchKeyword / galPhotographyMonth / galCreatedtime / galM
 
 이미지 파일은 tong.visitkorea.or.kr에서 바로 받는 정적 파일이라 OpenAPI 호출
 한도와 무관하다.
+
+## §18. 두루누비 정보 서비스 (걷기여행길) — 2026-09-09 확인
+
+베이스 `http://apis.data.go.kr/B551011/Durunubi`. KorService2와 **같은 인증키**를
+쓰고 호출 규약(재시도·에러코드·응답 파싱)도 같아서 `api/_lib/tourApi.js`의
+`callDuruApi()`로 붙였다.
+
+### 동작하는 오퍼레이션
+
+| 오퍼레이션 | totalCount | 내용 |
+| --- | --- | --- |
+| `courseList` | **142** | 코스 한 건 = 한 구간 |
+| `routeList` | 4 | 테마 노선(남파랑길·서해랑길·해파랑길·DMZ 평화의 길) |
+
+`themeList` / `courseSearchList` / `cycleList` / `bicycleList` 등은 400이다.
+
+### courseList 필드
+
+`routeIdx, crsIdx, crsKorNm, crsDstnc, crsTotlRqrmHour, crsLevel, crsCycle,
+crsContents, crsSummary, crsTourInfo, travelerinfo, sigun, brdDiv, gpxpath,
+createdtime, modifiedtime`
+
+- `crsDstnc` km, `crsTotlRqrmHour` **분**, `crsLevel` 1·2·3(쉬움/보통/어려움)
+- `crsCycle` 순환형/비순환형
+- `sigun` = `"강원 고성군"`처럼 **시도+시군 한 문자열**. 지역 필터는 이 값으로 한다
+  (법정동 코드·좌표 파라미터는 없다). ⚠️ 시군 이름만으로 거르면 **경남 고성군과
+  강원 고성군이 섞인다** — 시도까지 확인할 것.
+
+### ⚠️ 자전거 코스는 없다
+
+`brdDiv`가 142건 **전부 `DNWW`(걷기)** 다. `brdDiv=DNBW` 등을 파라미터로 넣어도
+필터링되지 않고 항상 142건이 온다. 그래서 둘러보기 하위 필터를 걷기/자전거로
+나눌 수 없어 **난이도(쉬움·보통·어려움)** 로 대신했다.
+
+### 좌표는 GPX에만 있다
+
+응답에 위경도 필드가 없고 `gpxpath`(GPX 파일 주소)만 있다. 지도에 시작점을
+찍으려면 그 파일의 첫 `trkpt`를 읽어야 한다.
+
+- 파일 크기 130KB 안팎, 좌표 1,000점 이상
+- **HTTP Range 미지원**(`Range` 헤더를 보내도 200 + 전체 본문)
+- durunubi.kr의 정적 파일이라 **공공데이터포털 호출 한도와 무관**
+
+### 파일럿 15곳 코스 수 (실측)
+
+| 지역 | 코스 | 지역 | 코스 |
+| --- | --- | --- | --- |
+| 강원 고성 | **12** | 충남 서천 | 3 |
+| 충남 태안 | 6 | 경북 영덕 | 3 |
+| 강원 양양 | 2 | 강원 삼척 | 2 |
+| 충남 보령 | 2 | | |
+
+**0건: 평창·정선·공주·청양·안동·영주·봉화·의성(8곳)** — 남파랑길·서해랑길·
+해파랑길·DMZ 평화의 길이 전부 해안선과 접경을 따라가는 노선이라 내륙 지역에는
+코스 자체가 없다. 그래서 화면에서는 코스가 없으면 지역 소개 하이라이트를 통째로
+감추고, 둘러보기 카테고리는 빈 상태로 둔다.
+
+### 호출 최소화
+
+전국 142건이 전부라 **지역별로 부르지 않고 한 번에 다 받아 서버 메모리에 12시간
+담아 두고 `sigun`으로 걸러 준다**(`api/tour/duru.js`). 즉 서버리스 인스턴스가
+살아 있는 동안 이 서비스가 쓰는 호출은 **페이지 수만큼(현재 2건)** 이 전부이고,
+사용자가 몇 개 지역을 돌아봐도 늘지 않는다. 지역마다 부르는 방식이었다면
+15지역 × 방문자마다 호출이 생겼을 것이다.
+
+| 화면 | 두루누비 호출 |
+| --- | --- |
+| 지역 소개 | 0건(캐시 적중) / 최초 1회만 2건 |
+| 둘러보기 진입 | 0건(같은 캐시 공유) |
+
+프런트엔드도 `fetchRegionCourses()`가 지역별 Promise를 세션 캐시에 담아 지역
+소개와 둘러보기가 같은 응답을 나눠 쓴다.

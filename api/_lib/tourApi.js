@@ -9,6 +9,8 @@
 // 이중 인코딩(+가 %2B가 아니라 %252B가 되는 식)이 되어 인증 오류가 난다.
 // → 이 파일 밖에서는 절대로 serviceKey를 직접 만들거나 인코딩하지 말 것.
 const KOR_SERVICE_BASE = "http://apis.data.go.kr/B551011/KorService2";
+// 두루누비 정보 서비스(걷기여행길 코스). 같은 인증키를 쓴다.
+const DURUNUBI_BASE = "http://apis.data.go.kr/B551011/Durunubi";
 
 // 공공데이터포털 공통 에러코드(returnReasonCode/resultCode 공용 표).
 const ERROR_MESSAGES = {
@@ -194,6 +196,14 @@ async function callOpenApi(baseUrl, operation, params, { timeoutMs = ATTEMPT_TIM
 // 반환값: 성공 시 { ok:true, body }, 실패 시 { ok:false, errorCode, message }.
 export function callTourApi(operation, params = {}, opts) {
   return callOpenApi(KOR_SERVICE_BASE, operation, params, opts);
+}
+
+// 두루누비 정보 서비스(걷기여행길). 같은 공공데이터포털 계정·같은 인증키를
+// 쓰지만 베이스 URL이 달라 별도 함수로 둔다. 호출 규약(재시도·에러코드·
+// 응답 파싱)은 KorService2와 완전히 같다.
+// operation: "courseList"(코스), "routeList"(테마 노선).
+export function callDuruApi(operation, params = {}, opts) {
+  return callOpenApi(DURUNUBI_BASE, operation, params, opts);
 }
 
 // 관광공사 이미지 URL은 같은 호스트(tong.visitkorea.or.kr)인데도 항목마다
