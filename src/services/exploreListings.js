@@ -28,9 +28,14 @@ export const SUB_FILTERS = {
   "체험 프로그램": ["전통체험", "공예체험", "농촌·어촌체험", "템플스테이", "웰니스", "산업관광"],
   "주변 관광지": ["자연", "역사", "문화", "레저스포츠"],
   // 두루누비에는 걷기(brdDiv=DNWW)만 있고 자전거 코스가 없어(142건 전수
-  // 확인) 걷기/자전거로 나눌 수가 없다. 대신 데이터에 실제로 있는
-  // 난이도(crsLevel 1~3)로 칩을 만든다 — 칩 줄의 구조는 그대로다.
-  "걷기 코스": ["쉬움", "보통", "어려움"],
+  // 확인) 걷기/자전거로 나눌 수가 없다.
+  //
+  // 처음에는 난이도(crsLevel)로 칩을 만들었는데 실측해 보니 쓸모가 없었다 —
+  // 파일럿 지역 30개 코스의 난이도별 소요시간 중앙값이 쉬움·보통·어려움
+  // 모두 270분으로 같다. 난이도로 걸러도 하루가 얼마나 들어가는지는 전혀
+  // 달라지지 않는다. 며칠~한 달 머무는 서비스에서 실제로 알아야 하는 건
+  // "이 코스가 내 반나절을 가져가는가"라 소요시간으로 바꿨다.
+  "걷기 코스": ["3시간 이내", "반나절", "하루"],
 };
 
 // 아직 목록을 못 받았을 때 쓰는 빈 값. 매번 새 객체를 만들면 useEffect
@@ -126,6 +131,19 @@ function normalize(raw, index) {
   return { category, item: shapeForCategory(category, base) };
 }
 
+// 소요시간 구간. 파일럿 지역 코스는 150~420분에 몰려 있어(2시간 이하는
+// 0건) 이 세 칸이면 실제 분포가 갈린다.
+const COURSE_HALF_DAY_MIN = 180; // 이 이상이면 반나절
+const COURSE_FULL_DAY_MIN = 300; // 이 이상이면 하루
+
+export function courseLoadLabel(minutes) {
+  const m = Number(minutes) || 0;
+  if (!m) return "";
+  if (m > COURSE_FULL_DAY_MIN) return "하루";
+  if (m > COURSE_HALF_DAY_MIN) return "반나절";
+  return "3시간 이내";
+}
+
 // 분 단위를 "3시간 30분"처럼 읽는 말로 바꾼다.
 function durationText(minutes) {
   const m = Number(minutes) || 0;
@@ -145,8 +163,10 @@ function shapeCourse(course, index) {
   return {
     id: String(course.id),
     name: course.name,
+    // 배지는 난이도를 그대로 둔다(참고 정보로는 쓸모가 있다). 거르는 기준만
+    // 소요시간으로 옮겼다.
     type: course.levelName || "걷기",
-    sub: course.levelName || null,
+    sub: courseLoadLabel(course.minutes),
     image: "",
     swatch: swatchFor(index),
     addr: course.sigun || "",
@@ -162,6 +182,8 @@ function shapeCourse(course, index) {
     // 일정 배치에서 쓰는 값(services/dayTimeline.js).
     courseMinutes: course.minutes,
     courseKm: course.distanceKm,
+    // 카드에서 소요시간을 강조할 때 쓴다("반나절"·"하루").
+    courseLoad: courseLoadLabel(course.minutes),
   };
 }
 

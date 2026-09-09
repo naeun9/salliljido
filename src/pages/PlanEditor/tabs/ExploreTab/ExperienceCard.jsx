@@ -77,8 +77,19 @@ export default function ExperienceCard({
             둘 다 없을 때는 줄 자체를 감춘다(docs/03-api-check.md §14). */}
         {(experience.duration || experience.cost) && (
           <div className={styles.meta}>
-            <span className={styles.duration}>{experience.duration}</span>
-            <span className={styles.cost}>{experience.cost}</span>
+            {/* 걷기 코스는 소요시간이 담을지 말지를 가르는 값이라(최단 2시간
+                30분, 중앙값 4시간 30분) 거리보다 앞세워 강조한다. 반나절·
+                하루짜리는 라벨을 함께 붙여 카드만 보고도 부담을 알 수 있게
+                한다. 체험 프로그램은 두 값이 비어 있어 이 가지를 타지 않는다. */}
+            <span className={experience.courseLoad ? styles.durationStrong : styles.duration}>
+              {experience.duration}
+            </span>
+            {experience.courseLoad && experience.courseLoad !== "3시간 이내" && (
+              <span className={styles.loadTag}>{experience.courseLoad}</span>
+            )}
+            <span className={experience.courseLoad ? styles.distance : styles.cost}>
+              {experience.cost}
+            </span>
           </div>
         )}
         {/* 계획 없이 둘러보는 화면에서는 담기·일차 선택을 감춘다(readOnly). */}
