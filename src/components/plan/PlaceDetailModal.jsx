@@ -3,7 +3,7 @@ import Modal from "../common/Modal.jsx";
 import Skeleton from "../common/Skeleton.jsx";
 import { usePlaceDetail } from "../../hooks/usePlaceDetail.js";
 import { kakaoMapUrl } from "../../utils/externalLinks.js";
-import { summarize, firstItems } from "../../utils/text.js";
+import { summarize, toParagraphs, splitList } from "../../utils/text.js";
 import styles from "./PlaceDetailModal.module.css";
 
 // 일정 항목을 눌렀을 때 뜨는 장소 상세. design의 우하단 카드(ovSel,
@@ -41,18 +41,29 @@ export default function PlaceDetailModal({ selection, contentTypeId, onClose }) 
   // 개요는 270~440자가 예사라 그대로 넣으면 정보 목록이 스크롤 밖으로
   // 밀린다. 문장 단위로 줄이고, 잘렸을 때만 "더 보기"를 붙인다.
   const summary = summarize(overview);
+  // 펼쳤을 때는 2~3문장씩 문단으로 나눠 그린다.
+  const paragraphs = toParagraphs(overview);
   const image = detail?.image || "";
   const tel = detail?.tel || "";
+
+  // 메뉴는 음식점(39)에만 있는 값이다. 다른 타입에는 detailIntro2가 아예
+  // 내려주지 않지만, 타입으로 한 번 더 막아 둔다.
+  const info = detail?.info || [];
+  const isRestaurant = String(contentTypeId || detail?.contentTypeId || "") === "39";
+  const valueOf = (label) => info.find((row) => row.label === label)?.value || "";
+  const firstMenu = isRestaurant ? valueOf("대표메뉴") : "";
+  // treatmenu는 "A / B / C 등" 한 줄로 와서 정보 목록에 넣으면 줄이 길어진다.
+  // 아래 메뉴 섹션에서 항목별로 세운다.
+  const menuItems = isRestaurant ? splitList(valueOf("취급메뉴")) : [];
+  const hasMenu = !!firstMenu || menuItems.length > 0;
 
   // 값이 있는 줄만 그린다. 전화번호는 detailIntro2의 문의처와 겹치는 일이
   // 잦아(같은 번호가 두 줄) 같은 값이면 하나만 남긴다.
   const rows = [
     { label: "주소", value: address },
     { label: "전화", value: tel },
-    // 취급메뉴는 "A / B / C / …"로 길게 오는 경우가 있어 앞 다섯 개만 남긴다.
-    ...(detail?.info || []).map((row) =>
-      row.label === "취급메뉴" ? { ...row, value: firstItems(row.value) } : row
-    ),
+    // 메뉴 두 줄은 정보 목록에서 빼고 아래 메뉴 섹션으로 옮긴다.
+    ...info.filter((row) => !(isRestaurant && (row.label === "대표메뉴" || row.label === "취급메뉴"))),
   ].filter((row, i, all) => row.value && all.findIndex((r) => r.value === row.value) === i);
 
   return (
@@ -95,16 +106,31 @@ export default function PlaceDetailModal({ selection, contentTypeId, onClose }) 
           ) : (
             <>
               {image && <img className={styles.image} src={image} alt="" loading="lazy" />}
-              {overview && (
-                <p className={styles.overview}>
-                  {expanded ? overview : summary.short}
-                  {summary.truncated && (
-                    <button type="button" className={styles.moreBtn} onClick={() => setExpanded((v) => !v)}>
-                      {expanded ? "접기" : "더 보기"}
-                    </button>
-                  )}
-                </p>
-              )}
+              {overview &&
+                (expanded ? (
+                  // 펼친 상태: 문단으로 나눠 그리고 "접기"는 마지막 문단 끝에 붙인다.
+                  <div className={styles.overviewFull}>
+                    {paragraphs.map((para, i) => (
+                      <p key={i} className={styles.overview}>
+                        {para}
+                        {i === paragraphs.length - 1 && (
+                          <button type="button" className={styles.moreBtn} onClick={() => setExpanded(false)}>
+                            접기
+                          </button>
+                        )}
+                      </p>
+                    ))}
+                  </div>
+                ) : (
+                  <p className={styles.overview}>
+                    {summary.short}
+                    {summary.truncated && (
+                      <button type="button" className={styles.moreBtn} onClick={() => setExpanded(true)}>
+                        더 보기
+                      </button>
+                    )}
+                  </p>
+                ))}
 
               {rows.length > 0 && (
                 <dl className={styles.info}>
@@ -115,6 +141,31 @@ export default function PlaceDetailModal({ selection, contentTypeId, onClose }) 
                     </div>
                   ))}
                 </dl>
+              )}
+
+              {/* 메뉴. 정보 목록 아래에 따로 둔다 — 한 줄로 이어 붙이면
+                  "A / B / C 등"이 되어 무엇이 있는지 눈에 안 들어온다.
+                  대표메뉴가 있으면 맨 위에 하나만 강조하고, 나머지는
+                  라벨 없이 항목만 세운다. 둘 다 없으면 섹션을 그리지 않는다. */}
+              {hasMenu && (
+                <section className={styles.menu}>
+                  <h3 className={styles.menuTitle}>메뉴</h3>
+                  {firstMenu && (
+                    <p className={styles.menuFirst}>
+                      <span className={styles.menuBadge}>대표</span>
+                      {firstMenu}
+                    </p>
+                  )}
+                  {menuItems.length > 0 && (
+                    <ul className={styles.menuList}>
+                      {menuItems.map((item) => (
+                        <li key={item} className={styles.menuItem}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </section>
               )}
 
               {/* 목록에만 있는 설명(대개 주소)은 주소 줄과 겹치면 버린다. */}
