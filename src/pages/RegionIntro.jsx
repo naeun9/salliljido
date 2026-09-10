@@ -2,7 +2,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSearch } from "../hooks/useSearch.js";
 import { useRegionSave } from "../hooks/useRegionSave.js";
 import { useConfirm } from "../hooks/useConfirm.js";
-import { getRegionByShort, getRegionInsights } from "../services/regionRecommend.js";
+import { getRegionByShort } from "../services/regionRecommend.js";
+import { regionAbout } from "../services/regionProfile.js";
 import { resolveStayCondition } from "../utils/date.js";
 import { hasJong } from "../utils/korean.js";
 import RegionNotFound from "../components/region/RegionNotFound.jsx";
@@ -15,22 +16,18 @@ import styles from "./RegionIntro.module.css";
 // intro 관련 계산). "dtStats"/"dtWhy"/"dtLocNote"/"dtMx"/"dtMy"/"inWhy"/
 // "regionPrograms"는 값은 계산되지만 이 화면 어디에도 마크업으로 안 걸려
 // 있던 죽은 코드라 옮기지 않았다(§ 보고서 참고).
-function buildAbout(region, quietLevel) {
-  const place = (region.places || ["바다"])[0];
-  const short = region.short;
+// ABOUT 문단. 예전에는 지역명과 places만 갈아끼운 같은 문장이 29곳에 그대로
+// 나갔고, "마트와 병원, 시장이 모여 있어"처럼 확인할 수 없는 말도 섞여 있었다.
+// 지금은 그 지역 관광공사 목록 실측값으로 문장을 골라 잇는다
+// (services/regionProfile.js). 첫 문장만 여기서 붙인다 — 고른 조건에 대한
+// 대답이라 지역 데이터가 아니라 화면 맥락에서 나오는 말이다.
+function buildAbout(region) {
+  const place = (region.places || ["자연"])[0];
   return (
     place +
     (hasJong(place) ? "과" : "와") +
     " 가까워 고르신 조건에 잘 맞는 곳입니다. " +
-    short +
-    (hasJong(short) ? "은 " : "는 ") +
-    place +
-    (hasJong(place) ? "을" : "를") +
-    " 곁에 둔 인구감소지역입니다. " +
-    (quietLevel <= 2
-      ? "인근 관광지에 비해 방문객이 적어 성수기를 빼면 하루가 조용하게 흐릅니다."
-      : "주말과 성수기에는 방문객이 늘지만 평일은 한적합니다.") +
-    " 읍내에 마트와 병원, 시장이 모여 있어 며칠에서 한 달까지 지내는 데 큰 불편이 없습니다. 대도시의 편의를 기대할 곳은 아니지만, 필요한 것은 대체로 걸어서 닿는 거리에 있습니다."
+    regionAbout(region, { hasJong })
   );
 }
 
@@ -51,8 +48,7 @@ export default function RegionIntro() {
   const { dur, place, customDays } = search;
   const cond = resolveStayCondition({ dur, place, customDays });
   const chips = [cond.durLabel, cond.place];
-  const insights = getRegionInsights(region.short);
-  const about = buildAbout(region, insights.quietLevel);
+  const about = buildAbout(region);
   // design 3095-3096줄: pool() 항목엔 swatch가 없어 항상 기본 초록 텍스처로
   // 떨어진다(RegionResult 카드용 swatch는 getRecommendations()가 그때그때
   // 만들어 붙이는 값이라 여기선 못 쓴다). imageNote는 POOL에 다 있어 지금은
@@ -84,7 +80,7 @@ export default function RegionIntro() {
         </div>
       </section>
 
-      <Features region={region} insights={insights} />
+      <Features region={region} />
 
       <section className={styles.cta}>
         <div className={styles.ctaInner}>
