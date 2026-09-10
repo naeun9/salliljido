@@ -42,10 +42,13 @@ function buildStats(region, insights) {
     {
       label: "교통 접근",
       icon: "M6 3.5h8v11H6z M8 17h4 M8 6.5h4",
+      // 육지 기준 기본 문구가 안 맞는 지역은 regions 데이터에서 덮어쓴다
+      // (울릉처럼 배로만 닿는 곳). 없으면 예전 목업 문구 그대로다.
       note:
-        quietLevel <= 1
+        region.access ||
+        (quietLevel <= 1
           ? "버스 위주라 현지 이동은 여유를 두는 게 좋아요"
-          : "고속버스와 기차로 수도권에서 2시간 안팎이에요",
+          : "고속버스와 기차로 수도권에서 2시간 안팎이에요"),
     },
   ];
 }

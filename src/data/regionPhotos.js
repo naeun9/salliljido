@@ -2,6 +2,10 @@
 // 조회해 고른 결과를 URL 상수로 적어 둔 것이다. 지역마다 4장이고, 첫 장이
 // 대표 사진(배너·카드)이며 나머지는 지역 소개 본문 슬라이드에 쓴다.
 //
+// 사진 목록은 광역별 파일로 나눠 뒀다(29곳 × 4장 = 116장이라 한 파일에
+// 두면 700줄이 넘는다 — CLAUDE.md 300줄 규칙). 여기서는 세 파일을 합쳐
+// 조회 함수만 내보낸다.
+//
 // 왜 화면에서 실시간으로 부르지 않는가:
 //  - 홈 캐러셀·마이페이지 카드는 방문자마다 지역 수만큼 호출이 생긴다.
 //    사진 몇 장을 위해 일 1,000건 한도를 태울 이유가 없다(docs/03-api-check.md §17).
@@ -11,369 +15,42 @@
 //  - 여기 있는 건 이미지 URL(정적 참조값)이지 관광 콘텐츠 캐시가 아니다.
 //    지역 코드(regnCd/signguCd)·중심 좌표와 같은 성격이다.
 //
-// 고른 기준(2026-08-29 재선별):
+// 고른 기준:
 //  - 촬영지(galPhotographyLocation)가 그 지역인 것만. 키워드 검색은
-//    galSearchKeyword까지 훑어서 다른 지역 사진이 섞인다.
-//  - 대표 사진은 배너에 딥그린 오버레이(72%→60%→76%)가 덮이므로, 오버레이를
-//    씌운 컨택트 시트를 만들어 형태가 남는 것만 골랐다. 평평한 백사장·잔잔한
-//    바다는 오버레이 아래에서 단색이 돼 버려서 전부 뺐다(태안 몽산포,
-//    서천 춘장대, 안동 하회마을이 그래서 교체됐다).
-//  - 가로형, 인물이 크게 나오지 않는 것.
-//  - (2026-09-09 추가) 압축 화질도 본다. 같은 1280px라도 파일이 작게 눌린
-//    것이 섞여 있어(양자화 테이블 합 1477 = 블록 노이즈) 화면을 꽉 채우면
-//    깨져 보인다. bpp와 양자화 합을 재서 여유 있는 것만 남겼다.
-//
-// 파일럿 지역 교체(2026-09-09): 속초·인제·홍성은 행정안전부 인구감소지역이
-// 아니라(속초·인제는 관심지역, 홍성은 미지정) 평창·고성·공주로 바꿨다.
-// 세 지역의 12장은 위 기준으로 새로 골랐고 나머지 48장은 그대로다.
+//    galSearchKeyword까지 훑어서 다른 지역 사진이 섞인다. 1페이지만 보면
+//    같은 명소 사진이 수십 장씩 중복돼 후보가 실제보다 적어 보이므로,
+//    여러 페이지를 훑어 "서로 다른 명소"로 센다(금산이 2개→8개가 됐다).
+//  - 대표 사진은 배너 오버레이가 덮이므로, 오버레이를 씌운 컨택트 시트를
+//    만들어 형태가 남는 것만 골랐다. 평평한 백사장·잔잔한 수면은 오버레이
+//    아래에서 단색이 돼 버려서 전부 뺐다.
+//  - 가로형(1000px 이상), 인물이 크게 나오지 않는 것.
+//  - 압축 화질도 본다. 같은 1280px라도 파일이 작게 눌린 것이 섞여 있어
+//    화면을 꽉 채우면 깨져 보인다. bpp와 JPEG 양자화 테이블 합을 재서
+//    기존 60장의 분포 안에 드는 것만 남겼다.
+//  - 네 장의 제목은 지역 소개 슬라이드에 캡션으로 그대로 나간다. 그래서
+//    "아름다운 우리강산"처럼 장소를 알 수 없는 사진 제목은 쓰지 않는다.
 //
 // 저작권: 전부 한국관광공사 관광사진 갤러리 제공 사진이다. 이 API에는
 // 사진별 저작권 유형(cpyrhtDivCd) 필드가 없다 — 장소 상세 API(detailImage2)에만
-// 있다. 출처는 화면에 "사진 ⓒ한국관광공사"로 표기한다(Footer, 지역 소개 하단).
+// 있다. 출처는 화면에 "사진 ⓒ한국관광공사"로 표기한다(Footer).
 //
 // 갱신 방법: gallerySearchList1을 지역명·명소명으로 부르고
 // galPhotographyLocation에 지역명이 들어간 것만 추린 뒤 골라 URL을 바꾸면 된다.
 // 원본이 내려가도 화면은 기존 빗금 배경으로 돌아간다(사진 + 빗금 2겹).
-const PHOTOS = {
-  양양: [
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/49/1544649.jpg",
-      title: "하조대",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/87/2774787.jpg",
-      title: "남애항 스카이워크 전망대",
-      photographer: "강원지사 모먼트스튜디오",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/00/1187900.jpg",
-      title: "남애항",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/15/1964615.jpg",
-      title: "하조대 스카이워크",
-      photographer: "한국관광공사 김지호",
-    },
-  ],
-  정선: [
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/67/2818467.jpg",
-      title: "병방치 스카이워크",
-      photographer: "두드림",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/91/1984991.jpg",
-      title: "정선 병방치스카이워크",
-      photographer: "한국관광공사 이범수",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/76/2516876.jpg",
-      title: "몰운대",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/87/1058787.jpg",
-      title: "풍경열차",
-      photographer: "한국관광공사 김지호",
-    },
-  ],
-  고성: [
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/16/1842516.jpg",
-      title: "공현진해수욕장",
-      photographer: "한국관광공사 이범수",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/49/2504249.jpg",
-      title: "설국으로 가는 길",
-      photographer: "황선구",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/21/2456121.jpg",
-      title: "왕곡마을",
-      photographer: "한국관광공사 이범수",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/20/1842520.jpg",
-      title: "송지호해수욕장",
-      photographer: "한국관광공사 이범수",
-    },
-  ],
-  삼척: [
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/67/1960267.jpg",
-      title: "삼척 장호항의 여름",
-      photographer: "허흥무",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/05/2925705.jpg",
-      title: "장호항의 여유",
-      photographer: "신승희",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/92/2550692.jpg",
-      title: "삼척 해상케이블카",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/51/2474451.jpg",
-      title: "죽서루",
-      photographer: "한국관광공사 이범수",
-    },
-  ],
-  평창: [
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/40/2575940.jpg",
-      title: "양떼목장",
-      photographer: "명준욱",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/55/2504255.jpg",
-      title: "오대산 설국 속 상원사",
-      photographer: "박상훈",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/72/2564572.jpg",
-      title: "효석달빛언덕",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/64/2525864.jpg",
-      title: "대관령 전경",
-      photographer: "IR 스튜디오",
-    },
-  ],
-  태안: [
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/13/3567213.jpg",
-      title: "안면암의 봄",
-      photographer: "박정아",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/96/2563896.jpg",
-      title: "신두리 사구",
-      photographer: "이순옥",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/70/1073970.jpg",
-      title: "청산수목원",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/36/1811836.jpg",
-      title: "태안 세계튤립축제",
-      photographer: "한국관광공사 김지호",
-    },
-  ],
-  서천: [
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/37/2936537.jpg",
-      title: "장항 스카이워크",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/50/2477950.jpg",
-      title: "장항송림산림욕장",
-      photographer: "한국관광공사 김지호 ",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/96/1989396.jpg",
-      title: "신성리 갈대밭",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/34/1951634.jpg",
-      title: "한국최초 성경전래지",
-      photographer: "한국관광공사 김지호",
-    },
-  ],
-  보령: [
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/91/2504291.jpg",
-      title: "무논 여행",
-      photographer: "정종호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/57/1193557.jpg",
-      title: "보령 충청수영성",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/80/2876180.jpg",
-      title: "남포관아문",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/90/1074490.jpg",
-      title: "대천해수욕장",
-      photographer: "한국관광공사 김지호",
-    },
-  ],
-  공주: [
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/83/1791183.jpg",
-      title: "공산성",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/99/2563899.jpg",
-      title: "마곡사의 겨울",
-      photographer: "이중일",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/28/1790428.jpg",
-      title: "공주한옥마을",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/54/1040154.jpg",
-      title: "공주 갑사",
-      photographer: "한국관광공사 김지호",
-    },
-  ],
-  청양: [
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/36/3570736.jpg",
-      title: "천장호 출렁다리",
-      photographer: "김석태",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/52/2537152.jpg",
-      title: "천장호 전경",
-      photographer: "김순자",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/32/1809432.jpg",
-      title: "칠갑산",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/32/1810232.jpg",
-      title: "칠갑산장승공원",
-      photographer: "한국관광공사 김지호 ",
-    },
-  ],
-  영덕: [
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/39/1908739.jpg",
-      title: "영덕 블루로드",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/26/2643926.jpg",
-      title: "강구항",
-      photographer: "한국관광공사 이범수",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/37/1908737.jpg",
-      title: "영덕 블루로드",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/45/2648845.jpg",
-      title: "죽도산",
-      photographer: "한국관광공사 김지호",
-    },
-  ],
-  봉화: [
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/63/1091463.jpg",
-      title: "범바위",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/43/1961943.jpg",
-      title: "가을빛 따스한 청량사탑",
-      photographer: "김혜경",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/77/2642977.jpg",
-      title: "닭실마을",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/85/1812385.jpg",
-      title: "경북_중부내륙 순환열차 O-Train",
-      photographer: "한국관광공사 이범수",
-    },
-  ],
-  의성: [
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/06/1961606.jpg",
-      title: "꽃과 능",
-      photographer: "오상래",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/67/1142067.jpg",
-      title: "의성 만취당",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/55/1999655.jpg",
-      title: "의성 산수유꽃 축제",
-      photographer: "한국관광공사 이범수",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/56/1999656.jpg",
-      title: "의성 산수유꽃 축제",
-      photographer: "한국관광공사 이범수",
-    },
-  ],
-  안동: [
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/80/1961780.jpg",
-      title: "월영교의 봄",
-      photographer: "김화분",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/52/1085052.jpg",
-      title: "부용대",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/35/1088335.jpg",
-      title: "병산서원",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/41/2504241.jpg",
-      title: "월영교의 아침 물안개",
-      photographer: "김성규",
-    },
-  ],
-  영주: [
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/61/2620261.jpg",
-      title: "외나무다리",
-      photographer: "이복현",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/32/1090932.jpg",
-      title: "소수서원",
-      photographer: "한국관광공사 김지호",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/21/1954821.jpg",
-      title: "영주 무섬마을",
-      photographer: "한국관광공사 이범수",
-    },
-    {
-      url: "https://tong.visitkorea.or.kr/cms2/website/27/1954527.jpg",
-      title: "희방폭포",
-      photographer: "한국관광공사 이범수",
-    },
-  ],
-};
+import { GANGWON_PHOTOS } from "./regionPhotos/gangwon.js";
+import { CHUNGNAM_PHOTOS } from "./regionPhotos/chungnam.js";
+import { GYEONGBUK_PHOTOS } from "./regionPhotos/gyeongbuk.js";
+
+const PHOTOS = { ...GANGWON_PHOTOS, ...CHUNGNAM_PHOTOS, ...GYEONGBUK_PHOTOS };
 
 // 홈 히어로 배경. 특정 시군을 대표하는 자리가 아니라, 파일럿 세 광역
-// (충남·강원·경북)이 고루 나오도록 위 60장 중에서 5장을 뽑아 돌린다.
+// (충남·강원·경북)이 고루 나오도록 위 목록에서 5장을 뽑아 돌린다.
 //
-// 고른 기준: 히어로 오버레이는 지역 배너보다 진하다(78%→66%→82%). 이
-// 오버레이를 씌운 상태로 히어로를 그대로 렌더해 놓고 고른 것들이라,
-// 다섯 장 모두 형태가 남고 흰 제목이 묻히지 않는다. 평평한 백사장·잔잔한
-// 수면처럼 오버레이 아래에서 단색이 되는 사진은 전부 뺐다.
+// 고른 기준: 히어로는 전면 오버레이 위에 글자 쪽을 한 겹 더 덮는다
+// (Hero.module.css의 .overlay + .textScrim). 그 상태로 히어로를 그대로
+// 렌더해 놓고 고른 것들이라 다섯 장 모두 형태가 남고 흰 제목이 묻히지
+// 않는다. 평평한 백사장·잔잔한 수면처럼 오버레이 아래에서 단색이 되는
+// 사진은 전부 뺐다.
 // 첫 장은 원래 쓰던 천장호 전경 그대로다 — 첫 화면의 인상은 바뀌지 않는다.
 export const HERO_PHOTOS = [
   {

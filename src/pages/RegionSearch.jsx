@@ -1,15 +1,27 @@
 import { useLayoutEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSearch } from "../hooks/useSearch.js";
+import { REGIONS } from "../data/regions.js";
 import styles from "./RegionSearch.module.css";
 
 // design/salliljido.extracted.html 309-393줄(#find), 3591-3609줄(pickVals),
 // 3985-4005줄(regionCards/ctaBg 등 계산식). 값은 원본 그대로.
+// 광역 아래 한 줄 설명. 파일럿이 29곳으로 늘어 이름을 다 적을 수 없어
+// 대표 세 곳만 쓰고 나머지는 개수로 말한다. 개수는 REGIONS에서 세므로
+// 지역을 더해도 문구가 어긋나지 않는다.
+const REGION_LEADS = {
+  강원: ["평창", "고성", "영월"],
+  충남: ["공주", "태안", "부여"],
+  경북: ["안동", "문경", "울진"],
+};
+const countOf = (region) => REGIONS.filter((r) => r.region === region).length;
+
 const REGION_OPTIONS = [
-  { value: "강원", sub: "평창·고성·양양·삼척" },
-  { value: "충남", sub: "공주·태안·보령·서천" },
-  { value: "경북", sub: "안동·영주·봉화·의성" },
-  { value: "상관없음", sub: "세 지역에서 모두 찾아드려요" },
+  ...Object.entries(REGION_LEADS).map(([value, leads]) => ({
+    value,
+    sub: `${leads.join("·")} 등 ${countOf(value)}곳`,
+  })),
+  { value: "상관없음", sub: `세 지역 ${REGIONS.length}곳에서 모두 찾아드려요` },
 ];
 
 const DURATION_OPTIONS = ["1주", "2주", "1달", "직접 입력"];

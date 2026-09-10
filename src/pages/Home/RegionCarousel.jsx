@@ -2,9 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSearch } from "../../hooks/useSearch.js";
 import { carouselPhoto, photoBackground } from "../../data/regionPhotos.js";
+import { REGIONS as PILOT_REGIONS } from "../../data/regions.js";
 import styles from "./RegionCarousel.module.css";
 
 // design/salliljido.extracted.html 195-238줄(#regions), 3839-3849줄(regions 데이터).
+//
+// cities는 원본이 4칸이었다. 파일럿이 광역당 9~10곳으로 늘었지만 칩을 열 개씩
+// 늘어놓으면 카드가 이름 목록이 되어 버려서, 대표 4곳만 그대로 두고 남은
+// 개수를 칩 하나로 덧붙인다(아래 cityChips). 개수는 REGIONS에서 세므로
+// 지역을 더해도 문구가 어긋나지 않는다.
 const REGIONS = [
   {
     order: "01 / 03",
@@ -31,6 +37,13 @@ const REGIONS = [
     imageNote: "안동 고택 마당",
   },
 ];
+
+// 카드에 그릴 칩: 대표 4곳 + "외 N곳". 남은 곳이 없으면 덧붙이지 않는다.
+function cityChips(region) {
+  const total = PILOT_REGIONS.filter((r) => r.region === region.name).length;
+  const rest = total - region.cities.length;
+  return rest > 0 ? [...region.cities, `외 ${rest}곳`] : region.cities;
+}
 
 const COUNT = REGIONS.length;
 const AUTOPLAY_MS = 7000; // design 2188줄: carouselInterval 기본값 7초
@@ -163,7 +176,7 @@ export default function RegionCarousel() {
                       <div className={styles.cardOrder}>{r.order}</div>
                       <h3 className={styles.cardName}>{r.name}</h3>
                       <div className={styles.cardCities}>
-                        {r.cities.map((c) => (
+                        {cityChips(r).map((c) => (
                           <span key={c} className={styles.cardCity}>
                             {c}
                           </span>
