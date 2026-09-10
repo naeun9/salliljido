@@ -21,7 +21,7 @@ const SLIDE_INTERVAL_MS = 3600; // design startIntroSlides(), 2181-2183줄
 function buildStats(region, insights) {
   const places = region.places || ["바다"];
   const last = places[places.length - 1];
-  const { quietLevel, convLevel, wcLevel } = insights;
+  const { convLevel, wcLevel } = insights;
   return [
     {
       label: "자연환경",
@@ -42,13 +42,12 @@ function buildStats(region, insights) {
     {
       label: "교통 접근",
       icon: "M6 3.5h8v11H6z M8 17h4 M8 6.5h4",
-      // 육지 기준 기본 문구가 안 맞는 지역은 regions 데이터에서 덮어쓴다
-      // (울릉처럼 배로만 닿는 곳). 없으면 예전 목업 문구 그대로다.
-      note:
-        region.access ||
-        (quietLevel <= 1
-          ? "버스 위주라 현지 이동은 여유를 두는 게 좋아요"
-          : "고속버스와 기차로 수도권에서 2시간 안팎이에요"),
+      // 29곳 전부 data/regions에 실제 접근 수단을 적어 두었다. 예전에는
+      // 지역명 해시로 두 문장 중 하나를 골랐는데, 그 문장이 "고속버스와
+      // 기차로 2시간"이라 철도가 없는 군이나 배로만 닿는 울릉에서는 틀린
+      // 말이 됐다. 값이 비는 지역은 없지만, 새 지역을 access 없이 추가해도
+      // 거짓말이 나가지 않도록 기본 문구는 단정하지 않는 쪽으로 둔다.
+      note: region.access || "대중교통편은 오가는 날짜에 따라 달라 미리 확인하는 게 좋아요",
     },
   ];
 }
