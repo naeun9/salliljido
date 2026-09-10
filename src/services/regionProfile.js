@@ -10,8 +10,8 @@
 // 두 화면이 같은 함수를 부른다. 화면이 어긋날 수가 없다.
 //
 // 판정에 쓰지 않는 것: 마트·병원·코워킹 공간은 관광공사 목록에 없는 정보라
-// 있다/없다를 말하지 않는다. 방문객 수도 없어서 "한적함"은 관광 콘텐츠가
-// 얼마나 적은지로 대신 본다(아래 quietLevel 주석 참고).
+// 있다/없다를 말하지 않는다. "한적함"만 목록이 아니라 한국관광 데이터랩의
+// 방문자수를 쓴다(아래 quietLevel 주석 참고).
 
 // 구간 경계. 여기만 고치면 두 화면이 같이 움직인다.
 const CAFE_MANY = 10; // 카페가 여러 곳
@@ -19,8 +19,14 @@ const CAFE_SOME = 3; // 카페가 몇 곳
 const FOOD_MANY = 40; // 식당이 넉넉
 const FOOD_SOME = 20; // 식당이 고루 있음
 const FOOD_FEW = 10; // 식당이 많지 않음
-const QUIET_VERY = 100; // 목록 전체가 100건 미만이면 매우 한적
-const QUIET_MID = 200;
+// 하루 평균 방문자(외지인+외국인). 29곳을 재어 보니 두 자리에서 뚜렷하게
+// 끊겨서 그 자리를 경계로 잡았다 — 1.5만~2.0만 사이가 비고(청송 15,460 →
+// 의성 20,204), 3.9만~4.7만 사이가 빈다(문경 39,156 → 양양 47,456).
+const QUIET_VERY = 20000;
+const QUIET_MID = 40000;
+// 방문자수를 못 구한 지역에서만 쓰는 대체 기준(아래 quietLevel 주석 참고).
+const FALLBACK_QUIET_VERY = 100;
+const FALLBACK_QUIET_MID = 200;
 
 const counts = (region) => region?.counts || { total: 0, stay: 0, food: 0, cafe: 0 };
 
@@ -46,14 +52,28 @@ export function foodLevel(region) {
   return 0;
 }
 
-// "한적함"은 방문객 수 데이터가 없다. 대신 그 지역 관광 목록이 얼마나
-// 얇은지로 본다 — 사람을 끌어모으는 곳 자체가 적다는 뜻이라 완전한 대체는
-// 아니지만, 지역명 해시보다는 실제에 가깝다. 방문자수 API가 생기면 이
-// 함수만 바꾸면 된다.
+// "한적함"은 한국관광 데이터랩의 하루 평균 방문자 수로 본다
+// (data/regions.js의 visitors, api/tour/visitors.js로 잰 값).
+// 현지인을 뺀 외지인+외국인이라 "그 지역에 사는 사람"이 아니라 실제로
+// 찾아온 사람 수다.
+//
+// 예전에는 방문자수를 못 구해 관광 목록 두께로 대신했는데, 실제로 재어 보니
+// 어긋나는 곳이 있었다 — 홍천은 목록이 216건이라 "한적함"이었지만 하루 평균
+// 67,766명으로 29곳 중 두 번째로 붐빈다(수도권에서 가깝다). 예산·논산·금산도
+// 한 단계씩 움직였다.
+//
+// visitors가 없는 지역은 예전 기준(목록 두께)으로 떨어진다. 새 지역을
+// 추가하고 아직 방문자수를 재지 않았을 때도 화면이 비지 않게 하기 위해서다.
 export function quietLevel(region) {
+  const visitors = Number(region?.visitors) || 0;
+  if (visitors > 0) {
+    if (visitors < QUIET_VERY) return 3;
+    if (visitors < QUIET_MID) return 2;
+    return 1;
+  }
   const { total } = counts(region);
-  if (total < QUIET_VERY) return 3;
-  if (total < QUIET_MID) return 2;
+  if (total < FALLBACK_QUIET_VERY) return 3;
+  if (total < FALLBACK_QUIET_MID) return 2;
   return 1;
 }
 
@@ -134,11 +154,16 @@ const THEME_LINE = {
   혼합: "자연과 유적, 공원이 어느 한쪽으로 치우치지 않고 섞여 있습니다.",
 };
 
+// 근거가 관광 목록 두께에서 실제 방문자 수로 바뀌면서 문장도 같이 고쳤다.
+// 예전에는 "관광지로 알려진 곳이 많지 않아"처럼 목록을 두고 하는 말이었는데,
+// 지금은 찾아온 사람 수를 두고 하는 말이라야 근거와 문장이 맞는다.
+// 주말이 평일보다 많다는 것도 잰 값이다(29곳 모두 토요일이 수요일보다 많고,
+// 대체로 1.4~1.7배였다).
 const QUIET_LINE = [
   "",
-  "볼거리가 많은 편이라 주말과 성수기에는 사람이 늘어납니다.",
-  "이름난 곳이 몇 있지만 대체로 붐비지 않습니다.",
-  "관광지로 알려진 곳이 많지 않아 하루가 조용하게 흐릅니다.",
+  "인구감소지역 가운데서는 찾는 사람이 많은 편이라 주말과 성수기에는 붐빕니다.",
+  "주말에는 사람이 늘지만 평일은 한산한 편입니다.",
+  "찾아오는 사람이 적어 평일이든 주말이든 하루가 조용하게 흐릅니다.",
 ];
 
 const STAY_LINE = [
