@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { hasJong, joinWithGwa } from "../../utils/korean.js";
 import { regionPhotoSlides } from "../../data/regionPhotos.js";
 import { fetchRegionCourses } from "../../services/exploreListings.js";
+import { cafeNote, foodNote } from "../../services/regionProfile.js";
 import styles from "./Features.module.css";
 
 // design/salliljido.extracted.html 718-740줄, 3075-3079줄(inStats),
@@ -18,10 +19,13 @@ const SLIDE_BACKGROUNDS = [
 ];
 const SLIDE_INTERVAL_MS = 3600; // design startIntroSlides(), 2181-2183줄
 
-function buildStats(region, insights) {
+// 네 줄 모두 그 지역 데이터에서 나온다. 생활 편의·워케이션은 관광공사 목록
+// 실측값(regionProfile.js), 교통은 regions의 access, 자연환경은 places다.
+// 예전에는 가운데 두 줄이 지역명 해시라 실제와 어긋났다 — 카페가 1곳인
+// 지역에 "코워킹 공간이 있어요"가 붙는 식이었다.
+function buildStats(region) {
   const places = region.places || ["바다"];
   const last = places[places.length - 1];
-  const { quietLevel, convLevel, wcLevel } = insights;
   return [
     {
       label: "자연환경",
@@ -31,26 +35,30 @@ function buildStats(region, insights) {
     {
       label: "생활 편의",
       icon: "M3.5 7h13l-1 9.5h-11z M7 7V4.8a3 3 0 0 1 6 0V7",
-      note:
-        convLevel >= 3 ? "마트와 병원, 시장이 읍내에 모여 있어요" : "기본 편의시설은 있지만 선택지는 적어요",
+      // 마트·병원은 관광공사 목록에 없어 말하지 않는다. 확인되는 건
+      // 식당·카페 수뿐이라 거기까지만 말한다.
+      note: foodNote(region),
     },
     {
       label: "워케이션 환경",
       icon: "M3 5.5h14v8H3z M7 16.5h6",
-      note: wcLevel >= 3 ? "조용한 카페와 코워킹 공간이 있어요" : "일할 만한 카페가 몇 곳 있어요",
+      // 코워킹 공간은 관광공사 목록에 없다. 카페 수로만 말한다.
+      note: cafeNote(region),
     },
     {
       label: "교통 접근",
       icon: "M6 3.5h8v11H6z M8 17h4 M8 6.5h4",
-      note:
-        quietLevel <= 1
-          ? "버스 위주라 현지 이동은 여유를 두는 게 좋아요"
-          : "고속버스와 기차로 수도권에서 2시간 안팎이에요",
+      // 29곳 전부 data/regions에 실제 접근 수단을 적어 두었다. 예전에는
+      // 지역명 해시로 두 문장 중 하나를 골랐는데, 그 문장이 "고속버스와
+      // 기차로 2시간"이라 철도가 없는 군이나 배로만 닿는 울릉에서는 틀린
+      // 말이 됐다. 값이 비는 지역은 없지만, 새 지역을 access 없이 추가해도
+      // 거짓말이 나가지 않도록 기본 문구는 단정하지 않는 쪽으로 둔다.
+      note: region.access || "대중교통편은 오가는 날짜에 따라 달라 미리 확인하는 게 좋아요",
     },
   ];
 }
 
-export default function Features({ region, insights }) {
+export default function Features({ region }) {
   const [slideIdx, setSlideIdx] = useState(0);
 
   useEffect(() => {
@@ -74,7 +82,7 @@ export default function Features({ region, insights }) {
   // 하루에 끝나는 길이 먼저 눈에 들어와야 한다.
   const topCourses = [...courses].sort((a, b) => (a.courseMinutes || 0) - (b.courseMinutes || 0)).slice(0, 2);
 
-  const stats = buildStats(region, insights);
+  const stats = buildStats(region);
   const photos = regionPhotoSlides(region.short);
   // 사진이 있으면 사진 4장, 없으면 목업 그라데이션 4장.
   const slides = SLIDE_BACKGROUNDS.map((bg, i) => {
@@ -123,7 +131,6 @@ export default function Features({ region, insights }) {
                   </span>
                 </div>
               ))}
-              <div className={styles.coursesSource}>걷기 코스 ⓒ한국관광공사 두루누비</div>
             </div>
           )}
         </div>

@@ -3,7 +3,6 @@ import ServiceSteps from "./Home/ServiceSteps.jsx";
 import RegionCarousel from "./Home/RegionCarousel.jsx";
 import SupportTeaser from "./Home/SupportTeaser.jsx";
 import ClosingCta from "./Home/ClosingCta.jsx";
-import Footer from "../components/common/Footer.jsx";
 
 // design/salliljido.extracted.html 83-308줄(landingDisplay). 원본은 화면
 // 전환이 display:none 토글이라 이 섹션들이 늘 한 DOM에 같이 있었지만,
@@ -16,7 +15,6 @@ export default function Home() {
       <RegionCarousel />
       <SupportTeaser />
       <ClosingCta />
-      <Footer />
     </div>
   );
 }

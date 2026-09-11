@@ -154,8 +154,7 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
   // 걷기 코스를 보고 있을 때만 경로선을 그린다. 다른 카테고리에서 코스
   // 선까지 깔면 지도가 읽히지 않는다. 지금 페이지에 깔린 카드만 대상이라
   // 목록과 지도가 어긋나지 않는다.
-  const coursePaths =
-    category === "걷기 코스" ? visibleList.filter((x) => (x.path || []).length > 1) : [];
+  const coursePaths = category === "걷기 코스" ? visibleList.filter((x) => (x.path || []).length > 1) : [];
 
   // 담은 곳은 지금 보고 있는 카테고리가 아니어도 지도에 계속 남는다.
   // 카테고리를 바꾸면 사라져서 "내가 뭘 담았더라"를 놓치기 쉬웠다.
@@ -245,7 +244,6 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
                   {ctaLabel || (addedCount ? `담은 ${addedCount}곳으로 계획 짜기` : "체류 계획 짜기")}{" "}
                   <span>→</span>
                 </button>
-                <span className={styles.ctaSource}>출처 ⓒ한국관광공사</span>
               </div>
             </>
           )}
@@ -278,10 +276,10 @@ export default function ExploreTab({ region, readOnly = false, ctaLabel, onCta }
                     color: CATEGORY_COLORS[c],
                   }))
                   .concat([
-                  // 담은 곳은 카테고리 다섯 색 어느 것과도 겹치지 않는 골드다
-                  // (ExploreMap.ADDED_MARKER_COLOR 주석 참고).
-                  { label: "계획에 추가됨", color: ADDED_MARKER_COLOR },
-                ])
+                    // 담은 곳은 카테고리 다섯 색 어느 것과도 겹치지 않는 골드다
+                    // (ExploreMap.ADDED_MARKER_COLOR 주석 참고).
+                    { label: "계획에 추가됨", color: ADDED_MARKER_COLOR },
+                  ])
           }
         />
       </div>

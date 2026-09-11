@@ -54,8 +54,14 @@ export default function PlaceDetailModal({ selection, contentTypeId, onClose }) 
   const firstMenu = isRestaurant ? valueOf("대표메뉴") : "";
   // treatmenu는 "A / B / C 등" 한 줄로 와서 정보 목록에 넣으면 줄이 길어진다.
   // 아래 메뉴 섹션에서 항목별로 세운다.
-  const menuItems = isRestaurant ? splitList(valueOf("취급메뉴")) : [];
-  const hasMenu = !!firstMenu || menuItems.length > 0;
+  const otherMenus = isRestaurant ? splitList(valueOf("취급메뉴")) : [];
+  // 대표메뉴가 취급메뉴 목록에도 들어 있는 경우가 잦다. 한 줄로 합치고
+  // 중복은 지운다 — 같은 이름이 "대표" 칩을 단 줄과 그냥 줄로 두 번 뜨면
+  // 어느 쪽이 맞는지 알 수 없다.
+  const menuItems = [
+    ...(firstMenu ? [{ name: firstMenu, first: true }] : []),
+    ...otherMenus.filter((name) => name !== firstMenu).map((name) => ({ name, first: false })),
+  ];
 
   // 값이 있는 줄만 그린다. 전화번호는 detailIntro2의 문의처와 겹치는 일이
   // 잦아(같은 번호가 두 줄) 같은 값이면 하나만 남긴다.
@@ -145,26 +151,21 @@ export default function PlaceDetailModal({ selection, contentTypeId, onClose }) 
 
               {/* 메뉴. 정보 목록 아래에 따로 둔다 — 한 줄로 이어 붙이면
                   "A / B / C 등"이 되어 무엇이 있는지 눈에 안 들어온다.
-                  대표메뉴가 있으면 맨 위에 하나만 강조하고, 나머지는
-                  라벨 없이 항목만 세운다. 둘 다 없으면 섹션을 그리지 않는다. */}
-              {hasMenu && (
+                  대표메뉴부터 한 줄씩 같은 크기·같은 색으로 세우고,
+                  대표메뉴에만 "대표" 칩과 굵기를 준다. 칩은 이름 뒤에
+                  붙인다 — 앞에 붙이면 그 줄만 이름이 오른쪽으로 밀려
+                  목록의 왼쪽 끝이 들쭉날쭉해진다. 비면 안 그린다. */}
+              {menuItems.length > 0 && (
                 <section className={styles.menu}>
                   <h3 className={styles.menuTitle}>메뉴</h3>
-                  {firstMenu && (
-                    <p className={styles.menuFirst}>
-                      <span className={styles.menuBadge}>대표</span>
-                      {firstMenu}
-                    </p>
-                  )}
-                  {menuItems.length > 0 && (
-                    <ul className={styles.menuList}>
-                      {menuItems.map((item) => (
-                        <li key={item} className={styles.menuItem}>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  <ul className={styles.menuList}>
+                    {menuItems.map((item) => (
+                      <li key={item.name} className={`${styles.menuItem} ${item.first ? styles.first : ""}`}>
+                        {item.name}
+                        {item.first && <span className={styles.menuBadge}>대표</span>}
+                      </li>
+                    ))}
+                  </ul>
                 </section>
               )}
 

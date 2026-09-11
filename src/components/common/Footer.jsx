@@ -2,7 +2,9 @@ import { Link, useLocation } from "react-router-dom";
 import styles from "./Footer.module.css";
 
 // design/salliljido.extracted.html 279-307줄. 원본은 랜딩 전용이었지만
-// 없는 경로 안내(pages/NotFound)에서도 쓴다.
+// 지금은 Layout이 모든 라우트 아래에 한 번 그린다 — 데이터 출처 표기를
+// 여기로 모았기 때문에, 관광공사 데이터를 쓰는 화면이면 어디서든 출처가
+// 보여야 한다.
 //
 // 바로가기 링크는 전부 Home 안의 섹션으로 가는 앵커다. Home에서는 페이지 내
 // 앵커(#service)로 두어 전역 scroll-behavior의 부드러운 스크롤을 그대로 쓰고,
@@ -30,9 +32,15 @@ export default function Footer() {
           </div>
           <div className={styles.sources}>
             <div className={styles.heading}>데이터 출처</div>
+            {/* 화면마다 흩어져 있던 출처 표기(지역 소개 · 둘러보기 탭 ·
+                예상 비용 탭)를 여기 한 곳으로 모았다. 화면 안에서는
+                본문을 가리기만 하고, 어차피 모두 같은 출처라 한 번만
+                적으면 된다. */}
             <ul className={styles.sourceList}>
               <li>관광 정보·사진 ⓒ한국관광공사</li>
+              <li>걷기 코스 ⓒ한국관광공사 두루누비</li>
               <li>인구감소지역 지정 현황 · 행정안전부</li>
+              <li>지도 ⓒ카카오</li>
               <li>비용은 공개 자료를 바탕으로 한 추정치이며 실제와 다를 수 있습니다.</li>
             </ul>
           </div>

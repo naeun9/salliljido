@@ -61,7 +61,15 @@
   --radius-pill: 999px; /* 칩, 필 배지, 필 버튼 */
 
   /* ── 폰트 패밀리 ── */
-  --font-family-base: "Pretendard Variable", Pretendard, -apple-system, sans-serif;
+  /* Pretendard는 index.html에서 CDN으로 받는다. 뒤쪽은 그 요청이 막히거나
+     느릴 때 쓰는 폴백이다 — 애플(-apple-system)·윈도우(Malgun Gothic)·
+     안드로이드(Roboto는 한글이 없어 시스템이 Noto Sans KR로 넘긴다) 순으로
+     그 OS의 한글 본문 글꼴까지 닿게 적었다. 예전 스택은 -apple-system 다음이
+     바로 sans-serif라, 윈도우에서는 브라우저 기본 글꼴(굴림 계열)로 떨어질
+     수 있었다. */
+  --font-family-base:
+    "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Malgun Gothic",
+    "Apple SD Gothic Neo", "Noto Sans KR", "Helvetica Neue", Arial, sans-serif;
   --font-family-mono: ui-monospace, Menlo, monospace; /* "screen ·"/"map ·" 라벨 전용 */
 
   /* ── 폰트 크기 : 반복 확인된 대표 값만 (전체 스케일은 0.5px 단위로

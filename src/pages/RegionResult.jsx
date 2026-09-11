@@ -80,8 +80,11 @@ export default function RegionResult() {
           </div>
 
           <h2 className={styles.heading}>{resultsHeading}</h2>
+          {/* "방문객이 적은"이라고 적혀 있었는데 방문자수 데이터가 없어 확인할
+              수 없는 말이었고, 실제로 고르는 기준도 아니다(행정안전부 지정
+              목록에서 고른 라이프스타일로 추린다). 실제 기준대로 고쳤다. */}
           <p className={styles.subtext}>
-            방문객이 적은 인구감소지역 중에서 골랐어요 · 지정 현황 자료 행정안전부
+            행정안전부가 지정한 인구감소지역 중에서 골랐어요 · 지정 현황 자료 행정안전부
           </p>
 
           {loading ? (

@@ -11,6 +11,9 @@
 const KOR_SERVICE_BASE = "http://apis.data.go.kr/B551011/KorService2";
 // 두루누비 정보 서비스(걷기여행길 코스). 같은 인증키를 쓴다.
 const DURUNUBI_BASE = "http://apis.data.go.kr/B551011/Durunubi";
+// 한국관광 데이터랩(빅데이터 지역별 방문자수). 역시 같은 인증키로 열린다 —
+// 별도 활용신청 없이 호출되는 것을 확인했다(docs/03-api-check.md §18).
+const DATALAB_BASE = "http://apis.data.go.kr/B551011/DataLabService";
 
 // 공공데이터포털 공통 에러코드(returnReasonCode/resultCode 공용 표).
 const ERROR_MESSAGES = {
@@ -204,6 +207,13 @@ export function callTourApi(operation, params = {}, opts) {
 // operation: "courseList"(코스), "routeList"(테마 노선).
 export function callDuruApi(operation, params = {}, opts) {
   return callOpenApi(DURUNUBI_BASE, operation, params, opts);
+}
+
+// 한국관광 데이터랩. 응답 껍데기가 KorService2와 같아 같은 파서를 쓴다.
+// operation: "locgoRegnVisitrDDList"(기초지자체 일별 방문자수),
+//            "metcoRegnVisitrDDList"(광역 일별).
+export function callDataLabApi(operation, params = {}, opts) {
+  return callOpenApi(DATALAB_BASE, operation, params, opts);
 }
 
 // 관광공사 이미지 URL은 같은 호스트(tong.visitkorea.or.kr)인데도 항목마다

@@ -2,7 +2,7 @@ import { useState } from "react";
 import DayNav from "../PlanEditor/tabs/ScheduleTab/DayNav.jsx";
 import ScheduleMap from "../PlanEditor/tabs/ScheduleTab/ScheduleMap.jsx";
 import { findStayMarker } from "../../services/addedItems.js";
-import { buildRoutePins, routeDistanceLabel } from "../../utils/route.js";
+import { buildRoutePins } from "../../utils/route.js";
 import styles from "./ScheduleMapView.module.css";
 
 // 최종 계획의 "지도 보기". 원본 디자인에는 없는 뷰라 새 값은 만들지 않고
@@ -59,8 +59,10 @@ export default function ScheduleMapView({ days, region, onSelectItem }) {
           items={pins}
           stay={stayMarker}
           center={{ lat: region.lat, lng: region.lng }}
-          distance={routeDistanceLabel(pins)}
           mapLabel={`${day}일차 일정`}
+          // 지도 아래 줄(이동 거리 · 마커 범례)은 그리지 않는다 — 오른쪽
+          // 목록이 같은 항목을 번호까지 붙여 이미 보여 준다.
+          showMeta={false}
           selectedIndex={selectedIndex}
           onSelect={setSelectedIndex}
           onHover={setHoverIndex}

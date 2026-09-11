@@ -1,9 +1,8 @@
 import NotFoundView from "../components/common/NotFoundView.jsx";
-import Footer from "../components/common/Footer.jsx";
 
 // 없는 경로(App.jsx의 path="*")로 들어왔을 때. design에는 없는 화면이라
 // 지역을 못 찾았을 때(RegionNotFound)와 같은 셸을 쓰고 문구만 바꿨다.
-// 헤더는 Layout이 이미 깔아 주고, 푸터는 랜딩처럼 화면이 직접 렌더한다.
+// 헤더와 푸터는 Layout이 이미 깔아 준다.
 export default function NotFound() {
   return (
     <div>
@@ -15,7 +14,6 @@ export default function NotFound() {
           { to: "/find", label: "지역 찾기", variant: "secondary" },
         ]}
       />
-      <Footer />
     </div>
   );
 }

@@ -15,6 +15,9 @@ export default function ScheduleMap({
   selectedIndex,
   onSelect,
   onHover,
+  // 지도 아래 줄(이동 거리 + 마커 범례)을 그릴지. 최종 계획의 "지도 보기"는
+  // 옆 목록이 같은 내용을 이미 들고 있어 이 줄을 끈다.
+  showMeta = true,
 }) {
   const hasItems = items.length > 0;
 
@@ -63,13 +66,15 @@ export default function ScheduleMap({
         {emptyOverlay}
       </div>
 
-      <div className={`${styles.meta} ${hasItems ? styles.visible : ""}`}>
-        <span className={styles.distance}>오늘 이동 약 {distance}</span>
-        <span className={styles.legendItem}>
-          <span className={styles.legendDot} />
-          내가 추가한 항목
-        </span>
-      </div>
+      {showMeta && (
+        <div className={`${styles.meta} ${hasItems ? styles.visible : ""}`}>
+          <span className={styles.distance}>오늘 이동 약 {distance}</span>
+          <span className={styles.legendItem}>
+            <span className={styles.legendDot} />
+            내가 추가한 항목
+          </span>
+        </div>
+      )}
     </div>
   );
 }
