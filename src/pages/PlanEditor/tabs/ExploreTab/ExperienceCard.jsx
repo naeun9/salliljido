@@ -61,9 +61,7 @@ export default function ExperienceCard({
       onMouseLeave={onMouseLeave}
       onClick={onOpenDetail ? cardBodyClick(onOpenDetail) : undefined}
     >
-      {showThumb && (
-        <CardThumb item={experience} imageClass={styles.image} tagClass={styles.imageTag} />
-      )}
+      {showThumb && <CardThumb item={experience} imageClass={styles.image} tagClass={styles.imageTag} />}
       <div className={styles.body}>
         <div className={styles.head}>
           <h3 className={styles.name} title={experience.name}>
@@ -87,9 +85,7 @@ export default function ExperienceCard({
             {experience.courseLoad && experience.courseLoad !== "3시간 이내" && (
               <span className={styles.loadTag}>{experience.courseLoad}</span>
             )}
-            <span className={experience.courseLoad ? styles.distance : styles.cost}>
-              {experience.cost}
-            </span>
+            <span className={experience.courseLoad ? styles.distance : styles.cost}>{experience.cost}</span>
           </div>
         )}
         {/* 계획 없이 둘러보는 화면에서는 담기·일차 선택을 감춘다(readOnly). */}
