@@ -52,10 +52,10 @@ export default function ConditionPanel({
             fill="none"
             className={`${styles.regenIcon} ${loading ? `${styles.spinning} slj-anim-spin` : ""}`}
           >
-            <path d="M12 7a5 5 0 1 1-1.5-3.6" stroke="#2F5D50" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M12 7a5 5 0 1 1-1.5-3.6" stroke="#181818" strokeWidth="1.5" strokeLinecap="round" />
             <path
               d="M12.2 1.6v2.6H9.6"
-              stroke="#2F5D50"
+              stroke="#181818"
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"

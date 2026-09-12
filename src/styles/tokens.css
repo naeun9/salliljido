@@ -1,55 +1,78 @@
-/*
-  design/salliljido.extracted.html 에서 그대로 추출한 값.
-  원본에는 CSS 변수가 없어(모든 값이 인라인 리터럴) 이름은 이번에 새로 붙였고,
-  값은 단 하나도 바꾸지 않았다. 근거: docs/01-analysis.md §2-1.
-
-  색상 토큰화 기준: 화면 전반에 반복되는(≥4회) 색만 변수로 뺐다.
-  region 카드 스와치, region-intro 슬라이드 배경, 구글 로그인 버튼 브랜드
-  색처럼 특정 데이터/특정 컴포넌트 1곳에서만 쓰이는 값은 변수로 만들지
-  않고 해당 컴포넌트·데이터 파일에 원본 그대로 남겨둔다(사용처: 각 컴포넌트
-  구현 단계에서 처리, docs/01-analysis.md 참고).
-*/
+/* 애플 웹/앱 스타일의 쿨그레이 디자인 시스템(2026-09-13, 2차 개정).
+   직전의 웜아이보리·세이지 시스템을 걷어내고 거의 흰색에 가까운
+   쿨그레이 3단(#FFFFFF/#F5F5F7/#EEF0F2) + 딥그린 포인트 하나로
+   바꿨다. 토큰 이름과 쓰임(주석)은 대부분 그대로 두고 실제 색만
+   옮겼다 — 이 토큰을 쓰는 70여 개 파일이 파일을 하나하나 고치지
+   않아도 한 번에 새 팔레트로 바뀐다. */
 
 :root {
-  /* ── 색상 : forest(그린) 계열 ── */
-  --forest: #2f5d50; /* 메인 브랜드 그린 (헤더 로고, 강조 텍스트, 버튼 아웃라인) */
-  --sage: #4a7c6f; /* 보조 그린 (아이콘, 링크, 스텝 넘버) */
-  --mist: #dce8e2; /* 연한 그린 틴트 (칩 배경, hover 배경, 뱃지) */
+  /* ── 색상 : 기본 강조 계열 ── */
+  --forest: #214D42; /* 유일한 메인 포인트 컬러(딥그린). 헤더 로고, 강조 텍스트, 버튼, 링크 */
+  --sage: #9AA0A6; /* 중성 쿨그레이 — 브랜드 색이 아니라 hover 보더 등 보조 힌트에만 쓴다 */
+  --mist: #E3ECE8; /* 연한 그린 틴트 — 다중 선택/태그형 칩의 배경(아래 --tag-bg와 같은 값) */
 
-  /* ── 색상 : terracotta(오렌지) 계열 ── */
-  --terracotta: #d9784e; /* 포인트 / 주요 CTA 배경 */
-  --terracotta-strong: #c96a41; /* CTA hover (더 진한 톤) */
-  --rust: #c05f33; /* 연한 배지 배경 위 텍스트 색 (데모 배지, 내 배지 등) */
-  --clay: #ebb98f; /* 밝은 테라코타 (CTA hover 대체, 강조 보더) */
-  --clay-tint: #f5e1d5; /* 배지 배경 (데모 배지, 내 배지) */
+  /* ── 색상 : 행동 강조 계열 ── */
+  --terracotta: #214D42; /* 포인트 / 주요 CTA 배경 — 딥그린으로 통일 */
+  --terracotta-strong: #183C34; /* CTA hover / 선택+hover 상태와 같은 톤 */
+  --rust: #c05f33; /* 연한 배지 배경 위 텍스트 색 (데모 배지 등, 상태 배지 색과는 무관) */
+  --clay: #d6d6d6; /* 밝은 회색 (드물게 쓰이는 강조 보더) */
+  --clay-tint: #f1f1f1; /* 배지 배경 (데모 배지 등) */
 
-  /* ── 색상 : 중성(종이/모래) 계열 ── */
-  --paper: #faf8f4; /* 페이지 배경 */
-  --cream: #fffdfa; /* 카드/서피스/입력창 배경 */
+  /* ── 색상 : 중성(쿨그레이) 계열 ──────────────────────────────
+     3단만 쓴다: 카드 #FFFFFF > 기본 배경 #F5F5F7 > 보조/구분 배경
+     #EEF0F2. 섹션을 색 박스로 감싸는 대신 이 세 톤을 미세하게 바꿔가며
+     구분한다(§ 아래 --border 참고). 베이지·크림·노란 계열은 쓰지 않는다. */
+  --paper: #F5F5F7; /* 페이지 기본 배경 */
+  --cream: #ffffff; /* 카드/서피스/입력창 배경 */
   --white: #ffffff; /* 순백 (로그인 카드, 일부 모달) */
-  --sand: #f5ede4; /* 섹션 배경 전환용 베이지 (Regions/Support 섹션, 안내 박스) */
-  --sand-strong: #e7dccb; /* 베이지 섹션의 보더 */
-  --ink: #2b2b29; /* 본문 텍스트 (거의 검정) */
-  --gray: #6e6e68; /* 보조 텍스트 (설명, 캡션) */
+  --sand: #EEF0F2; /* 보조 섹션 배경(옅은 회색) — 페이지 배경보다 한 단 더 짙어 구분감을 준다. Footer도 이 색 */
+  --sand-strong: #DDE1E3; /* --sand 위에서 쓰는 보더 */
+  --ink: #1D1D1F; /* 본문 텍스트 (거의 검정 — 애플 스타일) */
+  --gray: #6E7276; /* 보조 텍스트 (설명, 캡션) */
 
   /* ── 색상 : 보더 / 구분선 ── */
-  --border: #e7e2d8; /* 기본 보더 (카드, 인풋, 구분선) — 사용 빈도 100회로 가장 많음 */
-  --border-strong: #e5e1d8; /* 기본 보더보다 근소하게 진한 톤 (드물게 쓰임, 4회) */
-  --border-dashed: #d8d4ca; /* 점선 보더 (빈 슬롯 "+ 일정 추가" 버튼 등) */
-  --hairline: #f1ece3; /* 아주 옅은 구분선 (섹션 내부 divider) */
+  --border: #E1E4E6; /* 기본 보더 (카드, 인풋, 구분선) — 사용 빈도 100회로 가장 많음 */
+  --border-strong: #D5D9DB; /* 기본 보더보다 근소하게 진한 톤 */
+  --border-dashed: #D5D9DB; /* 점선 보더 (빈 슬롯 "+ 일정 추가" 버튼 등) */
+  --hairline: #ECEEF0; /* 아주 옅은 구분선 (섹션 내부 divider) */
+
+  /* ── 색상 : 선택형 UI 공통 상태(기간·관심사·테마·필터·탭·칩·옵션
+     버튼이 전부 이 값만 쓴다 — 페이지마다 다른 선택색을 쓰지 않는다).
+
+     단일 선택(하나만 고르는 옵션 버튼: 지역/기간/관심사, 정렬 순서,
+     하루 요일 탭 등)은 --opt-selected-*(딥그린 채움+흰 글자)를 쓰고,
+     다중 선택(여러 개를 동시에 고르는 필터·태그: 테마, 식사 스타일,
+     지원 프로그램 지역/유형/상태 필터)은 --tag-*(연한 그린 틴트)를
+     쓴다. 겉모습이 달라야 "지금 몇 개까지 고를 수 있는지"가 눈에
+     보인다. */
+  --opt-idle-bg: #ffffff;
+  --opt-idle-border: #DDE1E3;
+  --opt-idle-text: #4F5558;
+  --opt-hover-bg: #F0F4F2;
+  --opt-hover-text: #214D42;
+  --opt-selected-bg: #214D42;
+  --opt-selected-border: #214D42;
+  --opt-selected-text: #ffffff;
+  --opt-selected-hover-bg: #183C34;
+  --tag-bg: #E3ECE8;
+  --tag-text: #214D42;
+  --tag-border: #C7D7D0;
+  --opt-disabled-bg: #F1F2F3;
+  --opt-disabled-border: #E5E7E8;
+  --opt-disabled-text: #A5AAAD;
 
   /* ── 색상 : 스켈레톤 로딩 ── */
-  --skeleton-base: #ede9e2;
-  --skeleton-highlight: #f5f2ec;
+  --skeleton-base: #e8e8e8;
+  --skeleton-highlight: #f5f5f5;
 
   /* ── 색상 : 지도 목업 텍스처 (MapPlaceholder 전용, §5 참고) ── */
-  --map-tile-light: #eaf0eb;
-  --map-tile-dark: #e1eae3;
+  --map-tile-light: #f3f3f3;
+  --map-tile-dark: #e9e9e9;
 
   /* ── 그림자 ── */
-  --shadow-soft: 0 20px 44px -30px rgba(43, 43, 41, 0.4);
-  --shadow-card: 0 14px 30px -18px rgba(43, 43, 41, 0.5);
-  --shadow-pop: 0 24px 50px -26px rgba(43, 43, 41, 0.6);
+  --shadow-soft: 0 20px 44px -30px rgba(29, 29, 31, 0.4);
+  --shadow-card: 0 14px 30px -18px rgba(29, 29, 31, 0.5);
+  --shadow-pop: 0 24px 50px -26px rgba(29, 29, 31, 0.6);
 
   /* ── 모서리 (실제 쓰이는 6종 값만, 사용 맥락 기준으로 명명) ── */
   --radius-tag: 6px; /* 스켈레톤 텍스트 바, 아주 작은 태그 */
@@ -61,63 +84,37 @@
   --radius-pill: 999px; /* 칩, 필 배지, 필 버튼 */
 
   /* ── 폰트 패밀리 ── */
-  /* Pretendard는 index.html에서 CDN으로 받는다. 뒤쪽은 그 요청이 막히거나
-     느릴 때 쓰는 폴백이다 — 애플(-apple-system)·윈도우(Malgun Gothic)·
-     안드로이드(Roboto는 한글이 없어 시스템이 Noto Sans KR로 넘긴다) 순으로
-     그 OS의 한글 본문 글꼴까지 닿게 적었다. 예전 스택은 -apple-system 다음이
-     바로 sans-serif라, 윈도우에서는 브라우저 기본 글꼴(굴림 계열)로 떨어질
-     수 있었다. */
+  /* Pretendard 하나만 쓴다. 뒤쪽은 그 요청이 막히거나 느릴 때 쓰는
+     폴백이다 — 애플(-apple-system)·윈도우(Malgun Gothic)·안드로이드
+     (Roboto는 한글이 없어 시스템이 Noto Sans KR로 넘긴다) 순으로 그
+     OS의 한글 본문 글꼴까지 닿게 적었다. */
   --font-family-base:
     "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Malgun Gothic",
     "Apple SD Gothic Neo", "Noto Sans KR", "Helvetica Neue", Arial, sans-serif;
   --font-family-mono: ui-monospace, Menlo, monospace; /* "screen ·"/"map ·" 라벨 전용 */
 
   /* ── 폰트 크기 ──────────────────────────────────────────────
-     원본 design은 0.5px 단위로 28종을 썼다. 같은 위계인데 화면마다
-     14px / 14.5px처럼 어긋나는 자리가 많았고, 전체가 한 단계 작아
-     읽기 어려웠다. 그래서 0.5px 짝을 하나로 합치면서 스케일을 한 단계
-     올렸다(2026-09-13). 기준은 본문 16px · 보조 14px · 최소 13px.
-
-     새 스케일 — 이 값들 밖의 크기는 쓰지 않는다:
-       13  캡션·메타 (최소. 이보다 작은 글자는 두지 않는다)
-       14  보조 설명 — 라벨, 문의처, 상태 배지
-       15  작은 본문
-       16  기본 본문 · 버튼/라벨  ← 본문 기준
-       17  큰 본문
-       18  리드 문단
-       20  카드 소제목
-       23  섹션 소제목
-       25 이상은 헤딩(아래 clamp 설명 참고)
-
-     옮긴 표(기존 → 새):
-       11, 11.5, 12, 12.5 → 13      13, 13.5 → 14
-       14, 14.5 → 15                15, 15.5 → 16
-       16, 16.5 → 17                17, 17.5 → 18
-       18~19.5 → 20                 20.5~22.5 → 23
-
-     14px(보조)는 토큰이 없다 — 컴포넌트마다 쓰임이 달라 이름을 하나로
-     묶기 어려워서 값 그대로 둔다. 아래 토큰들은 원본에서 반복 확인된
-     대표 값만이다. */
+     타이포그래피만으로 위계를 만든다(2026-09-13 개정 기준):
+       Hero 제목        68px / 700   (컴포넌트별 clamp의 최댓값)
+       섹션 제목        42px / 700   (SERVICE/지역/SUPPORT 등 h2)
+       카드 제목        26px / 700   (--font-h3)
+       본문            16px / 400   (--font-body)
+       영문 section label 12px / 600 / letter-spacing 0.16em
+                                     (SERVICE, PILOT REGIONS, SUPPORT …)
+     Hero·섹션 제목은 화면 폭에 따라 clamp()로 줄어드는 반응형 값이라
+     전역 토큰으로 묶지 않고 각 컴포넌트에 남긴다(최댓값만 위 기준을
+     따른다) — 그 외 값은 아래 스케일 밖을 쓰지 않는다. */
   --font-caption: 13px; /* 메타 정보, 카운트 라벨 (최소 크기) */
   --font-body-sm: 15px; /* 작은 본문 */
   --font-body: 16px; /* 기본 본문 */
-  /* 원본은 본문 15px / 버튼·라벨 15.5px로 0.5px 차이를 뒀는데 화면에서
-     구분되지 않는 차이였다. 합쳐서 같은 값이 됐지만 이름은 둘 다 남긴다
-     — 쓰이는 자리(본문 15곳 / 버튼·라벨 16곳)의 뜻이 달라서, 나중에 한쪽만
-     조정할 때 이름이 있어야 한다. */
   --font-label: 16px; /* 버튼/라벨 텍스트 */
   --font-body-lg: 17px; /* 큰 본문 */
   --font-lead: 18px; /* 인트로/리드 문단 */
-  --font-h3: 23px; /* 카드·섹션 소제목 */
-
-  /* 반응형 헤딩(clamp)은 섹션마다 min/vw/max 조합이 전부 달라(원본이
-     고정 스케일을 쓰지 않음) 전역 토큰으로 묶지 않고 각 컴포넌트에
-     남긴다. clamp의 px 값(min·max)도 위 표대로 같이 올렸고, vw 계수는
-     건드리지 않았다 — 계수를 바꾸면 중간 폭에서 커지는 속도가 달라져
-     원본의 반응 곡선이 무너진다. */
+  --font-h3: 26px; /* 카드 제목 */
+  --font-label-caps: 12px; /* 영문 section label 전용. font-weight 600 · letter-spacing .16em과 함께 쓴다 */
 
   /* ── 트랜지션 ── */
-  --transition-fast: 0.2s ease; /* 가장 많이 쓰임(167회): 버튼/링크 hover */
+  --transition-fast: 0.2s ease; /* 가장 많이 쓰임: 버튼/링크 hover */
   --transition-base: 0.25s ease; /* 카드 hover, border-color 전환 */
   --transition-slow: 0.3s ease; /* 헤더 배경/보더 전환 */
 }

@@ -99,20 +99,11 @@ export default function Hero() {
 
       <div className={styles.content}>
         <div className={styles.inner}>
-          <div className={styles.eyebrow}>
-            <span className={styles.eyebrowDot} />
-            <span className={styles.eyebrowText}>인구감소지역 체류 안내 서비스</span>
-          </div>
-          <h1 className={styles.title}>
-            스쳐 가지 않고,
-            <br />그 지역에서
-            <br />
-            살아보는 시간
-          </h1>
-          <p className={styles.lead}>며칠이든 한 달이든, 조용한 지역에서 지내볼 준비를 돕습니다</p>
+          <h1 className={styles.title}>새로운 곳에서,<br />나의 일상을.</h1>
+          <p className={styles.lead}>지역 추천부터 일정까지, 나에게 맞는 지역살이를 계획하세요.</p>
           <div className={styles.ctaRow}>
             <Link to="/find" className={styles.primaryCta}>
-              어디서 살아볼까?
+              나에게 맞는 지역 찾기
               <span className={styles.primaryCtaArrow}>→</span>
             </Link>
             <a href="#service" className={styles.secondaryCta}>

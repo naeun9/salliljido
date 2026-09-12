@@ -148,8 +148,8 @@ export default function SupportPrograms() {
           <div className={styles.empty}>
             <span className={styles.emptyIcon}>
               <svg width="28" height="28" viewBox="0 0 26 26" fill="none">
-                <rect x="3" y="5" width="20" height="16" rx="3" stroke="#2F5D50" strokeWidth="1.5" />
-                <line x1="3" y1="10.5" x2="23" y2="10.5" stroke="#2F5D50" strokeWidth="1.5" />
+                <rect x="3" y="5" width="20" height="16" rx="3" stroke="#181818" strokeWidth="1.5" />
+                <line x1="3" y1="10.5" x2="23" y2="10.5" stroke="#181818" strokeWidth="1.5" />
               </svg>
             </span>
             <div className={styles.emptyTitle}>조건에 맞는 프로그램이 없어요</div>

@@ -32,7 +32,10 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #faf8f4;
+  /* 개별 페이지가 대부분 .page{background:var(--paper)}를 직접 쓰지만,
+     오버스크롤로 보이는 여백이나 아직 그런 배경이 없는 화면에서도 같은
+     웜아이보리가 보이도록 문서 배경 자체를 토큰에 맞춘다. */
+  background: var(--paper);
 }
 
 /* design 39줄: 원본은 화면 전체를 감싸는 스크롤 컨테이너
@@ -57,16 +60,16 @@ html {
 }
 
 a {
-  color: #2f5d50;
+  color: var(--ink);
   text-decoration: none;
 }
 a:hover {
-  color: #d9784e;
+  color: var(--forest);
 }
 
 body {
   font-family: var(--font-family-base);
-  color: #2b2b29;
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -258,7 +261,7 @@ body {
   }
   [data-print-dark],
   [data-print-dark] * {
-    color: #2b2b29 !important;
+    color: #191919 !important;
     text-shadow: none !important;
   }
   /* 스크롤 스냅이 켜져 있으면 인쇄 미리보기가 첫 화면에서 잘린다. */

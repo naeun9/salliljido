@@ -62,7 +62,7 @@ export default function CategoryList({
                 <svg width="28" height="28" viewBox="0 0 26 26" fill="none">
                   <path
                     d="M3.5 20V9.5L13 4l9.5 5.5V20"
-                    stroke="#2F5D50"
+                    stroke="#181818"
                     strokeWidth="1.5"
                     strokeLinejoin="round"
                   />
@@ -71,7 +71,7 @@ export default function CategoryList({
                     y1="20"
                     x2="22.5"
                     y2="20"
-                    stroke="#2F5D50"
+                    stroke="#181818"
                     strokeWidth="1.5"
                     strokeLinecap="round"
                   />
@@ -122,17 +122,17 @@ export default function CategoryList({
             <EmptyState
               icon={
                 <svg width="28" height="28" viewBox="0 0 26 26" fill="none">
-                  <circle cx="13" cy="13" r="9.5" stroke="#2F5D50" strokeWidth="1.5" />
+                  <circle cx="13" cy="13" r="9.5" stroke="#181818" strokeWidth="1.5" />
                   <line
                     x1="13"
                     y1="8"
                     x2="13"
                     y2="14"
-                    stroke="#2F5D50"
+                    stroke="#181818"
                     strokeWidth="1.5"
                     strokeLinecap="round"
                   />
-                  <circle cx="13" cy="17.5" r="1" fill="#2F5D50" />
+                  <circle cx="13" cy="17.5" r="1" fill="#181818" />
                 </svg>
               }
               title={
@@ -180,9 +180,9 @@ export default function CategoryList({
             <EmptyState
               icon={
                 <svg width="28" height="28" viewBox="0 0 26 26" fill="none">
-                  <circle cx="13" cy="11" r="7.5" stroke="#2F5D50" strokeWidth="1.4" />
-                  <circle cx="13" cy="11" r="2.6" fill="#DCE8E2" />
-                  <line x1="13" y1="19" x2="13" y2="24" stroke="#2F5D50" strokeWidth="1.4" />
+                  <circle cx="13" cy="11" r="7.5" stroke="#181818" strokeWidth="1.4" />
+                  <circle cx="13" cy="11" r="2.6" fill="#f0f0f0" />
+                  <line x1="13" y1="19" x2="13" y2="24" stroke="#181818" strokeWidth="1.4" />
                 </svg>
               }
               title="이 유형의 관광지는 아직 없어요"
@@ -222,8 +222,8 @@ export default function CategoryList({
             <EmptyState
               icon={
                 <svg width="28" height="28" viewBox="0 0 26 26" fill="none">
-                  <rect x="3.5" y="7" width="19" height="13" rx="2.6" stroke="#2F5D50" strokeWidth="1.5" />
-                  <line x1="3.5" y1="11.4" x2="22.5" y2="11.4" stroke="#2F5D50" strokeWidth="1.5" />
+                  <rect x="3.5" y="7" width="19" height="13" rx="2.6" stroke="#181818" strokeWidth="1.5" />
+                  <line x1="3.5" y1="11.4" x2="22.5" y2="11.4" stroke="#181818" strokeWidth="1.5" />
                 </svg>
               }
               title="이 지역의 식당·카페 정보는 아직 준비 중이에요"

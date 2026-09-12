@@ -100,7 +100,7 @@ export default function ExperienceCard({
                 <svg width="18" height="18" viewBox="0 0 13 13" fill="none">
                   <path
                     d="M2 7l3 3 6-6.5"
-                    stroke="#2F5D50"
+                    stroke="#181818"
                     strokeWidth="2.4"
                     strokeLinecap="round"
                     strokeLinejoin="round"

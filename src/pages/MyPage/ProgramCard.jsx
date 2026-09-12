@@ -43,8 +43,8 @@ export default function ProgramCard({ program, onUnsave }) {
         <svg width="13" height="15" viewBox="0 0 13 15" fill="none">
           <path
             d="M1.7 1.4h9.6v11.8l-4.8-3.9-4.8 3.9z"
-            fill="#2F5D50"
-            stroke="#2F5D50"
+            fill="#24483E"
+            stroke="#24483E"
             strokeWidth="1.4"
             strokeLinejoin="round"
           />

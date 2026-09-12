@@ -19,8 +19,8 @@ export default function TimelineItem({
   availableMeals,
   onToggleCuisineMenu,
 }) {
-  const border = hot ? "#4A7C6F" : "#E7E2D8";
-  const accent = item.custom ? "4px solid #D9784E" : item.mine ? "4px solid #EBB98F" : `1px solid ${border}`;
+  const border = hot ? "#555555" : "#E7E2D8";
+  const accent = item.custom ? "4px solid #202020" : item.mine ? "4px solid #d6d6d6" : `1px solid ${border}`;
   const cardBg = item.isRest ? "#F7F5F0" : item.mine ? "#FFFFFF" : "#FFFDFA";
   const swapLabel = item.custom ? "수정" : item.isDinner ? "다른 식당 보기" : "다른 곳 보기";
 
@@ -45,7 +45,7 @@ export default function TimelineItem({
       <div className={styles.row} onMouseEnter={onHoverEnter} onMouseLeave={onHoverLeave} onClick={onSelect}>
         <div className={styles.slotCol}>
           {showSlotLabel && (
-            <div className={styles.slotLabel} style={{ color: item.mine ? "#D9784E" : "#2F5D50" }}>
+            <div className={styles.slotLabel} style={{ color: item.mine ? "#202020" : "#181818" }}>
               {item.slot}
             </div>
           )}
@@ -62,8 +62,8 @@ export default function TimelineItem({
               <span
                 className={styles.tag}
                 style={{
-                  background: item.mine ? "#F5E1D5" : "#DCE8E2",
-                  color: item.mine ? "#C05F33" : "#2F5D50",
+                  background: item.mine ? "#f1f1f1" : "#f0f0f0",
+                  color: item.mine ? "#C05F33" : "#181818",
                 }}
               >
                 {item.tag}
@@ -186,7 +186,7 @@ export default function TimelineItem({
                   <svg width="13" height="13" viewBox="0 0 15 16" fill="none">
                     <path
                       d="M2.5 4.5h10M6 2.2h3M3.8 4.5l.6 9h6.2l.6-9"
-                      stroke="#6E6E68"
+                      stroke="#707070"
                       strokeWidth="1.3"
                       strokeLinecap="round"
                     />

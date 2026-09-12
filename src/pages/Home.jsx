@@ -3,13 +3,14 @@ import ServiceSteps from "./Home/ServiceSteps.jsx";
 import RegionCarousel from "./Home/RegionCarousel.jsx";
 import SupportTeaser from "./Home/SupportTeaser.jsx";
 import ClosingCta from "./Home/ClosingCta.jsx";
+import styles from "./Home.module.css";
 
 // design/salliljido.extracted.html 83-308줄(landingDisplay). 원본은 화면
 // 전환이 display:none 토글이라 이 섹션들이 늘 한 DOM에 같이 있었지만,
 // react-router에서는 "/" 라우트 하나가 이 섹션들을 그대로 이어붙인 형태다.
 export default function Home() {
   return (
-    <div>
+    <div className={styles.page}>
       <Hero />
       <ServiceSteps />
       <RegionCarousel />

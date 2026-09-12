@@ -1,0 +1,71 @@
+/* 홈 서비스 소개 카드 오른쪽에 들어가는 축약 예시 UI. 예전에는 실제 화면을
+   그대로 줄여 넣고 카드 높이에 맞춰 overflow:hidden으로 아래를 잘라냈는데,
+   내용이 중간에 끊겨 어색했다. 지금은 처음부터 "핵심만 담은 짧은 버전"으로
+   다시 그려서 잘라낼 필요가 없다 — 그래서 previewBar(브랜드바·일시정지
+   버튼)와, 콘텐츠를 주기적으로 안 보이게 만들던 loop 애니메이션도 뺐다
+   ("한눈에 다 보여야 한다"는 요구와 상충했다).
+   색·둥근 정도·버튼 상태 색은 실제 기능 화면(RegionSearch 등)과 같은
+   토큰(tokens.css)을 그대로 쓴다 — 홈에서 본 것과 실제로 들어갔을 때
+   화면이 다른 사이트처럼 보이지 않게 하기 위해서다. */
+.preview {
+  width: 100%; color: var(--ink); background: var(--cream); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+}
+
+/* 01 어울리는 지역 찾기 */
+.find { padding: 22px; }
+.label { font-size: 13px; color: var(--gray); margin: 0 0 8px; }
+.options { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 16px; }
+.options span { border: 1px solid var(--opt-idle-border); border-radius: var(--radius-input); padding: 9px 13px; font-size: 14px; background: var(--opt-idle-bg); color: var(--opt-idle-text); }
+/* 실제 /find 화면의 선택된 옵션(RegionSearch.module.css .optionBtn.selected)과
+   같은 공통 단일 선택 상태(tokens.css) — 채워진 딥그린 + 흰 글자. */
+.selected { background: var(--opt-selected-bg); border-color: var(--opt-selected-border); color: var(--opt-selected-text); font-weight: 600; }
+.result { display: flex; align-items: center; gap: 14px; border: 1px solid var(--border); border-radius: 14px; padding: 12px; background: var(--paper); }
+.result img { width: 64px; height: 74px; object-fit: cover; border-radius: 9px; flex-shrink: 0; }
+.result strong { display: block; margin: 4px 0; font-size: 17px; }
+.result p { font-size: 13px; color: var(--gray); margin: 0; line-height: 1.5; }
+.kicker { color: var(--gray); font-size: 13px; }
+
+/* 02 지역 둘러보기 */
+.explore { display: grid; grid-template-columns: .9fr 1.1fr; gap: 14px; padding: 20px; }
+.destination { position: relative; min-height: 150px; border-radius: 14px; overflow: hidden; background: #636363; }
+.destination > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.destination > div { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 14px; color: #fff; background: linear-gradient(transparent 40%, rgba(20, 26, 23, .78)); }
+.destination span { font-size: 12px; }
+.destination strong { font-size: 19px; margin-top: 4px; }
+.places { display: grid; gap: 8px; align-content: center; }
+.place { display: flex; align-items: center; gap: 10px; padding: 11px 12px; background: var(--paper); border: 1px solid var(--border); border-radius: 12px; }
+.placeKicker { font-size: 12px; color: var(--gray); flex-shrink: 0; width: 68px; }
+.place strong { flex: 1; min-width: 0; font-size: 13px; font-weight: 650; color: var(--ink); }
+.placeArrow { color: var(--sage); font-size: 15px; }
+
+/* 03 하루 일정 만들기 */
+.planner { padding: 20px; }
+.plannerHead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.day { font-size: 12px; color: var(--gray); border: 1px solid var(--border); border-radius: 99px; padding: 4px 11px; }
+.notes { display: grid; gap: 10px; }
+.planRow { display: grid; grid-template-columns: 44px 36px minmax(0, 1fr); gap: 10px; align-items: center; }
+.time { font-size: 13px; font-weight: 600; color: var(--ink); }
+.planThumb { width: 36px; height: 36px; border-radius: 8px; object-fit: cover; }
+.note strong { display: block; font-size: 14px; }
+.note span { display: block; font-size: 12px; color: var(--gray); margin-top: 2px; }
+
+/* 04 비용과 지원 확인하기 */
+.budget { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.budgetLeft, .budgetRight { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.totalCost { font-size: 20px; font-weight: 700; letter-spacing: -.03em; color: var(--forest); }
+.budgetRows { display: grid; gap: 10px; }
+.budgetRows > div { display: grid; grid-template-columns: 56px 1fr; align-items: center; font-size: 12px; color: var(--gray); }
+.bar { display: block; height: 8px; width: var(--width); background: var(--sage); border-radius: 8px; }
+.programCard { border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 6px; background: var(--paper); }
+.programHead { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.programCity { font-size: 12px; font-weight: 600; color: var(--gray); }
+.programStatus { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 99px; white-space: nowrap; }
+.programName { font-size: 13px; font-weight: 650; line-height: 1.4; color: var(--ink); }
+.programSummary { font-size: 12px; color: var(--gray); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+@media (max-width: 480px) {
+  .explore { grid-template-columns: 1fr; }
+  .destination { min-height: 120px; }
+  .budget { grid-template-columns: 1fr; }
+}

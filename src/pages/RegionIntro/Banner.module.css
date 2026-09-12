@@ -39,7 +39,7 @@
   top: 78px;
   font-family: var(--font-family-mono);
   font-size: 13px;
-  color: rgba(250, 248, 244, 0.72);
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .row {
@@ -69,7 +69,7 @@
   font-family: inherit;
   font-size: 15px;
   font-weight: 500;
-  color: rgba(250, 248, 244, 0.78);
+  color: rgba(255, 255, 255, 0.78);
   cursor: pointer;
   transition: color 0.2s ease;
 }
@@ -105,15 +105,15 @@
   position: relative;
   padding: 5px 11px;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(250, 248, 244, 0.38);
-  background: rgba(250, 248, 244, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.12);
   font-size: 13px;
   font-weight: 600;
-  color: rgba(250, 248, 244, 0.9);
+  color: rgba(255, 255, 255, 0.9);
   cursor: help;
 }
 .badge:hover {
-  background: rgba(250, 248, 244, 0.24);
+  background: rgba(255, 255, 255, 0.24);
 }
 .badgeTip {
   position: absolute;
@@ -144,8 +144,8 @@
 .chip {
   padding: 5px 11px;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(250, 248, 244, 0.42);
-  background: rgba(250, 248, 244, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.16);
   font-size: 15px;
   font-weight: 500;
   color: var(--cream);
@@ -159,8 +159,8 @@
   height: 44px;
   padding: 0 18px;
   border-radius: var(--radius-card);
-  border: 1px solid rgba(250, 248, 244, 0.5);
-  background: rgba(250, 248, 244, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.14);
   font-family: inherit;
   font-size: 16px;
   font-weight: 600;
@@ -172,11 +172,11 @@
     border-color 0.2s ease;
 }
 .saveBtn:hover {
-  background: rgba(250, 248, 244, 0.3);
-  border-color: rgba(250, 248, 244, 0.75);
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.75);
 }
 .saveBtn.saved {
-  background: rgba(250, 248, 244, 0.28);
+  background: rgba(255, 255, 255, 0.28);
 }
 @media (max-width: 759px) {
   .saveBtn {

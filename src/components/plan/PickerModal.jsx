@@ -60,7 +60,7 @@ export default function PickerModal({
               <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
                 <path
                   d={r.icon}
-                  stroke="#6E6E68"
+                  stroke="#707070"
                   strokeWidth="1.4"
                   strokeLinecap="round"
                   strokeLinejoin="round"

@@ -50,7 +50,7 @@ export default function EtcSection({ rows, etcTotal, onUpdateRow, onRemoveRow, o
                   y1="3"
                   x2="12"
                   y2="12"
-                  stroke="#6E6E68"
+                  stroke="#707070"
                   strokeWidth="1.4"
                   strokeLinecap="round"
                 />
@@ -59,7 +59,7 @@ export default function EtcSection({ rows, etcTotal, onUpdateRow, onRemoveRow, o
                   y1="3"
                   x2="3"
                   y2="12"
-                  stroke="#6E6E68"
+                  stroke="#707070"
                   strokeWidth="1.4"
                   strokeLinecap="round"
                 />

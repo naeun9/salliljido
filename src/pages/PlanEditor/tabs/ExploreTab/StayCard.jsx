@@ -78,7 +78,7 @@ export default function StayCard({
                 <svg width="16" height="16" viewBox="0 0 13 13" fill="none">
                   <path
                     d="M2 7l3 3 6-6.5"
-                    stroke="#2F5D50"
+                    stroke="#181818"
                     strokeWidth="2.4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -95,17 +95,17 @@ export default function StayCard({
           <a href={visitKoreaSearchUrl(stay.name)} target="_blank" rel="noopener" className={styles.link}>
             구석구석에서 보기
             <svg width="12" height="12" viewBox="0 0 13 13" fill="none">
-              <path d="M4.6 2h6.4v6.4" stroke="#2F5D50" strokeWidth="1.4" strokeLinecap="round" />
+              <path d="M4.6 2h6.4v6.4" stroke="#181818" strokeWidth="1.4" strokeLinecap="round" />
               <line
                 x1="11"
                 y1="2"
                 x2="3.4"
                 y2="9.6"
-                stroke="#2F5D50"
+                stroke="#181818"
                 strokeWidth="1.4"
                 strokeLinecap="round"
               />
-              <path d="M8.2 11H2V4.8" stroke="#2F5D50" strokeWidth="1.4" strokeLinecap="round" />
+              <path d="M8.2 11H2V4.8" stroke="#181818" strokeWidth="1.4" strokeLinecap="round" />
             </svg>
           </a>
         </div>

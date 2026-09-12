@@ -86,9 +86,12 @@ export default function Header() {
   return (
     <>
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`} data-print-hide>
+        <div className={styles.brandGroup}>
         <a href="/" onClick={handleLogoClick} aria-label="살릴지도 홈으로" className={styles.logo}>
           살릴지도
         </a>
+        {isHome && <span className={styles.brandCaption}>인구감소지역 체류 안내 서비스</span>}
+        </div>
         <div className={styles.actions}>
           <nav className={styles.nav}>
             {navItems.map((item) =>

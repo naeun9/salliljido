@@ -5,7 +5,7 @@ import styles from "../CostTab.module.css";
 export default function ToggleSwitch({ on, label, onClick }) {
   return (
     <button type="button" className={styles.toggleBtn} onClick={onClick}>
-      <span className={styles.toggleTrack} style={{ background: on ? "#2F5D50" : "#DCD7CC" }}>
+      <span className={styles.toggleTrack} style={{ background: on ? "#181818" : "#DCD7CC" }}>
         <span className={styles.toggleKnob} style={{ left: on ? "21px" : "3px" }} />
       </span>
       <span className={styles.toggleLabel}>{label}</span>

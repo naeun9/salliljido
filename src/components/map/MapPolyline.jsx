@@ -7,7 +7,7 @@ import { useMapContext } from "./KakaoMap.jsx";
 export default function MapPolyline({
   points,
   strokeWeight = 2,
-  strokeColor = "#4A7C6F",
+  strokeColor = "#555555",
   strokeOpacity = 0.55,
   strokeStyle = "shortdash",
 }) {

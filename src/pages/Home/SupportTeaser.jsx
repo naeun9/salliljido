@@ -47,8 +47,10 @@ export default function SupportTeaser() {
             <div key={p.id} className={styles.card}>
               <div className={styles.cardHead}>
                 <span className={styles.cardRegion}>{p.city}</span>
-                {/* 상태 색은 목록 화면 배지와 같은 값을 쓴다(badgeFg). */}
-                <span className={styles.cardStatus} style={{ color: p.badgeFg }}>
+                {/* 실제 지원 프로그램 목록(components/support/ProgramCard)의
+                    상태 배지와 같은 모양(배경+글자색 칩)으로 맞춘다 — 홈에서
+                    본 상태 표시가 실제 화면과 다르게 보이지 않도록. */}
+                <span className={styles.cardStatus} style={{ background: p.badgeBg, color: p.badgeFg }}>
                   {p.status}
                 </span>
               </div>

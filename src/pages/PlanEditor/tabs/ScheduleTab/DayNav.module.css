@@ -7,26 +7,39 @@
 .weekTabs.visible {
   display: flex;
 }
+/* 주차·일차 모두 "하나만 고르는" 단일 선택이라 공통 단일 선택
+   상태(tokens.css)를 쓴다 — 두 탭이 같은 파일 안에서도 서로 다른
+   선택색(연한 틴트 vs 채움)을 쓰던 것을 통일했다. */
 .weekTab {
   height: 34px;
   padding: 0 14px;
   border-radius: 9px;
-  border: 1px solid var(--border);
-  background: var(--cream);
+  border: 1px solid var(--opt-idle-border);
+  background: var(--opt-idle-bg);
   font-family: inherit;
   font-size: 15px;
   font-weight: 500;
-  color: var(--gray);
+  color: var(--opt-idle-text);
   cursor: pointer;
   transition:
     background 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+.weekTab:hover {
+  background: var(--opt-hover-bg);
+  border-color: var(--opt-hover-bg);
+  color: var(--opt-hover-text);
 }
 .weekTab.active {
   font-weight: 600;
-  background: var(--mist);
-  border-color: var(--forest);
-  color: var(--forest);
+  background: var(--opt-selected-bg);
+  border-color: var(--opt-selected-border);
+  color: var(--opt-selected-text);
+}
+.weekTab.active:hover {
+  background: var(--opt-selected-hover-bg);
+  border-color: var(--opt-selected-hover-bg);
 }
 
 .dayTabs {
@@ -42,26 +55,33 @@
   height: 42px;
   padding: 0 13px;
   border-radius: var(--radius-input);
-  border: 1px solid var(--border);
-  background: var(--cream);
+  border: 1px solid var(--opt-idle-border);
+  background: var(--opt-idle-bg);
   font-family: inherit;
   font-size: 15px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  color: var(--gray);
+  color: var(--opt-idle-text);
   cursor: pointer;
   transition:
     background 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 .dayTab:hover {
-  border-color: var(--sage);
+  background: var(--opt-hover-bg);
+  border-color: var(--opt-hover-bg);
+  color: var(--opt-hover-text);
 }
 .dayTab.active {
   font-weight: 600;
-  background: var(--forest);
-  border-color: var(--forest);
-  color: var(--paper);
+  background: var(--opt-selected-bg);
+  border-color: var(--opt-selected-border);
+  color: var(--opt-selected-text);
+}
+.dayTab.active:hover {
+  background: var(--opt-selected-hover-bg);
+  border-color: var(--opt-selected-hover-bg);
 }
 .dot {
   display: none;

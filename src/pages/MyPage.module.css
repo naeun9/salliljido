@@ -6,14 +6,14 @@
 
 .heading {
   margin: 0;
-  font-size: clamp(30px, 2.8vw, 38px);
+  font-size: clamp(30px, 2.8vw, 42px);
   line-height: 1.4;
   font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--ink);
 }
 .header {
-  max-width: 1180px;
+  max-width: 1320px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;

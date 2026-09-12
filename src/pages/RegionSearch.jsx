@@ -178,7 +178,7 @@ export default function RegionSearch() {
             <div className={styles.grid}>
               {PLACE_OPTIONS.map(({ value, icon: Icon }) => {
                 const selected = place === value;
-                const color = selected ? "var(--forest)" : "var(--gray)";
+                const color = selected ? "#ffffff" : "var(--opt-idle-text)";
                 return (
                   <button
                     key={value}
