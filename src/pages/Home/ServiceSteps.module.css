@@ -87,13 +87,21 @@
 }
 .card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px -14px rgba(0, 0, 0, .12); }
 
-/* 왼쪽 35% / 오른쪽 65%, 사이 gap 48px — 예전엔 좌우에 빈 공간이 남는
-   38%/62% + 32px였다. */
-.cardText { flex: 0 0 35%; min-width: 0; }
+/* flex-basis를 퍼센트(34%)로 주고 옆의 .preview는 flex-basis:auto(내용
+   기준)로 뒀더니, preview의 "내용이 원하는 폭"이 이 칸의 34%보다 훨씬
+   커서 shrink 계산에서 이 칸을 98px까지 짓눌러 버렸다(제목이 한 줄에
+   한 단어씩 잘린 원인). 그래서 두 칸 다 flex-basis를 0으로 두고
+   grow 비율(35:65)만으로 나누는 방식으로 바꿨다 — 이러면 내용 크기와
+   무관하게 항상 정확히 그 비율로 나뉜다. */
+.cardText { flex: 35 1 0%; max-width: 350px; min-width: 0; }
 /* 숫자는 원형 배경 없이 순수 텍스트로만. */
 .number { display: block; font-size: 14px; font-weight: 600; letter-spacing: .04em; color: var(--forest); }
-.cardText h3 { margin: 8px 0 10px; font-size: 26px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); line-height: 1.35; }
-.cardText p { margin: 0; font-size: 16px; font-weight: 450; line-height: 1.65; color: var(--gray); }
+/* word-break:keep-all이 없으면 한글은 글자 단위로 아무 데서나 줄바꿈된다
+   ("비용과 지 / 원 확인하 / 기"처럼). 칸을 좁혔더니 가장 긴 제목("비용과
+   지원 확인하기")에서 바로 이 문제가 났다 — 폭을 다시 늘리는 대신
+   띄어쓰기에서만 줄바꿈되게 고쳤다. */
+.cardText h3 { margin: 8px 0 10px; font-size: 26px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); line-height: 1.35; word-break: keep-all; }
+.cardText p { margin: 0; font-size: 16px; font-weight: 450; line-height: 1.65; color: var(--gray); word-break: keep-all; }
 /* 태그가 버튼처럼 보이지 않도록 예전보다 작게 — 높이 32px 고정, 옆
    여백만으로 크기를 잡고 세로 패딩은 line-height로 맞춘다. */
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
@@ -101,9 +109,10 @@
 
 /* 예시 UI 전체를 실제 화면처럼 크게 넣고 overflow:hidden으로 잘라내지
    않는다 — ServicePreview 쪽에서 애초에 이 폭·높이 안에 내용이 다
-   들어오는 축약형으로 만든다. 카드 오른쪽 끝까지 자연스럽게 폭을 쓰도록
-   65%를 배정했다(카드 가운데에 떠 있는 작은 박스처럼 보이지 않게). */
-.preview { flex: 1 1 65%; min-width: 0; border-radius: 16px; overflow: hidden; }
+   들어오는 축약형으로 만든다. .cardText와 같은 방식(basis:0 + grow
+   비율)으로 나눠 65%를 차지한다 — 카드 오른쪽 끝까지 자연스럽게 넓게
+   쓴다(카드 가운데에 떠 있는 작은 박스처럼 보이지 않게). */
+.preview { flex: 65 1 0%; min-width: 0; border-radius: 16px; overflow: hidden; }
 
 @media (max-width: 1100px) {
   .pin { flex-basis: 160px; }
