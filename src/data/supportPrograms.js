@@ -99,7 +99,7 @@
 // 실제 데이터가 모이면 이 배열을 `api/support/programs.js` 같은 서버리스
 // 함수가 돌려주는 형태로 바꿔도 된다. 위 필드 이름만 유지하면
 // services/supportPrograms.js는 손댈 필요가 없다.
-// 관련 기록: docs/02-todo.md "지원 프로그램 데이터".
+// 관련 기록: docs/02-todo.md §4 작업 기록 인덱스(09-12·09-13).
 import { GANGWON_PROGRAMS } from "./supportPrograms/gangwon.js";
 import { CHUNGNAM_PROGRAMS } from "./supportPrograms/chungnam.js";
 import { GYEONGBUK_PROGRAMS } from "./supportPrograms/gyeongbuk.js";

@@ -3,10 +3,10 @@ import { regionPhoto, photoBackground } from "../../data/regionPhotos.js";
 import styles from "./Banner.module.css";
 
 // design/salliljido.extracted.html 752-789줄. 삭제 버튼(dtDeleteDisplay)은
-// 마이페이지에서 기존 계획을 열었을 때만 보이는데 그 진입 경로가 아직 없어
-// 뺐다(docs/02-todo.md 참고). 저장 버튼은 RegionIntro와 같은 "지역 저장"
-// 버튼이다 — design도 detailVals()에서 같은 dtToggleSave/dtSaveLabel을
-// 공유해서 쓴다.
+// 원본처럼 마이페이지에서 기존 계획을 열었을 때만 보인다 — 그 진입 경로가
+// 생겨서(MyPage가 `?planId=`로 넘긴다) onDelete가 있을 때만 그린다.
+// 저장 버튼은 RegionIntro와 같은 "지역 저장" 버튼이다 — design도
+// detailVals()에서 같은 dtToggleSave/dtSaveLabel을 공유해서 쓴다.
 export default function Banner({
   region,
   planTitle,
