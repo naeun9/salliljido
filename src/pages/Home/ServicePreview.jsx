@@ -6,6 +6,36 @@ function Photo({ region, className }) {
   return <img className={className} src={regionPhoto(region)?.url} alt="" loading="lazy" />;
 }
 
+// "03 하루 일정" 예시의 항목 아이콘. 장소 사진을 반복해서 쓰는 대신
+// 종류를 상징하는 라인 아이콘 하나로 통일한다(요청: 서로 다른
+// 아이콘 라이브러리·이모지를 섞지 말 것) — RegionSearch.jsx의
+// NatureIcon 등과 같은 획(strokeWidth 1.4, 22 viewBox 기준 스케일)으로
+// 새로 그렸다.
+function LeafIcon({ color }) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M4 16C4 9 9 4 16 4C16 11 11 16 4 16Z" stroke={color} strokeWidth="1.4" strokeLinejoin="round" />
+      <path d="M5.2 14.8L14 6" stroke={color} strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
+  );
+}
+function BowlIcon({ color }) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M3 10h14c0 4-3 7-7 7s-7-3-7-7Z" stroke={color} strokeWidth="1.4" strokeLinejoin="round" />
+      <path d="M7.5 3c0 1.1 1 1.1 1 2.2s-1 1.1-1 2.2M13 3c0 1.1 1 1.1 1 2.2s-1 1.1-1 2.2" stroke={color} strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  );
+}
+function WaveIcon({ color }) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M2 8c2 0 2-2.4 4-2.4S8 8 10 8s2-2.4 4-2.4S16 8 18 8" stroke={color} strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M2 13c2 0 2-2.4 4-2.4S8 13 10 13s2-2.4 4-2.4S16 13 18 13" stroke={color} strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 // "04 비용과 지원 확인하기" 예시에 실제 지원 프로그램 데이터 1건을 보여준다
 // (SupportTeaser.jsx가 쓰는 것과 같은 목록에서, 마감 임박 → 모집 중 순위가
 // 가장 앞선 한 건). 모듈이 로드될 때 한 번만 계산해 매 렌더마다 다시
@@ -42,11 +72,13 @@ export default function ServicePreview({ type }) {
       {type === 2 && <div className={styles.planner}>
         <div className={styles.plannerHead}><span className={styles.kicker}>하루 일정</span><span className={styles.day}>DAY 01</span></div>
         <div className={styles.notes}>
-          {[["09:00", "해변 산책", "양양 죽도해변", "양양"], ["12:00", "로컬 맛집", "여유로운 점심 식사", "양양"], ["15:00", "서핑 체험", "초보자도 가능한 클래스", "양양"]].map(([hour, title, desc, region]) =>
+          {[["09:00", "해변 산책", "양양 죽도해변", LeafIcon], ["12:00", "로컬 맛집", "여유로운 점심 식사", BowlIcon], ["15:00", "서핑 체험", "초보자도 가능한 클래스", WaveIcon]].map(([hour, title, desc, Icon]) =>
             <div className={styles.planRow} key={hour}>
-              <span className={styles.time}>{hour}</span>
-              <Photo region={region} className={styles.planThumb} />
-              <div className={styles.note}><strong>{title}</strong><span>{desc}</span></div>
+              <span className={styles.planIcon}><Icon color="#214D42" /></span>
+              <div className={styles.note}>
+                <div className={styles.noteHead}><strong>{title}</strong><span className={styles.time}>{hour}</span></div>
+                <span>{desc}</span>
+              </div>
             </div>)}
         </div>
       </div>}

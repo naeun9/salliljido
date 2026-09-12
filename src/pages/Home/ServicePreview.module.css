@@ -1,19 +1,19 @@
 /* 홈 서비스 소개 카드 오른쪽에 들어가는 축약 예시 UI. 예전에는 실제 화면을
    그대로 줄여 넣고 카드 높이에 맞춰 overflow:hidden으로 아래를 잘라냈는데,
    내용이 중간에 끊겨 어색했다. 지금은 처음부터 "핵심만 담은 짧은 버전"으로
-   다시 그려서 잘라낼 필요가 없다 — 그래서 previewBar(브랜드바·일시정지
-   버튼)와, 콘텐츠를 주기적으로 안 보이게 만들던 loop 애니메이션도 뺐다
-   ("한눈에 다 보여야 한다"는 요구와 상충했다).
+   다시 그려서 잘라낼 필요가 없다.
    색·둥근 정도·버튼 상태 색은 실제 기능 화면(RegionSearch 등)과 같은
    토큰(tokens.css)을 그대로 쓴다 — 홈에서 본 것과 실제로 들어갔을 때
-   화면이 다른 사이트처럼 보이지 않게 하기 위해서다. */
+   화면이 다른 사이트처럼 보이지 않게 하기 위해서다.
+   네 종류(01~04) 모두 안쪽 padding을 24px로 통일했다 — 내용 구조는
+   저마다 달라도 바깥 여백 기준은 같아야 "하나의 시스템"으로 보인다. */
 .preview {
   width: 100%; color: var(--ink); background: var(--cream); border: 1px solid var(--border);
   border-radius: 16px; overflow: hidden;
 }
 
 /* 01 어울리는 지역 찾기 */
-.find { padding: 22px; }
+.find { padding: 24px; }
 .label { font-size: 13px; color: var(--gray); margin: 0 0 8px; }
 .options { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 16px; }
 .options span { border: 1px solid var(--opt-idle-border); border-radius: var(--radius-input); padding: 9px 13px; font-size: 14px; background: var(--opt-idle-bg); color: var(--opt-idle-text); }
@@ -27,31 +27,62 @@
 .kicker { color: var(--gray); font-size: 13px; }
 
 /* 02 지역 둘러보기 */
-.explore { display: grid; grid-template-columns: .9fr 1.1fr; gap: 14px; padding: 20px; }
+.explore { display: grid; grid-template-columns: .9fr 1.1fr; gap: 14px; padding: 24px; }
 .destination { position: relative; min-height: 150px; border-radius: 14px; overflow: hidden; background: #636363; }
 .destination > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .destination > div { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 14px; color: #fff; background: linear-gradient(transparent 40%, rgba(20, 26, 23, .78)); }
 .destination span { font-size: 12px; }
 .destination strong { font-size: 19px; margin-top: 4px; }
+
+/* 추천 숙소 / 주변 관광지 / 체험 프로그램 — 라벨·결과값·화살표 3열
+   그리드로 고정한다. 세 행의 높이·padding·radius·baseline을 모두
+   같게 두고, 화살표는 항상 같은 오른쪽 위치에 온다. 결과값이 길어
+   2줄이 되어도 행 높이 자체는 고정값(56px)이라 서로 달라지지 않는다.
+   베이지 대신 쿨그레이(#F7F8F9/#E5E7EB)를 쓴다 — 이 목록 전용 색으로,
+   전역 토큰(--sand 등)과는 별도로 지정했다. */
 .places { display: grid; gap: 8px; align-content: center; }
-.place { display: flex; align-items: center; gap: 10px; padding: 11px 12px; background: var(--paper); border: 1px solid var(--border); border-radius: 12px; }
-.placeKicker { font-size: 12px; color: var(--gray); flex-shrink: 0; width: 68px; }
-.place strong { flex: 1; min-width: 0; font-size: 13px; font-weight: 650; color: var(--ink); }
-.placeArrow { color: var(--sage); font-size: 15px; }
+.place {
+  display: grid;
+  grid-template-columns: 78px 1fr 16px;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 14px;
+  background: #F7F8F9;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+}
+.placeKicker { font-size: 12px; color: #73787C; }
+.place strong {
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.35;
+  color: #181A1B;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.placeArrow { color: #73787C; font-size: 15px; text-align: right; }
 
 /* 03 하루 일정 만들기 */
-.planner { padding: 20px; }
+.planner { padding: 24px; }
 .plannerHead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .day { font-size: 12px; color: var(--gray); border: 1px solid var(--border); border-radius: 99px; padding: 4px 11px; }
 .notes { display: grid; gap: 10px; }
-.planRow { display: grid; grid-template-columns: 44px 36px minmax(0, 1fr); gap: 10px; align-items: center; }
-.time { font-size: 13px; font-weight: 600; color: var(--ink); }
-.planThumb { width: 36px; height: 36px; border-radius: 8px; object-fit: cover; }
-.note strong { display: block; font-size: 14px; }
-.note span { display: block; font-size: 12px; color: var(--gray); margin-top: 2px; }
+/* 장소 사진을 반복하는 대신 종류를 나타내는 라인 아이콘 하나로
+   통일한다 — 아이콘 칸은 42px 정사각형, 배경은 --mist(#E3ECE8),
+   아이콘 색은 --forest(#214D42)로 tokens.css 값을 그대로 쓴다. */
+.planRow { display: flex; align-items: center; gap: 12px; }
+.planIcon { flex: 0 0 auto; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: var(--mist); color: var(--forest); }
+.note { flex: 1 1 auto; min-width: 0; }
+.noteHead { display: flex; align-items: baseline; gap: 8px; }
+.note strong { font-size: 14px; color: var(--ink); }
+.note .time { font-size: 12px; font-weight: 500; color: var(--gray); }
+.note > span { display: block; font-size: 12px; color: var(--gray); margin-top: 2px; }
 
 /* 04 비용과 지원 확인하기 */
-.budget { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.budget { padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .budgetLeft, .budgetRight { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .totalCost { font-size: 20px; font-weight: 700; letter-spacing: -.03em; color: var(--forest); }
 .budgetRows { display: grid; gap: 10px; }
@@ -68,4 +99,5 @@
   .explore { grid-template-columns: 1fr; }
   .destination { min-height: 120px; }
   .budget { grid-template-columns: 1fr; }
+  .place { grid-template-columns: 68px 1fr 16px; }
 }
