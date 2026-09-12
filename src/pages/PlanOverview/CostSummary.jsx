@@ -4,7 +4,10 @@ import styles from "./CostSummary.module.css";
 // 막대 값은 예상 비용 탭과 같은 utils/cost.js buildCostBars()에서 온다.
 export default function CostSummary({ bars, total }) {
   return (
-    <section className={styles.section}>
+    // data-ov-block: 인쇄에서 이 블록이 페이지 경계에 걸리면 통째로 다음
+    // 장으로 넘긴다(styles/global.css). 예전에는 이 표시를 쓰는 요소가
+    // 하나도 없어서 규칙이 죽어 있었고, 막대 목록이 장 사이에서 갈렸다.
+    <section className={styles.section} data-ov-block>
       <div className={styles.inner}>
         <h2 className={styles.heading}>예상 비용</h2>
         <div className={styles.row}>

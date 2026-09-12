@@ -39,14 +39,24 @@ export default function RegionGlance({
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
-        <h2 className={styles.heading}>지역 한눈에</h2>
+        {/* 인쇄에서는 제목을 뺀다 — 지도와 소개 산문이 빠지면 남는 것이
+            요약 지표 세 줄뿐이라, 제목이 있으면 새 섹션이 시작하는 것처럼
+            보여 첫 장이 도리어 장황해진다. */}
+        <h2 className={styles.heading} data-print-hide>
+          지역 한눈에
+        </h2>
         <div className={styles.row}>
           <div className={styles.left}>
             <div className={styles.nameRow}>
               <span className={styles.name}>{regionName}</span>
               <span className={styles.badge}>인구감소지역</span>
             </div>
-            <p className={styles.intro}>{intro}</p>
+            {/* 지역 소개 산문은 화면에서만 보여 준다. 인쇄 첫 장은
+                계획 정보(이름·지역·기간·비용·요약 지표)만 담아야 해서,
+                읽을거리를 빼면 한 장에 다 들어간다. */}
+            <p className={styles.intro} data-print-hide>
+              {intro}
+            </p>
             <div className={styles.facts}>
               {facts.map((f) => (
                 <div key={f.label} className={styles.factRow}>
