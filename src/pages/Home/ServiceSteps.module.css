@@ -46,13 +46,13 @@
    바탕(#DDE5E1, 8px)에 가운데 흰 파선을 얹고, 파선 간격을 넓게 벌려
    "길" 느낌을 준다. 카드 개수·높이가 달라져도 ol의 실제 높이를 그대로
    따라가 좌표를 다시 맞출 필요가 없다. */
-/* 핀(svg width 15px)이 핀 칸(320px) 오른쪽 끝에 딱 붙으므로 중심은
-   320 - 7.5 = 312.5px다. */
-.steps::before { content: ""; position: absolute; left: 308px; top: 0; bottom: 0; width: 9px; border-radius: 5px; background: #DDE5E1; }
+/* 핀(svg width 19px)이 핀 칸(320px) 오른쪽 끝에 딱 붙으므로 중심은
+   320 - 9.5 = 310.5px다. */
+.steps::before { content: ""; position: absolute; left: 306px; top: 0; bottom: 0; width: 9px; border-radius: 5px; background: #DDE5E1; }
 .steps::after {
   content: "";
   position: absolute;
-  left: 311.5px;
+  left: 309.5px;
   top: 0;
   bottom: 0;
   width: 2px;
@@ -62,8 +62,10 @@
 
 /* 핀이 카드의 세로 중앙에 오도록 align-items를 center로 둔다(이전엔
    flex-start + 고정 padding-top이라 카드가 길어질수록 핀이 위로
-   치우쳐 보였다). */
-.step { position: relative; display: flex; align-items: center; scroll-margin-top: 96px; }
+   치우쳐 보였다). z-index를 명시해 길(steps::before/after)보다 항상
+   앞에 그려지도록 확실히 한다 — ::after는 ol의 마지막 생성 자식이라
+   z-index 없이는 뒤에 오는 li(핀·카드)보다 오히려 위에 그려질 수 있다. */
+.step { position: relative; z-index: 1; display: flex; align-items: center; scroll-margin-top: 96px; }
 .pin { flex: 0 0 320px; display: flex; justify-content: flex-end; }
 .pin svg { display: block; }
 /* 핀에서 카드까지 이어지는 아주 얇은 연결선. */
@@ -105,8 +107,8 @@
 
 @media (max-width: 1100px) {
   .pin { flex-basis: 160px; }
-  .steps::before { left: 148px; }
-  .steps::after { left: 151.5px; }
+  .steps::before { left: 146px; }
+  .steps::after { left: 149.5px; }
   .rail { width: 160px; }
 }
 @media (max-width: 760px) {
@@ -118,11 +120,11 @@
   .service { padding-top: 64px; padding-bottom: 72px; }
   .timeline { margin-top: 40px; }
   .pin { flex-basis: 32px; }
-  .pin svg { width: 13px; height: 17px; }
+  .pin svg { width: 15px; height: 19px; }
   .connector { flex-basis: 10px; }
   .steps { gap: 32px; }
-  .steps::before { left: 22.5px; width: 6px; }
-  .steps::after { left: 24.5px; }
+  .steps::before { left: 21.5px; width: 6px; }
+  .steps::after { left: 23.5px; }
   .rail { width: 32px; padding-right: 0; justify-content: center; font-size: 12px; }
   .card { padding: 20px; border-radius: 18px; }
   .cardText h3 { font-size: 22px; }

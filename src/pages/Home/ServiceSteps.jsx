@@ -52,7 +52,7 @@ export default function ServiceSteps() {
           <ol className={styles.steps}>
             {STEPS.map((step, i) => <li id={"service-step-" + i} key={step.num} className={styles.step}>
               <span className={styles.pin} aria-hidden="true">
-                <svg width="15" height="19" viewBox="0 0 15 19" fill="none">
+                <svg width="19" height="24" viewBox="0 0 15 19" fill="none">
                   <path d="M7.5 0C3.36 0 0 3.36 0 7.5 0 13.13 7.5 19 7.5 19S15 13.13 15 7.5C15 3.36 11.64 0 7.5 0Z" fill="#24483E" />
                   <circle cx="7.5" cy="7.5" r="3" fill="#F5F3ED" />
                 </svg>
