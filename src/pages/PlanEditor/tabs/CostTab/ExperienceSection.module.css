@@ -20,19 +20,19 @@
 }
 .name {
   flex: 1 1 160px;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--ink);
 }
 .duration {
   flex: 0 0 auto;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--gray);
 }
 .cost {
   flex: 0 0 auto;
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--ink);
 }
@@ -55,7 +55,7 @@
   border: none;
   background: transparent;
   font-family: inherit;
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 600;
   text-align: right;
   color: var(--ink);
@@ -67,7 +67,7 @@
   margin: 0;
 }
 .costUnit {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--gray);
 }
 .removeBtn {
@@ -100,7 +100,7 @@
   display: block;
 }
 .emptyTitle {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--ink);
@@ -111,7 +111,7 @@
   background: transparent;
   padding: 0;
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--forest);
   border-bottom: 1px solid var(--mist);

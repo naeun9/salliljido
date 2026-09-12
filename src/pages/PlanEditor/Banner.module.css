@@ -47,7 +47,7 @@
   background: transparent;
   padding: 0;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   color: rgba(250, 248, 244, 0.78);
   cursor: pointer;
@@ -66,7 +66,7 @@
 }
 .title {
   margin: 0;
-  font-size: clamp(24px, 2.4vw, 31px);
+  font-size: clamp(26px, 2.4vw, 33px);
   line-height: 1.2;
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -82,7 +82,7 @@
   padding: 4px 10px;
   border-radius: var(--radius-pill);
   border: 1px solid rgba(250, 248, 244, 0.4);
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 600;
   color: rgba(250, 248, 244, 0.85);
 }
@@ -96,7 +96,7 @@
   border: 1px solid rgba(250, 248, 244, 0.45);
   background: rgba(250, 248, 244, 0.14);
   font-family: inherit;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--cream);
   cursor: pointer;
@@ -120,7 +120,7 @@
   border: 1px solid rgba(250, 248, 244, 0.6);
   background: rgba(250, 248, 244, 0.92);
   font-family: inherit;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--ink);
@@ -133,7 +133,7 @@
   border: none;
   background: var(--terracotta);
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--cream);
   cursor: pointer;
@@ -145,7 +145,7 @@
   border: 1px solid rgba(250, 248, 244, 0.4);
   background: transparent;
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 500;
   color: rgba(250, 248, 244, 0.85);
   cursor: pointer;
@@ -159,17 +159,17 @@
   margin-top: 14px;
 }
 .metaRegion {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: rgba(250, 248, 244, 0.9);
 }
 .metaDivider {
-  font-size: 14px;
+  font-size: 15px;
   color: rgba(250, 248, 244, 0.5);
 }
 .metaCondition {
-  font-size: 14.5px;
+  font-size: 15px;
   color: rgba(250, 248, 244, 0.78);
 }
 
@@ -190,7 +190,7 @@
   border: 1px solid rgba(250, 248, 244, 0.5);
   background: rgba(250, 248, 244, 0.14);
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--cream);

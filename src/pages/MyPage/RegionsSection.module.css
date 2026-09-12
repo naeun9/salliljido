@@ -16,7 +16,7 @@
 }
 .title {
   margin: 0;
-  font-size: 21.5px;
+  font-size: 23px;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: var(--ink);
@@ -62,7 +62,7 @@
   margin-bottom: 14px;
 }
 .emptyTitle {
-  font-size: 17.5px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--ink);

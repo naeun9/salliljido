@@ -28,7 +28,7 @@
 }
 .place {
   margin: 0;
-  font-size: 22.5px;
+  font-size: 23px;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: var(--ink);
@@ -46,12 +46,12 @@
   padding: 4px 11px;
   border-radius: var(--radius-pill);
   background: var(--mist);
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--forest);
 }
 .meta {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--sage);
 }
@@ -94,7 +94,7 @@
 
 .overview {
   margin: 16px 0 0;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.75;
   color: var(--gray);
   letter-spacing: -0.01em;
@@ -109,7 +109,7 @@
   border: none;
   background: none;
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--forest);
   cursor: pointer;
@@ -133,7 +133,7 @@
 }
 .infoLabel {
   flex: 0 0 82px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--sage);
 }
@@ -141,7 +141,7 @@
   flex: 1 1 auto;
   min-width: 0;
   margin: 0;
-  font-size: 15.5px;
+  font-size: 16px;
   line-height: 1.6;
   color: var(--ink);
   word-break: keep-all;
@@ -171,7 +171,7 @@
 }
 .menuTitle {
   margin: 0;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--sage);
 }
@@ -187,7 +187,7 @@
   display: flex;
   align-items: baseline;
   gap: 8px;
-  font-size: 15.5px;
+  font-size: 16px;
   line-height: 1.6;
   color: var(--ink);
   word-break: keep-all;
@@ -204,14 +204,14 @@
   padding: 3px 9px;
   border-radius: var(--radius-pill);
   background: var(--mist);
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--forest);
 }
 
 .error {
   margin: 16px 0 0;
-  font-size: 14.5px;
+  font-size: 15px;
   color: var(--rust);
 }
 
@@ -232,7 +232,7 @@
   border: 1px solid var(--border);
   background: var(--paper);
   font-family: inherit;
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--gray);
   cursor: pointer;
@@ -252,7 +252,7 @@
   border: none;
   background: var(--mist);
   font-family: inherit;
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--forest);
   cursor: pointer;

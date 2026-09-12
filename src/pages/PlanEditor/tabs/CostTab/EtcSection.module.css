@@ -29,7 +29,7 @@
   background: transparent;
   outline: none;
   font-family: inherit;
-  font-size: 15.5px;
+  font-size: 16px;
   letter-spacing: -0.01em;
   color: var(--ink);
 }
@@ -52,14 +52,14 @@
   background: transparent;
   outline: none;
   font-family: inherit;
-  font-size: 17.5px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--ink);
 }
 .amountUnit {
   flex: 0 0 auto;
-  font-size: 15.5px;
+  font-size: 16px;
   color: var(--gray);
 }
 .removeBtn {
@@ -92,7 +92,7 @@
   border: 1px solid var(--mist);
   background: var(--paper);
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--forest);

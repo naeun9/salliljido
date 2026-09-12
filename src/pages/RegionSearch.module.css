@@ -33,7 +33,7 @@
 }
 .title {
   margin: 0;
-  font-size: clamp(29px, 2.95vw, 38px);
+  font-size: clamp(31px, 2.95vw, 40px);
   line-height: 1.4;
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -52,14 +52,14 @@
   gap: 10px;
 }
 .stepNum {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.06em;
   color: var(--sage);
 }
 .stepTitle {
   margin: 0;
-  font-size: 20.5px;
+  font-size: 23px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--ink);
@@ -93,7 +93,7 @@
 }
 
 .optionLabel {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--ink);
@@ -103,7 +103,7 @@
 }
 .optionSub {
   margin-top: 7px;
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 1.6;
   color: var(--gray);
 }
@@ -146,16 +146,16 @@
   background: transparent;
   outline: none;
   font-family: inherit;
-  font-size: 17.5px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--ink);
 }
 .customDurUnit {
-  font-size: 15.5px;
+  font-size: 16px;
   color: var(--gray);
 }
 .customDurHint {
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .ctaRow {
@@ -174,7 +174,7 @@
   border-radius: var(--radius-card);
   border: none;
   font-family: inherit;
-  font-size: 17.5px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.01em;
   transition:
@@ -193,5 +193,5 @@
   color: #a8a49b;
 }
 .submitArrow {
-  font-size: 18.5px;
+  font-size: 20px;
 }

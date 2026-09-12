@@ -1,19 +1,16 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./Footer.module.css";
 
-// design/salliljido.extracted.html 279-307줄. 원본은 랜딩 전용이었지만
-// 지금은 Layout이 모든 라우트 아래에 한 번 그린다 — 데이터 출처 표기를
-// 여기로 모았기 때문에, 관광공사 데이터를 쓰는 화면이면 어디서든 출처가
-// 보여야 한다.
+// design/salliljido.extracted.html 279-307줄. 원본대로 랜딩 전용이다 —
+// Layout이 홈에서만 그린다(그 파일 주석 참고). 다른 화면에는 출처 한 줄
+// (DataSourceNote)만 남는다.
 //
-// 바로가기 링크는 전부 Home 안의 섹션으로 가는 앵커다. Home에서는 페이지 내
-// 앵커(#service)로 두어 전역 scroll-behavior의 부드러운 스크롤을 그대로 쓰고,
-// Home이 아닌 화면에서는 그 앵커가 가리킬 섹션이 없으므로 홈으로 이동하면서
-// 해당 섹션으로 가도록 "/#service" 형태로 바꾼다 — 안 그러면 눌러도 아무 일도
-// 안 일어나는 죽은 링크가 된다.
+// 바로가기 링크는 전부 홈 안의 섹션으로 가는 앵커다. 홈에서만 그려지므로
+// 페이지 내 앵커(#service)로 두면 전역 scroll-behavior의 부드러운 스크롤이
+// 그대로 걸린다. (예전에는 모든 화면에 푸터가 있어서 홈이 아닐 때
+// "/#service"로 바꾸는 분기가 필요했다.)
 export default function Footer() {
-  const isHome = useLocation().pathname === "/";
-  const section = (id) => (isHome ? `#${id}` : `/#${id}`);
+  const section = (id) => `#${id}`;
 
   return (
     <footer className={styles.footer} data-print-hide>

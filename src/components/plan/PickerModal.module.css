@@ -13,14 +13,14 @@
   padding: 22px 24px 14px;
 }
 .title {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: var(--ink);
 }
 .sub {
   margin: 8px 0 0;
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 1.6;
   color: var(--gray);
 }
@@ -31,7 +31,7 @@
 }
 .sectionLabel {
   padding: 8px 0 6px;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--gray);
@@ -62,13 +62,13 @@
   border-color: var(--mist);
 }
 .optionName {
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--ink);
 }
 .optionMeta {
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--gray);
 }
 .restOption {
@@ -90,7 +90,7 @@
   border-color: var(--gray);
 }
 .restName {
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--ink);
@@ -114,7 +114,7 @@
   background: #f8e6da;
 }
 .customLabel {
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--rust);
@@ -129,7 +129,7 @@
   border: 1px solid var(--border);
   background: var(--cream);
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--gray);
   cursor: pointer;

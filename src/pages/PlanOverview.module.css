@@ -17,7 +17,7 @@
 
 .impactNote {
   margin: 0;
-  font-size: 16.5px;
+  font-size: 17px;
   line-height: 1.7;
   font-weight: 600;
   color: #fffdfa;
@@ -26,7 +26,7 @@
 
 .source {
   margin: 12px 0 0;
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.7;
   color: rgba(250, 248, 244, 0.7);
 }
@@ -55,7 +55,7 @@
   border: 1px solid #2f5d50;
   background: transparent;
   font-family: inherit;
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 600;
   color: #2f5d50;
   cursor: pointer;
@@ -68,7 +68,7 @@
   border: none;
   background: #d9784e;
   font-family: inherit;
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 600;
   color: #fffdfa;
   cursor: pointer;

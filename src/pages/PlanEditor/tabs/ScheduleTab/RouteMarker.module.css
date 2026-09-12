@@ -15,7 +15,7 @@
   color: var(--cream);
   /* design 17.5px. 같은 이유로(실제 지도 글씨와 나란히 놓임) 한 단계 낮췄다.
      핀 원 크기(38/48px)는 그대로다. */
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   box-shadow: 0 6px 14px -8px rgba(43, 43, 41, 0.6);
   transition:

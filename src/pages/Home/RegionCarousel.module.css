@@ -24,14 +24,14 @@
   max-width: 560px;
 }
 .eyebrow {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.1em;
   color: var(--sage);
 }
 .title {
   margin: 18px 0 0;
-  font-size: clamp(30px, 3.4vw, 45px);
+  font-size: clamp(32px, 3.4vw, 47px);
   line-height: 1.35;
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -48,7 +48,7 @@
   border: 1px solid var(--mist);
   background: var(--paper);
   color: var(--forest);
-  font-size: 17.5px;
+  font-size: 18px;
   cursor: pointer;
   transition:
     background 0.2s ease,
@@ -95,7 +95,7 @@
   border-radius: var(--radius-tag);
   background: rgba(250, 248, 244, 0.9);
   font-family: var(--font-family-mono);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--gray);
 }
 .cardBody {
@@ -104,14 +104,14 @@
   padding: clamp(30px, 4vw, 48px);
 }
 .cardOrder {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.08em;
   color: var(--terracotta);
 }
 .cardName {
   margin: 14px 0 0;
-  font-size: clamp(28px, 2.8vw, 36px);
+  font-size: clamp(30px, 2.8vw, 38px);
   font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--ink);
@@ -127,13 +127,13 @@
   border-radius: var(--radius-pill);
   border: 1px solid var(--mist);
   background: var(--paper);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--forest);
 }
 .cardDesc {
   margin: 24px 0 0;
-  font-size: 17.5px;
+  font-size: 18px;
   line-height: 1.8;
   color: var(--gray);
   letter-spacing: -0.01em;

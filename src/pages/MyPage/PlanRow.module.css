@@ -31,7 +31,7 @@
 }
 .title {
   margin: 0;
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: var(--ink);
@@ -54,7 +54,7 @@
   padding: 4px 10px;
   border-radius: var(--radius-pill);
   background: var(--clay-tint);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--rust);
 }
@@ -65,7 +65,7 @@
   border: 1px solid var(--forest);
   background: var(--paper);
   font-family: inherit;
-  font-size: 16.5px;
+  font-size: 17px;
   font-weight: 600;
   color: var(--ink);
   outline: none;
@@ -97,7 +97,7 @@
   min-width: 140px;
 }
 .cost {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--forest);

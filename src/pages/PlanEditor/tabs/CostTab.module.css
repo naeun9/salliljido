@@ -23,7 +23,7 @@
   border-radius: var(--radius-pill);
   border: 1px solid var(--mist);
   background: var(--paper);
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--forest);
 }
@@ -35,20 +35,20 @@
   gap: 16px;
 }
 .total {
-  font-size: clamp(36px, 4.6vw, 57px);
+  font-size: clamp(38px, 4.6vw, 59px);
   line-height: 1.05;
   font-weight: 700;
   letter-spacing: -0.04em;
   color: var(--forest);
 }
 .daily {
-  font-size: 16.5px;
+  font-size: 17px;
   color: var(--gray);
   letter-spacing: -0.01em;
 }
 .disclaimer {
   margin: 14px 0 0;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.68;
   color: var(--gray);
 }
@@ -84,24 +84,24 @@
 }
 .cardTitle {
   margin: 0;
-  font-size: 18.5px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: var(--ink);
 }
 .cardSub {
   margin: 0 0 5px;
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--gray);
 }
 .cardAmount {
-  font-size: 17.5px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--forest);
 }
 .cardBasis {
   margin: 14px 0 0;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.68;
   color: var(--gray);
 }
@@ -132,19 +132,19 @@
   background: transparent;
   outline: none;
   font-family: inherit;
-  font-size: 17.5px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--ink);
 }
 .amountUnit {
   flex: 0 0 auto;
-  font-size: 15.5px;
+  font-size: 16px;
   color: var(--gray);
 }
 .amountMultiplier {
   flex: 0 0 auto;
-  font-size: 15.5px;
+  font-size: 16px;
   color: var(--gray);
 }
 
@@ -180,7 +180,7 @@
   transition: left 0.2s ease;
 }
 .toggleLabel {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--ink);
 }
@@ -197,7 +197,7 @@
   border-top: 1px solid var(--hairline);
 }
 .subLabel {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--gray);
 }

@@ -14,14 +14,14 @@
 }
 .title {
   margin: 0;
-  font-size: 22px;
+  font-size: 23px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--ink);
 }
 .body {
   margin: 10px 0 0;
-  font-size: 15.5px;
+  font-size: 16px;
   line-height: 1.7;
   color: var(--gray);
 }
@@ -38,7 +38,7 @@
   height: 46px;
   padding: 0 20px;
   border-radius: var(--radius-card);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
 }
 .primary {

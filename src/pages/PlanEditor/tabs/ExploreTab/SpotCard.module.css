@@ -23,7 +23,7 @@
 }
 .imageTag {
   font-family: var(--font-family-mono);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--gray);
 }
 .body {
@@ -44,7 +44,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 17.5px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: var(--ink);
@@ -54,13 +54,13 @@
   padding: 4px 10px;
   border-radius: var(--radius-pill);
   background: var(--mist);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--forest);
 }
 .desc {
   margin: 8px 0 0;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.68;
   color: var(--gray);
   letter-spacing: -0.01em;
@@ -80,7 +80,7 @@
   border: 1px solid var(--border);
   background: var(--cream);
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--forest);
   cursor: pointer;

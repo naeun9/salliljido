@@ -59,7 +59,7 @@
 }
 
 .logo {
-  font-size: 21.5px;
+  font-size: 23px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--header-fg);
@@ -94,7 +94,7 @@
   display: inline-flex;
   align-items: center;
   height: 38px;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
   color: var(--nav-base);
   letter-spacing: -0.01em;
@@ -137,7 +137,7 @@
   border-radius: var(--radius-input);
   border: 1px solid var(--login-border);
   background: var(--login-bg);
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--login-fg);
@@ -154,7 +154,7 @@
   padding: 5px 11px;
   border-radius: var(--radius-pill);
   background: var(--clay-tint);
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--rust);
@@ -180,7 +180,7 @@
   border: 1px solid var(--avatar-border);
   background: var(--avatar-bg);
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--avatar-fg);
   cursor: pointer;
@@ -231,7 +231,7 @@
   white-space: nowrap;
 }
 .accountEmail {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--gray);
   overflow: hidden;
   text-overflow: ellipsis;

@@ -16,14 +16,14 @@
   max-width: 620px;
 }
 .eyebrow {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.1em;
   color: var(--sage);
 }
 .title {
   margin: 18px 0 0;
-  font-size: clamp(30px, 3.4vw, 45px);
+  font-size: clamp(32px, 3.4vw, 47px);
   line-height: 1.35;
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -31,7 +31,7 @@
 }
 .lead {
   margin: 20px 0 0;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.8;
   color: var(--gray);
   letter-spacing: -0.01em;
@@ -71,17 +71,17 @@
   padding: 5px 11px;
   border-radius: var(--radius-pill);
   background: var(--mist);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--forest);
 }
 .cardStatus {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 500;
 }
 .cardTitle {
   margin: 20px 0 0;
-  font-size: 20.5px;
+  font-size: 23px;
   font-weight: 600;
   line-height: 1.45;
   letter-spacing: -0.02em;
@@ -89,7 +89,7 @@
 }
 .cardBenefit {
   margin: 12px 0 22px;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.75;
   color: var(--gray);
   letter-spacing: -0.01em;
@@ -103,12 +103,12 @@
   gap: 10px;
 }
 .cardPeriodLabel {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--gray);
 }
 .cardPeriodValue {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--ink);
 }
@@ -126,7 +126,7 @@
   border: 1px solid var(--forest);
   background: transparent;
   color: var(--forest);
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.01em;
   /* design은 투명 → 딥그린 채움 + 글자색 반전이라, 커서가 닿는 순간

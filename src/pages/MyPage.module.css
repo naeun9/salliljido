@@ -6,7 +6,7 @@
 
 .heading {
   margin: 0;
-  font-size: clamp(28px, 2.8vw, 36px);
+  font-size: clamp(30px, 2.8vw, 38px);
   line-height: 1.4;
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -35,13 +35,13 @@
   background: var(--cream);
 }
 .statLabel {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--gray);
 }
 .statValue {
   margin-top: 6px;
-  font-size: 21.5px;
+  font-size: 23px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--forest);

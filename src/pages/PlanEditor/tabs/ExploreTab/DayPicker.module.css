@@ -14,7 +14,7 @@
   display: flex;
 }
 .pickerLabel {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--gray);
 }
@@ -30,7 +30,7 @@
   border: 1px solid var(--border);
   background: var(--paper);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--gray);
   cursor: pointer;
@@ -48,7 +48,7 @@
   border: none;
   background: var(--terracotta);
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--cream);
   cursor: pointer;
