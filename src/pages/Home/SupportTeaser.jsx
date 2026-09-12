@@ -10,6 +10,11 @@ import styles from "./SupportTeaser.module.css";
 // (data/supportPrograms.js)에서 앞의 세 건을 가져온다 — 홈과 지원 프로그램
 // 화면이 다른 말을 할 수 없다.
 //
+// 리드 문구의 "빈집 재생"도 같은 이유로 뺐다 — 원본 카피가 열거한 세
+// 항목 중 빈집 재생 사업은 확인된 공고에 없다. 실제 지원 내용(영월의
+// 연수비, 영덕의 숙박비·체험비 지원)을 덮으면서 프로그램이 늘어도
+// 어긋나지 않는 "체류 활동비"로 바꿨다.
+//
 // 카드는 원본대로 최대 세 장이고, 공고가 그보다 적으면 있는 만큼만 그린다
 // (그리드가 auto-fit이라 두 장이면 두 장이 폭을 나눠 갖는다).
 const TEASER_COUNT = 3;
@@ -32,7 +37,7 @@ export default function SupportTeaser() {
           <div className={styles.eyebrow}>SUPPORT</div>
           <h2 className={styles.title}>지자체 지원 프로그램을 모았습니다</h2>
           <p className={styles.lead}>
-            숙박비 지원, 체험 프로그램, 빈집 재생까지. 공고가 흩어져 있어 놓치기 쉬운 사업들을 지역·기간별로
+            숙박비 지원, 체험비 지원, 체류 활동비까지. 공고가 흩어져 있어 놓치기 쉬운 사업들을 지역·기간별로
             정리했습니다.
           </p>
         </div>
