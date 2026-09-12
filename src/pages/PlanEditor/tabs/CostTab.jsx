@@ -87,8 +87,9 @@ export default function CostTab({ region, openedPlanId }) {
     });
 
   // 저장이 끝나면 최종 계획 화면으로 넘어간다. design 2470/2456줄은
-  // 토스트를 띄우느라 120ms 뒤에 옮기는데, 토스트가 아직 없으므로
-  // (docs/02-todo.md ToastStack) 지연 없이 바로 이동한다.
+  // 토스트를 띄우느라 120ms 뒤에 옮기는데, 우리 토스트는 화면 밖 고정
+  // 레이어(ToastStack)라 화면이 바뀌어도 그대로 남는다 — 기다릴 이유가
+  // 없어 바로 이동하고 토스트는 다음 화면에서 계속 보인다.
   function goOverview(id) {
     navigate(`/plan/${encodeURIComponent(region.short)}/overview?planId=${encodeURIComponent(id)}`);
   }

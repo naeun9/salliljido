@@ -62,8 +62,8 @@ export default function SupportPrograms() {
     setTypeFilter([]);
     setStatusFilter([]);
   }
-  // design 4357175줄: 로그인 필요 + 등록 해제 전에만 확인창. 등록 시
-  // 토스트는 ToastStack이 아직 없어(docs/02-todo.md) 생략했다.
+  // design 4357175줄: 로그인 필요 + 등록 해제 전에만 확인창.
+  // 등록·해제 모두 토스트를 띄운다(아래 showToast).
   function toggleSave(program) {
     if (
       !requireAuth(

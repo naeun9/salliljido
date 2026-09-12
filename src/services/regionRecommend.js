@@ -9,7 +9,7 @@
 //     함수를 쓰므로 두 화면이 어긋나지 않는다.
 // 대응하는 서버리스 함수 자리: api/region/recommend.js(추천 점수),
 // api/region/stats.js(방문자수·수요강도).
-// 관련 기록: docs/02-todo.md "추천 결과 → 실제 API 교체".
+// 관련 기록: docs/02-todo.md §2 B1(추천 정렬을 실제 지표로).
 //
 // 지역 목록 자체는 data/regions.js 하나에서 온다(그 파일 주석 참고).
 import { REGIONS, REGION_BY_SHORT } from "../data/regions.js";
@@ -46,7 +46,6 @@ export async function getRecommendations({ region, place }) {
 }
 
 // RegionIntro(지역 소개) 화면에서 short(지역 slug)로 상세 데이터를 다시 찾을 때 쓴다.
-// docs/02-todo.md "RegionIntro 데이터 연결" 참고.
 export function getRegionByShort(short) {
   return REGION_BY_SHORT[short] || null;
 }
