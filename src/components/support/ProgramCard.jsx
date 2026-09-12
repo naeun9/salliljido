@@ -94,6 +94,12 @@ export default function ProgramCard({ program, saved, onToggleSave }) {
             </svg>
           </a>
         )}
+        {/* 공식 공고 URL을 못 찾은 항목. 버튼 자리를 그냥 비워 두면 카드가
+            망가진 것처럼 보이고, 사용자가 "신청은 어디서 하나"에서 막힌다.
+            그래서 버튼 대신 확인 방법을 알려 준다. 제3자 집계 서비스
+            링크는 걸지 않는다 — 공고 원문이 아니라 재가공된 정보라
+            신청 근거가 될 수 없다. 대신 카드 아래 문의처로 안내한다. */}
+        {!program.url && <span className={styles.noticeNote}>공고 확인 필요 · 문의처로 확인해 주세요</span>}
         <button
           type="button"
           className={`${styles.saveBtn} ${saved ? styles.saveBtnActive : ""}`}
