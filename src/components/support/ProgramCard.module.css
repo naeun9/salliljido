@@ -44,11 +44,33 @@
   color: var(--ink);
 }
 
-.city {
+/* 원본은 지역명이 홀로 한 줄이었다(.city의 margin-top: 7px). 유형 배지를
+   같은 줄에 붙이면서 여백을 줄에 옮겼고, .city 자체 값은 건드리지 않았다. */
+.cityRow {
   margin-top: 7px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.city {
   font-size: var(--font-body);
   font-weight: 500;
   color: var(--sage);
+}
+
+/* 상태 배지(.badge)보다 한 단계 작고 조용하게. 크기·자간은 카드 안의
+   다른 보조 문구(.infoLabel 13px)와 맞췄고, 색은 인라인 스타일로
+   유형마다 다르게 들어온다(TYPE_COLOR). */
+.typeBadge {
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
 .benefits {

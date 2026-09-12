@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import {
   REGION_FILTER_OPTIONS,
   STATUS_FILTER_OPTIONS,
+  TYPE_FILTER_OPTIONS,
   SUP_LOAD_MS,
   getAllPrograms,
   filterPrograms,
@@ -31,6 +32,7 @@ export default function SupportPrograms() {
     const r = searchParams.get("region");
     return r && REGION_FILTER_OPTIONS.includes(r) ? [r] : [];
   });
+  const [typeFilter, setTypeFilter] = useState([]);
   const [statusFilter, setStatusFilter] = useState([]);
   const [sort, setSort] = useState("deadline");
   const saved = useSaved();
@@ -49,11 +51,15 @@ export default function SupportPrograms() {
   function toggleRegion(r) {
     setRegionFilter((cur) => (cur.includes(r) ? cur.filter((x) => x !== r) : cur.concat([r])));
   }
+  function toggleType(t) {
+    setTypeFilter((cur) => (cur.includes(t) ? cur.filter((x) => x !== t) : cur.concat([t])));
+  }
   function toggleStatus(s) {
     setStatusFilter((cur) => (cur.includes(s) ? cur.filter((x) => x !== s) : cur.concat([s])));
   }
   function clearFilters() {
     setRegionFilter([]);
+    setTypeFilter([]);
     setStatusFilter([]);
   }
   // design 4357175줄: 로그인 필요 + 등록 해제 전에만 확인창. 등록 시
@@ -78,7 +84,7 @@ export default function SupportPrograms() {
     showToast("관심 프로그램에 담았어요", { link: true });
   }
 
-  const shown = sortPrograms(filterPrograms(ALL_PROGRAMS, { regionFilter, statusFilter }), sort);
+  const shown = sortPrograms(filterPrograms(ALL_PROGRAMS, { regionFilter, typeFilter, statusFilter }), sort);
 
   return (
     <div className={styles.page}>
@@ -86,19 +92,29 @@ export default function SupportPrograms() {
         <div className={styles.header}>
           <div>
             <h1 className={styles.title}>지자체 지원 프로그램</h1>
-            <p className={styles.subtitle}>한 달 살기를 지원하는 지자체 프로그램을 모아 보여드립니다</p>
+            {/* 원본 문구는 "한 달 살기를 지원하는 지자체 프로그램을 모아
+                보여드립니다"였다. 목록에 성격이 다른 두 갈래가 섞여
+                있어서(여행 경비를 돌려주는 관광형, 정착을 전제로 숙소를
+                주는 귀농귀촌형) 그 구분을 한 줄로 밝힌다. */}
+            <p className={styles.subtitle}>
+              여행 경비를 돌려주는 체류 여행 지원과, 숙소를 내주는 귀농귀촌 살아보기를 함께 모았습니다
+            </p>
           </div>
           <span className={styles.asOf}>{asOfLabel()}</span>
         </div>
 
         <ProgramFilter
           regionOptions={REGION_FILTER_OPTIONS}
+          typeOptions={TYPE_FILTER_OPTIONS}
           statusOptions={STATUS_FILTER_OPTIONS}
           regionFilter={regionFilter}
+          typeFilter={typeFilter}
           statusFilter={statusFilter}
           onToggleRegion={toggleRegion}
+          onToggleType={toggleType}
           onToggleStatus={toggleStatus}
           onClearRegion={() => setRegionFilter([])}
+          onClearType={() => setTypeFilter([])}
           onClearStatus={() => setStatusFilter([])}
           count={shown.length}
           sort={sort}

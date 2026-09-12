@@ -11,12 +11,16 @@ function Chip({ label, active, onClick }) {
 
 export default function ProgramFilter({
   regionOptions,
+  typeOptions,
   statusOptions,
   regionFilter,
+  typeFilter,
   statusFilter,
   onToggleRegion,
+  onToggleType,
   onToggleStatus,
   onClearRegion,
+  onClearType,
   onClearStatus,
   count,
   sort,
@@ -30,6 +34,20 @@ export default function ProgramFilter({
           <Chip label="전체" active={regionFilter.length === 0} onClick={onClearRegion} />
           {regionOptions.map((r) => (
             <Chip key={r} label={r} active={regionFilter.includes(r)} onClick={() => onToggleRegion(r)} />
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.divider} />
+
+      {/* 유형 줄은 원본에 없던 것이다. 지역 줄과 같은 구조(전체 칩 + 옵션
+          칩)를 그대로 반복해서, 칩 모양·간격·활성 색을 새로 만들지 않았다. */}
+      <div className={styles.row}>
+        <span className={styles.rowLabel}>유형</span>
+        <div className={styles.chipList}>
+          <Chip label="전체" active={typeFilter.length === 0} onClick={onClearType} />
+          {typeOptions.map((t) => (
+            <Chip key={t} label={t} active={typeFilter.includes(t)} onClick={() => onToggleType(t)} />
           ))}
         </div>
       </div>
