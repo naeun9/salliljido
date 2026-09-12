@@ -1,14 +1,11 @@
-/* 애플 스타일 쿨그레이 시스템. 이 섹션 전체를 둥근 흰 박스로 감싸던
-   것을 걷어냈다 — "SERVICE/지역 소개/SUPPORT를 박스로 감싸지 말고
-   넓은 여백 속에 배치해 달라"는 요청에 맞춘 것이다. 대신 옆 섹션과는
-   아주 미세한 배경 톤 차이(카드 #FFFFFF ↔ 기본 #F5F5F7 ↔ 보조
-   #EEF0F2)와 위쪽 1px 구분선만으로 나눈다 — 이 섹션은 옅은 회색(카드
-   톤인 흰색)으로 서비스 소개(#F5F5F7)와 구분한다.
-   콘텐츠 max-width(1320px)·좌우 padding(48px)·왼쪽 시작선은 다른
-   섹션과 동일하게 맞췄다. */
-.regions { padding: 64px clamp(18px, 4vw, 48px) 72px; background: var(--cream); border-top: 1px solid var(--border); }
-.inner { max-width: 1320px; margin: 0 auto; }
-.head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; }
+/* 페이지 배경은 다른 홈 섹션과 완전히 같은 색(var(--paper))으로
+   통일한다 — 섹션마다 배경을 다르게 나누지 않기로 한 원칙을 이
+   섹션에서만 깨고 있었다. 대신 이 섹션은 원래대로 둥근 사각형 카드
+   트레이(연한 회색 --sand) 안에 캐러셀을 담아 "카드 형식" 느낌을
+   살린다 — Hero가 사진 카드로 떠 있는 것과 같은 방식. */
+.regions { padding: 64px clamp(10px, 1.5vw, 24px); background: var(--paper); }
+.inner { max-width: 1320px; margin: 0 auto; background: var(--sand); border-radius: 32px; overflow: hidden; padding: 36px 0 24px; }
+.head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 0 clamp(24px, 4vw, 48px); }
 .headText { max-width: 680px; }
 .eyebrow { font-size: var(--font-label-caps); font-weight: 600; letter-spacing: .16em; color: var(--forest); }
 .title { margin: 16px 0 0; font-size: clamp(28px, 3.1vw, 42px); line-height: 1.35; font-weight: 700; letter-spacing: -.03em; color: var(--ink); }

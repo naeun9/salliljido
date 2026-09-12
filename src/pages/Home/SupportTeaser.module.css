@@ -1,14 +1,14 @@
 /* design/salliljido.extracted.html 240-267줄.
-   박스로 감싸지 않고, 옆 섹션(지역 소개, 흰색)보다 한 단 짙은 보조
-   배경(#EEF0F2)으로 구분한다. max-width·padding·타이포는 다른
-   섹션과 같은 기준(1320px / 48px / 섹션 제목 42px / label 12·.16em). */
+   박스로 감싸지 않고, 다른 홈 섹션과 완전히 같은 배경(var(--paper))을
+   쓴다 — 섹션마다 배경을 다르게 나누지 않기로 한 원칙. max-width·
+   padding·타이포는 다른 섹션과 같은 기준(1320px / 48px / 섹션 제목
+   42px / label 12·.16em). */
 .support {
   min-height: 100vh;
   display: flex;
   align-items: center;
   padding: clamp(72px, 10vh, 120px) clamp(18px, 4vw, 48px);
-  background: var(--sand);
-  border-top: 1px solid var(--border);
+  background: var(--paper);
   scroll-snap-align: start;
 }
 .inner {

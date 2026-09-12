@@ -1,13 +1,12 @@
 /* design/salliljido.extracted.html 269-277줄(Closing CTA)에서 출발한 자리.
    예전엔 초록/흰색 "박스 카드"로 띄웠는데, 이 영역은 새 기능 소개가
    아니라 페이지의 마지막 CTA라는 요청에 맞춰 박스(배경색·테두리·
-   그림자)를 걷어냈다 — 웹 기본 배경(웜아이보리, var(--paper)) 위에
-   문구와 사진만 놓인 단순 2-column이다. 위아래 여백을 넉넉히 둬 바로
-   아래 Footer(같은 배경색)로 자연스럽게 이어진다. */
+   그림자)를 걷어냈다 — 다른 모든 홈 섹션과 완전히 같은 배경
+   (var(--paper)) 위에 문구와 사진만 놓인 단순 2-column이다. 구분선도
+   넣지 않아 위아래 섹션과 이어져 보인다. */
 .closing {
   padding: 96px clamp(18px, 4vw, 48px) 120px;
   background: var(--paper);
-  border-top: 1px solid var(--border);
 }
 .inner {
   display: flex;
