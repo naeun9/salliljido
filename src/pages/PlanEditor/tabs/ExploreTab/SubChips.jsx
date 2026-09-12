@@ -6,7 +6,7 @@ import styles from "../ExploreTab.module.css";
 // 흔한데(예: 태안에 호텔 없음) 원본이 이미 이 처리를 갖고 있어 그대로 쓴다.
 //
 // 자리는 카테고리 제목 줄(이미 아래 선이 있다) 바로 밑이다 —
-// "숙박 · 예약은 외부 서비스로 연결됩니다" 안내보다 위에 있으면 무엇에 대한
+// "숙박 · 상세 정보는 관광공사 구석구석으로 연결됩니다" 안내보다 위에 있으면 무엇에 대한
 // 필터인지 읽히지 않았다. ExploreTab.jsx가 300줄을 넘어 떼어냈다.
 export default function SubChips({ category, fullList, selected, onToggle }) {
   return (

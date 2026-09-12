@@ -43,7 +43,13 @@ export default function CategoryList({
         <div className={`${styles.categorySection} slj-anim-fade`}>
           <div className={styles.sectionHead}>
             <h2 className={styles.sectionTitle}>숙박</h2>
-            <span className={styles.sectionNote}>예약은 외부 서비스로 연결됩니다</span>
+            {/* design 1048줄은 "예약은 외부 서비스로 연결됩니다"였는데
+                실제로 나가는 링크는 예약 사이트가 아니다. 숙소 카드의
+                링크는 대한민국구석구석(관광공사 공식 소개 사이트) 검색
+                결과로 가고(utils/externalLinks.js), 버튼 문구도 이미
+                "구석구석에서 보기"로 고쳐 뒀다. 이 안내만 옛 문구로
+                남아 예약을 기대하게 만들어서 목적지에 맞게 바꿨다. */}
+            <span className={styles.sectionNote}>상세 정보는 관광공사 구석구석으로 연결됩니다</span>
           </div>
           {subChips}
           {/* design은 숙박·주변 관광지에는 빈 상태를 두지 않았다(목업이
