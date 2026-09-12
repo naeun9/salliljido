@@ -4,7 +4,9 @@
    트레이(연한 회색 --sand) 안에 캐러셀을 담아 "카드 형식" 느낌을
    살린다 — Hero가 사진 카드로 떠 있는 것과 같은 방식. */
 .regions { padding: 64px clamp(10px, 1.5vw, 24px); background: var(--paper); }
-.inner { max-width: 1320px; margin: 0 auto; background: var(--sand); border-radius: 32px; overflow: hidden; padding: 36px 0 24px; }
+/* 다른 섹션(1320px)보다 트레이를 좀 더 넓게 — 카드 형식이라는 느낌을
+   살리기 위해 양옆으로 조금 더 늘렸다. */
+.inner { max-width: 1400px; margin: 0 auto; background: var(--sand); border-radius: 32px; overflow: hidden; padding: 36px 0 24px; }
 .head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 0 clamp(24px, 4vw, 48px); }
 .headText { max-width: 680px; }
 .eyebrow { font-size: var(--font-label-caps); font-weight: 600; letter-spacing: .16em; color: var(--forest); }
