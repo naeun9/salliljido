@@ -48,7 +48,7 @@
   border-bottom: 1px solid var(--border);
   background: transparent;
   font-family: inherit;
-  font-size: 18.5px;
+  font-size: 20px;
   line-height: 1;
   color: var(--forest);
   cursor: pointer;
@@ -83,14 +83,14 @@
 }
 .errorTitle {
   margin-top: 18px;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--ink);
 }
 .errorBody {
   margin: 8px 0 18px;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--gray);
 }
 .retryBtn {
@@ -100,7 +100,7 @@
   border: 1px solid var(--forest);
   background: transparent;
   font-family: inherit;
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--forest);
   cursor: pointer;
@@ -123,7 +123,7 @@
   border: 1px solid var(--border);
   background: var(--cream);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--gray);
   cursor: pointer;
@@ -139,7 +139,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--gray);
 }
 .legendDot {

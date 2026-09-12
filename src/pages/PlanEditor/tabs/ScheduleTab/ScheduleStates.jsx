@@ -17,10 +17,10 @@ export default function ScheduleStates({ routineOn, loading }) {
             <circle cx="3.5" cy="20" r="2" stroke="#4A7C6F" strokeWidth="1.3" />
             <line x1="9" y1="20" x2="18" y2="20" stroke="#4A7C6F" strokeWidth="1.4" />
           </svg>
-          <div style={{ fontSize: 18, fontWeight: 600, letterSpacing: "-.02em", color: "#2B2B29" }}>
+          <div style={{ fontSize: 20, fontWeight: 600, letterSpacing: "-.02em", color: "#2B2B29" }}>
             테마와 식사 스타일을 고르면 하루 일정을 만들어 드립니다
           </div>
-          <p style={{ margin: "8px 0 0", fontSize: 15.5, lineHeight: 1.75, color: "#6E6E68" }}>
+          <p style={{ margin: "8px 0 0", fontSize: 16, lineHeight: 1.75, color: "#6E6E68" }}>
             고른 조건에 맞춰 오전·오후·저녁 세 갈래로 하루를 채워 드립니다.
           </p>
         </div>

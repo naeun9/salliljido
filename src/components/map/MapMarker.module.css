@@ -16,7 +16,7 @@
   color: var(--cream);
   /* design 13px. 목업 지도는 배경이 빗금뿐이라 괜찮았는데, 실제 지도 위에는
      카카오 지명(11~12px)이 함께 깔려서 이 라벨만 크게 튄다. 한 단계 줄였다. */
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
   box-shadow: 0 6px 14px -8px rgba(43, 43, 41, 0.5);
@@ -24,7 +24,7 @@
 /* 담긴 기간처럼 라벨 아래 붙는 보조 줄. 라벨과 같은 필 안에 두어
    길어져도 잘리지 않는다(필 자체가 내용만큼 늘어난다). */
 .pillSub {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   opacity: 0.85;
 }

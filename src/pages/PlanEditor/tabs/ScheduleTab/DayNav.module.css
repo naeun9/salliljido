@@ -14,7 +14,7 @@
   border: 1px solid var(--border);
   background: var(--cream);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--gray);
   cursor: pointer;
@@ -45,7 +45,7 @@
   border: 1px solid var(--border);
   background: var(--cream);
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: -0.01em;
   color: var(--gray);

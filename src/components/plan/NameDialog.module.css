@@ -25,7 +25,7 @@
      모듈 안에서 이름을 쓰면 해시돼서 keyframes를 못 찾는다. */
 }
 .title {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--ink);
@@ -38,7 +38,7 @@
   border: 1px solid var(--mist);
   background: var(--paper);
   font-family: inherit;
-  font-size: 16.5px;
+  font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--ink);
@@ -46,7 +46,7 @@
 }
 .summary {
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--gray);
 }
 .actions {
@@ -60,7 +60,7 @@
   border-radius: var(--radius-input);
   border: none;
   font-family: inherit;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   color: var(--cream);
 }
@@ -83,7 +83,7 @@
   border: 1px solid var(--border);
   background: var(--paper);
   font-family: inherit;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   color: var(--gray);
   cursor: pointer;

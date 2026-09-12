@@ -21,7 +21,7 @@
 
 .heading {
   margin: 0;
-  font-size: clamp(25px, 2.4vw, 30px);
+  font-size: clamp(27px, 2.4vw, 32px);
   font-weight: 700;
   letter-spacing: -0.03em;
   color: #2b2b29;
@@ -39,7 +39,7 @@
   border: 1px solid #e7e2d8;
   background: #fffdfa;
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 600;
   color: #6e6e68;
   cursor: pointer;
@@ -78,7 +78,7 @@
 }
 
 .dayLabel {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: #2b2b29;
@@ -88,13 +88,13 @@
   padding: 4px 11px;
   border-radius: 999px;
   background: #dce8e2;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
   color: #2f5d50;
 }
 
 .dayWeek {
-  font-size: 13.5px;
+  font-size: 14px;
   color: #6e6e68;
 }
 
@@ -118,14 +118,14 @@
 }
 
 .cellSlot {
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #2f5d50;
 }
 
 .cellTime {
-  font-size: 13px;
+  font-size: 14px;
   color: #6e6e68;
   white-space: nowrap;
 }
@@ -145,7 +145,7 @@
 }
 
 .itemName {
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: #2b2b29;
@@ -160,7 +160,7 @@
   padding: 3px 10px;
   border-radius: 999px;
   background: #dce8e2;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 600;
   color: #2f5d50;
 }
@@ -173,7 +173,7 @@
   padding: 12px 14px;
   border-radius: 10px;
   border: 1px dashed #e7e2d8;
-  font-size: 13.5px;
+  font-size: 14px;
   color: #6e6e68;
 }
 
@@ -190,7 +190,7 @@
   border: 1px solid #2f5d50;
   background: transparent;
   font-family: inherit;
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 600;
   color: #2f5d50;
   cursor: pointer;
@@ -203,9 +203,11 @@
   color: #faf8f4;
 }
 
-/* 인쇄에만 남기는 자리. 표/지도 보기를 켜 뒀거나 카드가 접혀 있어도
-   PDF에는 전체 일정이 카드로 나가야 해서, 날짜 카드는 항상 그려 두고
-   화면에서만 감춘다. 인쇄에서는 원래 display 값으로 되돌린다. */
+/* 인쇄에만 남기는 자리. 어떤 보기를 켜 뒀거나 카드가 접혀 있어도 PDF에는
+   요약 표와 전체 일정이 다 나가야 해서, 표와 날짜 카드를 항상 그려 두고
+   화면에서만 감춘다. 인쇄에서는 원래 display 값으로 되돌린다.
+   (표는 div이라 flex가 맞지 않아 styles/global.css의 [data-ov-table]에서
+   block으로 덮는다.) */
 .screenOff,
 .screenOffBlock {
   display: none;
@@ -242,7 +244,7 @@
 
 .th {
   padding: 13px 16px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   color: #6e6e68;
 }
@@ -258,7 +260,7 @@
 }
 
 .rowLabel {
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #2b2b29;
@@ -266,7 +268,7 @@
 
 .rowTheme {
   margin-top: 5px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: #4a7c6f;
 }
@@ -285,7 +287,7 @@
   border: none;
   background: transparent;
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: #2b2b29;
@@ -299,7 +301,7 @@
 }
 
 .tdEmpty {
-  font-size: 13.5px;
+  font-size: 14px;
   color: #6e6e68;
 }
 

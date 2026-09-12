@@ -21,18 +21,18 @@
 .badge {
   padding: 5px 11px;
   border-radius: var(--radius-pill);
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
 }
 .city {
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--sage);
 }
 
 .name {
   margin: 16px 0 0;
-  font-size: 19.5px;
+  font-size: 20px;
   font-weight: 700;
   line-height: 1.4;
   letter-spacing: -0.025em;
@@ -68,6 +68,21 @@
 .applyBtn:hover {
   background: var(--terracotta-strong);
   color: var(--cream);
+}
+
+/* 공고 URL이 없는 항목 자리. 지원 프로그램 카드와 같은 규칙이지만
+   이 카드의 버튼 높이(42px)에 맞춘다. */
+.noticeNote {
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: var(--radius-input);
+  border: 1px dashed var(--border-dashed);
+  font-size: var(--font-body-sm);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--gray);
 }
 
 .unsaveBtn {

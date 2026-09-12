@@ -13,7 +13,22 @@ export default function ProgramCard({ program, saved, onToggleSave }) {
       </div>
 
       <h3 className={styles.name}>{program.name}</h3>
-      <div className={styles.city}>{program.city}</div>
+      {/* 유형 배지는 원본에 없던 것이다. 관광 부서의 여행 경비 지원과
+          농업 부서의 귀농귀촌 살아보기는 성격이 전혀 달라서 구분이
+          필요한데, .top의 상태 배지 옆에 또 배지를 붙이면 둘이 헷갈린다.
+          그래서 지역명 줄에 붙이고 색도 상태 배지와 다른 조합을 썼다
+          (services/supportPrograms.js의 TYPE_COLOR). */}
+      <div className={styles.cityRow}>
+        <span className={styles.city}>{program.city}</span>
+        {program.type && (
+          <span
+            className={styles.typeBadge}
+            style={{ background: program.typeBg, color: program.typeFg, borderColor: program.typeBorder }}
+          >
+            {program.type}
+          </span>
+        )}
+      </div>
 
       <ul className={styles.benefits}>
         {program.benefits.map((b) => (
@@ -24,23 +39,32 @@ export default function ProgramCard({ program, saved, onToggleSave }) {
         ))}
       </ul>
 
+      {/* 체류 기간은 원본 카드에 없던 칸이다. infoGrid가
+          repeat(auto-fit, minmax(120px, 1fr))이라 칸이 늘거나 줄어도
+          레이아웃 규칙은 그대로다.
+          원본은 네 칸이 늘 채워진다고 보고 그렸지만, 실제 공고에는
+          모집 대상이 첨부파일에만 있거나(부여) 인원 제한이 아예 없는
+          경우(서천 반값여행)가 있다. 라벨만 있고 값이 빈 칸을 남기지
+          않도록 값이 없으면 칸을 통째로 뺀다. */}
       <div className={styles.infoGrid}>
-        <div>
-          <div className={styles.infoLabel}>신청 기간</div>
-          <div className={styles.infoValue}>{program.period}</div>
-        </div>
-        <div>
-          <div className={styles.infoLabel}>모집 대상</div>
-          <div className={styles.infoValue}>{program.target}</div>
-        </div>
-        <div>
-          <div className={styles.infoLabel}>모집 인원</div>
-          <div className={styles.infoValue}>{program.quota}</div>
-        </div>
-        {/* 체류 기간은 원본 카드에 없던 칸이다. infoGrid가
-            repeat(auto-fit, minmax(120px, 1fr))이라 칸이 하나 늘어도
-            레이아웃 규칙은 그대로다. 값을 아직 안 채운 항목에서는
-            빈 칸이 남지 않도록 통째로 뺀다. */}
+        {program.period && (
+          <div>
+            <div className={styles.infoLabel}>신청 기간</div>
+            <div className={styles.infoValue}>{program.period}</div>
+          </div>
+        )}
+        {program.target && (
+          <div>
+            <div className={styles.infoLabel}>모집 대상</div>
+            <div className={styles.infoValue}>{program.target}</div>
+          </div>
+        )}
+        {program.quota && (
+          <div>
+            <div className={styles.infoLabel}>모집 인원</div>
+            <div className={styles.infoValue}>{program.quota}</div>
+          </div>
+        )}
         {program.stayWeeks && (
           <div>
             <div className={styles.infoLabel}>체류 기간</div>
@@ -70,6 +94,12 @@ export default function ProgramCard({ program, saved, onToggleSave }) {
             </svg>
           </a>
         )}
+        {/* 공식 공고 URL을 못 찾은 항목. 버튼 자리를 그냥 비워 두면 카드가
+            망가진 것처럼 보이고, 사용자가 "신청은 어디서 하나"에서 막힌다.
+            그래서 버튼 대신 확인 방법을 알려 준다. 제3자 집계 서비스
+            링크는 걸지 않는다 — 공고 원문이 아니라 재가공된 정보라
+            신청 근거가 될 수 없다. 대신 카드 아래 문의처로 안내한다. */}
+        {!program.url && <span className={styles.noticeNote}>공고 확인 필요 · 문의처로 확인해 주세요</span>}
         <button
           type="button"
           className={`${styles.saveBtn} ${saved ? styles.saveBtnActive : ""}`}

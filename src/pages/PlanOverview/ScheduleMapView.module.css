@@ -50,7 +50,7 @@
   border-radius: 50%;
   background: var(--forest);
   color: var(--cream);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -65,18 +65,18 @@
   gap: 3px;
 }
 .slot {
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--gray);
 }
 .place {
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--ink);
   word-break: keep-all;
 }
 .addr {
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--gray);
   word-break: keep-all;
 }
@@ -86,7 +86,7 @@
   padding: 3px 10px;
   border-radius: var(--radius-pill);
   background: var(--mist);
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--forest);
 }
@@ -99,7 +99,7 @@
   padding: 12px 14px;
   border-radius: 10px;
   border: 1px dashed var(--border);
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--gray);
 }
 

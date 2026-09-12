@@ -135,9 +135,7 @@ export default function CategoryList({
                   : "이 유형의 체험 프로그램은 아직 없어요"
               }
               description={
-                category === "걷기 코스"
-                  ? "다른 난이도를 골라보시겠어요?"
-                  : "다른 유형을 골라보시겠어요?"
+                category === "걷기 코스" ? "다른 난이도를 골라보시겠어요?" : "다른 유형을 골라보시겠어요?"
               }
             />
           ) : (

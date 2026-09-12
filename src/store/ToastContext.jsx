@@ -29,22 +29,19 @@ export function ToastProvider({ children }) {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
-  const showToast = useCallback(
-    (text, { link = false, kind = "ok", undo = null } = {}) => {
-      seq.current += 1;
-      const id = `t${seq.current}`;
-      setToasts((prev) => prev.concat({ id, text, link, kind, undo }));
-      timers.current.set(
-        id,
-        setTimeout(() => {
-          timers.current.delete(id);
-          setToasts((prev) => prev.filter((t) => t.id !== id));
-        }, TOAST_TTL_MS)
-      );
-      return id;
-    },
-    []
-  );
+  const showToast = useCallback((text, { link = false, kind = "ok", undo = null } = {}) => {
+    seq.current += 1;
+    const id = `t${seq.current}`;
+    setToasts((prev) => prev.concat({ id, text, link, kind, undo }));
+    timers.current.set(
+      id,
+      setTimeout(() => {
+        timers.current.delete(id);
+        setToasts((prev) => prev.filter((t) => t.id !== id));
+      }, TOAST_TTL_MS)
+    );
+    return id;
+  }, []);
 
   useEffect(() => {
     const map = timers.current;

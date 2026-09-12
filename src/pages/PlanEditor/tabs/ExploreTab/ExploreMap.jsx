@@ -99,12 +99,7 @@ export default function ExploreMap({
   }, [fitId, coursePaths]);
 
   return (
-    <KakaoMap
-      className={styles.kakaoMap}
-      center={center}
-      bounds={fitBounds || bounds}
-      fallback={fallback}
-    >
+    <KakaoMap className={styles.kakaoMap} center={center} bounds={fitBounds || bounds} fallback={fallback}>
       <MapZoomControl className={styles.zoomCluster} buttonClassName={styles.zoomBtn} />
 
       {/* 코스 경로. 마커보다 먼저 그려야 선 위에 마커가 얹힌다. */}

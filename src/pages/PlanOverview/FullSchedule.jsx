@@ -22,11 +22,12 @@ export default function FullSchedule({
   const collapsed = !expanded && days.length > EXPAND_LIMIT;
   const showExpand = days.length > EXPAND_LIMIT && cards;
 
-  // 인쇄(PDF)는 어떤 보기를 켜 뒀든 항상 카드 목록 전체가 나가야 한다.
-  // 예전에는 화면에 보이는 것만 그려서, 표/지도 보기 상태로 내보내면
-  // 일정이 통째로 빠지고(지도는 인쇄에서 감춰진다) 카드 보기에서도
-  // 접혀 있으면 6일차부터 사라졌다. 그래서 날짜 카드는 언제나 전부
-  // 그려 두고, 화면에서만 감춘다(.screenOff는 인쇄에서 다시 보인다).
+  // 인쇄(PDF)는 어떤 보기를 켜 뒀든 요약 표와 카드 목록 전체가 나가야
+  // 한다. 예전에는 화면에 보이는 것만 그려서, 표/지도 보기 상태로
+  // 내보내면 일정이 통째로 빠지고(지도는 인쇄에서 감춰진다) 카드
+  // 보기에서도 접혀 있으면 6일차부터 사라졌다. 그래서 표와 날짜 카드는
+  // 언제나 전부 그려 두고, 화면에서만 감춘다(.screenOff는 인쇄에서
+  // 다시 보인다).
 
   return (
     <section className={styles.section} data-print-plain data-ov-schedule>
@@ -62,7 +63,48 @@ export default function FullSchedule({
             인쇄물은 예전처럼 카드 보기 내용만 나간다. */}
         {map && <ScheduleMapView days={days} region={mapRegion} onSelectItem={onSelectItem} />}
 
-        <div className={`${styles.cards} ${cards ? "" : styles.screenOff}`}>
+        {/* 전체 일정 요약 표(일차 × 오전·오후·저녁). 화면에서는 "표 보기"를
+            골랐을 때만 보이고, 인쇄에서는 보기와 무관하게 늘 나간다 —
+            한 장으로 전체를 훑는 용도라 일자별 카드 앞에 둔다.
+            화면에서는 카드와 표 중 하나만 보이므로, 이 블록을 카드보다
+            위로 옮겨도 보이는 결과는 달라지지 않는다. */}
+        <div className={`${styles.tableWrap} ${table ? "" : styles.screenOff}`} data-ov-table>
+          <div className={styles.table}>
+            <div className={styles.tableHead}>
+              <div className={styles.th}>일차</div>
+              {SLOTS.map((s) => (
+                <div key={s} className={styles.th}>
+                  {s}
+                </div>
+              ))}
+            </div>
+            {days.map((d) => (
+              <div key={d.day} className={styles.tableRow} data-ov-row>
+                <div className={styles.rowHead}>
+                  <div className={styles.rowLabel}>{d.label}</div>
+                  <div className={styles.rowTheme}>{d.theme}</div>
+                </div>
+                {d.cells.map((c) => (
+                  <div key={c.slot} className={styles.td}>
+                    {c.items.map((it, i) => (
+                      <button
+                        key={`${it.place}-${i}`}
+                        type="button"
+                        className={`${styles.cellBtn} ${it.mine ? styles.mine : ""}`}
+                        onClick={() => onSelectItem(d, c, it)}
+                      >
+                        {it.place}
+                      </button>
+                    ))}
+                    {c.items.length === 0 && <div className={styles.tdEmpty}>—</div>}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className={`${styles.cards} ${cards ? "" : styles.screenOff}`} data-ov-cards>
           {days.map((d, i) => (
             <div
               key={d.day}
@@ -105,44 +147,6 @@ export default function FullSchedule({
             <button type="button" className={styles.expandBtn} onClick={onToggleExpand}>
               {expanded ? "접기" : `전체 ${days.length}일 펼쳐보기`}
             </button>
-          </div>
-        )}
-
-        {table && (
-          <div className={styles.tableWrap} data-print-hide>
-            <div className={styles.table}>
-              <div className={styles.tableHead}>
-                <div className={styles.th}>일차</div>
-                {SLOTS.map((s) => (
-                  <div key={s} className={styles.th}>
-                    {s}
-                  </div>
-                ))}
-              </div>
-              {days.map((d) => (
-                <div key={d.day} className={styles.tableRow}>
-                  <div className={styles.rowHead}>
-                    <div className={styles.rowLabel}>{d.label}</div>
-                    <div className={styles.rowTheme}>{d.theme}</div>
-                  </div>
-                  {d.cells.map((c) => (
-                    <div key={c.slot} className={styles.td}>
-                      {c.items.map((it, i) => (
-                        <button
-                          key={`${it.place}-${i}`}
-                          type="button"
-                          className={`${styles.cellBtn} ${it.mine ? styles.mine : ""}`}
-                          onClick={() => onSelectItem(d, c, it)}
-                        >
-                          {it.place}
-                        </button>
-                      ))}
-                      {c.items.length === 0 && <div className={styles.tdEmpty}>—</div>}
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
           </div>
         )}
       </div>

@@ -41,7 +41,7 @@
   border: 1px solid var(--border);
   background: var(--cream);
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: -0.01em;
   color: var(--gray);
@@ -81,7 +81,7 @@
   border: 1px solid var(--border);
   background: var(--cream);
   font-family: inherit;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.01em;
   color: var(--gray);
@@ -143,13 +143,13 @@
 }
 .sectionTitle {
   margin: 0;
-  font-size: 20.5px;
+  font-size: 23px;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: var(--ink);
 }
 .sectionNote {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--gray);
 }
 
@@ -175,7 +175,7 @@
   border: 1px solid var(--forest);
   background: transparent;
   font-family: inherit;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   color: var(--forest);
   cursor: pointer;
@@ -207,7 +207,7 @@
   border: none;
   background: var(--terracotta);
   font-family: inherit;
-  font-size: 16.5px;
+  font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--cream);

@@ -25,7 +25,7 @@
 }
 .title {
   margin: 0;
-  font-size: 17.5px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: var(--ink);
@@ -43,12 +43,12 @@
   gap: 12px;
 }
 .barLabel {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--ink);
 }
 .barAmount {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--ink);
 }
@@ -66,7 +66,7 @@
 }
 .pct {
   margin-top: 5px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--gray);
 }
 
@@ -80,12 +80,12 @@
   gap: 12px;
 }
 .totalLabel {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--gray);
 }
 .totalAmount {
-  font-size: 25.5px;
+  font-size: 27px;
   font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--forest);
@@ -107,7 +107,7 @@
   border: none;
   background: var(--terracotta);
   font-family: inherit;
-  font-size: 16.5px;
+  font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--cream);

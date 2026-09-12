@@ -13,7 +13,7 @@
   display: flex;
 }
 .summary {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--ink);
@@ -26,7 +26,7 @@
   border: 1px solid var(--border);
   background: var(--paper);
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--forest);
   cursor: pointer;
@@ -44,7 +44,7 @@
   border: 1px solid var(--border);
   background: var(--paper);
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--forest);
 }
@@ -84,7 +84,7 @@
 .rowLabel {
   flex: 0 0 auto;
   width: 108px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--gray);
@@ -107,7 +107,7 @@
   border: 1px solid var(--border);
   background: var(--cream);
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: -0.01em;
   color: var(--gray);
@@ -136,7 +136,7 @@
   border: 1px solid var(--border);
   background: var(--cream);
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: -0.01em;
   color: var(--gray);
@@ -155,12 +155,12 @@
   color: var(--forest);
 }
 .mealHint {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--gray);
 }
 .helpText {
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--gray);
 }
 .divider {
@@ -175,7 +175,7 @@
   border-radius: var(--radius-card);
   border: none;
   font-family: inherit;
-  font-size: 16.5px;
+  font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.01em;
   transition:

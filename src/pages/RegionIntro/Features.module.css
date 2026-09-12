@@ -48,14 +48,14 @@
   padding-top: 5px;
 }
 .statLabel {
-  font-size: 17.5px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--ink);
 }
 .statNote {
   margin-top: 7px;
-  font-size: 15.5px;
+  font-size: 16px;
   line-height: 1.7;
   color: var(--gray);
   letter-spacing: -0.01em;
@@ -68,7 +68,7 @@
   border-top: 1px solid var(--border);
 }
 .coursesTitle {
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--ink);
@@ -82,14 +82,14 @@
   padding: 7px 0;
 }
 .courseName {
-  font-size: 14.5px;
+  font-size: 15px;
   color: var(--ink);
   letter-spacing: -0.01em;
   word-break: keep-all;
 }
 .courseMeta {
   flex: 0 0 auto;
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--gray);
 }
 
@@ -114,6 +114,6 @@
   border-radius: var(--radius-tag);
   background: rgba(250, 248, 244, 0.9);
   font-family: var(--font-family-mono);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--gray);
 }

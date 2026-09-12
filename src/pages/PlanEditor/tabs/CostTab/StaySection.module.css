@@ -32,7 +32,7 @@
   border: 1px solid var(--mist);
   background: var(--cream);
   font-family: inherit;
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--ink);
 }
@@ -45,7 +45,7 @@
 }
 .rangeGroup span,
 .rateGroup span {
-  font-size: 14.5px;
+  font-size: 15px;
   color: var(--gray);
 }
 .memoInput {
@@ -57,12 +57,12 @@
   border: 1px solid var(--mist);
   background: var(--cream);
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--ink);
 }
 .subtotal {
   flex: 0 0 auto;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--ink);
 }
@@ -95,19 +95,19 @@
   border: 1px dashed var(--sage);
   background: transparent;
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--forest);
   cursor: pointer;
 }
 .segWarn {
-  font-size: 14px;
+  font-size: 15px;
 }
 
 /* 비어 있는 박을 기본 단가로 채웠다는 안내. 경고(.segWarn)가 아니라
    계산 방식을 알려 주는 줄이라 한 단계 조용하게 둔다. */
 .fillNote {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.6;
   color: var(--gray);
 }

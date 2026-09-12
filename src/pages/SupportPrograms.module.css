@@ -18,7 +18,7 @@
 }
 .title {
   margin: 0;
-  font-size: clamp(28px, 2.8vw, 36px);
+  font-size: clamp(30px, 2.8vw, 38px);
   line-height: 1.4;
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -32,7 +32,7 @@
   letter-spacing: -0.01em;
 }
 .asOf {
-  font-size: 14.5px;
+  font-size: 15px;
   color: var(--gray);
   letter-spacing: -0.01em;
 }
@@ -71,7 +71,7 @@
 }
 .emptyTitle {
   margin-top: 22px;
-  font-size: 18.5px;
+  font-size: 20px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--ink);

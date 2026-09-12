@@ -23,7 +23,7 @@
 }
 .imageTag {
   font-family: var(--font-family-mono);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--gray);
 }
 .body {
@@ -48,7 +48,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: var(--ink);
@@ -58,13 +58,13 @@
   padding: 4px 10px;
   border-radius: var(--radius-pill);
   background: var(--mist);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--forest);
 }
 .location {
   margin-top: 7px;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--gray);
 }
 /* 담기 버튼과 예약 링크를 한 줄에 두되, 담은 뒤 버튼 문구가 길어져
@@ -86,7 +86,7 @@
   padding: 0 15px;
   border-radius: 9px;
   border: 1px solid var(--border);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--forest);
   transition:
@@ -117,7 +117,7 @@
   border: 1px solid var(--terracotta);
   background: var(--terracotta);
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--cream);
   cursor: pointer;
@@ -142,7 +142,7 @@
   display: flex;
 }
 .pickerLabel {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--gray);
 }
@@ -160,7 +160,7 @@
   flex: 1 1 0;
 }
 .rangeLabel {
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--gray);
 }
@@ -171,19 +171,19 @@
   border: 1px solid var(--border);
   background: var(--paper);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--ink);
   cursor: pointer;
 }
 .rangeDash {
   padding-bottom: 7px;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--gray);
 }
 .rangeHint {
   margin: 0;
-  font-size: 12.5px;
+  font-size: 13px;
   line-height: 1.55;
   color: var(--gray);
 }
@@ -200,7 +200,7 @@
   border: none;
   background: var(--terracotta);
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--cream);
   cursor: pointer;
@@ -213,7 +213,7 @@
   border: 1px solid var(--border);
   background: var(--paper);
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--gray);
   cursor: pointer;

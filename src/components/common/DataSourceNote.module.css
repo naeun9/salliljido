@@ -1,0 +1,19 @@
+/* 원본에 없던 요소다. 푸터(--sand 색면, 80px 여백)를 홈에만 두면서,
+   데이터 화면에는 이 한 줄만 남긴다. 그래서 색면을 쓰지 않고 아주 옅은
+   구분선 위에 보조 문구 톤으로만 놓는다 — 본문이 끝났다는 것만 알리고
+   시선을 가져가지 않게. 값은 전부 기존 토큰이다. */
+.note {
+  border-top: 1px solid var(--hairline);
+  padding: 20px clamp(20px, 5vw, 64px) 28px;
+  background: var(--paper);
+}
+
+.text {
+  max-width: 1240px;
+  margin: 0 auto;
+  font-size: var(--font-caption);
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+  color: var(--gray);
+  text-wrap: pretty;
+}

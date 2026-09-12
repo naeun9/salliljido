@@ -17,14 +17,27 @@ export default function ProgramCard({ program, onUnsave }) {
         {program.deadlineLabel}
       </div>
       <div className={styles.ctaRow}>
-        <a href={program.url} target="_blank" rel="noopener" className={styles.applyBtn}>
-          신청 페이지로 이동
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-            <path d="M4.6 2h6.4v6.4" stroke="#FFFDFA" strokeWidth="1.4" strokeLinecap="round" />
-            <line x1="11" y1="2" x2="3.4" y2="9.6" stroke="#FFFDFA" strokeWidth="1.4" strokeLinecap="round" />
-            <path d="M8.2 11H2V4.8" stroke="#FFFDFA" strokeWidth="1.4" strokeLinecap="round" />
-          </svg>
-        </a>
+        {/* 공고 URL이 없는 항목(의성)은 버튼이 눌러도 아무 일이 없으므로
+            지원 프로그램 카드와 같은 안내로 바꾼다. */}
+        {!program.url && <span className={styles.noticeNote}>공고 확인 필요</span>}
+        {program.url && (
+          <a href={program.url} target="_blank" rel="noopener" className={styles.applyBtn}>
+            신청 페이지로 이동
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+              <path d="M4.6 2h6.4v6.4" stroke="#FFFDFA" strokeWidth="1.4" strokeLinecap="round" />
+              <line
+                x1="11"
+                y1="2"
+                x2="3.4"
+                y2="9.6"
+                stroke="#FFFDFA"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+              />
+              <path d="M8.2 11H2V4.8" stroke="#FFFDFA" strokeWidth="1.4" strokeLinecap="round" />
+            </svg>
+          </a>
+        )}
       </div>
       <button type="button" aria-label="관심 해제" className={styles.unsaveBtn} onClick={onUnsave}>
         <svg width="13" height="15" viewBox="0 0 13 15" fill="none">
