@@ -36,7 +36,7 @@ export default function PlanRow({
                 <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
                   <path
                     d="M9.6 1.9l2.5 2.5-7.4 7.4-3.2.7.7-3.2z"
-                    stroke="#6E6E68"
+                    stroke="#707070"
                     strokeWidth="1.3"
                     strokeLinejoin="round"
                   />
@@ -79,8 +79,8 @@ export default function PlanRow({
         </button>
         <button type="button" aria-label="계획 삭제" className={styles.removeBtn} onClick={onRemove}>
           <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-            <line x1="3" y1="3" x2="12" y2="12" stroke="#6E6E68" strokeWidth="1.4" strokeLinecap="round" />
-            <line x1="12" y1="3" x2="3" y2="12" stroke="#6E6E68" strokeWidth="1.4" strokeLinecap="round" />
+            <line x1="3" y1="3" x2="12" y2="12" stroke="#707070" strokeWidth="1.4" strokeLinecap="round" />
+            <line x1="12" y1="3" x2="3" y2="12" stroke="#707070" strokeWidth="1.4" strokeLinecap="round" />
           </svg>
         </button>
       </div>

@@ -95,8 +95,8 @@ export default function PlaceDetailModal({ selection, contentTypeId, onClose }) 
           </div>
           <button type="button" className={styles.closeIcon} aria-label="닫기" onClick={onClose}>
             <svg width="14" height="14" viewBox="0 0 15 15" fill="none">
-              <line x1="3" y1="3" x2="12" y2="12" stroke="#6E6E68" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="12" y1="3" x2="3" y2="12" stroke="#6E6E68" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="3" y1="3" x2="12" y2="12" stroke="#707070" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="12" y1="3" x2="3" y2="12" stroke="#707070" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </button>
         </div>

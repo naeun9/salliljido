@@ -153,23 +153,34 @@
   flex-wrap: wrap;
   gap: 6px;
 }
+/* 담을 요일은 하루만 고르는 단일 선택이라 채움 상태를 쓴다. */
 .dayOption {
   height: 32px;
   padding: 0 11px;
   border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--paper);
+  border: 1px solid var(--opt-idle-border);
+  background: var(--opt-idle-bg);
   font-family: inherit;
   font-size: 15px;
   font-weight: 500;
-  color: var(--gray);
+  color: var(--opt-idle-text);
   cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.dayOption:hover {
+  background: var(--opt-hover-bg);
+  border-color: var(--opt-hover-bg);
+  color: var(--opt-hover-text);
 }
 .dayOption.selected {
-  border-color: var(--forest);
-  background: var(--mist);
-  color: var(--forest);
+  border-color: var(--opt-selected-border);
+  background: var(--opt-selected-bg);
+  color: var(--opt-selected-text);
   font-weight: 600;
+}
+.dayOption.selected:hover {
+  background: var(--opt-selected-hover-bg);
+  border-color: var(--opt-selected-hover-bg);
 }
 .pickerConfirm {
   height: 38px;

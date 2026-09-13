@@ -2,10 +2,11 @@
    지금은 Layout이 모든 화면 아래에 그린다(값은 원본 그대로). */
 .footer {
   background: var(--sand);
-  padding: clamp(56px, 7vh, 80px) clamp(20px, 5vw, 64px) 32px;
+  border-top: 1px solid var(--border);
+  padding: clamp(56px, 7vh, 80px) clamp(18px, 4vw, 48px) 32px;
 }
 .inner {
-  max-width: 1240px;
+  max-width: 1320px;
   margin: 0 auto;
 }
 .row {
@@ -75,7 +76,7 @@
 .bottom {
   margin-top: clamp(40px, 5vh, 56px);
   padding-top: 22px;
-  border-top: 1px solid #e4d9cb;
+  border-top: 1px solid var(--border);
   display: flex;
   flex-wrap: wrap;
   gap: 12px;

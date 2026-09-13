@@ -15,7 +15,7 @@
   bottom: 12px;
   padding: 5px 9px;
   border-radius: var(--radius-tag);
-  background: rgba(250, 248, 244, 0.92);
+  background: rgba(255, 255, 255, 0.92);
   font-family: var(--font-family-mono);
   font-size: 13px;
   color: var(--gray);

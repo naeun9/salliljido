@@ -16,21 +16,21 @@
     border-color 0.3s ease,
     color 0.3s ease;
 
-  --nav-base: rgba(250, 248, 244, 0.88);
+  --nav-base: rgba(255, 255, 255, 0.88);
   --nav-active: #ffffff;
   --nav-hover: #ffffff;
   --underline: #ffffff;
   --header-fg: var(--paper);
   --header-shadow: 0 1px 3px rgba(24, 48, 41, 0.35);
-  --header-bg: rgba(250, 248, 244, 0);
+  --header-bg: rgba(255, 255, 255, 0);
   --header-border: 0.5px solid transparent;
   --header-blur: blur(8px);
   --login-border: rgba(255, 255, 255, 0.7);
   --login-bg: transparent;
   --login-fg: #ffffff;
   --login-hover-bg: rgba(255, 255, 255, 0.16);
-  --avatar-border: rgba(250, 248, 244, 0.6);
-  --avatar-bg: rgba(250, 248, 244, 0.22);
+  --avatar-border: rgba(255, 255, 255, 0.6);
+  --avatar-bg: rgba(255, 255, 255, 0.22);
   --avatar-fg: var(--cream);
 
   background: var(--header-bg);
@@ -46,7 +46,7 @@
   --underline: var(--forest);
   --header-fg: var(--ink);
   --header-shadow: none;
-  --header-bg: rgba(250, 248, 244, 0.85);
+  --header-bg: rgba(255, 255, 255, 0.85);
   --header-border: 0.5px solid var(--border-strong);
   --header-blur: blur(12px);
   --login-border: var(--forest);
@@ -291,3 +291,29 @@
     display: flex;
   }
 }
+
+/* 화이트 내비게이션: 홈 사진 위에서도 메뉴 대비를 일정하게 유지한다. */
+.header, .header.scrolled {
+  --nav-base: #59616a;
+  --nav-active: #202b32;
+  --nav-hover: #202b32;
+  --underline: #202b32;
+  --header-fg: #202b32;
+  --header-shadow: none;
+  --header-bg: rgba(255, 255, 255, .97);
+  --header-border: 1px solid #eef0f2;
+  --login-border: #dce1e5;
+  --login-bg: #fff;
+  --login-fg: #202b32;
+  --login-hover-bg: #f3f5f7;
+  --avatar-border: #dce1e5;
+  --avatar-bg: #f3f5f7;
+  --avatar-fg: #202b32;
+}
+.brandGroup { display: flex; align-items: center; gap: 18px; min-width: 0; }
+.brandCaption { font-size: 13px; line-height: 1.5; color: #777; font-weight: 400; }
+@media (max-width: 1100px) {
+  .brandGroup { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .brandCaption { font-size: 13px; }
+}
+@media (max-width: 380px) { .brandCaption { max-width: 190px; } }

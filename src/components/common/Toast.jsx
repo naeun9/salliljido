@@ -6,7 +6,7 @@ const ICON_PATH = {
   ok: "M2 7l3 3 6-6.5",
   fail: "M6.5 2.5v5M6.5 10.2v.3",
 };
-const ICON_STROKE = { ok: "#2F5D50", fail: "#C05F33" };
+const ICON_STROKE = { ok: "#181818", fail: "#C05F33" };
 
 export default function Toast({ toast, onAction }) {
   const kind = toast.kind === "fail" ? "fail" : "ok";

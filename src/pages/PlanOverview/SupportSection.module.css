@@ -1,7 +1,7 @@
 /* design/salliljido.extracted.html 1655-1670줄. */
 .section {
   padding: clamp(44px, 6vh, 64px) clamp(20px, 5vw, 64px);
-  background: #f5ede4;
+  background: #ffffff;
   border-top: 1px solid #e7dccb;
 }
 
@@ -15,14 +15,14 @@
   font-size: clamp(27px, 2.4vw, 32px);
   font-weight: 700;
   letter-spacing: -0.03em;
-  color: #2b2b29;
+  color: #191919;
 }
 
 .lead {
   margin: 12px 0 0;
   font-size: 16px;
   line-height: 1.7;
-  color: #6e6e68;
+  color: #707070;
 }
 
 .cards {
@@ -38,27 +38,27 @@
   padding: 20px 22px;
   border-radius: 12px;
   border: 1px solid #e7dccb;
-  background: #fffdfa;
+  background: #ffffff;
 }
 
 .name {
   font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.025em;
-  color: #2b2b29;
+  color: #191919;
 }
 
 .meta {
   margin-top: 8px;
   font-size: 15px;
-  color: #6e6e68;
+  color: #707070;
 }
 
 .summary {
   margin-top: 8px;
   font-size: 15px;
   line-height: 1.65;
-  color: #6e6e68;
+  color: #707070;
 }
 
 .moreLink {
@@ -66,9 +66,9 @@
   margin-top: 20px;
   font-size: 16px;
   font-weight: 600;
-  color: #2f5d50;
+  color: #181818;
   border-bottom: 1px solid #dcc9b0;
 }
 .moreLink:hover {
-  border-color: #d9784e;
+  border-color: #202020;
 }

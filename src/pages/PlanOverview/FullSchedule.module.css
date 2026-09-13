@@ -1,7 +1,7 @@
 /* design/salliljido.extracted.html 1542-1613줄. */
 .section {
   padding: clamp(44px, 6vh, 64px) clamp(20px, 5vw, 64px);
-  background: #f5ede4;
+  background: #ffffff;
   border-top: 1px solid #e7dccb;
   border-bottom: 1px solid #e7dccb;
 }
@@ -24,7 +24,7 @@
   font-size: clamp(27px, 2.4vw, 32px);
   font-weight: 700;
   letter-spacing: -0.03em;
-  color: #2b2b29;
+  color: #191919;
 }
 
 .tabs {
@@ -37,20 +37,20 @@
   padding: 0 18px;
   border-radius: 999px;
   border: 1px solid #e7e2d8;
-  background: #fffdfa;
+  background: #ffffff;
   font-family: inherit;
   font-size: 15px;
   font-weight: 600;
-  color: #6e6e68;
+  color: #707070;
   cursor: pointer;
   transition:
     background 0.2s ease,
     color 0.2s ease;
 }
 .tab.tabOn {
-  border-color: #2f5d50;
-  background: #2f5d50;
-  color: #faf8f4;
+  border-color: #181818;
+  background: #181818;
+  color: #ffffff;
 }
 
 /* --- 카드 보기 --- */
@@ -65,7 +65,7 @@
   padding: 20px 22px 22px;
   border-radius: 12px;
   border: 1px solid #e7e2d8;
-  background: #fffdfa;
+  background: #ffffff;
 }
 
 .dayHead {
@@ -81,21 +81,21 @@
   font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.025em;
-  color: #2b2b29;
+  color: #191919;
 }
 
 .dayTheme {
   padding: 4px 11px;
   border-radius: 999px;
-  background: #dce8e2;
+  background: #f0f0f0;
   font-size: 14px;
   font-weight: 600;
-  color: #2f5d50;
+  color: #181818;
 }
 
 .dayWeek {
   font-size: 14px;
-  color: #6e6e68;
+  color: #707070;
 }
 
 .cells {
@@ -121,12 +121,12 @@
   font-size: 15px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: #2f5d50;
+  color: #181818;
 }
 
 .cellTime {
   font-size: 14px;
-  color: #6e6e68;
+  color: #707070;
   white-space: nowrap;
 }
 
@@ -135,20 +135,20 @@
   padding: 12px 14px;
   border-radius: 10px;
   border: 1px solid #efe7dc;
-  background: #faf8f4;
+  background: #ffffff;
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.2s ease;
 }
 .itemBtn:hover {
-  border-color: #4a7c6f;
+  border-color: #555555;
 }
 
 .itemName {
   font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: #2b2b29;
+  color: #191919;
 }
 .itemName.mine {
   color: #c05f33;
@@ -159,13 +159,13 @@
   margin-top: 8px;
   padding: 3px 10px;
   border-radius: 999px;
-  background: #dce8e2;
+  background: #f0f0f0;
   font-size: 13px;
   font-weight: 600;
-  color: #2f5d50;
+  color: #181818;
 }
 .itemTag.mine {
-  background: #f5e1d5;
+  background: #f1f1f1;
   color: #c05f33;
 }
 
@@ -174,7 +174,7 @@
   border-radius: 10px;
   border: 1px dashed #e7e2d8;
   font-size: 14px;
-  color: #6e6e68;
+  color: #707070;
 }
 
 .expandRow {
@@ -187,20 +187,20 @@
   height: 44px;
   padding: 0 22px;
   border-radius: 12px;
-  border: 1px solid #2f5d50;
+  border: 1px solid #181818;
   background: transparent;
   font-family: inherit;
   font-size: 16px;
   font-weight: 600;
-  color: #2f5d50;
+  color: #181818;
   cursor: pointer;
   transition:
     background 0.2s ease,
     color 0.2s ease;
 }
 .expandBtn:hover {
-  background: #2f5d50;
-  color: #faf8f4;
+  background: #181818;
+  color: #ffffff;
 }
 
 /* 인쇄에만 남기는 자리. 어떤 보기를 켜 뒀거나 카드가 접혀 있어도 PDF에는
@@ -231,14 +231,14 @@
   min-width: 760px;
   border-radius: 12px;
   border: 1px solid #e7e2d8;
-  background: #fffdfa;
+  background: #ffffff;
   overflow: hidden;
 }
 
 .tableHead {
   display: grid;
   grid-template-columns: 132px repeat(3, 1fr);
-  background: #f5ede4;
+  background: #ffffff;
   border-bottom: 1px solid #e7dccb;
 }
 
@@ -246,7 +246,7 @@
   padding: 13px 16px;
   font-size: 15px;
   font-weight: 700;
-  color: #6e6e68;
+  color: #707070;
 }
 
 .tableRow {
@@ -263,14 +263,14 @@
   font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: #2b2b29;
+  color: #191919;
 }
 
 .rowTheme {
   margin-top: 5px;
   font-size: 14px;
   font-weight: 600;
-  color: #4a7c6f;
+  color: #555555;
 }
 
 .td {
@@ -290,19 +290,19 @@
   font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: #2b2b29;
+  color: #191919;
   cursor: pointer;
 }
 .cellBtn.mine {
   color: #c05f33;
 }
 .cellBtn:hover {
-  color: #2f5d50;
+  color: #181818;
 }
 
 .tdEmpty {
   font-size: 14px;
-  color: #6e6e68;
+  color: #707070;
 }
 
 /* design state.narrow(< 760px): 카드 보기의 슬롯 3칸이 1칸으로 접힌다

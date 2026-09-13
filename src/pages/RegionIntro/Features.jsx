@@ -104,7 +104,7 @@ export default function Features({ region }) {
                 <svg width="26" height="26" viewBox="0 0 20 20" fill="none">
                   <path
                     d={s.icon}
-                    stroke="#2F5D50"
+                    stroke="#181818"
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"

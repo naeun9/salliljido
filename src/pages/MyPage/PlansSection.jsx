@@ -40,12 +40,12 @@ export default function PlansSection({
         ) : (
           <div className={styles.empty}>
             <svg width="26" height="26" viewBox="0 0 26 26" fill="none" className={styles.emptyIcon}>
-              <circle cx="3.5" cy="6" r="2" fill="#DCE8E2" />
-              <line x1="9" y1="6" x2="23" y2="6" stroke="#4A7C6F" strokeWidth="1.4" />
-              <circle cx="3.5" cy="13" r="2" stroke="#4A7C6F" strokeWidth="1.3" />
-              <line x1="9" y1="13" x2="23" y2="13" stroke="#4A7C6F" strokeWidth="1.4" />
-              <circle cx="3.5" cy="20" r="2" stroke="#4A7C6F" strokeWidth="1.3" />
-              <line x1="9" y1="20" x2="18" y2="20" stroke="#4A7C6F" strokeWidth="1.4" />
+              <circle cx="3.5" cy="6" r="2" fill="#f0f0f0" />
+              <line x1="9" y1="6" x2="23" y2="6" stroke="#555555" strokeWidth="1.4" />
+              <circle cx="3.5" cy="13" r="2" stroke="#555555" strokeWidth="1.3" />
+              <line x1="9" y1="13" x2="23" y2="13" stroke="#555555" strokeWidth="1.4" />
+              <circle cx="3.5" cy="20" r="2" stroke="#555555" strokeWidth="1.3" />
+              <line x1="9" y1="20" x2="18" y2="20" stroke="#555555" strokeWidth="1.4" />
             </svg>
             <div className={styles.emptyTitle}>지역을 고르면 하루 일정을 만들어 드립니다</div>
             <p className={styles.emptyDesc}>

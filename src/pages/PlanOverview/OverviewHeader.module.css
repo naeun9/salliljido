@@ -2,7 +2,7 @@
 .header {
   position: relative;
   padding: 108px clamp(20px, 5vw, 64px) 76px;
-  background: #2f5d50;
+  background: #181818;
 }
 
 .row {
@@ -30,12 +30,12 @@
   font-family: inherit;
   font-size: 15px;
   font-weight: 500;
-  color: rgba(250, 248, 244, 0.78);
+  color: rgba(255, 255, 255, 0.78);
   cursor: pointer;
   transition: color 0.2s ease;
 }
 .backBtn:hover {
-  color: #fffdfa;
+  color: #ffffff;
 }
 .backArrow {
   font-size: 16px;
@@ -55,7 +55,7 @@
   line-height: 1.2;
   font-weight: 800;
   letter-spacing: -0.035em;
-  color: #fffdfa;
+  color: #ffffff;
   cursor: pointer;
 }
 
@@ -66,13 +66,13 @@
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  border: 1px solid rgba(250, 248, 244, 0.45);
-  background: rgba(250, 248, 244, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.14);
   cursor: pointer;
   transition: background 0.2s ease;
 }
 .renameBtn:hover {
-  background: rgba(250, 248, 244, 0.3);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .editRow {
@@ -87,13 +87,13 @@
   height: 46px;
   padding: 0 14px;
   border-radius: 10px;
-  border: 1px solid rgba(250, 248, 244, 0.6);
-  background: rgba(250, 248, 244, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.92);
   font-family: inherit;
   font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: #2b2b29;
+  color: #191919;
   outline: none;
 }
 
@@ -102,18 +102,18 @@
   padding: 0 16px;
   border-radius: 10px;
   border: none;
-  background: rgba(250, 248, 244, 0.92);
+  background: rgba(255, 255, 255, 0.92);
   font-family: inherit;
   font-size: 16px;
   font-weight: 600;
-  color: #2f5d50;
+  color: #181818;
   cursor: pointer;
 }
 
 .subline {
   margin-top: 12px;
   font-size: 16px;
-  color: rgba(250, 248, 244, 0.82);
+  color: rgba(255, 255, 255, 0.82);
   letter-spacing: -0.01em;
 }
 
@@ -129,18 +129,18 @@
   height: 44px;
   padding: 0 18px;
   border-radius: 10px;
-  border: 1px solid rgba(250, 248, 244, 0.5);
-  background: rgba(250, 248, 244, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.14);
   font-family: inherit;
   font-size: 16px;
   font-weight: 600;
-  color: #fffdfa;
+  color: #ffffff;
   cursor: pointer;
   transition: background 0.2s ease;
 }
 .editBtn:hover {
-  background: rgba(250, 248, 244, 0.3);
-  color: #fffdfa;
+  background: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
 }
 
 .exportWrap {
@@ -154,17 +154,17 @@
   height: 44px;
   padding: 0 18px;
   border-radius: 10px;
-  border: 1px solid rgba(250, 248, 244, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   background: transparent;
   font-family: inherit;
   font-size: 16px;
   font-weight: 600;
-  color: #fffdfa;
+  color: #ffffff;
   cursor: pointer;
   transition: background 0.2s ease;
 }
 .exportBtn:hover {
-  background: rgba(250, 248, 244, 0.22);
+  background: rgba(255, 255, 255, 0.22);
 }
 
 .exportMenu {
@@ -178,8 +178,8 @@
   min-width: 216px;
   padding: 8px;
   border-radius: 12px;
-  border: 1px solid #dce8e2;
-  background: #fffdfa;
+  border: 1px solid #f0f0f0;
+  background: #ffffff;
   box-shadow: 0 18px 36px -20px rgba(43, 43, 41, 0.55);
 }
 
@@ -195,12 +195,12 @@
   font-family: inherit;
   font-size: 15px;
   font-weight: 600;
-  color: #2b2b29;
+  color: #191919;
   cursor: pointer;
   text-align: left;
 }
 .exportItem:hover {
-  background: #f5ede4;
+  background: #ffffff;
 }
 
 /* 좁은 화면(design의 narrow와 같은 760px 기준)에서는 내보내기 메뉴를
@@ -240,11 +240,11 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  border: 1px solid rgba(250, 248, 244, 0.4);
-  background: rgba(250, 248, 244, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.1);
   cursor: pointer;
   transition: background 0.2s ease;
 }
 .deleteBtn:hover {
-  background: rgba(217, 120, 78, 0.35);
+  background: rgba(32, 32, 32, 0.35);
 }

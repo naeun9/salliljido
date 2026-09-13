@@ -103,25 +103,25 @@ export default function OverviewHeader({
               <div className={styles.exportMenu}>
                 <button type="button" className={styles.exportItem} onClick={onPrint}>
                   <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-                    <rect x="4" y="1.5" width="8" height="4" stroke="#2F5D50" strokeWidth="1.4" />
+                    <rect x="4" y="1.5" width="8" height="4" stroke="#181818" strokeWidth="1.4" />
                     <rect
                       x="1.8"
                       y="5.5"
                       width="12.4"
                       height="6"
                       rx="1.4"
-                      stroke="#2F5D50"
+                      stroke="#181818"
                       strokeWidth="1.4"
                     />
-                    <rect x="4.5" y="9.5" width="7" height="5" stroke="#2F5D50" strokeWidth="1.4" />
+                    <rect x="4.5" y="9.5" width="7" height="5" stroke="#181818" strokeWidth="1.4" />
                   </svg>
                   인쇄 / PDF로 저장
                 </button>
                 <button type="button" className={styles.exportItem} onClick={onExportXlsx}>
                   <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-                    <rect x="2.5" y="2" width="11" height="12" rx="1.4" stroke="#2F5D50" strokeWidth="1.4" />
-                    <line x1="2.5" y1="6" x2="13.5" y2="6" stroke="#2F5D50" strokeWidth="1.2" />
-                    <line x1="7" y1="6" x2="7" y2="14" stroke="#2F5D50" strokeWidth="1.2" />
+                    <rect x="2.5" y="2" width="11" height="12" rx="1.4" stroke="#181818" strokeWidth="1.4" />
+                    <line x1="2.5" y1="6" x2="13.5" y2="6" stroke="#181818" strokeWidth="1.2" />
+                    <line x1="7" y1="6" x2="7" y2="14" stroke="#181818" strokeWidth="1.2" />
                   </svg>
                   엑셀(.xlsx)로 내보내기
                 </button>

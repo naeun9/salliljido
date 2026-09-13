@@ -64,7 +64,7 @@ export default function UtilCard({
                 <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
                   <path
                     d="M2.5 7.5l3 3 6-6.5"
-                    stroke="#2F5D50"
+                    stroke="#181818"
                     strokeWidth="1.8"
                     strokeLinecap="round"
                     strokeLinejoin="round"

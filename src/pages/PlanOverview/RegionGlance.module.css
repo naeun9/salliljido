@@ -13,7 +13,7 @@
   font-size: clamp(27px, 2.4vw, 32px);
   font-weight: 700;
   letter-spacing: -0.03em;
-  color: #2b2b29;
+  color: #191919;
 }
 
 .row {
@@ -39,7 +39,7 @@
   font-size: 23px;
   font-weight: 700;
   letter-spacing: -0.025em;
-  color: #2b2b29;
+  color: #191919;
 }
 
 .badge {
@@ -48,14 +48,14 @@
   border: 1px solid #e4e0d6;
   font-size: 13px;
   font-weight: 500;
-  color: #6e6e68;
+  color: #707070;
 }
 
 .intro {
   margin: 12px 0 0;
   font-size: 17px;
   line-height: 1.75;
-  color: #6e6e68;
+  color: #707070;
   letter-spacing: -0.01em;
   text-wrap: pretty;
 }
@@ -78,14 +78,14 @@
 .factLabel {
   font-size: 15px;
   font-weight: 600;
-  color: #6e6e68;
+  color: #707070;
 }
 
 .factValue {
   font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: #2b2b29;
+  color: #191919;
   text-align: right;
 }
 
@@ -94,11 +94,11 @@
   margin-top: 18px;
   font-size: 16px;
   font-weight: 600;
-  color: #2f5d50;
-  border-bottom: 1px solid #dce8e2;
+  color: #181818;
+  border-bottom: 1px solid #f0f0f0;
 }
 .introLink:hover {
-  border-color: #d9784e;
+  border-color: #202020;
 }
 
 .right {
@@ -110,7 +110,7 @@
   position: relative;
   height: 268px;
   border-radius: 12px;
-  border: 1px solid #dce8e2;
+  border: 1px solid #f0f0f0;
   overflow: hidden;
   background: repeating-linear-gradient(135deg, #eaf0eb 0 12px, #e1eae3 12px 24px);
 }
@@ -123,7 +123,7 @@
   height: 208px;
   margin: -104px 0 0 -104px;
   border-radius: 50%;
-  border: 1px solid rgba(47, 93, 80, 0.35);
+  border: 1px solid rgba(24, 24, 24, 0.35);
   background: rgba(74, 124, 111, 0.16);
 }
 
@@ -139,16 +139,16 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: #4a7c6f;
+  background: #555555;
 }
 
 .clusterLabel {
   padding: 3px 8px;
   border-radius: 6px;
-  background: rgba(250, 248, 244, 0.9);
+  background: rgba(255, 255, 255, 0.9);
   font-size: 13px;
   font-weight: 600;
-  color: #2f5d50;
+  color: #181818;
   white-space: nowrap;
 }
 
@@ -163,8 +163,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  border: 3px solid #fffdfa;
-  background: #2f5d50;
+  border: 3px solid #ffffff;
+  background: #181818;
   box-shadow: 0 8px 18px -10px rgba(43, 43, 41, 0.6);
 }
 
@@ -177,10 +177,10 @@
   bottom: 12px;
   padding: 5px 10px;
   border-radius: 6px;
-  background: rgba(250, 248, 244, 0.9);
+  background: rgba(255, 255, 255, 0.9);
   font-family: ui-monospace, Menlo, monospace;
   font-size: 13px;
-  color: #6e6e68;
+  color: #707070;
 }
 
 .mapFoot {
@@ -194,17 +194,17 @@
 
 .rangeNote {
   font-size: 15px;
-  color: #6e6e68;
+  color: #707070;
 }
 
 .routeLink {
   font-size: 15px;
   font-weight: 600;
-  color: #2f5d50;
-  border-bottom: 1px solid #dce8e2;
+  color: #181818;
+  border-bottom: 1px solid #f0f0f0;
 }
 .routeLink:hover {
-  border-color: #d9784e;
+  border-color: #202020;
 }
 
 /* 아래 둘은 실제 카카오맵 위에 올리는 오버레이용이다. 위치는 CustomOverlay가
@@ -224,7 +224,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  border: 3px solid #fffdfa;
-  background: #2f5d50;
+  border: 3px solid #ffffff;
+  background: #181818;
   box-shadow: 0 8px 18px -10px rgba(43, 43, 41, 0.6);
 }

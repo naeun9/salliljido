@@ -1,29 +1,33 @@
-/* design/salliljido.extracted.html 240-267줄 */
+/* design/salliljido.extracted.html 240-267줄.
+   박스로 감싸지 않고, 다른 홈 섹션과 완전히 같은 배경(var(--paper))을
+   쓴다 — 섹션마다 배경을 다르게 나누지 않기로 한 원칙. max-width·
+   padding·타이포는 다른 섹션과 같은 기준(1320px / 48px / 섹션 제목
+   42px / label 12·.16em). */
 .support {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: clamp(72px, 10vh, 120px) clamp(20px, 5vw, 64px);
+  padding: clamp(72px, 10vh, 120px) clamp(18px, 4vw, 48px);
   background: var(--paper);
   scroll-snap-align: start;
 }
 .inner {
   width: 100%;
-  max-width: 1240px;
+  max-width: 1320px;
   margin: 0 auto;
 }
 .head {
   max-width: 620px;
 }
 .eyebrow {
-  font-size: 15px;
+  font-size: var(--font-label-caps);
   font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--sage);
+  letter-spacing: 0.16em;
+  color: var(--forest);
 }
 .title {
   margin: 18px 0 0;
-  font-size: clamp(32px, 3.4vw, 47px);
+  font-size: clamp(32px, 3.4vw, 42px);
   line-height: 1.35;
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -49,7 +53,7 @@
   flex-direction: column;
   padding: 28px 26px 26px;
   border-radius: var(--radius-card);
-  border: 1px solid var(--mist);
+  border: 1px solid var(--border);
   background: var(--cream);
   /* design은 0.3s에 -3px였다. 커서가 지나가기만 해도 카드가 튀어 올라
      섹션 전체가 들썩였다. 시간을 늘리고 거리를 줄인다. */
@@ -70,23 +74,31 @@
 .cardRegion {
   padding: 5px 11px;
   border-radius: var(--radius-pill);
-  background: var(--mist);
+  background: var(--sand);
   font-size: 15px;
   font-weight: 600;
-  color: var(--forest);
+  color: var(--gray);
 }
+/* 실제 지원 프로그램 목록(components/support/ProgramCard.module.css의
+   .badge)과 같은 칩 모양 — 배경+글자색이 있는 작은 필. 예전엔 글자색만
+   있어서 "상태 표시"보다 얇은 텍스트처럼 보였다. */
 .cardStatus {
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 .cardTitle {
   margin: 20px 0 0;
-  font-size: 23px;
-  font-weight: 600;
-  line-height: 1.45;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.4;
   letter-spacing: -0.02em;
   color: var(--ink);
 }
+/* 홈에서는 핵심 지원 내용만 짧게 — 2~3줄에서 자르고 상세는 실제
+   지원 프로그램 페이지에서 보여준다. */
 .cardBenefit {
   margin: 12px 0 22px;
   font-size: 17px;
@@ -94,10 +106,14 @@
   color: var(--gray);
   letter-spacing: -0.01em;
   flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .cardPeriod {
   padding-top: 18px;
-  border-top: 1px solid #efe7dc;
+  border-top: 1px solid var(--hairline);
   display: flex;
   align-items: baseline;
   gap: 10px;
@@ -135,6 +151,6 @@
   transition: background 0.45s ease;
 }
 .cta:hover {
-  background: var(--mist);
+  background: var(--opt-hover-bg);
   color: var(--forest);
 }

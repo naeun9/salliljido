@@ -67,7 +67,7 @@ export default function Timeline({
       {stayName && (
         <div className={styles.stayRow}>
           <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
-            <path d="M3 8.2 9 3.2l6 5V15H3z" stroke="#2F5D50" strokeWidth="1.5" strokeLinejoin="round" />
+            <path d="M3 8.2 9 3.2l6 5V15H3z" stroke="#181818" strokeWidth="1.5" strokeLinejoin="round" />
           </svg>
           오늘 묵는 곳 · {stayName}
         </div>
@@ -79,8 +79,8 @@ export default function Timeline({
         </p>
         <button type="button" className={styles.hintClose} aria-label="안내 닫기" onClick={onCloseHint}>
           <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-            <line x1="2" y1="2" x2="10" y2="10" stroke="#2F5D50" strokeWidth="1.5" strokeLinecap="round" />
-            <line x1="10" y1="2" x2="2" y2="10" stroke="#2F5D50" strokeWidth="1.5" strokeLinecap="round" />
+            <line x1="2" y1="2" x2="10" y2="10" stroke="#181818" strokeWidth="1.5" strokeLinecap="round" />
+            <line x1="10" y1="2" x2="2" y2="10" stroke="#181818" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
         </button>
       </div>

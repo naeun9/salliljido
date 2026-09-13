@@ -1,138 +1,132 @@
-/* design/salliljido.extracted.html 113-193줄 */
+/* 색은 전역 토큰(styles/tokens.css)을 그대로 쓴다 — 이 파일에서만 쓰는
+   지역 변수를 두지 않고 --forest/--sage/--mist/--ink/--gray/--paper를
+   직접 참조해, 다른 화면과 팔레트가 같은 소스에서 나오게 한다.
+
+   "왼쪽 얇은 길 + 핀 / 오른쪽 가로형 카드" 단일 열 타임라인 구조다.
+   길·핀은 헤더(SERVICE/제목)와 같은 왼쪽 기준선에 바짝 붙이고, 카드가
+   남은 폭을 전부 쓴다. 간격은 8px 배수(8/16/24/32/48/64)로 통일했다. */
 .service {
-  padding: clamp(80px, 12vh, 130px) clamp(20px, 5vw, 64px) clamp(88px, 13vh, 140px);
+  padding: 96px clamp(18px, 4vw, 48px) 112px;
   background: var(--paper);
-  scroll-snap-align: start;
 }
-.inner {
-  width: 100%;
-  max-width: 1240px;
-  margin: 0 auto;
-}
-.head {
-  max-width: 640px;
-}
-.eyebrow {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  color: var(--sage);
-}
-.title {
-  margin: 18px 0 0;
-  font-size: clamp(32px, 3.4vw, 47px);
-  line-height: 1.35;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-  text-wrap: pretty;
-}
-.lead {
-  margin: 32px 0 0;
-  font-size: 18px;
-  line-height: 1.75;
-  color: var(--gray);
-  letter-spacing: -0.01em;
+.inner { max-width: 1320px; margin: auto; }
+/* 지역 소개(PILOT REGIONS) 헤더와 같은 왼쪽 정렬 구조로 맞췄다 — 가운데
+   정렬보다 왼쪽에 글이 있는 쪽이 더 낫다는 판단. */
+.head { text-align: left; }
+.accent { display: block; width: 64px; height: 6px; background: var(--forest); border-radius: 99px; margin: 0 0 24px; }
+.eyebrow { display: block; font-size: var(--font-label-caps); font-weight: 600; letter-spacing: .16em; color: var(--forest); }
+.title { margin: 16px 0 16px; font-size: clamp(32px, 3.6vw, 42px); font-weight: 700; letter-spacing: -.03em; color: var(--ink); line-height: 1.3; }
+.lead { margin: 0; max-width: 640px; color: var(--gray); font-size: 17px; line-height: 1.75; }
+.overview { display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 16px 24px; margin: 32px 0 0; }
+.overview a { display: flex; align-items: center; gap: 8px; color: var(--gray); font-size: 14px; }
+.overview a > span { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--cream); color: var(--forest); font-size: 12px; font-weight: 700; }
+.overview b { color: var(--sage); margin-left: 8px; font-weight: 400; }
+.overview a:focus-visible { outline: 2px solid var(--forest); outline-offset: 5px; border-radius: 4px; }
+
+/* 화면이 아주 넓으면(예: 와이드 모니터) .inner(1320px) 안에서 카드가
+   끝까지 늘어나 핀은 왼쪽에 붙고 카드만 오른쪽으로 치우친 채 화면
+   전체를 쓰는 것처럼 보였다 — 로드맵+카드를 하나의 덩어리로 보면
+   화면 가운데 있지 않은 것처럼 읽힌다. 이 묶음 자체에 조금 더 좁은
+   최대폭을 줘서 넓은 화면에서는 남는 폭이 오른쪽에만 남게 한다.
+   헤더(SERVICE/제목)가 왼쪽 정렬이라, 이 묶음도 가운데로 띄우지 않고
+   같은 왼쪽 기준선에 맞춘다 — margin:auto를 쓰지 않는다. */
+.timeline { position: relative; max-width: 1280px; margin: 64px 0 0; padding: 28px 0; }
+
+/* START/GOAL은 핀의 실제 중심 좌표에 transform으로 정확히 맞춘다.
+   절대좌표라 폭이 바뀌는 구간(560px)마다 값을 같이 맞춘다. */
+.rail { position: absolute; left: 46.5px; transform: translateX(-50%); font-size: 13px; font-weight: 700; letter-spacing: .12em; color: var(--forest); text-transform: uppercase; white-space: nowrap; }
+.rail[data-start] { top: 0; }
+.rail[data-end] { bottom: 0; }
+
+.steps { position: relative; display: flex; flex-direction: column; gap: 48px; padding: 0; margin: 0; list-style: none; }
+/* 핀 중심(320 - 20 - 8 = 292px)을 지나는, 처음부터 끝까지 폭이 같은
+   직선. 단순한 세로 막대로 보이지 않도록 두 겹으로 그린다 —
+   바탕(#DDE5E1, 8px)에 가운데 흰 파선을 얹고, 파선 간격을 넓게 벌려
+   "길" 느낌을 준다. 카드 개수·높이가 달라져도 ol의 실제 높이를 그대로
+   따라가 좌표를 다시 맞출 필요가 없다. */
+/* 핀(svg width 19px)이 핀 칸(56px) 오른쪽 끝에 딱 붙으므로 중심은
+   56 - 9.5 = 46.5px다. */
+.steps::before { content: ""; position: absolute; left: 42px; top: 0; bottom: 0; width: 9px; border-radius: 5px; background: #DDE5E1; }
+.steps::after {
+  content: "";
+  position: absolute;
+  left: 45.5px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-image: linear-gradient(#fff 40%, transparent 40%);
+  background-size: 2px 24px;
 }
 
-.steps {
-  margin-top: clamp(56px, 7vh, 88px);
-}
+/* 핀이 카드의 세로 중앙에 오도록 align-items를 center로 둔다(이전엔
+   flex-start + 고정 padding-top이라 카드가 길어질수록 핀이 위로
+   치우쳐 보였다). z-index를 명시해 길(steps::before/after)보다 항상
+   앞에 그려지도록 확실히 한다 — ::after는 ol의 마지막 생성 자식이라
+   z-index 없이는 뒤에 오는 li(핀·카드)보다 오히려 위에 그려질 수 있다. */
+.step { position: relative; z-index: 1; display: flex; align-items: center; scroll-margin-top: 96px; }
+.pin { flex: 0 0 56px; display: flex; justify-content: flex-end; }
+.pin svg { display: block; }
+/* 핀에서 카드까지 이어지는 아주 얇은 연결선. */
+.connector { flex: 0 0 28px; height: 1px; background: #DDE5E1; margin: 0 0 0 0; align-self: center; }
 
-.step {
+.card {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 280px;
   display: flex;
   align-items: center;
-  gap: clamp(32px, 5vw, 72px);
-  flex-direction: row;
+  gap: 48px;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 22px;
+  padding: 40px;
+  box-shadow: 0 4px 16px -12px rgba(0, 0, 0, .08);
+  transition: transform .25s ease, box-shadow .25s ease;
 }
-.step.reverse {
-  flex-direction: row-reverse;
-}
+.card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px -14px rgba(0, 0, 0, .12); }
 
-.stepText {
-  flex: 1 1 380px;
-  min-width: 260px;
-  opacity: 1;
-  transition:
-    opacity 0.7s ease,
-    transform 0.7s cubic-bezier(0.2, 0.7, 0.3, 1);
-}
-.stepNum {
-  font-size: clamp(70px, 7.3vw, 102px);
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  color: var(--mist);
-}
-.stepTitle {
-  margin: 14px 0 0;
-  font-size: clamp(23px, 2.1vw, 29px);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-}
-.stepDesc {
-  margin: 12px 0 0;
-  font-size: 18px;
-  line-height: 1.75;
-  color: var(--gray);
-  letter-spacing: -0.01em;
-}
-.stepChips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 20px;
-}
-.stepChip {
-  padding: 6px 12px;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--mist);
-  background: var(--cream);
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--forest);
-}
+/* flex-basis를 퍼센트(34%)로 주고 옆의 .preview는 flex-basis:auto(내용
+   기준)로 뒀더니, preview의 "내용이 원하는 폭"이 이 칸의 34%보다 훨씬
+   커서 shrink 계산에서 이 칸을 98px까지 짓눌러 버렸다(제목이 한 줄에
+   한 단어씩 잘린 원인). 그래서 두 칸 다 flex-basis를 0으로 두고
+   grow 비율(35:65)만으로 나누는 방식으로 바꿨다 — 이러면 내용 크기와
+   무관하게 항상 정확히 그 비율로 나뉜다. */
+.cardText { flex: 35 1 0%; max-width: 350px; min-width: 0; }
+/* 숫자는 원형 배경 없이 순수 텍스트로만. */
+.number { display: block; font-size: 14px; font-weight: 600; letter-spacing: .04em; color: var(--forest); }
+/* word-break:keep-all이 없으면 한글은 글자 단위로 아무 데서나 줄바꿈된다
+   ("비용과 지 / 원 확인하 / 기"처럼). 칸을 좁혔더니 가장 긴 제목("비용과
+   지원 확인하기")에서 바로 이 문제가 났다 — 폭을 다시 늘리는 대신
+   띄어쓰기에서만 줄바꿈되게 고쳤다. */
+.cardText h3 { margin: 8px 0 10px; font-size: 26px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); line-height: 1.35; word-break: keep-all; }
+.cardText p { margin: 0; font-size: 16px; font-weight: 450; line-height: 1.65; color: var(--gray); word-break: keep-all; }
+/* 태그가 버튼처럼 보이지 않도록 예전보다 작게 — 높이 32px 고정, 옆
+   여백만으로 크기를 잡고 세로 패딩은 line-height로 맞춘다. */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.chips span { display: inline-flex; align-items: center; height: 32px; padding: 0 14px; font-size: 13px; color: var(--forest); background: var(--mist); border-radius: 99px; }
 
-.stepArt {
-  flex: 1 1 420px;
-  min-width: 260px;
-  height: clamp(220px, 30vh, 300px);
-  border-radius: var(--radius-card);
-  box-shadow: 0 20px 44px -30px rgba(43, 43, 41, 0.4);
-  display: flex;
-  align-items: flex-end;
-  padding: 14px;
-  opacity: 1;
-  transition:
-    opacity 0.7s ease,
-    transform 0.7s cubic-bezier(0.2, 0.7, 0.3, 1);
-}
-.stepArtLabel {
-  padding: 6px 10px;
-  border-radius: var(--radius-tag);
-  background: rgba(250, 248, 244, 0.92);
-  font-family: var(--font-family-mono);
-  font-size: 13px;
-  color: var(--gray);
-}
+/* 예시 UI 전체를 실제 화면처럼 크게 넣고 overflow:hidden으로 잘라내지
+   않는다 — ServicePreview 쪽에서 애초에 이 폭·높이 안에 내용이 다
+   들어오는 축약형으로 만든다. .cardText와 같은 방식(basis:0 + grow
+   비율)으로 나눠 65%를 차지한다 — 카드 오른쪽 끝까지 자연스럽게 넓게
+   쓴다(카드 가운데에 떠 있는 작은 박스처럼 보이지 않게). */
+.preview { flex: 65 1 0%; min-width: 0; border-radius: 16px; overflow: hidden; }
 
-.connector {
-  width: 1px;
-  height: clamp(88px, 12vh, 120px);
-  margin-left: 22px;
-  border-left: 1px dashed var(--border-strong);
+@media (max-width: 760px) {
+  .card { flex-direction: column; align-items: stretch; padding: 28px; gap: 24px; min-height: 0; }
+  .cardText { flex-basis: auto; }
+  .connector { flex-basis: 16px; }
 }
-
-@media (max-width: 939px) {
-  .step,
-  .step.reverse {
-    flex-direction: column;
-  }
-  .stepNum {
-    font-size: 44px;
-  }
-  .connector {
-    height: 64px;
-  }
+@media (max-width: 560px) {
+  .service { padding-top: 64px; padding-bottom: 72px; }
+  .timeline { margin-top: 40px; }
+  .pin { flex-basis: 32px; }
+  .pin svg { width: 15px; height: 19px; }
+  .connector { flex-basis: 10px; }
+  .steps { gap: 32px; }
+  .steps::before { left: 21.5px; width: 6px; }
+  .steps::after { left: 23.5px; }
+  .rail { left: 24.5px; font-size: 12px; }
+  .card { padding: 20px; border-radius: 18px; }
+  .cardText h3 { font-size: 22px; }
 }

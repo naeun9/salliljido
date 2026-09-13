@@ -33,7 +33,7 @@
 }
 .title {
   margin: 0;
-  font-size: clamp(31px, 2.95vw, 40px);
+  font-size: clamp(31px, 2.95vw, 42px);
   line-height: 1.4;
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -72,40 +72,57 @@
   gap: 12px;
 }
 
+/* 지역·기간·장소 모두 "하나만 고르는" 단일 선택이라, 전체 서비스
+   공통 단일 선택 상태(tokens.css)를 그대로 쓴다 — 채워서 강조하는
+   딥그린(선택)과 옅은 회색(미선택)만 쓰고, 페이지마다 다른 선택색을
+   쓰지 않는다. */
 .optionBtn {
   text-align: left;
   padding: 18px 18px 20px;
   border-radius: var(--radius-card);
-  border: 1px solid var(--border);
-  background: var(--cream);
+  border: 1px solid var(--opt-idle-border);
+  background: var(--opt-idle-bg);
   cursor: pointer;
   font-family: inherit;
   transition:
     background 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 .optionBtn:hover {
-  border-color: var(--sage);
+  background: var(--opt-hover-bg);
+  border-color: var(--opt-hover-bg);
 }
 .optionBtn.selected {
-  background: var(--mist);
-  border-color: var(--forest);
+  background: var(--opt-selected-bg);
+  border-color: var(--opt-selected-border);
+}
+.optionBtn.selected:hover {
+  background: var(--opt-selected-hover-bg);
+  border-color: var(--opt-selected-hover-bg);
 }
 
 .optionLabel {
   font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: var(--ink);
+  color: var(--opt-idle-text);
+}
+.optionBtn:hover .optionLabel {
+  color: var(--opt-hover-text);
 }
 .optionBtn.selected .optionLabel {
-  color: var(--forest);
+  color: var(--opt-selected-text);
 }
 .optionSub {
   margin-top: 7px;
   font-size: 15px;
   line-height: 1.6;
   color: var(--gray);
+}
+.optionBtn.selected .optionSub {
+  color: var(--opt-selected-text);
+  opacity: 0.85;
 }
 
 .placeBtn {
@@ -114,10 +131,13 @@
   gap: 12px;
 }
 .placeBtn .optionLabel {
-  color: var(--gray);
+  color: var(--opt-idle-text);
+}
+.placeBtn:hover .optionLabel {
+  color: var(--opt-hover-text);
 }
 .placeBtn.selected .optionLabel {
-  color: var(--forest);
+  color: var(--opt-selected-text);
 }
 
 .customDur {

@@ -1,162 +1,68 @@
-/* design/salliljido.extracted.html 195-238줄 */
-.regions {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding: clamp(72px, 10vh, 120px) clamp(20px, 5vw, 64px);
-  background: var(--sand);
-  scroll-snap-align: start;
-}
-.inner {
-  width: 100%;
-  max-width: 1240px;
-  margin: 0 auto;
-}
+/* 페이지 배경은 다른 홈 섹션과 완전히 같은 색(var(--paper))으로
+   통일한다 — 섹션마다 배경을 다르게 나누지 않기로 한 원칙을 이
+   섹션에서만 깨고 있었다. 대신 이 섹션은 원래대로 둥근 사각형 카드
+   트레이(연한 회색 --sand) 안에 캐러셀을 담아 "카드 형식" 느낌을
+   살린다 — Hero가 사진 카드로 떠 있는 것과 같은 방식. */
+.regions { padding: 64px clamp(10px, 1.5vw, 24px); background: var(--paper); }
+/* 다른 섹션(1320px)보다 트레이를 좀 더 넓게 — 카드 형식이라는 느낌을
+   살리기 위해 양옆으로 조금 더 늘렸다. */
+.inner { max-width: 1400px; margin: 0 auto; background: var(--sand); border-radius: 32px; overflow: hidden; padding: 36px 0 24px; }
+.head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 0 clamp(24px, 4vw, 48px); }
+.headText { max-width: 680px; }
+.eyebrow { font-size: var(--font-label-caps); font-weight: 600; letter-spacing: .16em; color: var(--forest); }
+.title { margin: 16px 0 0; font-size: clamp(28px, 3.1vw, 42px); line-height: 1.35; font-weight: 700; letter-spacing: -.03em; color: var(--ink); }
+.lead { margin: 10px 0 0; font-size: 16px; line-height: 1.7; color: var(--gray); }
+.arrows { display: flex; gap: 10px; }
+.arrowBtn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border); background: var(--cream); color: var(--ink); font-size: 18px; cursor: pointer; }
+.arrowBtn:hover { background: var(--opt-hover-bg); }
+.track { margin-top: 22px; padding: 20px 0 28px; touch-action: pan-y; user-select: none; }
+/* 중앙 카드는 440~480px(clamp), 좌우 카드는 scale(.78)로 약 345~375px가
+   되어 요청한 폭 범위(중앙 440~480 / 좌우 330~360)에 맞는다. */
+.trackInner { display: grid; grid-template-columns: minmax(0, 1fr); width: clamp(340px, 36vw, 480px); margin: 0 auto; isolation: isolate; }
+/* 예전엔 scale(.84) + opacity(.45)라 좌우 카드가 거의 꺼진 것처럼
+   보였다. 크기 차이를 줄이고(스케일은 좀 더 낮췄지만 위 폭 자체가 커져
+   실제 결과 폭은 요청 범위 안), 불투명도를 .7로 올려 "선택 가능한
+   카드"로 보이게 했다. */
+.slide { min-width: 0; grid-area: 1 / 1; transform: translateX(calc(var(--offset) * 92%)) scale(.78); opacity: .7; z-index: 0; transition: transform .65s cubic-bezier(.22, .68, .2, 1), opacity .65s ease; }
+.card { display: flex; flex-direction: column; height: 100%; border-radius: 22px; border: 1px solid var(--border); background: var(--cream); overflow: hidden; cursor: pointer; box-shadow: 0 12px 28px -18px rgba(29, 29, 31, .2); transition: transform .25s ease, box-shadow .25s ease; }
+.card:hover { box-shadow: 0 20px 36px -20px rgba(29, 29, 31, .26); }
+.card:focus-visible, .arrowBtn:focus-visible, .dot:focus-visible { outline: 2px solid var(--forest); outline-offset: 4px; }
+/* 1:1.08(정사각형에 가까운 세로형)에서 5:4(가로형)로 — 사진 비중을
+   낮춰 섹션 높이를 줄이는 가장 큰 요인. 요청한 이미지 높이(340~400px)에
+   맞는다(중앙 폭 460px 기준 약 368px). */
+.cardImage { position: relative; width: 100%; aspect-ratio: 5 / 4; background-size: cover; background-position: center; }
+.locationLabel { position: absolute; bottom: 16px; right: 16px; left: 16px; text-align: right; color: rgba(255, 255, 255, .85); font-size: 13px; font-weight: 400; line-height: 1.5; text-shadow: 0 1px 6px rgba(0, 0, 0, .55); z-index: 1; }
+.cardImage::after { content: ""; position: absolute; inset: 55% 0 0; background: linear-gradient(transparent, rgba(0, 0, 0, .24)); pointer-events: none; }
+.cardBody { padding: 20px; flex: 1; }
+.cardHeading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.cardName { margin: 0; font-size: 25px; font-weight: 700; letter-spacing: -.03em; color: var(--ink); }
+.cardArrow { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 50%; color: var(--gray); }
+.cardCities { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.cardCity { padding: 5px 8px; border-radius: 6px; background: var(--sand); font-size: 13px; color: var(--gray); }
+/* 홈에서는 지역 소개 문장을 1~2문장만 — REGIONS 데이터 자체가 이미
+   그 안에 있지만, 혹시 넘치더라도 2줄에서 자르는 안전장치를 둔다. */
+.cardDesc { margin: 14px 0 0; font-size: 15px; line-height: 1.7; color: var(--gray); letter-spacing: -.02em; text-wrap: pretty; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.dots { display: flex; justify-content: center; gap: 4px; margin-top: 0; }
+.dot { width: 32px; height: 32px; display: grid; place-items: center; border: 0; padding: 0; background: transparent; cursor: pointer; }
 
-.head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-}
-.headText {
-  max-width: 560px;
-}
-.eyebrow {
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--sage);
-}
-.title {
-  margin: 18px 0 0;
-  font-size: clamp(32px, 3.4vw, 47px);
-  line-height: 1.35;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-}
-.arrows {
-  display: flex;
-  gap: 10px;
-}
-.arrowBtn {
-  width: 46px;
-  height: 46px;
-  border-radius: var(--radius-card);
-  border: 1px solid var(--mist);
-  background: var(--paper);
-  color: var(--forest);
-  font-size: 18px;
-  cursor: pointer;
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease;
-}
-.arrowBtn:hover {
-  background: var(--white);
-  border-color: var(--sage);
-}
 
-.track {
-  margin-top: clamp(36px, 5vh, 56px);
-  overflow: hidden;
-  border-radius: var(--radius-card);
+.slide[data-selected="true"] { transform: translateX(0) scale(1); opacity: 1; z-index: 2; }
+.slide[data-selected="true"] .card { box-shadow: 0 24px 45px -24px rgba(29, 29, 31, .3); }
+.dot::after { content: ""; width: 7px; height: 7px; border-radius: 999px; background: var(--border-strong); transition: width .3s ease; }
+.dot[data-active="true"]::after { width: 22px; background: var(--forest); }
+.selection { text-align: center; margin: 8px 16px 0; font-size: 14px; color: var(--ink); }
+.selection span { color: var(--gray); font-size: 13px; }
+@media (max-width: 759px) {
+  .regions { padding: 40px clamp(14px, 4vw, 24px) 48px; }
+  .title { font-size: 26px; }
+  .trackInner { width: min(74vw, 380px); }
+  .slide { transform: translateX(calc(var(--offset) * 90%)) scale(.8); }
+  .card { border-radius: 20px; }
+  .cardImage { aspect-ratio: 5 / 4; }
+  .cardBody { padding: 18px; }
+  .cardName { font-size: 23px; }
+  .selection span { display: block; margin-top: 6px; }
 }
-.trackInner {
-  display: flex;
-  transition: transform 0.8s cubic-bezier(0.4, 0.1, 0.2, 1);
-}
-.slide {
-  flex: 0 0 100%;
-}
-
-.card {
-  display: flex;
-  flex-wrap: wrap;
-  border-radius: var(--radius-card);
-  border: 1px solid #e4d9cb;
-  background: var(--cream);
-  overflow: hidden;
-  cursor: pointer;
-}
-.cardImage {
-  flex: 1 1 340px;
-  min-width: 280px;
-  position: relative;
-  min-height: 300px;
-  display: flex;
-  align-items: flex-end;
-}
-.cardImageNote {
-  margin: 18px;
-  padding: 7px 11px;
-  border-radius: var(--radius-tag);
-  background: rgba(250, 248, 244, 0.9);
-  font-family: var(--font-family-mono);
-  font-size: 14px;
-  color: var(--gray);
-}
-.cardBody {
-  flex: 1 1 380px;
-  min-width: 280px;
-  padding: clamp(30px, 4vw, 48px);
-}
-.cardOrder {
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--terracotta);
-}
-.cardName {
-  margin: 14px 0 0;
-  font-size: clamp(30px, 2.8vw, 38px);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-}
-.cardCities {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 20px;
-}
-.cardCity {
-  padding: 7px 13px;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--mist);
-  background: var(--paper);
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--forest);
-}
-.cardDesc {
-  margin: 24px 0 0;
-  font-size: 18px;
-  line-height: 1.8;
-  color: var(--gray);
-  letter-spacing: -0.01em;
-  text-wrap: pretty;
-}
-
-.dots {
-  display: flex;
-  justify-content: center;
-  gap: 9px;
-  margin-top: 28px;
-}
-.dot {
-  height: 8px;
-  border-radius: var(--radius-pill);
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  background: #d6c9b8;
-  transition:
-    width 0.4s ease,
-    background 0.4s ease;
-}
-.dot.active {
-  background: var(--forest);
+@media (prefers-reduced-motion: reduce) {
+  .slide, .card, .dot::after { transition: none; }
 }

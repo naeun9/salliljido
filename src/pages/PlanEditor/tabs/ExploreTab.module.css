@@ -30,6 +30,8 @@
   margin-bottom: 0;
 }
 
+/* 카테고리(숙박/체험/관광지/식당·카페)는 한 번에 하나만 보므로 단일
+   선택 — 공통 단일 선택 상태(tokens.css)를 쓴다. */
 .chip {
   flex: 0 0 auto;
   display: inline-flex;
@@ -38,26 +40,33 @@
   height: 42px;
   padding: 0 16px;
   border-radius: var(--radius-input);
-  border: 1px solid var(--border);
-  background: var(--cream);
+  border: 1px solid var(--opt-idle-border);
+  background: var(--opt-idle-bg);
   font-family: inherit;
   font-size: 16px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  color: var(--gray);
+  color: var(--opt-idle-text);
   cursor: pointer;
   transition:
     background 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 .chip:hover {
-  border-color: var(--sage);
+  background: var(--opt-hover-bg);
+  border-color: var(--opt-hover-bg);
+  color: var(--opt-hover-text);
 }
 .chip.active {
   font-weight: 600;
-  background: var(--mist);
-  border-color: var(--forest);
-  color: var(--forest);
+  background: var(--opt-selected-bg);
+  border-color: var(--opt-selected-border);
+  color: var(--opt-selected-text);
+}
+.chip.active:hover {
+  background: var(--opt-selected-hover-bg);
+  border-color: var(--opt-selected-hover-bg);
 }
 .chipDot {
   width: 9px;
@@ -73,31 +82,36 @@
      들여쓴 자리. 왼쪽 들여쓰기(14px)는 design 값 그대로. */
   margin: 14px 0 0 14px;
 }
+/* 하위 유형은 여러 개를 동시에 켤 수 있는 다중 선택이라, 단일 선택과는
+   다른 태그형 상태(연한 그린 틴트, tokens.css --tag-*)를 쓴다. */
 .subChip {
   flex: 0 0 auto;
   height: 32px;
   padding: 0 12px;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--border);
-  background: var(--cream);
+  border: 1px solid var(--opt-idle-border);
+  background: var(--opt-idle-bg);
   font-family: inherit;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  color: var(--gray);
+  color: var(--opt-idle-text);
   cursor: pointer;
   transition:
     background 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 .subChip:hover {
-  border-color: var(--sage);
+  background: var(--opt-hover-bg);
+  border-color: var(--opt-hover-bg);
+  color: var(--opt-hover-text);
 }
 .subChip.active {
   font-weight: 600;
-  background: var(--mist);
-  border-color: var(--forest);
-  color: var(--forest);
+  background: var(--tag-bg);
+  border-color: var(--tag-border);
+  color: var(--tag-text);
 }
 
 .loadGrid {

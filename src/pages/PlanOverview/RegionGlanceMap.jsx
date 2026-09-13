@@ -31,9 +31,9 @@ export default function RegionGlanceMap({ region, fallback }) {
         lng={center.lng}
         radius={RANGE_RADIUS_M}
         strokeWeight={1}
-        strokeColor="#2F5D50"
+        strokeColor="#181818"
         strokeOpacity={0.35}
-        fillColor="#4A7C6F"
+        fillColor="#555555"
         fillOpacity={0.16}
       />
 

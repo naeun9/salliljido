@@ -108,10 +108,10 @@ export default function ProgramCard({ program, saved, onToggleSave }) {
           <svg width="13" height="15" viewBox="0 0 13 15" fill="none">
             <path
               d="M1.7 1.4h9.6v11.8l-4.8-3.9-4.8 3.9z"
-              stroke={saved ? "#2F5D50" : "#6E6E68"}
+              stroke={saved ? "#24483E" : "#767D78"}
               strokeWidth="1.4"
               strokeLinejoin="round"
-              fill={saved ? "#2F5D50" : "none"}
+              fill={saved ? "#24483E" : "none"}
             />
           </svg>
           {saved ? "관심 등록됨" : "관심 등록"}

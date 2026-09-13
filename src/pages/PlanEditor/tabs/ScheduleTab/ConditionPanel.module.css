@@ -100,30 +100,35 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+/* 테마·식사 스타일 모두 여러 개를 동시에 고르는 다중 선택이라 태그형
+   상태(tokens.css --tag-*)를 쓴다. */
 .themeChip {
   flex: 0 0 auto;
   padding: 9px 16px;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--border);
-  background: var(--cream);
+  border: 1px solid var(--opt-idle-border);
+  background: var(--opt-idle-bg);
   font-family: inherit;
   font-size: 16px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  color: var(--gray);
+  color: var(--opt-idle-text);
   cursor: pointer;
   transition:
     background 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 .themeChip:hover {
-  border-color: var(--sage);
+  background: var(--opt-hover-bg);
+  border-color: var(--opt-hover-bg);
+  color: var(--opt-hover-text);
 }
 .themeChip.active {
   font-weight: 600;
-  background: var(--mist);
-  border-color: var(--forest);
-  color: var(--forest);
+  background: var(--tag-bg);
+  border-color: var(--tag-border);
+  color: var(--tag-text);
 }
 .mealChip {
   flex: 0 0 auto;
@@ -133,26 +138,29 @@
   gap: 2px;
   padding: 8px 16px;
   border-radius: var(--radius-card);
-  border: 1px solid var(--border);
-  background: var(--cream);
+  border: 1px solid var(--opt-idle-border);
+  background: var(--opt-idle-bg);
   font-family: inherit;
   font-size: 16px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  color: var(--gray);
+  color: var(--opt-idle-text);
   cursor: pointer;
   transition:
     background 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 .mealChip:hover {
-  border-color: var(--sage);
+  background: var(--opt-hover-bg);
+  border-color: var(--opt-hover-bg);
+  color: var(--opt-hover-text);
 }
 .mealChip.active {
   font-weight: 600;
-  background: var(--mist);
-  border-color: var(--forest);
-  color: var(--forest);
+  background: var(--tag-bg);
+  border-color: var(--tag-border);
+  color: var(--tag-text);
 }
 .mealHint {
   font-size: 13px;

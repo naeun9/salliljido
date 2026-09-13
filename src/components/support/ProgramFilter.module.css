@@ -36,30 +36,35 @@
   padding-bottom: 2px;
 }
 
+/* 지역·유형·상태 필터는 동시에 여러 개를 켤 수 있는 다중 선택이라
+   태그형 상태(tokens.css --tag-*)를 쓴다. */
 .chip {
   flex: 0 0 auto;
   padding: 8px 15px;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--border);
-  background: var(--paper);
+  border: 1px solid var(--opt-idle-border);
+  background: var(--opt-idle-bg);
   font-family: inherit;
   font-size: var(--font-body);
   font-weight: 500;
   letter-spacing: -0.01em;
-  color: var(--gray);
+  color: var(--opt-idle-text);
   cursor: pointer;
   transition:
     background var(--transition-fast),
-    border-color var(--transition-fast);
+    border-color var(--transition-fast),
+    color var(--transition-fast);
 }
 .chip:hover {
-  border-color: var(--sage);
+  background: var(--opt-hover-bg);
+  border-color: var(--opt-hover-bg);
+  color: var(--opt-hover-text);
 }
 .chipActive {
-  background: var(--mist);
-  border-color: var(--forest);
+  background: var(--tag-bg);
+  border-color: var(--tag-border);
   font-weight: 600;
-  color: var(--forest);
+  color: var(--tag-text);
 }
 
 .divider {
@@ -87,20 +92,33 @@
   gap: 6px;
 }
 
+/* 정렬 순서는 한 번에 하나만 고르는 단일 선택이라 위 필터 칩과 달리
+   채움 상태(tokens.css --opt-selected-*)를 쓴다. */
 .sortBtn {
   padding: 7px 12px;
   border-radius: var(--radius-chip-sq);
-  border: 1px solid var(--border);
-  background: var(--paper);
+  border: 1px solid var(--opt-idle-border);
+  background: var(--opt-idle-bg);
   font-family: inherit;
   font-size: var(--font-body-sm);
   font-weight: 500;
-  color: var(--gray);
+  color: var(--opt-idle-text);
   cursor: pointer;
   white-space: nowrap;
+  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+.sortBtn:hover {
+  background: var(--opt-hover-bg);
+  border-color: var(--opt-hover-bg);
+  color: var(--opt-hover-text);
 }
 .sortBtnActive {
-  background: var(--mist);
-  border-color: var(--forest);
-  color: var(--forest);
+  background: var(--opt-selected-bg);
+  border-color: var(--opt-selected-border);
+  color: var(--opt-selected-text);
+  font-weight: 600;
+}
+.sortBtnActive:hover {
+  background: var(--opt-selected-hover-bg);
+  border-color: var(--opt-selected-hover-bg);
 }

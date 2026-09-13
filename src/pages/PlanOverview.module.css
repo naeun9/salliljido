@@ -2,12 +2,12 @@
    1672-1682줄(출처 밴드 + 모바일 하단 바). */
 .page {
   min-height: 100vh;
-  background: #faf8f4;
+  background: #ffffff;
 }
 
 .impact {
   padding: 40px clamp(20px, 5vw, 64px);
-  background: #2f5d50;
+  background: #181818;
 }
 
 .impactInner {
@@ -20,7 +20,7 @@
   font-size: 17px;
   line-height: 1.7;
   font-weight: 600;
-  color: #fffdfa;
+  color: #ffffff;
   letter-spacing: -0.015em;
 }
 
@@ -28,7 +28,7 @@
   margin: 12px 0 0;
   font-size: 14px;
   line-height: 1.7;
-  color: rgba(250, 248, 244, 0.7);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* design state.narrow(< 760px)에서만 뜨는 고정 하단 바(ovMobileBarDisplay). */
@@ -42,7 +42,7 @@
   gap: 10px;
   padding: 12px 16px;
   border-top: 1px solid #e7e2d8;
-  background: rgba(250, 248, 244, 0.96);
+  background: rgba(255, 255, 255, 0.96);
 }
 
 .mobileEdit {
@@ -52,12 +52,12 @@
   justify-content: center;
   height: 48px;
   border-radius: 10px;
-  border: 1px solid #2f5d50;
+  border: 1px solid #181818;
   background: transparent;
   font-family: inherit;
   font-size: 16px;
   font-weight: 600;
-  color: #2f5d50;
+  color: #181818;
   cursor: pointer;
 }
 
@@ -66,11 +66,11 @@
   height: 48px;
   border-radius: 10px;
   border: none;
-  background: #d9784e;
+  background: #202020;
   font-family: inherit;
   font-size: 16px;
   font-weight: 600;
-  color: #fffdfa;
+  color: #ffffff;
   cursor: pointer;
 }
 

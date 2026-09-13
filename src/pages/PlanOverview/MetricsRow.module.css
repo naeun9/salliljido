@@ -27,7 +27,7 @@
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.01em;
-  color: #6e6e68;
+  color: #707070;
 }
 
 .value {
@@ -36,7 +36,7 @@
   line-height: 1.15;
   font-weight: 700;
   letter-spacing: -0.03em;
-  color: #2f5d50;
+  color: #181818;
 }
 
 /* design state.narrow(window.innerWidth < 760): 2열로 접히고

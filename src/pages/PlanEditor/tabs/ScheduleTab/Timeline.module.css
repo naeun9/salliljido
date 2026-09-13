@@ -88,7 +88,7 @@
   cursor: pointer;
 }
 .hintClose:hover {
-  background: rgba(47, 93, 80, 0.12);
+  background: rgba(24, 24, 24, 0.12);
 }
 
 .list {
