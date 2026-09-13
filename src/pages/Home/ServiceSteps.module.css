@@ -29,16 +29,19 @@
    끝까지 늘어나 핀은 왼쪽에 붙고 카드만 오른쪽으로 치우친 채 화면
    전체를 쓰는 것처럼 보였다 — 로드맵+카드를 하나의 덩어리로 보면
    화면 가운데 있지 않은 것처럼 읽힌다. 이 묶음 자체에 조금 더 좁은
-   최대폭을 줘서 넓은 화면에서는 좌우로 똑같이 여백이 남게 한다. */
-.timeline { position: relative; max-width: 1180px; margin: 64px auto 0; }
+   최대폭을 줘서 넓은 화면에서는 남는 폭이 오른쪽에만 남게 한다.
+   헤더(SERVICE/제목)가 왼쪽 정렬이라, 이 묶음도 가운데로 띄우지 않고
+   같은 왼쪽 기준선에 맞춘다 — margin:auto를 쓰지 않는다. */
+.timeline { position: relative; max-width: 1180px; margin: 64px 0 0; padding: 28px 0; }
 
-/* 핀 칸(320px) 안에서 오른쪽 끝(20px 안쪽)에 정렬해, 핀 중심이 전체
-   콘텐츠 폭의 약 25~28% 지점에 오게 한다. START/GOAL도 같은 폭·정렬을
-   써서 핀과 항상 같은 x좌표에 놓인다. 버튼/알약 모양이 아니라 순수
-   텍스트 라벨이다. */
-.rail { display: flex; justify-content: flex-end; width: 320px; padding-right: 12px; font-size: 13px; font-weight: 700; letter-spacing: .12em; color: var(--forest); text-transform: uppercase; }
-.rail[data-start] { margin-bottom: 24px; }
-.rail[data-end] { margin-top: 24px; }
+/* START/GOAL은 핀 칸(320px) 안 아무 자리가 아니라, 핀의 실제 중심
+   좌표(310.5px = 320 - 19px폭 핀의 절반)에 transform으로 정확히
+   맞춘다 — 핀 칸을 기준으로 정렬하면 핀 자체가 칸 오른쪽에 붙어 있어
+   글자가 핀 쪽으로 치우치거나 겹칠 듯 붙어 보였다. 절대좌표라 폭이
+   바뀌는 구간마다(1100px/560px) 값을 같이 맞춘다. */
+.rail { position: absolute; left: 310.5px; transform: translateX(-50%); font-size: 13px; font-weight: 700; letter-spacing: .12em; color: var(--forest); text-transform: uppercase; white-space: nowrap; }
+.rail[data-start] { top: 0; }
+.rail[data-end] { bottom: 0; }
 
 .steps { position: relative; display: flex; flex-direction: column; gap: 48px; padding: 0; margin: 0; list-style: none; }
 /* 핀 중심(320 - 20 - 8 = 292px)을 지나는, 처음부터 끝까지 폭이 같은
@@ -118,7 +121,7 @@
   .pin { flex-basis: 160px; }
   .steps::before { left: 146px; }
   .steps::after { left: 149.5px; }
-  .rail { width: 160px; }
+  .rail { left: 150.5px; }
 }
 @media (max-width: 760px) {
   .card { flex-direction: column; align-items: stretch; padding: 28px; gap: 24px; min-height: 0; }
@@ -134,7 +137,7 @@
   .steps { gap: 32px; }
   .steps::before { left: 21.5px; width: 6px; }
   .steps::after { left: 23.5px; }
-  .rail { width: 32px; padding-right: 0; justify-content: center; font-size: 12px; }
+  .rail { left: 24.5px; font-size: 12px; }
   .card { padding: 20px; border-radius: 18px; }
   .cardText h3 { font-size: 22px; }
 }
