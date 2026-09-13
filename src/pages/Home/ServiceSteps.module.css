@@ -32,7 +32,7 @@
    최대폭을 줘서 넓은 화면에서는 남는 폭이 오른쪽에만 남게 한다.
    헤더(SERVICE/제목)가 왼쪽 정렬이라, 이 묶음도 가운데로 띄우지 않고
    같은 왼쪽 기준선에 맞춘다 — margin:auto를 쓰지 않는다. */
-.timeline { position: relative; max-width: 1180px; margin: 64px 0 0; padding: 28px 0; }
+.timeline { position: relative; max-width: 1280px; margin: 64px 0 0; padding: 28px 0; }
 
 /* START/GOAL은 핀 칸(320px) 안 아무 자리가 아니라, 핀의 실제 중심
    좌표(310.5px = 320 - 19px폭 핀의 절반)에 transform으로 정확히
