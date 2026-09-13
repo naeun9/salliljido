@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSearch } from "../../hooks/useSearch.js";
 import { carouselPhoto, photoBackground } from "../../data/regionPhotos.js";
@@ -43,6 +43,13 @@ function cityChips(region) {
 }
 
 const COUNT = REGIONS.length;
+// Hero.jsx와 같은 기준: 움직임을 줄여 달라고 한 사람에게는 자동 재생을
+// 켜지 않는다.
+function prefersReducedMotion() {
+  return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+const AUTOPLAY_MS = 5000;
+
 // 직접 고르는 캐러셀. 선택한 카드는 가운데에 유지한다.
 export default function RegionCarousel() {
   const [idx, setIdx] = useState(0);
@@ -52,6 +59,16 @@ export default function RegionCarousel() {
   const { setRegion } = useSearch();
 
   function goTo(i) { setIdx((i + COUNT) % COUNT); }
+
+  // 홈에서는 가만히 둬도 옆 카드가 차례로 보이도록 자동 재생한다.
+  // 화살표·점·드래그로 직접 넘기면 idx가 바뀌면서 이 효과가 다시
+  // 실행돼 타이머가 그 시점부터 새로 시작한다 — 자동 넘김이 방금 사용자가
+  // 고른 카드를 곧바로 밀어내지 않는다.
+  useEffect(() => {
+    if (prefersReducedMotion()) return undefined;
+    const t = setInterval(() => setIdx((i) => (i + 1) % COUNT), AUTOPLAY_MS);
+    return () => clearInterval(t);
+  }, [idx]);
   function openFind(name) {
     setRegion(name);
     navigate("/find", { state: { region: name } });
