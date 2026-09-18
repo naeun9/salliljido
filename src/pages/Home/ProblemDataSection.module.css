@@ -1,5 +1,5 @@
 .section {
-  padding: 120px clamp(18px, 4vw, 48px) 48px;
+  padding: 120px clamp(18px, 4vw, 48px) 32px;
   background: var(--paper);
 }
 
@@ -89,7 +89,7 @@
 }
 
 @media (max-width: 720px) {
-  .section { padding: 80px 18px 32px; }
+  .section { padding: 80px 18px 24px; }
   .head { max-width: none; }
   .title,
   .transitionTitle { font-size: clamp(29px, 8vw, 36px); line-height: 1.4; }

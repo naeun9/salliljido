@@ -6,7 +6,7 @@
    길·핀은 헤더(SERVICE/제목)와 같은 왼쪽 기준선에 바짝 붙이고, 카드가
    남은 폭을 전부 쓴다. 간격은 8px 배수(8/16/24/32/48/64)로 통일했다. */
 .service {
-  padding: 96px clamp(18px, 4vw, 48px) 112px;
+  padding: 72px clamp(18px, 4vw, 48px) 112px;
   background: var(--paper);
 }
 .inner { max-width: 1320px; margin: auto; }
