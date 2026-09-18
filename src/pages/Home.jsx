@@ -1,4 +1,5 @@
 import Hero from "./Home/Hero.jsx";
+import ProblemDataSection from "./Home/ProblemDataSection.jsx";
 import ServiceSteps from "./Home/ServiceSteps.jsx";
 import RegionCarousel from "./Home/RegionCarousel.jsx";
 import SupportTeaser from "./Home/SupportTeaser.jsx";
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <Hero />
+      <ProblemDataSection />
       <ServiceSteps />
       <RegionCarousel />
       <SupportTeaser />
