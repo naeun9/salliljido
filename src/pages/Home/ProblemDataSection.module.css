@@ -11,7 +11,7 @@
 .transitionTitle {
   margin: 0;
   color: var(--ink);
-  font-size: clamp(32px, 3.6vw, 42px);
+  font-size: clamp(33.6px, 3.78vw, 44.1px);
   font-weight: 700;
   line-height: 1.35;
   letter-spacing: -0.035em;
@@ -52,8 +52,8 @@
   line-height: 1;
 }
 
-.value { display: block; margin-top: 24px; color: var(--forest); font-size: clamp(40px, 4vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; }
-.subtitle { min-height: 52px; margin: 14px 0 0; color: var(--ink); font-size: 18px; font-weight: 650; line-height: 1.5; letter-spacing: -0.02em; word-break: keep-all; }
+.value { display: block; margin-top: 24px; color: var(--forest); font-size: clamp(42px, 4.2vw, 54.6px); font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; }
+.subtitle { min-height: 52px; margin: 14px 0 0; color: var(--ink); font-size: 18.9px; font-weight: 650; line-height: 1.5; letter-spacing: -0.02em; word-break: keep-all; }
 .barVisual,
 .dotVisual { min-height: 86px; margin-top: 26px; }
 .bar { width: 100%; height: 9px; overflow: hidden; border-radius: var(--radius-pill); background: var(--sand); }
@@ -76,7 +76,7 @@
   transition: background-color 150ms ease calc(var(--dot-index) * 55ms);
 }
 .body { margin: 6px 0 0; color: #4f5558; font-size: var(--font-body); line-height: 1.75; letter-spacing: -0.015em; word-break: keep-all; }
-.source { margin: auto 0 0; padding-top: 24px; color: #9aa0a6; font-size: 12px; line-height: 1.55; word-break: keep-all; }
+.source { margin: auto 0 0; padding-top: 24px; color: #9aa0a6; font-size: 12.6px; line-height: 1.55; word-break: keep-all; }
 
 .transition { max-width: 900px; margin: 120px auto 0; padding-top: 48px; border-top: 1px solid var(--border); text-align: center; }
 .eyebrow { display: block; margin-bottom: 18px; color: var(--forest); font-size: var(--font-label-caps); font-weight: 600; letter-spacing: 0.16em; }
@@ -92,13 +92,13 @@
   .section { padding: 80px 18px 24px; }
   .head { max-width: none; }
   .title,
-  .transitionTitle { font-size: clamp(29px, 8vw, 36px); line-height: 1.4; }
+  .transitionTitle { font-size: clamp(30.45px, 8.4vw, 37.8px); line-height: 1.4; }
   .lead { font-size: var(--font-body); line-height: 1.75; }
   .lead br,
   .transitionDescription br { display: none; }
   .cards { grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 40px; }
   .card { min-height: 0; padding: 26px 24px; }
-  .value { font-size: clamp(40px, 13vw, 50px); white-space: nowrap; }
+  .value { font-size: clamp(42px, 13.65vw, 52.5px); white-space: nowrap; }
   .subtitle { min-height: 0; }
   .barVisual,
   .dotVisual { margin-top: 24px; }
