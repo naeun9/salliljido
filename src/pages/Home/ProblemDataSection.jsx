@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import styles from "./ProblemDataSection.module.css";
 
 const DOTS = Array.from({ length: 29 }, (_, index) => index);
@@ -35,7 +36,11 @@ function DataVisual({ type }) {
       <div className={styles.dotVisual} aria-label="전체 29개 지역 중 12개 지역">
         <div className={styles.dots} aria-hidden="true">
           {DOTS.map((dot) => (
-            <span key={dot} className={dot < 12 ? styles.dotActive : styles.dot} />
+            <span
+              key={dot}
+              className={dot < 12 ? styles.dotActive : styles.dot}
+              style={dot < 12 ? { "--dot-index": dot } : undefined}
+            />
           ))}
         </div>
         <span className={styles.visualCaption}>12 / 29</span>
@@ -58,8 +63,68 @@ function DataVisual({ type }) {
 }
 
 export default function ProblemDataSection() {
+  const sectionRef = useRef(null);
+  const [entered, setEntered] = useState(false);
+  const [counts, setCounts] = useState({ cause: 0, result: 0 });
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return undefined;
+
+    if (
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ||
+      !("IntersectionObserver" in window)
+    ) {
+      setEntered(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setEntered(true);
+        observer.disconnect();
+      },
+      { threshold: 0.18 },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!entered) return undefined;
+
+    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      setCounts({ cause: 40, result: 14 });
+      return undefined;
+    }
+
+    const duration = 900;
+    const startedAt = performance.now();
+    let frameId;
+
+    const update = (now) => {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCounts({
+        cause: Math.round(40 * eased),
+        result: Math.round(14 * eased),
+      });
+      if (progress < 1) frameId = requestAnimationFrame(update);
+    };
+
+    frameId = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(frameId);
+  }, [entered]);
+
   return (
-    <section className={styles.section} aria-labelledby="problem-data-title">
+    <section
+      ref={sectionRef}
+      className={`${styles.section} ${entered ? styles.entered : ""}`}
+      aria-labelledby="problem-data-title"
+    >
       <div className={styles.inner}>
         <header className={styles.head}>
           <span className={styles.accent} aria-hidden="true" />
@@ -77,7 +142,11 @@ export default function ProblemDataSection() {
           {CARDS.map((card) => (
             <article key={card.label} className={styles.card}>
               <span className={styles.label}>{card.label}</span>
-              <strong className={styles.value}>{card.value}</strong>
+              <strong className={styles.value}>
+                {card.visual === "progress" && `${counts.cause}%`}
+                {card.visual === "dots" && card.value}
+                {card.visual === "distribution" && `${counts.result}개 지역`}
+              </strong>
               <h3 className={styles.subtitle}>{card.subtitle}</h3>
               <DataVisual type={card.visual} />
               <p className={styles.body}>{card.body}</p>

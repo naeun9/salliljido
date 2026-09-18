@@ -57,15 +57,34 @@
 .barVisual,
 .dotVisual { min-height: 86px; margin-top: 26px; }
 .bar { width: 100%; height: 9px; overflow: hidden; border-radius: var(--radius-pill); background: var(--sand); }
-.barFill { display: block; height: 100%; border-radius: inherit; background: var(--forest); }
+.barFill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--forest);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.entered .barFill { transform: scaleX(1); transition: transform 900ms cubic-bezier(0.2, 0.7, 0.3, 1); }
 .visualCaption { display: block; margin-top: 12px; color: var(--gray); font-size: var(--font-caption); font-weight: 600; }
 .dots { display: grid; grid-template-columns: repeat(10, 9px); gap: 8px; }
 .dot,
 .dotActive { width: 9px; height: 9px; border-radius: var(--radius-circle); background: var(--sand-strong); }
-.dotActive { background: var(--forest); }
+.dotActive { background: var(--sand-strong); }
+.entered .dotActive {
+  background: var(--forest);
+  transition: background-color 150ms ease calc(var(--dot-index) * 55ms);
+}
 .body { margin: 6px 0 0; color: #4f5558; font-size: var(--font-body); line-height: 1.75; letter-spacing: -0.015em; word-break: keep-all; }
 .source { margin: auto 0 0; padding-top: 24px; color: #9aa0a6; font-size: 12px; line-height: 1.55; word-break: keep-all; }
 
 .transition { max-width: 900px; margin: 120px auto 0; padding-top: 48px; border-top: 1px solid var(--border); text-align: center; }
 .eyebrow { display: block; margin-bottom: 18px; color: var(--forest); font-size: var(--font-label-caps); font-weight: 600; letter-spacing: 0.16em; }
 .transitionDescription { margin: 24px auto 0; color: var(--gray); font-size: var(--font-body-lg); line-height: 1.8; letter-spacing: -0.015em; word-break: keep-all; }
+
+@media (prefers-reduced-motion: reduce) {
+  .barFill { transform: scaleX(1); }
+  .entered .barFill,
+  .entered .dotActive { transition: none; }
+  .dotActive { background: var(--forest); }
+}
