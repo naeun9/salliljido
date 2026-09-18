@@ -82,6 +82,38 @@
 .eyebrow { display: block; margin-bottom: 18px; color: var(--forest); font-size: var(--font-label-caps); font-weight: 600; letter-spacing: 0.16em; }
 .transitionDescription { margin: 24px auto 0; color: var(--gray); font-size: var(--font-body-lg); line-height: 1.8; letter-spacing: -0.015em; word-break: keep-all; }
 
+@media (max-width: 1050px) {
+  .section { padding-top: 104px; }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card { min-height: 470px; }
+}
+
+@media (max-width: 720px) {
+  .section { padding: 80px 18px 32px; }
+  .head { max-width: none; }
+  .title,
+  .transitionTitle { font-size: clamp(29px, 8vw, 36px); line-height: 1.4; }
+  .lead { font-size: var(--font-body); line-height: 1.75; }
+  .lead br,
+  .transitionDescription br { display: none; }
+  .cards { grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 40px; }
+  .card { min-height: 0; padding: 26px 24px; }
+  .value { font-size: clamp(40px, 13vw, 50px); white-space: nowrap; }
+  .subtitle { min-height: 0; }
+  .barVisual,
+  .dotVisual { margin-top: 24px; }
+  .source { margin-top: 32px; }
+  .transition { margin-top: 80px; padding-top: 40px; }
+  .transitionDescription { font-size: var(--font-body); }
+}
+
+@media (max-width: 380px) {
+  .card { padding: 24px 20px; }
+  .dots { grid-template-columns: repeat(10, 8px); gap: 7px; }
+  .dot,
+  .dotActive { width: 8px; height: 8px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .barFill { transform: scaleX(1); }
   .entered .barFill,
