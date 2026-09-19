@@ -129,7 +129,9 @@ export default function ProblemDataSection() {
         <header className={styles.head}>
           <span className={styles.accent} aria-hidden="true" />
           <h2 id="problem-data-title" className={styles.title}>
-            상권이 사라진 지역, 여행을 ‘계획’하는 것부터 장벽입니다.
+            상권이 사라진 지역,
+            <br className={styles.titleBreak} />{" "}
+            여행을 ‘계획’하는 것부터 장벽입니다.
           </h2>
           <p className={styles.lead}>
             인구 유출로 지역의 생활 상권이 줄어들면서, 여행자는 숙소와 카페 같은 기본 정보조차 찾기 어려워졌습니다.
