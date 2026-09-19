@@ -63,13 +63,13 @@ function DataVisual({ type }) {
 }
 
 export default function ProblemDataSection() {
-  const sectionRef = useRef(null);
+  const cardsRef = useRef(null);
   const [entered, setEntered] = useState(false);
   const [counts, setCounts] = useState({ cause: 0, result: 0 });
 
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return undefined;
+    const cards = cardsRef.current;
+    if (!cards) return undefined;
 
     if (
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ||
@@ -79,17 +79,21 @@ export default function ProblemDataSection() {
       return undefined;
     }
 
+    let startFrame;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
-        setEntered(true);
         observer.disconnect();
+        startFrame = requestAnimationFrame(() => setEntered(true));
       },
-      { threshold: 0.18 },
+      { threshold: 0.25 },
     );
 
-    observer.observe(section);
-    return () => observer.disconnect();
+    observer.observe(cards);
+    return () => {
+      observer.disconnect();
+      if (startFrame) cancelAnimationFrame(startFrame);
+    };
   }, []);
 
   useEffect(() => {
@@ -121,7 +125,6 @@ export default function ProblemDataSection() {
 
   return (
     <section
-      ref={sectionRef}
       className={`${styles.section} ${entered ? styles.entered : ""}`}
       aria-labelledby="problem-data-title"
     >
@@ -140,7 +143,7 @@ export default function ProblemDataSection() {
           </p>
         </header>
 
-        <div className={styles.cards}>
+        <div ref={cardsRef} className={styles.cards}>
           {CARDS.map((card) => (
             <article key={card.label} className={styles.card}>
               <span className={styles.label}>{card.label}</span>
