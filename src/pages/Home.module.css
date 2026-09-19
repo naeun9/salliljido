@@ -5,4 +5,12 @@
    그대로 두되, 히어로 둘레 여백에도 이 배경이 비친다. */
 .page {
   background: #F5F3ED;
+  --font-caption: 13.65px;
+  --font-body-sm: 15.75px;
+  --font-body: 16.8px;
+  --font-label: 16.8px;
+  --font-body-lg: 17.85px;
+  --font-lead: 18.9px;
+  --font-h3: 27.3px;
+  --font-label-caps: 12.6px;
 }

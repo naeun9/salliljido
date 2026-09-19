@@ -20,9 +20,9 @@
    추천 결과가 나타나는 흐름을 10초 주기로 반복한다. 실제 선택 색은
    /find의 선택 상태(tokens.css --opt-selected-*)와 정확히 같다. */
 .find { padding: 24px; }
-.label { font-size: 13px; color: var(--gray); margin: 0 0 8px; }
+.label { font-size: 13.65px; color: var(--gray); margin: 0 0 8px; }
 .options { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 16px; }
-.options span { border: 1px solid var(--opt-idle-border); border-radius: var(--radius-input); padding: 9px 13px; font-size: 14px; background: var(--opt-idle-bg); color: var(--opt-idle-text); font-weight: 500; }
+.options span { border: 1px solid var(--opt-idle-border); border-radius: var(--radius-input); padding: 9px 13px; font-size: 14.7px; background: var(--opt-idle-bg); color: var(--opt-idle-text); font-weight: 500; }
 .period { animation: choosePeriod 10s ease-in-out infinite; }
 .interest { animation: chooseInterest 10s ease-in-out infinite; }
 @keyframes choosePeriod {
@@ -39,9 +39,9 @@
   46%, 91% { opacity: 1; transform: translateY(0); }
 }
 .result img { width: 64px; height: 74px; object-fit: cover; border-radius: 9px; flex-shrink: 0; }
-.result strong { display: block; margin: 4px 0; font-size: 17px; }
-.result p { font-size: 13px; color: var(--gray); margin: 0; line-height: 1.5; }
-.kicker { color: var(--gray); font-size: 13px; }
+.result strong { display: block; margin: 4px 0; font-size: 17.85px; }
+.result p { font-size: 13.65px; color: var(--gray); margin: 0; line-height: 1.5; }
+.kicker { color: var(--gray); font-size: 13.65px; }
 
 /* 02 지역 둘러보기 — 추천 숙소 → 주변 관광지 → 체험 프로그램 순서로
    하나씩 나타난다(뜬 다음엔 계속 떠 있다가 다음 반복에서 같이 사라짐). */
@@ -49,8 +49,8 @@
 .destination { position: relative; min-height: 150px; border-radius: 14px; overflow: hidden; background: #636363; }
 .destination > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .destination > div { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 14px; color: #fff; background: linear-gradient(transparent 40%, rgba(20, 26, 23, .78)); }
-.destination span { font-size: 12px; }
-.destination strong { font-size: 19px; margin-top: 4px; }
+.destination span { font-size: 12.6px; }
+.destination strong { font-size: 19.95px; margin-top: 4px; }
 
 /* 추천 숙소 / 주변 관광지 / 체험 프로그램 — 라벨·결과값·화살표 3열
    그리드로 고정한다. 세 행의 높이·padding·radius·baseline을 모두
@@ -77,9 +77,9 @@
   0%, 8%, 100% { opacity: 0; transform: translateX(10px); }
   20%, 92% { opacity: 1; transform: translateX(0); }
 }
-.placeKicker { font-size: 12px; color: #73787C; }
+.placeKicker { font-size: 12.6px; color: #73787C; }
 .place strong {
-  font-size: 13px;
+  font-size: 13.65px;
   font-weight: 650;
   line-height: 1.35;
   color: #181A1B;
@@ -88,14 +88,14 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.placeArrow { color: #73787C; font-size: 15px; text-align: right; }
+.placeArrow { color: #73787C; font-size: 15.75px; text-align: right; }
 
 /* 03 하루 일정 만들기 — 실제 일정 화면(PlanEditor의 ScheduleTab/Timeline)
    처럼 왼쪽 시간·가운데 점을 이은 세로선·오른쪽 장소 카드 구조로 바꿔
    "계획표" 느낌을 냈다. 항목도 순서대로 하나씩 나타난다. */
 .planner { padding: 24px; }
 .plannerHead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-.day { font-size: 12px; color: var(--gray); border: 1px solid var(--border); border-radius: 99px; padding: 4px 11px; }
+.day { font-size: 12.6px; color: var(--gray); border: 1px solid var(--border); border-radius: 99px; padding: 4px 11px; }
 .notes { position: relative; display: grid; gap: 14px; }
 /* 시간 점을 잇는 세로선. planTime 칸(44px) 가운데를 지난다. */
 .notes::before { content: ""; position: absolute; left: 21px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
@@ -114,7 +114,7 @@
   20%, 92% { opacity: 1; transform: translateY(0); }
 }
 .planTime { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
-.time { font-size: 11px; font-weight: 600; color: var(--gray); white-space: nowrap; }
+.time { font-size: 11.55px; font-weight: 600; color: var(--gray); white-space: nowrap; }
 .planDot { width: 9px; height: 9px; border-radius: 50%; background: var(--forest); box-shadow: 0 0 0 3px var(--cream); }
 .planCard { display: flex; align-items: center; gap: 10px; min-width: 0; }
 /* 장소 사진을 반복하는 대신 종류를 나타내는 라인 아이콘 하나로
@@ -122,20 +122,20 @@
    아이콘 색은 --forest(#214D42)로 tokens.css 값을 그대로 쓴다. */
 .planIcon { flex: 0 0 auto; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: var(--mist); color: var(--forest); }
 .note { flex: 1 1 auto; min-width: 0; }
-.note strong { display: block; font-size: 14px; color: var(--ink); }
-.note > span { display: block; font-size: 12px; color: var(--gray); margin-top: 2px; }
+.note strong { display: block; font-size: 14.7px; color: var(--ink); }
+.note > span { display: block; font-size: 12.6px; color: var(--gray); margin-top: 2px; }
 
 /* 04 비용과 지원 확인하기 — 막대가 숙박 → 식비 → 교통·체험 순서로
    차오르며 예상 비용이 쌓이는 느낌을 준다. */
 .budget { padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .budgetLeft, .budgetRight { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-.totalCost { font-size: 20px; font-weight: 700; letter-spacing: -.03em; color: var(--forest); white-space: nowrap; animation: totalIn 8s ease-in-out infinite; }
+.totalCost { font-size: 21px; font-weight: 700; letter-spacing: -.03em; color: var(--forest); white-space: nowrap; animation: totalIn 8s ease-in-out infinite; }
 @keyframes totalIn {
   0%, 8% { opacity: .35; }
   38%, 100% { opacity: 1; }
 }
 .budgetRows { display: grid; gap: 10px; }
-.budgetRows > div { display: grid; grid-template-columns: 56px 1fr; align-items: center; font-size: 12px; color: var(--gray); }
+.budgetRows > div { display: grid; grid-template-columns: 56px 1fr; align-items: center; font-size: 12.6px; color: var(--gray); }
 .bar { display: block; height: 8px; width: 0; background: var(--sage); border-radius: 8px; animation: barGrow 8s ease-in-out infinite; animation-delay: calc(var(--order) * .5s); }
 @keyframes barGrow {
   0%, 5% { width: 0; }
@@ -144,10 +144,10 @@
 }
 .programCard { border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 6px; background: var(--paper); }
 .programHead { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.programCity { font-size: 12px; font-weight: 600; color: var(--gray); }
-.programStatus { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 99px; white-space: nowrap; }
-.programName { font-size: 13px; font-weight: 650; line-height: 1.4; color: var(--ink); }
-.programSummary { font-size: 12px; color: var(--gray); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.programCity { font-size: 12.6px; font-weight: 600; color: var(--gray); }
+.programStatus { font-size: 11.55px; font-weight: 700; padding: 3px 9px; border-radius: 99px; white-space: nowrap; }
+.programName { font-size: 13.65px; font-weight: 650; line-height: 1.4; color: var(--ink); }
+.programSummary { font-size: 12.6px; color: var(--gray); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
 @media (max-width: 480px) {
   .explore { grid-template-columns: 1fr; }
