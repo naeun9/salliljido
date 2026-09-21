@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useInView } from "../../hooks/useInView.js";
 import styles from "./ProblemDataSection.module.css";
 
 const DOTS = Array.from({ length: 29 }, (_, index) => index);
@@ -8,7 +9,6 @@ const CARDS = [
     label: "원인",
     value: "40%",
     subtitle: "전국 시군구 약 40%가 인구감소지역으로 지정",
-    body: "거주민 감소는 식당·카페·생활 서비스의 축소로 이어지고, 방문객이 이용할 수 있는 여행 인프라도 함께 줄어듭니다.",
     source: "행정안전부 「인구감소지역 지정 고시」",
     visual: "progress",
   },
@@ -16,7 +16,6 @@ const CARDS = [
     label: "현상",
     value: "12개 지역",
     subtitle: "파일럿 29곳 중 등록 카페 5건 미만",
-    body: "카페 정보조차 충분하지 않은 지역에서는 며칠 머물며 생활할 동선을 구성하기 어렵습니다.",
     source: "한국관광공사 TourAPI 및 자체 실측 · 2026.09",
     visual: "dots",
   },
@@ -24,7 +23,6 @@ const CARDS = [
     label: "결과",
     value: "14개 지역",
     subtitle: "파일럿 29곳 중 온라인 숙박 정보 20건 미만",
-    body: "숙박 선택지가 적고 방문이 주말에 집중되면서, 체류형 여행 일정을 계획하기 어려워집니다.",
     source: "한국관광공사 TourAPI · 관광빅데이터 · 2026.09",
     visual: "distribution",
   },
@@ -64,6 +62,8 @@ function DataVisual({ type }) {
 
 export default function ProblemDataSection() {
   const cardsRef = useRef(null);
+  // 마무리 화면은 스크롤해서 도착했을 때 글자가 차례로 떠오른다.
+  const [transitionRef, transitionIn] = useInView({ threshold: 0.4 });
   const [entered, setEntered] = useState(false);
   const [counts, setCounts] = useState({ cause: 0, result: 0 });
 
@@ -142,9 +142,9 @@ export default function ProblemDataSection() {
             여행을 ‘계획’하는 것부터 장벽입니다.
           </h2>
           <p className={styles.lead}>
-            인구 유출로 지역의 생활 상권이 줄어들면서, 여행자는 숙소와 카페 같은 기본 정보조차 찾기 어려워졌습니다.
+            인구가 줄어든 지역은 숙소와 식당, 카페 정보부터 찾기 어렵습니다.
             <br />
-            머무는 여행을 계획하기 전, 정보 부족이라는 첫 번째 장벽을 만나게 됩니다.
+            며칠 머물 계획을 세우려 해도 필요한 정보가 부족하거나 흩어져 있습니다.
           </p>
         </header>
 
@@ -159,7 +159,6 @@ export default function ProblemDataSection() {
               </strong>
               <h3 className={styles.subtitle}>{card.subtitle}</h3>
               <DataVisual type={card.visual} />
-              <p className={styles.body}>{card.body}</p>
               <p className={styles.source}>출처: {card.source}</p>
             </article>
           ))}
@@ -168,19 +167,24 @@ export default function ProblemDataSection() {
       </div>
     </section>
 
-    <section className={styles.transitionSection} aria-labelledby="problem-transition-title">
+    <section
+      ref={transitionRef}
+      className={`${styles.transitionSection} ${transitionIn ? styles.transitionIn : ""}`}
+      aria-labelledby="problem-transition-title"
+    >
+      {/* 배경에 아주 옅은 점 격자가 천천히 흐른다. 장식이라 읽는 데
+          방해되지 않도록 가운데만 보이고 가장자리는 사라진다. */}
+      <span className={styles.dotField} aria-hidden="true" />
       <div className={styles.inner}>
         <div className={styles.transition}>
           <span className={styles.eyebrow}>WHY SALLILJIDO</span>
           <h2 id="problem-transition-title" className={styles.transitionTitle}>
-            그래서 인구감소지역의 여행은
+            인구감소지역의 여행은
             <br />
             검색이 아니라 ‘발굴’이 필요합니다.
           </h2>
           <p className={styles.transitionDescription}>
-            숙박, 생활 편의, 관광지, 지자체 지원처럼 여러 공공데이터에 흩어진 정보를 한곳에 모아
-            <br />
-            지역을 발견하는 순간부터 체류 계획까지 하나의 흐름으로 연결합니다.
+            흩어진 공공데이터를 모아, 지역 선택부터 체류 계획까지 하나의 흐름으로 잇습니다.
           </p>
         </div>
       </div>
