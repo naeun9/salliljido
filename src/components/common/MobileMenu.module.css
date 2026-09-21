@@ -20,16 +20,20 @@
   justify-content: space-between;
   flex: 0 0 auto;
 }
+/* 헤더와 같은 로고 이미지. 오버레이 배경(--paper)이 순백이 아니라
+   이미지 배경은 투명하게 빼 뒀다. */
 .overlayLogo {
-  font-size: 23px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--forest);
+  display: inline-flex;
+  align-items: center;
   cursor: pointer;
   background: none;
   border: none;
   padding: 0;
-  font-family: inherit;
+}
+.overlayLogoImage {
+  display: block;
+  width: auto;
+  height: 30px;
 }
 .overlayLogo:hover {
   opacity: 0.78;

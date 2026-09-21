@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth.js";
+import logoImage from "../../assets/logo.png";
 import styles from "./Header.module.css";
 import menuStyles from "./MobileMenu.module.css";
 
@@ -86,12 +87,9 @@ export default function Header() {
   return (
     <>
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`} data-print-hide>
-        <div className={styles.brandGroup}>
         <a href="/" onClick={handleLogoClick} aria-label="살릴지도 홈으로" className={styles.logo}>
-          살릴지도
+          <img className={styles.logoImage} src={logoImage} alt="살릴지도" />
         </a>
-        {isHome && <span className={styles.brandCaption}>인구감소지역 체류 안내 서비스</span>}
-        </div>
         <div className={styles.actions}>
           <nav className={styles.nav}>
             {navItems.map((item) =>
@@ -185,7 +183,7 @@ export default function Header() {
             aria-label="살릴지도 홈으로"
             className={menuStyles.overlayLogo}
           >
-            살릴지도
+            <img className={menuStyles.overlayLogoImage} src={logoImage} alt="살릴지도" />
           </a>
           <button
             className={menuStyles.overlayClose}

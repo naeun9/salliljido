@@ -123,7 +123,12 @@ export default function ProblemDataSection() {
     return () => cancelAnimationFrame(frameId);
   }, [entered]);
 
+  // 통계 카드 3장과 "WHY SALLILJIDO" 마무리 블록은 원래 한 <section> 안에
+  // 있었다. 둘을 합치면 자연 높이가 1500px쯤이라 랜딩 2번째 화면부터
+  // 한 화면(100svh)에 담는다는 요구를 만족할 수 없어, 내용은 그대로 둔 채
+  // 두 개의 전체 화면 섹션으로 나눴다.
   return (
+    <>
     <section
       className={`${styles.section} ${entered ? styles.entered : ""}`}
       aria-labelledby="problem-data-title"
@@ -160,9 +165,14 @@ export default function ProblemDataSection() {
           ))}
         </div>
 
+      </div>
+    </section>
+
+    <section className={styles.transitionSection} aria-labelledby="problem-transition-title">
+      <div className={styles.inner}>
         <div className={styles.transition}>
           <span className={styles.eyebrow}>WHY SALLILJIDO</span>
-          <h2 className={styles.transitionTitle}>
+          <h2 id="problem-transition-title" className={styles.transitionTitle}>
             그래서 인구감소지역의 여행은
             <br />
             검색이 아니라 ‘발굴’이 필요합니다.
@@ -175,5 +185,6 @@ export default function ProblemDataSection() {
         </div>
       </div>
     </section>
+    </>
   );
 }
