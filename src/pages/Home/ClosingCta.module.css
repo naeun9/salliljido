@@ -74,23 +74,3 @@
   .photo { height: 220px; }
   .content { width: 100%; }
 }
-
-/* ── 한 화면(100svh) 맞추기 ──────────────────────────────────────
-   내용이 적은 마지막 CTA라 여백만 화면 높이에 묶으면 된다. 사진
-   높이(340px 고정)도 낮은 화면에서 함께 줄어들게 한다. */
-@media (min-width: 760px) and (min-height: 700px) {
-  .closing {
-    height: 100svh;
-    display: flex;
-    align-items: center;
-    padding: 64px clamp(18px, 4vw, 48px) clamp(24px, 5vh, 120px);
-    scroll-snap-align: start;
-    /* html에 scroll-padding-top:64px(고정 헤더 높이)이 걸려 있어서,
-       start 정렬은 섹션 윗변을 화면 위에서 64px 내려 붙인다. 섹션이
-       100svh라 그만큼 아래가 잘려 "애매하게 넘어가" 보였다. 음수
-       scroll-margin으로 그 64px을 상쇄해 화면에 딱 맞게 붙인다
-       (헤더 가림은 각 섹션의 padding-top:64px이 이미 막고 있다). */
-    scroll-margin-top: -64px;
-  }
-  .photo { height: clamp(220px, 38vh, 340px); }
-}

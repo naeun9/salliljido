@@ -48,7 +48,6 @@ export default function Footer() {
           <div className={styles.policyLinks}>
             <Link to="/terms">서비스 이용약관</Link>
             <Link to="/privacy">개인정보처리방침</Link>
-            <a href="mailto:contact@sallil.kr">contact@sallil.kr</a>
           </div>
         </div>
       </div>
