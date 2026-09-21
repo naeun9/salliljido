@@ -10,10 +10,10 @@
 .head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 0 clamp(24px, 4vw, 48px); }
 .headText { max-width: 680px; }
 .eyebrow { font-size: var(--font-label-caps); font-weight: 600; letter-spacing: .16em; color: var(--forest); }
-.title { margin: 16px 0 0; font-size: clamp(29.4px, 3.255vw, 44.1px); line-height: 1.35; font-weight: 700; letter-spacing: -.03em; color: var(--ink); }
-.lead { margin: 10px 0 0; font-size: 16.8px; line-height: 1.7; color: var(--gray); }
+.title { margin: 16px 0 0; font-size: var(--font-h2); line-height: 1.35; font-weight: 700; letter-spacing: -.03em; color: var(--ink); }
+.lead { margin: 10px 0 0; font-size: var(--font-lead); line-height: 1.7; color: var(--gray); }
 .arrows { display: flex; gap: 10px; }
-.arrowBtn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border); background: var(--cream); color: var(--ink); font-size: 18.9px; cursor: pointer; }
+.arrowBtn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border); background: var(--cream); color: var(--ink); font-size: var(--font-body); cursor: pointer; }
 .arrowBtn:hover { background: var(--opt-hover-bg); }
 .track { margin-top: 22px; padding: 20px 0 28px; touch-action: pan-y; user-select: none; }
 /* 중앙 카드는 440~480px(clamp), 좌우 카드는 scale(.78)로 약 345~375px가
@@ -31,17 +31,17 @@
    낮춰 섹션 높이를 줄이는 가장 큰 요인. 요청한 이미지 높이(340~400px)에
    맞는다(중앙 폭 460px 기준 약 368px). */
 .cardImage { position: relative; width: 100%; aspect-ratio: 5 / 4; background-size: cover; background-position: center; }
-.locationLabel { position: absolute; bottom: 16px; right: 16px; left: 16px; text-align: right; color: rgba(255, 255, 255, .85); font-size: 13.65px; font-weight: 400; line-height: 1.5; text-shadow: 0 1px 6px rgba(0, 0, 0, .55); z-index: 1; }
+.locationLabel { position: absolute; bottom: 16px; right: 16px; left: 16px; text-align: right; color: rgba(255, 255, 255, .85); font-size: var(--font-caption); font-weight: 400; line-height: 1.5; text-shadow: 0 1px 6px rgba(0, 0, 0, .55); z-index: 1; }
 .cardImage::after { content: ""; position: absolute; inset: 55% 0 0; background: linear-gradient(transparent, rgba(0, 0, 0, .24)); pointer-events: none; }
 .cardBody { padding: 20px; flex: 1; }
 .cardHeading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.cardName { margin: 0; font-size: 26.25px; font-weight: 700; letter-spacing: -.03em; color: var(--ink); }
+.cardName { margin: 0; font-size: var(--font-h3); font-weight: 700; letter-spacing: -.03em; color: var(--ink); }
 .cardArrow { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 50%; color: var(--gray); }
 .cardCities { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
-.cardCity { padding: 5px 8px; border-radius: 6px; background: var(--sand); font-size: 13.65px; color: var(--gray); }
+.cardCity { padding: 5px 8px; border-radius: 6px; background: var(--sand); font-size: var(--font-caption); color: var(--gray); }
 /* 홈에서는 지역 소개 문장을 1~2문장만 — REGIONS 데이터 자체가 이미
    그 안에 있지만, 혹시 넘치더라도 2줄에서 자르는 안전장치를 둔다. */
-.cardDesc { margin: 14px 0 0; font-size: 15.75px; line-height: 1.7; color: var(--gray); letter-spacing: -.02em; text-wrap: pretty; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.cardDesc { margin: 14px 0 0; font-size: var(--font-body-sm); line-height: 1.7; color: var(--gray); letter-spacing: -.02em; text-wrap: pretty; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .dots { display: flex; justify-content: center; gap: 4px; margin-top: 0; }
 .dot { width: 32px; height: 32px; display: grid; place-items: center; border: 0; padding: 0; background: transparent; cursor: pointer; }
 
@@ -50,19 +50,44 @@
 .slide[data-selected="true"] .card { box-shadow: 0 24px 45px -24px rgba(29, 29, 31, .3); }
 .dot::after { content: ""; width: 7px; height: 7px; border-radius: 999px; background: var(--border-strong); transition: width .3s ease; }
 .dot[data-active="true"]::after { width: 22px; background: var(--forest); }
-.selection { text-align: center; margin: 8px 16px 0; font-size: 14.7px; color: var(--ink); }
-.selection span { color: var(--gray); font-size: 13.65px; }
+.selection { text-align: center; margin: 8px 16px 0; font-size: var(--font-body-sm); color: var(--ink); }
+.selection span { color: var(--gray); font-size: var(--font-caption); }
 @media (max-width: 759px) {
   .regions { padding: 40px clamp(14px, 4vw, 24px) 48px; }
-  .title { font-size: 27.3px; }
   .trackInner { width: min(74vw, 380px); }
   .slide { transform: translateX(calc(var(--offset) * 90%)) scale(.8); }
   .card { border-radius: 20px; }
   .cardImage { aspect-ratio: 5 / 4; }
   .cardBody { padding: 18px; }
-  .cardName { font-size: 24.15px; }
   .selection span { display: block; margin-top: 6px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .slide, .card, .dot::after { transition: none; }
+}
+
+/* ── 한 화면(100svh) 맞추기 ──────────────────────────────────────
+   이 섹션의 높이를 정하는 건 캐러셀 카드다(사진 + 본문). 그래서 카드
+   폭을 가로(36vw)뿐 아니라 세로(50vh)로도 묶는다 — 화면이 낮아지면
+   폭이 먼저 줄고, 5:4 사진이 따라 낮아져 전체가 한 화면에 들어온다.
+
+   사진 비율은 이 구간에서만 5:4 → 16:10으로 눕힌다. 5:4를 유지한 채
+   높이를 맞추려면 카드 폭을 300px 아래로 끌어내려야 해서, 넓은
+   화면에서도 카드가 손톱만 해졌다. 비율 한 단을 눕히는 쪽이 카드
+   크기(최대 480px)를 지키면서 한 화면에 담는 방법이다. */
+@media (min-width: 760px) and (min-height: 700px) {
+  .regions {
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    padding: 64px clamp(10px, 1.5vw, 24px) clamp(16px, 3vh, 32px);
+    scroll-snap-align: start;
+  }
+  .inner { width: 100%; padding: clamp(18px, 3vh, 36px) 0 clamp(14px, 2.4vh, 24px); }
+  .title { margin-top: clamp(10px, 1.8vh, 16px); }
+  .trackInner { width: clamp(300px, min(36vw, 50vh), 480px); }
+  .cardImage { aspect-ratio: 16 / 10; }
+  .track { margin-top: clamp(12px, 2vh, 22px); padding: clamp(10px, 1.8vh, 20px) 0 clamp(14px, 2.4vh, 28px); }
+  .cardBody { padding: clamp(14px, 2vh, 20px); }
+  .cardCities { margin-top: clamp(8px, 1.4vh, 14px); }
+  .cardDesc { margin-top: clamp(8px, 1.4vh, 14px); }
 }
