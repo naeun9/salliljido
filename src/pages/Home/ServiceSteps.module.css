@@ -99,7 +99,7 @@
    지원 확인하기")에서 바로 이 문제가 났다 — 폭을 다시 늘리는 대신
    띄어쓰기에서만 줄바꿈되게 고쳤다. */
 .cardText h3 { margin: 8px 0 10px; font-size: var(--font-h3); font-weight: 700; letter-spacing: -.02em; color: var(--ink); line-height: 1.35; word-break: keep-all; }
-.cardText p { margin: 0; font-size: var(--font-body); font-weight: 450; line-height: 1.65; color: var(--gray); word-break: keep-all; }
+.cardText p { margin: 0; font-size: var(--font-body-sm); font-weight: 450; line-height: 1.65; color: var(--gray); word-break: keep-all; }
 /* 태그가 버튼처럼 보이지 않도록 예전보다 작게 — 높이 32px 고정, 옆
    여백만으로 크기를 잡고 세로 패딩은 line-height로 맞춘다. */
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }

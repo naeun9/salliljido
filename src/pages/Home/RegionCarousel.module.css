@@ -36,7 +36,7 @@
 .cardBody { padding: 20px; flex: 1; }
 .cardHeading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .cardName { margin: 0; font-size: var(--font-h3); font-weight: 700; letter-spacing: -.03em; color: var(--ink); }
-.cardArrow { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 50%; color: var(--gray); }
+.cardArrow { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 50%; color: var(--gray); font-size: var(--font-body); }
 .cardCities { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
 .cardCity { padding: 5px 8px; border-radius: 6px; background: var(--sand); font-size: var(--font-caption); color: var(--gray); }
 /* 홈에서는 지역 소개 문장을 1~2문장만 — REGIONS 데이터 자체가 이미
@@ -81,6 +81,12 @@
     align-items: center;
     padding: 64px clamp(10px, 1.5vw, 24px) clamp(16px, 3vh, 32px);
     scroll-snap-align: start;
+    /* html에 scroll-padding-top:64px(고정 헤더 높이)이 걸려 있어서,
+       start 정렬은 섹션 윗변을 화면 위에서 64px 내려 붙인다. 섹션이
+       100svh라 그만큼 아래가 잘려 "애매하게 넘어가" 보였다. 음수
+       scroll-margin으로 그 64px을 상쇄해 화면에 딱 맞게 붙인다
+       (헤더 가림은 각 섹션의 padding-top:64px이 이미 막고 있다). */
+    scroll-margin-top: -64px;
   }
   .inner { width: 100%; padding: clamp(18px, 3vh, 36px) 0 clamp(14px, 2.4vh, 24px); }
   .title { margin-top: clamp(10px, 1.8vh, 16px); }
