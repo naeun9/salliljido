@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useInView } from "../../hooks/useInView.js";
 import styles from "./ServiceSteps.module.css";
 import ServicePreview from "./ServicePreview.jsx";
@@ -36,31 +35,19 @@ const STEPS = [
 // 높이가 달라도(예시 UI 종류별로 실제 내용 길이가 다르다) 핀이 항상 카드와
 // 같은 높이에서 자연스럽게 정렬된다 — 세로선은 .steps 안에 있는 고정폭
 // 핀 칸을 따라 그어지므로 좌표를 따로 맞출 필요가 없다.
-// 카드 하나가 재생되는 시간. 각 예시 UI의 "동작이 끝나는" 지점(결과가
-// 뜨고 막대가 다 차는 데 최대 4.6초)을 지나도록 잡았다. 네 장이 한 바퀴
-// 도는 데 20초.
-const STEP_MS = 5000;
+// 예시 UI는 처음에는 비어 있다가, 스크롤해서 그 카드가 화면에 들어오는
+// 순간 생성 애니메이션으로 나타나고 이후로는 그 흐름을 반복한다. 카드마다
+// 따로 감지하므로 내려가는 순서대로 01 → 04가 하나씩 살아난다.
+function StepPreview({ type }) {
+  const [ref, inView] = useInView({ threshold: 0.35 });
+  return (
+    <div ref={ref} className={styles.preview} data-preview-started={inView}>
+      <ServicePreview type={type} />
+    </div>
+  );
+}
 
 export default function ServiceSteps() {
-  // 화면 밖에서는 타이머를 돌리지 않는다(once:false). 스크롤해서 이
-  // 자리에 왔을 때 01번부터 순서대로 시작하고, 한 바퀴 돌면 반복한다.
-  const [timelineRef, timelineIn] = useInView({ threshold: 0.2, once: false });
-  const [activeStep, setActiveStep] = useState(-1);
-
-  useEffect(() => {
-    if (!timelineIn) {
-      // 화면을 벗어나면 전부 "완료된 모습"으로 돌려놓는다 — 다시 내려왔을 때
-      // 중간부터 이어지지 않고 01번부터 다시 시작한다.
-      setActiveStep(-1);
-      return undefined;
-    }
-    setActiveStep(0);
-    const timer = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % STEPS.length);
-    }, STEP_MS);
-    return () => clearInterval(timer);
-  }, [timelineIn]);
-
   return (
     <section id="service" className={styles.service} data-screen-label="Service">
       <div className={styles.inner}>
@@ -73,7 +60,7 @@ export default function ServiceSteps() {
         <nav className={styles.overview} aria-label="서비스 이용 순서">
           {STEPS.map((step, i) => <a key={step.num} href={"#service-step-" + i}><span>{step.num}</span>{["지역 찾기", "둘러보기", "일정 만들기", "비용 확인"][i]}{i < 3 && <b aria-hidden="true">→</b>}</a>)}
         </nav>
-        <div ref={timelineRef} className={styles.timeline}>
+        <div className={styles.timeline}>
           <span className={styles.rail} data-start aria-hidden="true">START</span>
           <ol className={styles.steps}>
             {STEPS.map((step, i) => <li id={"service-step-" + i} key={step.num} className={styles.step}>
@@ -91,7 +78,7 @@ export default function ServiceSteps() {
                   <p>{step.desc}</p>
                   <div className={styles.chips}>{step.chips.map(chip => <span key={chip}>{chip}</span>)}</div>
                 </div>
-                <div className={styles.preview} data-preview-active={i === activeStep}><ServicePreview type={i} /></div>
+                <StepPreview type={i} />
               </div>
             </li>)}
           </ol>
